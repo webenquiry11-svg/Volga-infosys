@@ -903,20 +903,10 @@
 
   <script src="volga.js"></script>
   <script>
-    const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-      ? 'http://localhost:5000/api' : '/api';
-      
+    const API = window.VOLGA_API;
+
     function getImageUrl(url) {
-      if (!url) return '';
-      if (url.startsWith('http://') || url.startsWith('https://')) {
-        return url;
-      }
-      if (url.startsWith('/uploads/')) {
-        return (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-          ? `http://localhost:5000${url}`
-          : url;
-      }
-      return url;
+      return window.getVolgaImageUrl(url);
     }
 
     async function loadBlog() {

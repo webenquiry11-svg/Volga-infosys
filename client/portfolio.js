@@ -12,7 +12,7 @@ const defaultData = [
 ];
 
 const h = window.location.hostname;
-const API_URL = (h === 'localhost' || h === '127.0.0.1') ? 'http://localhost:5000/api' : '/api';
+const API_URL = window.VOLGA_API;
 
 async function fetchProjects() {
   try {

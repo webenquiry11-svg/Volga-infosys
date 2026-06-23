@@ -4,6 +4,21 @@
    loader, nav scroll effects, counter animation
 ═══════════════════════════════════════════════════════════ */
 
+// ─── 0. API CONFIG ───────────────────────────────────────
+(function() {
+  const RAILWAY_URL = 'https://volga-remodel-15-6-26-production.up.railway.app';
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  window.VOLGA_API = isLocal ? 'http://localhost:5000/api' : (RAILWAY_URL + '/api');
+  window.getVolgaImageUrl = function(url) {
+    if (!url) return '';
+    if (url.startsWith('http://') || url.startsWith('https://')) return url;
+    if (url.startsWith('/uploads/')) {
+      return isLocal ? ('http://localhost:5000' + url) : (RAILWAY_URL + url);
+    }
+    return url;
+  };
+})();
+
 // ─── 1. REGISTER GSAP PLUGINS ───────────────────────────
 try {
   if (typeof TextPlugin !== 'undefined') {
@@ -532,10 +547,9 @@ function setupMagnetic() {
     btn.disabled = true;
 
     const data = Object.fromEntries(new FormData(form));
-    const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'volga-remodel-15-6-26.railway.internal' : '';
 
     try {
-      const res = await fetch(`${API}/api/contact`, {
+      const res = await fetch(`${window.VOLGA_API}/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -588,10 +602,10 @@ async function fetchLatestBlogs() {
   const blogGrid = document.getElementById('blogGrid');
   if (!blogGrid) return;
 
-  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'volga-remodel-15-6-26.railway.internal' : '';
+  const API = window.VOLGA_API;
 
   try {
-    const res = await fetch(`${API}/api/blogs`);
+    const res = await fetch(`${API}/blogs`);
     const result = await res.json();
     const blogs = result.data || result; // Handle both wrapped and unwrapped responses
 
@@ -761,11 +775,11 @@ function addBlogNavigation(blogGrid) {
 
 // ─── 11.6 REAL-TIME BLOG UPDATES ────────────────────────────
 function setupBlogRealtimeUpdates() {
-  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'volga-remodel-15-6-26.railway.internal' : '';
+  const API = window.VOLGA_API;
 
   setInterval(async () => {
     try {
-      const res = await fetch(`${API}/api/blogs`);
+      const res = await fetch(`${API}/blogs`);
       const result = await res.json();
       const blogs = result.data || result;
 
@@ -794,10 +808,10 @@ async function fetchCaseStudies() {
   const caseStudiesContainer = document.getElementById('caseStudiesContainer');
   if (!caseStudiesContainer) return;
 
-  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'volga-remodel-15-6-26.railway.internal' : '';
+  const API = window.VOLGA_API;
 
   try {
-    const res = await fetch(`${API}/api/case-studies`);
+    const res = await fetch(`${API}/case-studies`);
     const caseStudies = await res.json();
 
     if (caseStudies.length === 0) {
@@ -850,10 +864,10 @@ async function fetchClientStories() {
   const storiesGrid = document.getElementById('storiesGrid');
   if (!storiesGrid) return;
 
-  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'volga-remodel-15-6-26.railway.internal' : '';
+  const API = window.VOLGA_API;
 
   try {
-    const res = await fetch(`${API}/api/client-stories`);
+    const res = await fetch(`${API}/client-stories`);
     if (!res.ok) throw new Error('API request failed');
     const stories = await res.json();
 
@@ -943,10 +957,10 @@ async function fetchIndustryNews() {
   const newsContainer = document.getElementById('newsContainer');
   if (!newsContainer) return;
 
-  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'volga-remodel-15-6-26.railway.internal' : '';
+  const API = window.VOLGA_API;
 
   try {
-    const res = await fetch(`${API}/api/industry-news`);
+    const res = await fetch(`${API}/industry-news`);
     const news = await res.json();
 
     if (news.length === 0) {
@@ -1008,15 +1022,15 @@ async function fetchInsightsOverview() {
   const container = document.getElementById('insights-overview-container');
   if (!container) return;
 
-  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'volga-remodel-15-6-26.railway.internal' : '';
+  const API = window.VOLGA_API;
 
   try {
     // Fetch all insight types in parallel
     const [blogsRes, caseStudiesRes, clientStoriesRes, industryNewsRes] = await Promise.all([
-      fetch(`${API}/api/blogs`),
-      fetch(`${API}/api/case-studies`),
-      fetch(`${API}/api/client-stories`),
-      fetch(`${API}/api/industry-news`)
+      fetch(`${API}/blogs`),
+      fetch(`${API}/case-studies`),
+      fetch(`${API}/client-stories`),
+      fetch(`${API}/industry-news`)
     ]);
 
     const blogsResult = await blogsRes.json();

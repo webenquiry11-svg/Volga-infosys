@@ -1604,9 +1604,7 @@
             btn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
             btn.disabled = true;
 
-            const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-              ? 'http://localhost:5000'
-              : '';
+            const API = window.VOLGA_API.replace('/api', '');
 
             const data = {
               name: contactFormV2.querySelector('[name="name"]').value,
@@ -1619,7 +1617,7 @@
             };
 
             try {
-              const res = await fetch(`${API}/api/contact`, {
+              const res = await fetch(`${window.VOLGA_API}/contact`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)

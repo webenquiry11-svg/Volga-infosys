@@ -616,6 +616,7 @@ Volga Infosys helps organizations bridge the gap between physical operations and
   </footer>
 
   <!-- ═══════════════════════════════════════════ SCRIPTS -->
+  <script src="api-config.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const homeBlogCards = document.querySelectorAll('.blog-section .card');
@@ -626,10 +627,10 @@ Volga Infosys helps organizations bridge the gap between physical operations and
       };
 
       async function loadHomeBlogCards() {
-        const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-          ? 'volga-remodel-15-6-26.railway.internal/' : '';
+        const API = window.VOLGA_API;
+
         try {
-          const res = await fetch(`${API}/api/blogs`);
+          const res = await fetch(`${API}/blogs`);
           if (!res.ok) throw new Error('Blog fetch failed');
           const result = await res.json();
           const posts = result.data || result;

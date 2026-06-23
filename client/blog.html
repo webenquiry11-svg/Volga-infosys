@@ -1308,6 +1308,7 @@
 
   </footer>
 
+  <script src="api-config.js"></script>
   <script>
     // Sample blog data for offline viewing
     const sampleBlogs = [
@@ -1362,8 +1363,7 @@
       }
     ];
     
-    const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-      ? 'volga-remodel-15-6-26.railway.internal' : '/api';
+    const API = window.VOLGA_API;
 
     let allPosts = [];
     let activeFilter = 'all';
@@ -1374,9 +1374,7 @@
         return url;
       }
       if (url.startsWith('/uploads/')) {
-        return (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-          ? `http://localhost:5000${url}`
-          : `volga-remodel-15-6-26.railway.internal${url}`;
+        return window.getVolgaImageUrl(url);
       }
       return url;
     }
