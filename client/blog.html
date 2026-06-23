@@ -1363,7 +1363,7 @@
     ];
     
     const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-      ? 'http://localhost:5000/api' : '/api';
+      ? 'volga-remodel-15-6-26.railway.internal' : '/api';
 
     let allPosts = [];
     let activeFilter = 'all';
@@ -1376,7 +1376,7 @@
       if (url.startsWith('/uploads/')) {
         return (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
           ? `http://localhost:5000${url}`
-          : url;
+          : `volga-remodel-15-6-26.railway.internal${url}`;
       }
       return url;
     }

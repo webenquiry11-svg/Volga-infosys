@@ -532,7 +532,7 @@ function setupMagnetic() {
     btn.disabled = true;
 
     const data = Object.fromEntries(new FormData(form));
-    const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : '';
+    const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'volga-remodel-15-6-26.railway.internal' : '';
 
     try {
       const res = await fetch(`${API}/api/contact`, {
@@ -588,7 +588,7 @@ async function fetchLatestBlogs() {
   const blogGrid = document.getElementById('blogGrid');
   if (!blogGrid) return;
 
-  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : '';
+  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'volga-remodel-15-6-26.railway.internal' : '';
 
   try {
     const res = await fetch(`${API}/api/blogs`);
@@ -761,7 +761,7 @@ function addBlogNavigation(blogGrid) {
 
 // ─── 11.6 REAL-TIME BLOG UPDATES ────────────────────────────
 function setupBlogRealtimeUpdates() {
-  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : '';
+  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'volga-remodel-15-6-26.railway.internal' : '';
 
   setInterval(async () => {
     try {
@@ -794,7 +794,7 @@ async function fetchCaseStudies() {
   const caseStudiesContainer = document.getElementById('caseStudiesContainer');
   if (!caseStudiesContainer) return;
 
-  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : '';
+  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'volga-remodel-15-6-26.railway.internal' : '';
 
   try {
     const res = await fetch(`${API}/api/case-studies`);
@@ -850,7 +850,7 @@ async function fetchClientStories() {
   const storiesGrid = document.getElementById('storiesGrid');
   if (!storiesGrid) return;
 
-  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : '';
+  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'volga-remodel-15-6-26.railway.internal' : '';
 
   try {
     const res = await fetch(`${API}/api/client-stories`);
@@ -943,7 +943,7 @@ async function fetchIndustryNews() {
   const newsContainer = document.getElementById('newsContainer');
   if (!newsContainer) return;
 
-  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : '';
+  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'volga-remodel-15-6-26.railway.internal' : '';
 
   try {
     const res = await fetch(`${API}/api/industry-news`);
@@ -1008,7 +1008,7 @@ async function fetchInsightsOverview() {
   const container = document.getElementById('insights-overview-container');
   if (!container) return;
 
-  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : '';
+  const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'volga-remodel-15-6-26.railway.internal' : '';
 
   try {
     // Fetch all insight types in parallel

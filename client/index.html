@@ -627,7 +627,7 @@ Volga Infosys helps organizations bridge the gap between physical operations and
 
       async function loadHomeBlogCards() {
         const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-          ? 'http://localhost:5000' : '';
+          ? 'volga-remodel-15-6-26.railway.internal/' : '';
         try {
           const res = await fetch(`${API}/api/blogs`);
           if (!res.ok) throw new Error('Blog fetch failed');
