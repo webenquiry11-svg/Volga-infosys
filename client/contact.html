@@ -1,0 +1,1649 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact - Volga Infosys</title>
+  <link rel="stylesheet" href="volga.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+  <style>
+    .page-Hero {
+      position: relative;
+      min-height: 55vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 5rem;
+      overflow: hidden;
+    }
+
+    .page-Hero-video-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .page-Hero-video-wrap iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 177.78vh;
+      height: 56vw;
+      min-width: 100%;
+      min-height: 100%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .page-Hero-video-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(135deg, rgba(6, 8, 16, 0.75) 0%, rgba(6, 8, 16, 0.4) 60%, rgba(123, 47, 255, 0.1) 100%)!important;
+    }
+
+    .page-Hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 3rem;
+      color: white;
+      text-align: center;
+    
+    }
+
+    .page-Hero-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--white);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      margin-top: 5rem;
+      background: transparent;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      
+
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      
+    }
+
+    .page-Hero-label::before {
+      content: '';
+      width: 30px;
+      height: 1.5px;
+      background: var(--accent);
+    }
+
+    .page-Hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 4vw, 6rem);
+      line-height: 0.93;
+      letter-spacing: 0.02em;
+      font-weight: 900;
+  
+      
+    }
+
+    /* Redesigned Contact Section Styles */
+    .contact-v2 {
+      background: #F5EFEB;
+      padding: 100px 5%;
+      color: #2F4156;
+      font-family: var(--font-ui);
+    }
+
+    .c2-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      align-items: start;
+      max-width: 1300px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .c2-left-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: #567C8D;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 2rem;
+    }
+
+    .c2-left-eyebrow::before {
+      content: '';
+      width: 30px;
+      height: 1px;
+      background: #567C8D;
+    }
+
+    .c2-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1.05;
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+      color: #E8930A;
+    }
+
+    .c2-title span {
+      color: #2F4156;
+      display: block;
+    }
+
+    .c2-desc {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: rgba(47, 65, 86, 0.7);
+      margin-bottom: 3rem;
+      max-width: 500px;
+    }
+
+    .c2-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: rgba(47, 65, 86, 0.6);
+      margin-bottom: 4rem;
+    }
+
+    .c2-status-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+    }
+
+    .c2-info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin-bottom: 4rem;
+    }
+
+    .c2-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .c2-info-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(47, 65, 86, 0.05);
+      border: 1px solid rgba(47, 65, 86, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #567C8D;
+      font-size: 1.2rem;
+    }
+
+    .c2-info-content h4 {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(47, 65, 86, 0.5);
+      margin-bottom: 5px;
+    }
+
+    .c2-info-content p {
+      font-size: 0.95rem;
+      color: #2F4156;
+      font-weight: 500;
+    }
+
+    .c2-socials {
+      display: flex;
+      gap: 15px;
+    }
+
+    .c2-social-link {
+      width: 44px;
+      height: 44px;
+      background: rgba(47, 65, 86, 0.05);
+      border: 1px solid rgba(47, 65, 86, 0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(47, 65, 86, 0.5);
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+
+    .c2-social-link:hover {
+      background: #567C8D;
+      color: white;
+      border-color: #567C8D;
+      transform: translateY(-3px);
+    }
+
+    /* Form Card Glassmorphism */
+    .c2-form-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 32px;
+      padding: 50px;
+      box-shadow: 0 30px 60px rgba(47, 65, 86, 0.9);
+      position: relative;
+      z-index: 1;
+    }
+
+    .c2-form-header {
+      margin-bottom: 40px;
+    }
+
+    .c2-form-header h3 {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      color: #2F4156;
+    }
+
+    .c2-form-header p {
+      font-size: 0.95rem;
+      color: rgba(47, 65, 86, 0.6);
+    }
+
+    .c2-form-group {
+      margin-bottom: 25px;
+    }
+
+    .c2-form-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(47, 65, 86, 0.5);
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .c2-interest-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .c2-tag-btn {
+      padding: 10px 20px;
+      background: transparent;
+      border: 1px solid rgba(47, 65, 86, 0.1);
+      border-radius: 100px;
+      color: rgba(47, 65, 86, 0.7);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .c2-tag-btn:hover {
+      background: rgba(47, 65, 86, 0.05);
+      border-color: #567C8D;
+    }
+
+    .c2-tag-btn.active {
+      background: #567C8D;
+      border-color: #567C8D;
+      color: white;
+      box-shadow: 0 4px 12px rgba(86, 124, 141, 0.2);
+    }
+
+    .c2-input-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .c2-input {
+      width: 100%;
+      background: rgba(47, 65, 86, 0.03);
+      border: 1px solid rgba(47, 65, 86, 0.1);
+      border-radius: 12px;
+      padding: 15px 20px;
+      color: #2F4156;
+      font-family: var(--font-ui);
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    .c2-input:focus {
+      border-color: #567C8D;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .c2-input::placeholder {
+      color: rgba(47, 65, 86, 0.3);
+    }
+
+    .c2-budget-slider {
+      margin-top: 20px;
+      position: relative;
+    }
+
+    .c2-budget-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .c2-budget-val {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #567C8D;
+    }
+
+    .c2-budget-hint {
+      font-size: 0.8rem;
+      color: rgba(47, 65, 86, 0.4);
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      background: rgba(47, 65, 86, 0.1);
+      border-radius: 2px;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #567C8D;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(86, 124, 141, 0.3);
+      transition: transform 0.2s;
+    }
+
+    .c2-budget-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      font-size: 0.7rem;
+      color: rgba(47, 65, 86, 0.4);
+      font-family: var(--font-mono);
+    }
+
+    .c2-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .c2-submit-btn {
+      width: 100%;
+      font-family:var(--font-display);
+      padding: 1rem 2.4rem;
+      background: linear-gradient(135deg, #567C8D 0%, #2F4156 100%);
+      border: none;
+      border-radius: 100px;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      margin-top: 20px;
+    }
+
+    .c2-submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(47, 65, 86, 0.2);
+    }
+
+    .c2-privacy {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.8rem;
+      color: rgba(47, 65, 86, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    @media (max-width: 1100px) {
+      .c2-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
+
+      .c2-left {
+        text-align: center;
+      }
+
+      .c2-left-eyebrow {
+        justify-content: center;
+      }
+
+      .c2-desc {
+        margin: 0 auto 3rem;
+      }
+
+      .c2-status {
+        justify-content: center;
+      }
+
+      .c2-info-list {
+        align-items: center;
+      }
+
+      .c2-socials {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .c2-form-card {
+        padding: 30px;
+      }
+
+      .c2-input-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+    .map-section {
+      padding: 0;
+      background: #0d1117;
+      overflow: hidden;
+    }
+
+    .map-section-inner {
+      position: relative;
+      padding: 6rem 0 7rem;
+      overflow: hidden;
+    }
+
+    /* SVG grid background */
+    .map-grid-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Orbit rings */
+    .map-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(45, 212, 191, 0.15);
+      pointer-events: none;
+      z-index: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .map-ring-1 {
+      width: 700px;
+      height: 700px;
+      animation: mapSpin 30s linear infinite;
+    }
+
+    .map-ring-2 {
+      width: 1000px;
+      height: 1000px;
+      border-style: dashed;
+      animation: mapSpin 50s linear infinite reverse;
+    }
+
+    .map-ring-3 {
+      width: 1300px;
+      height: 1300px;
+      animation: mapSpin 70s linear infinite;
+    }
+
+    @keyframes mapSpin {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    /* Crosshair lines */
+    .map-crosshair-h,
+    .map-crosshair-v {
+      position: absolute;
+      background: rgba(45, 212, 191, 0.08);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .map-crosshair-h {
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      transform: translateY(-50%);
+    }
+
+    .map-crosshair-v {
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      transform: translateX(-50%);
+    }
+
+    /* Floating coordinate tags */
+    .map-coord {
+      position: absolute;
+      z-index: 1;
+      pointer-events: none;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      color: rgba(45, 212, 191, 0.6);
+      border: 1px solid rgba(45, 212, 191, 0.2);
+      padding: 4px 10px;
+      border-radius: 3px;
+      background: rgba(30, 58, 138, 0.7);
+    }
+
+    .map-coord-4 {
+      bottom: 12%;
+      right: 4%;
+      animation: floatY 6s ease-in-out infinite 4.5s;
+    }
+
+    @keyframes floatY {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    /* Header */
+    .map-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .map-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #567C8D;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .map-label::before {
+      content: '';
+      width: 28px;
+      height: 1.5px;
+      background: #567C8D;
+    }
+
+    .map-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .map-title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    /* Outer frame */
+    .map-outer {
+      position: relative;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(45, 212, 191, 0.25);
+      border-radius: 4px;
+      box-shadow: 0 0 60px rgba(45, 212, 191, 0.08), inset 0 0 40px rgba(45, 212, 191, 0.03);
+    }
+
+    /* Corner brackets */
+    .map-corner {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-color: var(--accent);
+      border-style: solid;
+      z-index: 3;
+    }
+
+    .map-corner-tl {
+      top: -1px;
+      left: -1px;
+      border-width: 2px 0 0 2px;
+    }
+
+    .map-corner-tr {
+      top: -1px;
+      right: -1px;
+      border-width: 2px 2px 0 0;
+    }
+
+    .map-corner-bl {
+      bottom: -1px;
+      left: -1px;
+      border-width: 0 0 2px 2px;
+    }
+
+    .map-corner-br {
+      bottom: -1px;
+      right: -1px;
+      border-width: 0 2px 2px 0;
+    }
+
+    /* Scan line animation */
+    .map-scan {
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      height: 2px;
+      top: 10px;
+      background: linear-gradient(to right, transparent, rgba(45, 212, 191, 0.6), transparent);
+      z-index: 3;
+      pointer-events: none;
+      animation: mapScanMove 4s ease-in-out infinite;
+    }
+
+    @keyframes mapScanMove {
+      0% {
+        top: 10px;
+        opacity: 1;
+      }
+
+      95% {
+        top: calc(100% - 10px);
+        opacity: 1;
+      }
+
+      100% {
+        top: calc(100% - 10px);
+        opacity: 0;
+      }
+    }
+
+    /* Map iframe */
+    .map-wrap {
+      border-radius: 2px;
+      overflow: hidden;
+      height: 450px;
+    }
+
+    /* Address badge */
+    .map-badge {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(30, 58, 138, 0.8);
+      color: #E0F2FE;
+      border: 1px solid rgba(45, 212, 191, 0.4);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      padding: 0.45rem 1.2rem;
+      border-radius: 2px;
+      white-space: nowrap;
+      z-index: 4;
+      box-shadow: 0 0 20px rgba(45, 212, 191, 0.2);
+    }
+
+    .map-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      box-shadow: 0 0 8px var(--accent);
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    /* FAQ */
+    .faq {
+      padding: 8rem 0;
+      background: var(--bg);
+    }
+
+    .faq-list {
+      margin-top: 3rem;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .faq-item:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: var(--font-ui);
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: left;
+      padding: 1.5rem 0;
+      cursor: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: color 0.3s;
+    }
+
+    .faq-q:hover {
+      color: var(--accent);
+    }
+
+    .faq-q-icon {
+      font-size: 1.2rem;
+      color: var(--accent);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+
+    .faq-q.open .faq-q-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-a {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+      padding: 0;
+    }
+
+    .faq-a.open {
+      max-height: 200px;
+      padding-bottom: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .page-Hero-content {
+        padding: 0 1.5rem;
+      }
+
+      .contact-page-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-form-full {
+        padding: 1.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress-container">
+    <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
+      <img src="logo.png" alt="VOLGA Infosys logo" />
+    </a>
+
+    <ul class="nav-links">
+      <li class="nav-item" data-menu="solutions">
+        <button class="nav-link">Solutions <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="industries">
+        <button class="nav-link">Industries <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="services">
+        <button class="nav-link">Services <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="work">
+        <button class="nav-link">Work <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="technologies">
+        <a class="nav-link" href="technologies(2).html">Technologies</a>
+      </li>
+      <li class="nav-item" data-menu="insights">
+        <a class="nav-link" href="insights-overview.html">Insights </a>
+      </li>
+      <li class="nav-item" data-menu="company">
+        <button class="nav-link">Company <span class="nav-arrow"></span></button>
+      </li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Contact Us</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose" aria-label="Close mobile menu">X</button>
+    <ul>
+      <li><a href="index.html" class="mm-link">Home</a></li>
+      <li><a href="solutions.html" class="mm-link">Solutions</a></li>
+      <li><a href="industries.html" class="mm-link">Industries</a></li>
+      <li><a href="services.html" class="mm-link">Services</a></li>
+      <li><a href="portfolio.html" class="mm-link">Work</a></li>
+      <li><a href="technologies.html" class="mm-link">Technologies</a></li>
+      <li><a href="blog.html" class="mm-link">Insights</a></li>
+      <li><a href="company.html" class="mm-link">Company</a></li>
+      <li><a href="contact.html" class="mm-link">Contact</a></li>
+    </ul>
+  </div>
+
+
+  <!-- MEGA MENUS -->
+  <div class="mega-menu" id="menu-solutions">
+    <div class="mega-inner">
+      <div class="mega-label">Solutions</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                  </svg></span>AR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg></span>VR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg></span>MR / XR Applications</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                  </svg></span>Digital Twin</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20h9" />
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                  </svg></span>AI Integration</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                    <line x1="9" y1="9" x2="9.01" y2="9" />
+                    <line x1="15" y1="9" x2="15.01" y2="9" />
+                  </svg></span>3D Configurators</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg></span>Virtual Showrooms</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg></span>Simulation Systems</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg></span>Interactive Training</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                  </svg></span>Metaverse Solutions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">New: AI-Powered XR</div>
+        <div class="mega-highlight-sub">Combining spatial computing with generative AI for next-gen enterprise
+          experiences.</div>
+        <a href="#" class="mega-highlight-btn">Explore <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-industries">
+    <div class="mega-inner">
+      <div class="mega-label">Industries</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="industries.html#healthcare"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                  </svg></span>Healthcare</a></li>
+            <li><a class="mega-item" href="industries.html#manufacturing"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path
+                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                    <line x1="12" y1="22.08" x2="12" y2="12" />
+                  </svg></span>Manufacturing</a></li>
+            <li><a class="mega-item" href="industries.html#realestate"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg></span>Real Estate</a></li>
+            <li><a class="mega-item" href="industries.html#education"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                  </svg></span>Education</a></li>
+            <li><a class="mega-item" href="industries.html#automotive"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                    <line x1="9" y1="9" x2="9.01" y2="9" />
+                    <line x1="15" y1="9" x2="15.01" y2="9" />
+                  </svg></span>Automotive</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="industries.html#retail"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1" />
+                    <circle cx="20" cy="21" r="1" />
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                  </svg></span>Retail</a></li>
+            <li><a class="mega-item" href="industries.html#architecture"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                    <polyline points="2 17 12 22 22 17" />
+                    <polyline points="2 12 12 17 22 12" />
+                  </svg></span>Architecture</a></li>
+            <li><a class="mega-item" href="industries.html#defense"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg></span>Defense</a></li>
+            <li><a class="mega-item" href="industries.html#tourism"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg></span>Tourism</a></li>
+            <li><a class="mega-item" href="industries.html#energy"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg></span>Energy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Industry Solutions</div>
+        <div class="mega-highlight-sub">Tailored immersive experiences built for your sector's unique challenges.</div>
+        <a href="industries.html" class="mega-highlight-btn">View All <svg width="12" height="12" viewBox="0 0 12 12"
+            fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-services">
+    <div class="mega-inner">
+      <div class="mega-label">Services</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="services.html#custom-ar"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                    <line x1="12" y1="18" x2="12.01" y2="18" />
+                  </svg></span>Custom AR App Development</a></li>
+            <li><a class="mega-item" href="services.html#vr-training"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg></span>VR Training Platforms</a></li>
+            <li><a class="mega-item" href="services.html#unity-dev"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                    <polyline points="2 17 12 22 22 17" />
+                    <polyline points="2 12 12 17 22 12" />
+                  </svg></span>Unity Development</a></li>
+
+            <li><a class="mega-item" href="services.html#webgl"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                    <line x1="9" y1="9" x2="9.01" y2="9" />
+                    <line x1="15" y1="9" x2="15.01" y2="9" />
+                  </svg></span>WebGL Experiences</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+
+            <li><a class="mega-item" href="services.html#3d-modeling"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg></span>3D Modeling & Animation</a></li>
+            <li><a class="mega-item" href="services.html#uiux"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 17l10-10 4 4 6-6" />
+                  </svg></span>UI/UX Design</a></li>
+            <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
+                    <path
+                      d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
+                  </svg></span>Cloud Deployment</a></li>
+            <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z" />
+                  </svg></span>Maintenance & Support</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Full-Cycle Delivery</div>
+        <div class="mega-highlight-sub">From concept to deployment — we handle every stage of your XR project.</div>
+        <a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-work">
+    <div class="mega-inner">
+      <div class="mega-label">Work</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="portfolio2.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10 9 9 9 8 9" />
+                  </svg></span>Case Studies</a></li>
+            <li><a class="mega-item" href="portfolio.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg></span>Portfolio</a></li>
+            <li><a class="mega-item" href="client-stories.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg></span>Client Stories</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polygon points="10 8 16 12 10 16 10 8" />
+                  </svg></span>Product Demos</a></li>
+
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Featured Project</div>
+        <div class="mega-highlight-sub">See how we transformed a global manufacturer's training program with immersive
+          VR.</div>
+        <a href="#" class="mega-highlight-btn">View Case Study <svg width="12" height="12" viewBox="0 0 12 12"
+            fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <div class="mega-menu" id="menu-company">
+    <div class="mega-inner">
+      <div class="mega-label">Company</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="about.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg></span>About Us</a></li>
+        
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                  </svg></span>Careers</a></li>
+            
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg></span>Partnerships</a></li>
+            
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">We're Hiring</div>
+        <div class="mega-highlight-sub">Join a team building the future of spatial computing and enterprise immersive
+          tech.</div>
+        <a href="#" class="mega-highlight-btn">See Openings <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+  <div id="backdrop" aria-hidden="true"></div>
+
+  <!-- PAGE Hero -->
+  <section class="page-Hero" data-title="CONTACT">
+    <div class="page-Hero-video-wrap">
+      <video src="hero-video.mp4" alt="Contact Hero" style="width:100%;height:100%;object-fit:cover;" autoplay muted loop >
+      </video>
+      <div class="page-Hero-video-overlay"></div>
+    </div>
+    <div class="page-Hero-content">
+
+      <h1 class="page-Hero-title Hero-heading">
+        LET'S BUILD <em>SOMETHING</em> IMMERSIVE TOGETHER
+        <div class="page-Hero-label">Get In Touch</div>
+      </h1>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-track" id="tickerTrack">
+      <span>Virtual Reality</span><span class="ticker-dot">&#10022;</span>
+      <span>Augmented Reality</span><span class="ticker-dot">&#10022;</span>
+      <span>3D Visualization</span><span class="ticker-dot">&#10022;</span>
+      <span>Immersive Tech</span><span class="ticker-dot">&#10022;</span>
+      <span>XR Development</span><span class="ticker-dot">&#10022;</span>
+      <span>Innovation Lab</span><span class="ticker-dot">&#10022;</span>
+      <span>Virtual Reality</span><span class="ticker-dot">&#10022;</span>
+      <span>Augmented Reality</span><span class="ticker-dot">&#10022;</span>
+      <span>3D Visualization</span><span class="ticker-dot">&#10022;</span>
+      <span>Immersive Tech</span><span class="ticker-dot">&#10022;</span>
+      <span>XR Development</span><span class="ticker-dot">&#10022;</span>
+      <span>Innovation Lab</span><span class="ticker-dot">&#10022;</span>
+    </div>
+  </div>
+
+ 
+  <section class="contact-v2">
+    <div class="c2-grid">
+      <div class="c2-left">
+        <div class="c2-left-eyebrow">GET IN TOUCH</div>
+        <h2 class="c2-title">Let's build<br><span>something immersive together</span></h2>
+        <p class="c2-desc">Tell us about your project and we'll come back with ideas, a timeline, and an honest quote —
+          no pressure, no jargon.</p>
+
+        <div class="c2-status">
+          <div class="c2-status-dot"></div>
+          <span>We reply within 24 hours on business days</span>
+        </div>
+
+        <div class="c2-info-list">
+          <div class="c2-info-item">
+            <div class="c2-info-icon"><i class="fas fa-envelope"></i></div>
+            <div class="c2-info-content">
+              <h4>EMAIL</h4>
+              <p>hello@volgaxr.com</p>
+            </div>
+          </div>
+          <div class="c2-info-item">
+            <div class="c2-info-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="c2-info-content">
+              <h4>BASED IN</h4>
+              <p>Ludhiana, Punjab — working globally</p>
+            </div>
+          </div>
+          <div class="c2-info-item">
+            <div class="c2-info-icon"><i class="fas fa-clock"></i></div>
+            <div class="c2-info-content">
+              <h4>WORKING HOURS</h4>
+              <p>Mon – Fri, 9am – 6pm IST</p>
+            </div>
+          </div>
+        </div>
+
+      
+      </div>
+
+      <div class="c2-right">
+        <div class="c2-form-card">
+          <div class="c2-form-header">
+            <h3>Start a project</h3>
+            <p>Fill in the details and we'll put together the right approach for you.</p>
+          </div>
+
+          <form id="contactFormV2">
+            <div class="c2-form-group">
+              <label class="c2-form-label" for="selectedService">I'M INTERESTED IN</label>
+              <div class="c2-interest-tags">
+                <button type="button" class="c2-tag-btn active">Virtual Reality</button>
+                <button type="button" class="c2-tag-btn">Augmented Reality</button>
+                <button type="button" class="c2-tag-btn">3D Visualisation</button>
+                <button type="button" class="c2-tag-btn">VR Training</button>
+                <button type="button" class="c2-tag-btn">WebXR</button>
+                <button type="button" class="c2-tag-btn">Not sure yet</button>
+              </div>
+              <input type="hidden" name="service" id="selectedService" value="Virtual Reality">
+            </div>
+
+            <div class="c2-input-row">
+              <div class="c2-form-group">
+                <label class="c2-form-label" for="contactName">YOUR NAME</label>
+                <input type="text" class="c2-input" id="contactName" name="name" placeholder="Alex Johnson" required>
+              </div>
+              <div class="c2-form-group">
+                <label class="c2-form-label" for="contactEmail">EMAIL ADDRESS</label>
+                <input type="email" class="c2-input" id="contactEmail" name="email" placeholder="alex@company.com" required>
+              </div>
+            </div>
+
+            <div class="c2-input-row">
+              <div class="c2-form-group">
+                <label class="c2-form-label" for="contactCompany">COMPANY (OPTIONAL)</label>
+                <input type="text" class="c2-input" id="contactCompany" name="company" placeholder="Acme Corp">
+              </div>
+              <div class="c2-form-group">
+                <label class="c2-form-label" for="contactCountry">COUNTRY</label>
+                <input type="text" class="c2-input" id="contactCountry" name="country" placeholder="Select country">
+              </div>
+            </div>
+
+            <div class="c2-form-group">
+              <label class="c2-form-label" for="budgetRange">ESTIMATED BUDGET</label>
+              <div class="c2-budget-slider">
+                <div class="c2-budget-header">
+                  <span class="c2-budget-val" id="budgetVal">$3,000</span>
+                  <span class="c2-budget-hint">Drag to set range</span>
+                </div>
+                <input type="range" name="budget" min="1000" max="50000" step="1000" value="3000" id="budgetRange">
+                <div class="c2-budget-labels">
+                  <span>$1k</span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span>$50k+</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="c2-form-group">
+              <label class="c2-form-label" for="contactMessage">TELL US ABOUT YOUR PROJECT</label>
+              <textarea class="c2-input c2-textarea" id="contactMessage" name="message"
+                placeholder="Describe your idea, goals, or any questions you have. The more detail, the better we can prepare."
+                required></textarea>
+            </div>
+
+            <button type="submit" class="c2-submit-btn">
+              Send Message <i class="fas fa-paper-plane"></i>
+            </button>
+
+            <div class="c2-privacy">
+              <i class="fas fa-lock"></i>
+              Your info is private. We never share or sell your data.
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP -->
+  <section class="map-section">
+    <div class="map-section-inner">
+
+      <!-- SVG background grid -->
+      <svg class="map-grid-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+        <defs>
+          <pattern id="mapGrid" width="48" height="48" patternUnits="userSpaceOnUse">
+            <path d="M 48 0 L 0 0 0 48" fill="none" stroke="rgba(86,124,141,0.12)" stroke-width="1" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#mapGrid)" />
+      </svg>
+
+      <!-- Orbit rings -->
+      <div class="map-ring map-ring-1"></div>
+      <div class="map-ring map-ring-2"></div>
+      <div class="map-ring map-ring-3"></div>
+
+      <!-- Floating coordinate tags -->
+      <div class="map-coord map-coord-1"><span>30.9012&deg; N</span></div>
+      <div class="map-coord map-coord-2"><span>75.8230&deg; E</span></div>
+      <div class="map-coord map-coord-3"><span>ALT &middot; 247m</span></div>
+      <div class="map-coord map-coord-4"><span>LUDHIANA &middot; PB</span></div>
+
+      <!-- Crosshair lines -->
+      <div class="map-crosshair-h"></div>
+      <div class="map-crosshair-v"></div>
+
+      <div class="container" style="position:relative;z-index:2;">
+        <div class="map-header">
+          <span class="map-label">Find Us</span>
+          <h2 class="map-title">Our <em>Location</em></h2>
+        </div>
+        <div class="map-outer">
+          <!-- corner brackets -->
+          <div class="map-corner map-corner-tl"></div>
+          <div class="map-corner map-corner-tr"></div>
+          <div class="map-corner map-corner-bl"></div>
+          <div class="map-corner map-corner-br"></div>
+          <!-- scan line -->
+          <div class="map-scan"></div>
+          <div class="map-wrap">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13693.918224086667!2d75.82303012785634!3d30.9012170937504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391a83b8311fac27%3A0x5402417b2086c88d!2sVolga%20Infosys!5e0!3m2!1sen!2sin!4v1778300424201!5m2!1sen!2sin"
+              width="100%" height="100%" style="border:0; display:block;" allowfullscreen loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade" title="Volga Infosys Location">
+            </iframe>
+          </div>
+          <!-- address badge -->
+          <div class="map-badge">📍
+            <span>SCO-137, Feroze Gandhi Market, Ludhiana</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label reveal-fade">Common Questions</div>
+        <h2 class="section-heading reveal-split">Frequently Asked</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q">How long does a typical VR project take? <span class="faq-q-icon">+</span></button>
+          <div class="faq-a">Depending on complexity, most VR projects take between 6â€“16 weeks from concept to
+            delivery. We provide a detailed timeline after the discovery call.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Do you work with international clients? <span class="faq-q-icon">+</span></button>
+          <div class="faq-a">Absolutely. We have active clients across USA, UAE, UK, DACH and Scandinavia. All
+            collaboration is handled remotely with regular milestone demos.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What platforms do you develop for? <span class="faq-q-icon">+</span></button>
+          <div class="faq-a">We develop for Meta Quest, HTC Vive, Pico, WebXR, iOS ARKit, Android ARCore, and custom
+            hardware setups depending on your use case.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What information should I prepare before contacting you? <span
+              class="faq-q-icon">+</span></button>
+          <div class="faq-a">A brief description of your project idea, your industry, target audience, and any budget or
+            timeline constraints. We'll handle the rest in the discovery call.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ WEBGL GALLERY CTA -->
+  
+ 
+
+  <footer class="footer">
+    <div class="ft">
+  <div class="ft-top">
+    <div class="ft-eyebrow">
+      <span class="ft-eyebrow-text">Let's build work that inspires.</span>
+      <span class="ft-clock" id="clk">IST → --:--</span>
+    </div>
+    <div class="ft-headline">Ready to build<span>something</span> bold?</div>
+    <div class="ft-cta">
+      Start a collaboration
+      <i class="ti ti-arrow-right" style="font-size:14px" aria-hidden="true"></i>
+    </div>
+    
+  </div>
+
+  <div class="ft-divider"></div>
+
+  <div class="ft-mid">
+    <div>
+      <div class="ft-mhead">Business</div>
+      <span class="ft-mlink">Training Simulation</span>
+      <span class="ft-mlink">3D Configurators</span>
+      <span class="ft-mlink">Buildings & Interiors</span>
+      <span class="ft-mlink">E-Commerce</span>
+      <span class="ft-mlink">Manufacturing</span>
+      <span class="ft-mlink">Entertainment</span>
+      <span class="ft-mlink">Museums & Travel</span>
+    </div>
+    <div>
+      <div class="ft-mhead">Services</div>
+      <span class="ft-mlink">Augmented Reality</span>
+      <span class="ft-mlink">Virtual Reality</span>
+      <span class="ft-mlink">AR Player</span>
+      <span class="ft-mlink">VR Player 360°</span>
+      <span class="ft-mlink">Privacy Policy</span>
+    </div>
+    <div>
+      <div class="ft-mhead">Business Enquiry</div>
+      <div class="ft-contact-val"><span class="ft-contact-label">E.</span>hello@volga.com</div>
+      <div class="ft-contact-val"><span class="ft-contact-label">P.</span>+91 98241 82099</div>
+    </div>
+    <div>
+      <div class="ft-mhead">Social</div>
+      <span class="ft-mlink">LinkedIn</span>
+      <span class="ft-mlink">Instagram</span>
+      <span class="ft-mlink">Facebook</span>
+      <span class="ft-mlink">YouTube</span>
+      <span class="ft-mlink">WhatsApp</span>
+    </div>
+  </div>
+
+  <div class="ft-wordmark-wrap">
+    <div class="ft-wordmark">VOLGA</div>
+  </div>
+
+  <div class="ft-bottom">
+    <span class="ft-copy">© Volga Infosys® 2026</span>
+    <div class="ft-blinks">
+      <span class="ft-blink">Privacy & Policy</span>
+      <span class="ft-blink">Made with ♦ by Volga</span>
+    </div>
+  </div>
+</div>
+
+  </footer>
+    <script src="volga.js"></script>
+    <script>
+      // FAQ accordion
+      document.querySelectorAll('.faq-q').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const answer = btn.nextElementSibling;
+          const isOpen = answer.classList.contains('open');
+          document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+          document.querySelectorAll('.faq-q').forEach(b => b.classList.remove('open'));
+          if (!isOpen) {
+            answer.classList.add('open');
+            btn.classList.add('open');
+          }
+        });
+      });
+
+      // Redesigned Form Logic
+      document.addEventListener('DOMContentLoaded', () => {
+        // Interest tags
+        const tags = document.querySelectorAll('.c2-tag-btn');
+        const serviceInput = document.getElementById('selectedService');
+
+        tags.forEach(tag => {
+          tag.addEventListener('click', () => {
+            tags.forEach(t => t.classList.remove('active'));
+            tag.classList.add('active');
+            if (serviceInput) serviceInput.value = tag.textContent;
+          });
+        });
+
+        // Budget slider
+        const budgetRange = document.getElementById('budgetRange');
+        const budgetVal = document.getElementById('budgetVal');
+
+        if (budgetRange && budgetVal) {
+          budgetRange.addEventListener('input', (e) => {
+            const val = parseInt(e.target.value);
+            budgetVal.textContent = `$${val.toLocaleString()}${val >= 50000 ? '+' : ''}`;
+          });
+        }
+
+        // Contact form V2 submit
+        const contactFormV2 = document.getElementById('contactFormV2');
+        if (contactFormV2) {
+          contactFormV2.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = contactFormV2.querySelector('.c2-submit-btn');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+
+            const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+              ? 'http://localhost:5000'
+              : '';
+
+            const data = {
+              name: contactFormV2.querySelector('[name="name"]').value,
+              email: contactFormV2.querySelector('[name="email"]').value,
+              company: contactFormV2.querySelector('[name="company"]').value,
+              country: contactFormV2.querySelector('[name="country"]').value,
+              serviceInterested: contactFormV2.querySelector('[name="service"]').value,
+              budget: contactFormV2.querySelector('[name="budget"]').value,
+              message: contactFormV2.querySelector('[name="message"]').value,
+            };
+
+            try {
+              const res = await fetch(`${API}/api/contact`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+              });
+              const json = await res.json();
+              if (json.success) {
+                btn.innerHTML = '✓ Message Sent!';
+                contactFormV2.reset();
+                setTimeout(() => { btn.innerHTML = originalHTML; btn.disabled = false; }, 3500);
+              } else {
+                btn.innerHTML = 'Failed — Try Again';
+                btn.disabled = false;
+              }
+            } catch (err) {
+              btn.innerHTML = 'Error — Try Again';
+              btn.disabled = false;
+            }
+          });
+        }
+      });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="contact-gallery.js"></script>
+</body>
+
+</html>

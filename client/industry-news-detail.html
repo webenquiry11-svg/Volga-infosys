@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Industry News — Volga Infosys</title>
+  <link rel="stylesheet" href="volga.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+  <style>
+    .page-Hero {
+      position: relative;
+      min-height: 55vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 5rem;
+      padding-top: 14rem;
+      overflow: hidden;
+    }
+
+    .page-Hero-video-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .page-Hero-video-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .page-Hero-video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(6, 8, 16, 0.80) 0%, rgba(6, 8, 16, 0.45) 60%, rgba(86, 124, 141, 0.15) 100%);
+    }
+
+    .page-Hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 3rem;
+      color: white;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .page-Hero-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      justify-self: center;
+
+    }
+
+    .page-Hero-label::before {
+      content: '';
+      width: 30px;
+      height: 1.5px;
+      background: var(--accent);
+    }
+
+    .page-Hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 2vw, 3rem);
+      line-height: 0.93;
+      letter-spacing: 0.02em;
+      font-weight: 900;
+      justify-self: center;
+
+    }
+
+    .industry-news-detail {
+      padding: 6rem 0;
+      background: var(--bg);
+    }
+
+    .industry-news-detail-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 4rem;
+      padding: 0 3rem;
+    }
+
+    .industry-news-detail-content {
+      max-width: 100%;
+    }
+
+    .industry-news-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      letter-spacing: 0.08em;
+    }
+
+    .industry-news-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .industry-news-meta-dot {
+      color: var(--accent);
+    }
+
+    .industry-news-content {
+      line-height: 1.9;
+      color: var(--text);
+      font-size: 1.05rem;
+    }
+
+    .industry-news-content p {
+      margin-bottom: 1.5rem;
+    }
+
+    .industry-news-content h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      color: var(--text);
+      margin: 3rem 0 1.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .industry-news-content h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      color: var(--text);
+      margin: 2.5rem 0 1.2rem;
+      letter-spacing: 0.01em;
+    }
+
+    .industry-news-content h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+      color: var(--text);
+      margin: 2rem 0 1rem;
+    }
+
+    .industry-news-content h4 {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      color: var(--text);
+      margin: 1.5rem 0 0.8rem;
+    }
+
+    .industry-news-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin: 2rem 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .industry-news-content blockquote {
+      border-left: 4px solid var(--accent);
+      padding: 1rem 1.5rem;
+      margin: 2rem 0;
+      background: rgba(255,177,98,0.05);
+      border-radius: 0 12px 12px 0;
+      font-style: italic;
+      color: var(--text-muted);
+    }
+
+    .industry-news-content ul,
+    .industry-news-content ol {
+      margin-bottom: 1.5rem;
+      padding-left: 2rem;
+    }
+
+    .industry-news-content li {
+      margin-bottom: 0.5rem;
+      line-height: 1.8;
+    }
+    
+    .industry-news-content strong,
+    .industry-news-content b {
+      font-weight: 600;
+    }
+    
+    .industry-news-content em,
+    .industry-news-content i {
+      font-style: italic;
+    }
+    
+    .industry-news-content a {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+    
+    .industry-news-content a:hover {
+      color: #4a6b7a;
+    }
+
+    .industry-news-back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 3rem;
+      transition: gap 0.3s;
+    }
+
+    .industry-news-back-link:hover {
+      gap: 1rem;
+    }
+
+    .industry-news-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: sticky;
+      top: 120px;
+    }
+
+    .industry-news-sidebar-header {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid rgba(86, 124, 141, 0.2);
+    }
+
+    .industry-news-card-mini {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(86, 124, 141, 0.1);
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .industry-news-card-mini:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(86, 124, 141, 0.15);
+      border-color: rgba(86, 124, 141, 0.3);
+    }
+
+    .industry-news-card-mini-thumb {
+      width: 100%;
+      height: 120px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .industry-news-card-mini-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .industry-news-card-mini:hover .industry-news-card-mini-thumb img {
+      transform: scale(1.08);
+    }
+
+    .industry-news-card-mini-date {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .industry-news-card-mini-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+      line-height: 1.35;
+    }
+
+    .industry-news-card-mini-excerpt {
+      font-size: 0.85rem;
+      color: #666;
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    @media (max-width: 1200px) {
+      .industry-news-detail-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .industry-news-sidebar {
+        position: relative;
+        top: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-Hero-content {
+        padding: 0 1.5rem;
+      }
+
+      .industry-news-detail {
+        padding: 4rem 0;
+      }
+
+      .industry-news-meta {
+        flex-direction: column;
+        gap: 0.8rem;
+        align-items: flex-start;
+      }
+
+      .industry-news-detail-container {
+        padding: 0 1.5rem;
+      }
+
+      .industry-news-sidebar {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
+      <img src="logo.png" alt="VOLGA Infosys logo" />
+    </a>
+
+    <ul class="nav-links">
+      <li class="nav-item" data-menu="solutions">
+        <button class="nav-link">Solutions <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="industries">
+        <button class="nav-link">Industries <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="services">
+        <button class="nav-link">Services <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="work">
+        <button class="nav-link">Work <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="technologies">
+        <a class="nav-link" href="technologies (2).html">Technologies</a>
+      </li>
+      <li class="nav-item" data-menu="insights">
+        <a class="nav-link" href="insights-overview.html">Insights </a>
+      </li>
+      <li class="nav-item" data-menu="company">
+        <button class="nav-link">Company <span class="nav-arrow"></span></button>
+      </li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Contact Us</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose" aria-label="Close mobile menu">X</button>
+    <ul>
+      <li><a href="index.html" class="mm-link">Home</a></li>
+      <li><a href="solutions.html" class="mm-link">Solutions</a></li>
+      <li><a href="industries.html" class="mm-link">Industries</a></li>
+      <li><a href="services.html" class="mm-link">Services</a></li>
+      <li><a href="portfolio.html" class="mm-link">Work</a></li>
+      <li><a href="technologies.html" class="mm-link">Technologies</a></li>
+      <li><a href="blog.html" class="mm-link">Insights</a></li>
+      <li><a href="company.html" class="mm-link">Company</a></li>
+      <li><a href="contact.html" class="mm-link">Contact</a></li>
+    </ul>
+  </div>
+
+
+  <!-- MEGA MENUS -->
+  <div class="mega-menu" id="menu-solutions">
+    <div class="mega-inner">
+      <div class="mega-label">Solutions</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                  </svg></span>AR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg></span>VR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg></span>MR / XR Applications</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                  </svg></span>Digital Twin</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20h9" />
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                  </svg></span>AI Integration</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                    <line x1="9" y1="9" x2="9.01" y2="9" />
+                    <line x1="15" y1="9" x2="15.01" y2="9" />
+                  </svg></span>3D Configurators</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg></span>Virtual Showrooms</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg></span>Simulation Systems</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg></span>Interactive Training</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                  </svg></span>Metaverse Solutions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">New: AI-Powered XR</div>
+        <div class="mega-highlight-sub">Combining spatial computing with generative AI for next-gen enterprise
+          experiences.</div>
+        <a href="#" class="mega-highlight-btn">Explore <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-industries">
+    <div class="mega-inner">
+      <div class="mega-label">Industries</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="industries.html#healthcare"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                  </svg></span>Healthcare</a></li>
+            <li><a class="mega-item" href="industries.html#manufacturing"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path
+                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                    <line x1="12" y1="22.08" x2="12" y2="12" />
+                  </svg></span>Manufacturing</a></li>
+            <li><a class="mega-item" href="industries.html#realestate"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg></span>Real Estate</a></li>
+            <li><a class="mega-item" href="industries.html#education"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                  </svg></span>Education</a></li>
+            <li><a class="mega-item" href="industries.html#automotive"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                    <line x1="9" y1="9" x2="9.01" y2="9" />
+                    <line x1="15" y1="9" x2="15.01" y2="9" />
+                  </svg></span>Automotive</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="industries.html#retail"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1" />
+                    <circle cx="20" cy="21" r="1" />
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                  </svg></span>Retail</a></li>
+            <li><a class="mega-item" href="industries.html#architecture"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                    <polyline points="2 17 12 22 22 17" />
+                    <polyline points="2 12 12 17 22 12" />
+                  </svg></span>Architecture</a></li>
+            <li><a class="mega-item" href="industries.html#defense"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg></span>Defense</a></li>
+            <li><a class="mega-item" href="industries.html#tourism"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg></span>Tourism</a></li>
+            <li><a class="mega-item" href="industries.html#energy"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg></span>Energy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Industry Solutions</div>
+        <div class="mega-highlight-sub">Tailored immersive experiences built for your sector's unique challenges.</div>
+        <a href="industries.html" class="mega-highlight-btn">View All <svg width="12" height="12" viewBox="0 0 12 12"
+            fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-services">
+    <div class="mega-inner">
+      <div class="mega-label">Services</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="services.html#custom-ar"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                    <line x1="12" y1="18" x2="12.01" y2="18" />
+                  </svg></span>Custom AR App Development</a></li>
+            <li><a class="mega-item" href="services.html#vr-training"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg></span>VR Training Platforms</a></li>
+            <li><a class="mega-item" href="services.html#unity-dev"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                    <polyline points="2 17 12 22 22 17" />
+                    <polyline points="2 12 12 17 22 12" />
+                  </svg></span>Unity Development</a></li>
+
+            <li><a class="mega-item" href="services.html#webgl"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                    <line x1="9" y1="9" x2="9.01" y2="9" />
+                    <line x1="15" y1="9" x2="15.01" y2="9" />
+                  </svg></span>WebGL Experiences</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+
+            <li><a class="mega-item" href="services.html#3d-modeling"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg></span>3D Modeling & Animation</a></li>
+            <li><a class="mega-item" href="services.html#uiux"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 17l10-10 4 4 6-6" />
+                  </svg></span>UI/UX Design</a></li>
+            <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
+                    <path
+                      d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
+                  </svg></span>Cloud Deployment</a></li>
+            <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z" />
+                  </svg></span>Maintenance & Support</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Full-Cycle Delivery</div>
+        <div class="mega-highlight-sub">From concept to deployment — we handle every stage of your XR project.</div>
+        <a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-work">
+    <div class="mega-inner">
+      <div class="mega-label">Work</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="portfolio2.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10 9 9 9 8 9" />
+                  </svg></span>Case Studies</a></li>
+            <li><a class="mega-item" href="portfolio.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg></span>Portfolio</a></li>
+            <li><a class="mega-item" href="client-stories.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg></span>Client Stories</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polygon points="10 8 16 12 10 16 10 8" />
+                  </svg></span>Product Demos</a></li>
+
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Featured Project</div>
+        <div class="mega-highlight-sub">See how we transformed a global manufacturer's training program with immersive
+          VR.</div>
+        <a href="#" class="mega-highlight-btn">View Case Study <svg width="12" height="12" viewBox="0 0 12 12"
+            fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <div class="mega-menu" id="menu-company">
+    <div class="mega-inner">
+      <div class="mega-label">Company</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="about.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg></span>About Us</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg></span>Leadership</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                  </svg></span>Careers</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                    <polyline points="2 12 6 12 9 21 15 3 18 12 22 12" />
+                  </svg></span>Our Process</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg></span>Partnerships</a></li>
+            <li><a class="mega-item" href="contact.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg></span>Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">We're Hiring</div>
+        <div class="mega-highlight-sub">Join a team building the future of spatial computing and enterprise immersive
+          tech.</div>
+        <a href="#" class="mega-highlight-btn">See Openings <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+  <div id="backdrop" aria-hidden="true"></div>
+
+  <!-- PAGE Hero -->
+  <section class="page-Hero">
+    <div class="page-Hero-video-wrap">
+      <img id="HeroImage" src="" alt="Industry News Hero" />
+      <div class="page-Hero-video-overlay"></div>
+    </div>
+    <div class="page-Hero-content">
+      <h1 class="page-Hero-title Hero-heading">
+        <span class="Hero-line" id="HeroTitle"></span>
+      </h1>
+      <div class="page-Hero-label" id="HeroCategory" style="margin-top:1rem;"></div>
+    </div>
+  </section>
+
+  <!-- INDUSTRY NEWS CONTENT -->
+  <section class="industry-news-detail">
+    <div class="industry-news-detail-container">
+      <div class="industry-news-detail-content">
+        <div class="industry-news-meta reveal-fade">
+          <span id="industryNewsSource"></span>
+          <span class="industry-news-meta-dot">✦</span>
+          <span id="industryNewsDate"></span>
+        </div>
+
+        <div class="industry-news-content reveal-fade" id="industryNewsContent">
+          <p>Loading...</p>
+        </div>
+
+        <a href="industry-news.html" class="industry-news-back-link reveal-fade">
+          <i class="fas fa-arrow-left"></i> Back to Industry News
+        </a>
+      </div>
+
+      <div class="industry-news-sidebar">
+        <div class="industry-news-sidebar-header">More Industry News</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="ft">
+  <div class="ft-top">
+    <div class="ft-eyebrow">
+      <span class="ft-eyebrow-text">Let's build work that inspires.</span>
+      <span class="ft-clock" id="clk">IST → --:--</span>
+    </div>
+    <div class="ft-headline">Ready to build<br><span>something</span> bold?</div>
+    <div class="ft-cta">
+      Start a collaboration
+      <i class="ti ti-arrow-right" style="font-size:14px" aria-hidden="true"></i>
+    </div>
+    
+  </div>
+
+  <div class="ft-divider"></div>
+
+  <div class="ft-mid">
+    <div>
+      <div class="ft-mhead">Business</div>
+      <span class="ft-mlink">Training Simulation</span>
+      <span class="ft-mlink">3D Configurators</span>
+      <span class="ft-mlink">Buildings & Interiors</span>
+      <span class="ft-mlink">E-Commerce</span>
+      <span class="ft-mlink">Manufacturing</span>
+      <span class="ft-mlink">Entertainment</span>
+      <span class="ft-mlink">Museums & Travel</span>
+    </div>
+    <div>
+      <div class="ft-mhead">Services</div>
+      <span class="ft-mlink">Augmented Reality</span>
+      <span class="ft-mlink">Virtual Reality</span>
+      <span class="ft-mlink">AR Player</span>
+      <span class="ft-mlink">VR Player 360°</span>
+      <span class="ft-mlink">Privacy Policy</span>
+    </div>
+    <div>
+      <div class="ft-mhead">Business Enquiry</div>
+      <div class="ft-contact-val"><span class="ft-contact-label">E.</span>hello@volga.com</div>
+      <div class="ft-contact-val"><span class="ft-contact-label">P.</span>+91 98241 82099</div>
+    </div>
+    <div>
+      <div class="ft-mhead">Social</div>
+      <span class="ft-mlink">LinkedIn</span>
+      <span class="ft-mlink">Instagram</span>
+      <span class="ft-mlink">Facebook</span>
+      <span class="ft-mlink">YouTube</span>
+      <span class="ft-mlink">WhatsApp</span>
+    </div>
+  </div>
+
+  <div class="ft-wordmark-wrap">
+    <div class="ft-wordmark">VOLGA</div>
+  </div>
+
+  <div class="ft-bottom">
+    <span class="ft-copy">© Volga Infosys® 2026</span>
+    <div class="ft-blinks">
+      <span class="ft-blink">Privacy & Policy</span>
+      <span class="ft-blink">Made with ♦ by Volga</span>
+    </div>
+  </div>
+</div>
+
+  </footer>
+
+  <script src="volga.js"></script>
+  <script>
+    const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? 'http://localhost:5000/api' : '/api';
+    
+    const fallbackNews = [
+      {
+        _id: '1',
+        title: 'Apple Vision Pro 2 Launches with Improved Display',
+        description: 'Apple announces the next generation of spatial computing with higher resolution and longer battery life.',
+        content: `
+          <h2>Apple Vision Pro 2: A New Era of Spatial Computing</h2>
+          <p>Apple has officially unveiled the Vision Pro 2, the next generation of its mixed-reality headset that promises to redefine how professionals interact with digital content in physical space. The device launches with a 4K micro-OLED display per eye, a 40% improvement in pixel density over its predecessor.</p>
+
+          <h3>Key Hardware Improvements</h3>
+          <p>The new headset features Apple's M4 chip paired with the dedicated R2 co-processor, delivering significantly lower latency for hand and eye tracking. Battery life has been extended to five hours of active use — nearly double the original model — thanks to a redesigned battery pack and more efficient thermal management.</p>
+          <ul>
+            <li>4K micro-OLED per eye (vs 1080p in Vision Pro 1)</li>
+            <li>M4 chip with R2 co-processor</li>
+            <li>5-hour battery life from improved battery pack</li>
+            <li>200g lighter with new carbon-fibre frame</li>
+            <li>Eye tracking accuracy improved by 60%</li>
+          </ul>
+
+          <h3>Enterprise Focus</h3>
+          <p>Apple's developer keynote made clear that Vision Pro 2 is squarely aimed at enterprise customers. Healthcare, architecture, and manufacturing sectors were highlighted with dedicated visionOS 3.0 APIs for spatial data visualisation, remote collaboration, and procedure simulation.</p>
+
+          <blockquote>"We've seen early adopters in surgery simulation and industrial design reduce training time by over 45%. Vision Pro 2 doubles down on those use cases," said Apple VP of Product, Sarah Chen.</blockquote>
+
+          <h3>Pricing and Availability</h3>
+          <p>The Vision Pro 2 starts at $3,499 for the base 256GB configuration and will be available through Apple's enterprise sales programme from Q3 2026. Developer units ship immediately to registered visionOS developers.</p>
+        `,
+        image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80',
+        topic: 'Product Launches',
+        source: 'TechCrunch',
+        publishedAt: '2026-06-05'
+      },
+      {
+        _id: '2',
+        title: 'Meta Acquires Prism VR for $800M',
+        description: 'Meta expands its VR ecosystem with the acquisition of Prism VR, a leader in haptic feedback technology.',
+        content: `
+          <h2>Meta's $800M Bet on Haptic Feedback</h2>
+          <p>Meta Platforms has acquired Prism VR, a San Francisco-based startup specialising in full-hand haptic feedback gloves, in an $800 million all-cash deal. The acquisition signals Meta's intent to close the immersion gap that has long separated virtual reality from truly convincing physical interaction.</p>
+
+          <h3>What Prism VR Brings to Meta</h3>
+          <p>Prism VR's core technology, branded HapticMesh, uses a network of micro-actuators embedded in thin gloves to simulate textures, resistance, and vibration in real time. The system can render the difference between touching glass, fabric, or stone — sensations that current VR controllers cannot replicate.</p>
+
+          <h3>Impact on the Quest Platform</h3>
+          <p>Meta confirmed that Prism VR's 120-person engineering team will be integrated into Reality Labs. The technology is expected to appear in a peripheral accessory for the Quest 4 line, likely announced later in 2026. Meta has not committed to a standalone consumer product timeline.</p>
+
+          <blockquote>"Haptics is the final frontier of immersion. We've cracked audio and visual fidelity — tactile sensation is next," said Meta's CTO, Andrew Bosworth, in a press statement.</blockquote>
+
+          <h3>Competitive Context</h3>
+          <p>The acquisition puts pressure on HaptX and bHaptics, the two remaining independent haptic hardware companies targeting enterprise VR. Analysts at Morgan Stanley expect consolidation to accelerate across the XR hardware space through the remainder of 2026.</p>
+        `,
+        image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80',
+        topic: 'M&A / Deals',
+        source: 'Bloomberg',
+        publishedAt: '2026-05-28'
+      },
+      {
+        _id: '3',
+        title: 'IDC: XR Market to Reach $150B by 2028',
+        description: 'New research from IDC projects significant growth in the extended reality market over the next two years.',
+        content: `
+          <h2>XR Market Forecast: $150 Billion by 2028</h2>
+          <p>A new report from International Data Corporation (IDC) projects the combined augmented, virtual, and mixed reality market to reach $150 billion in annual revenue by 2028, up from an estimated $52 billion in 2025. The compound annual growth rate of 42% would make XR one of the fastest-growing technology segments of the decade.</p>
+
+          <h3>Enterprise Driving Growth</h3>
+          <p>Unlike the consumer-led growth narrative that dominated the 2020s, IDC attributes the majority of projected revenue — roughly 68% — to enterprise deployments. Manufacturing, healthcare, and professional training are identified as the three largest verticals.</p>
+          <ul>
+            <li><strong>Manufacturing:</strong> Assembly guidance, remote expert support, quality inspection</li>
+            <li><strong>Healthcare:</strong> Surgical simulation, anatomy education, patient rehabilitation</li>
+            <li><strong>Training & Safety:</strong> Hazardous environment simulation, compliance training</li>
+            <li><strong>Architecture & Construction:</strong> Design review, client presentation, site planning</li>
+          </ul>
+
+          <h3>Regional Breakdown</h3>
+          <p>North America leads adoption with 38% of projected revenue, followed by Asia-Pacific at 31% — driven primarily by South Korea, Japan, and China's manufacturing sector investments. Europe accounts for 24%, with Germany and the UK showing the strongest enterprise uptake.</p>
+
+          <blockquote>"The enterprise XR inflection point has arrived. The companies investing in spatial computing workflows today are building a sustainable competitive advantage that will compound over the next decade." — IDC Research Director, Tom Mainelli</blockquote>
+
+          <h3>Hardware vs Software Split</h3>
+          <p>IDC projects that by 2028, software and services will account for 61% of total XR revenue, overtaking hardware for the first time. This mirrors the trajectory seen in cloud computing and reflects the maturation of XR as a platform rather than a device category.</p>
+        `,
+        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
+        topic: 'Research',
+        source: 'IDC',
+        publishedAt: '2026-06-03'
+      },
+      {
+        _id: '4',
+        title: 'Google ARCore 3.0 Released with New Features',
+        description: 'Google launches ARCore 3.0 with improved plane detection, hand tracking, and environmental understanding.',
+        content: `
+          <h2>ARCore 3.0: Google's Most Capable AR Platform Yet</h2>
+          <p>Google has released ARCore 3.0, a significant update to its augmented reality development platform for Android. The release introduces native hand tracking, semantic scene understanding, and a new Geospatial Creator tool that allows developers to anchor digital content to real-world coordinates using Google Maps data.</p>
+
+          <h3>Hand Tracking Without Hardware</h3>
+          <p>The headline feature of ARCore 3.0 is hand tracking that works on any Android device with a rear-facing camera, without requiring depth sensors or specialised hardware. The system tracks 21 joint positions per hand at 60fps, enabling natural gesture-based interaction in AR applications.</p>
+
+          <h3>Scene Semantics API</h3>
+          <p>A new Scene Semantics API lets developers query the semantic category of any pixel in the camera feed — distinguishing sky, ground, buildings, vegetation, and bodies of water in real time. This enables context-aware AR experiences, such as automatically placing digital objects on surfaces or adjusting lighting based on the detected environment.</p>
+          <ul>
+            <li>Real-time semantic segmentation at 30fps</li>
+            <li>12 scene categories including interior/exterior detection</li>
+            <li>Works on Android devices from 2023 onwards</li>
+          </ul>
+
+          <h3>Geospatial Creator Updates</h3>
+          <p>Building on the Geospatial API introduced in ARCore 2.x, the new Geospatial Creator allows persistent AR anchors in over 100 cities worldwide. Content placed using these anchors remains visible to any user who opens the same AR application in the same physical location — enabling city-scale AR experiences without server infrastructure.</p>
+
+          <blockquote>"ARCore 3.0 brings hand tracking and scene understanding to over 2 billion Android devices. This is the platform moment that enterprise AR has been waiting for." — Dave Burke, VP of Engineering, Android</blockquote>
+
+          <h3>Developer Availability</h3>
+          <p>ARCore 3.0 is available now via Google Play Services. The updated SDK, documentation, and sample projects are published to GitHub. Unity and Unreal Engine plugins supporting the new APIs are available through the respective engine marketplaces.</p>
+        `,
+        image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80',
+        topic: 'Product Launches',
+        source: 'Google Blog',
+        publishedAt: '2026-05-20'
+      }
+    ];
+      
+    function getImageUrl(url) {
+      if (!url) return '';
+      if (url.startsWith('http://') || url.startsWith('https://')) {
+        return url;
+      }
+      if (url.startsWith('/uploads/')) {
+        return (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+          ? `http://localhost:5000${url}`
+          : url;
+      }
+      return url;
+    }
+
+    async function loadIndustryNews() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+
+      console.log('Industry News ID from URL:', id);
+      let industryNews = fallbackNews;
+
+      try {
+        const res = await fetch(`${API}/industry-news`);
+        const data = await res.json();
+        if (data && data.length > 0) {
+          industryNews = data;
+        }
+      } catch (err) {
+        console.warn('Failed to load from API, using fallback data:', err);
+      }
+
+      const newsItem = industryNews.find(n => n._id === id) || industryNews[0];
+
+      if (!id) {
+        document.getElementById('industryNewsContent').innerHTML = '<p>Industry News not found.</p>';
+        return;
+      }
+
+      // Hero section
+      document.getElementById('HeroImage').src = getImageUrl(newsItem.image);
+      document.getElementById('HeroTitle').textContent = newsItem.title;
+      document.getElementById('HeroCategory').textContent = 'Industry News';
+
+      // Meta
+      const fmtDate = (iso) => new Date(iso).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+      document.getElementById('industryNewsSource').textContent = newsItem.source;
+      document.getElementById('industryNewsDate').textContent = fmtDate(newsItem.publishedAt || newsItem.createdAt);
+
+      // Content — use full article if available, else fall back to description
+      const contentEl = document.getElementById('industryNewsContent');
+      if (newsItem.content && newsItem.content.trim()) {
+        contentEl.innerHTML = newsItem.content;
+      } else if (newsItem.description) {
+        contentEl.innerHTML = newsItem.description
+          .split('\n')
+          .filter(function(line) { return line.trim(); })
+          .map(function(line) { return '<p>' + line + '</p>'; })
+          .join('');
+      } else {
+        contentEl.innerHTML = '<p>No content available.</p>';
+      }
+      
+      // Sidebar - other news (excluding current one)
+      const otherNews = industryNews.filter(n => n._id !== newsItem._id).slice(0, 3);
+      const sidebarEl = document.querySelector('.industry-news-sidebar');
+      sidebarEl.innerHTML = `
+        <div class="industry-news-sidebar-header">More Industry News</div>
+        ${otherNews.map(n => `
+          <a href="industry-news-detail.html?id=${n._id}" class="industry-news-card-mini">
+            <div class="industry-news-card-mini-thumb">
+              <img src="${getImageUrl(n.image)}" alt="${n.title}">
+            </div>
+            <div class="industry-news-card-mini-date">${fmtDate(n.publishedAt || n.createdAt)}</div>
+            <h3 class="industry-news-card-mini-title">${n.title}</h3>
+            <p class="industry-news-card-mini-excerpt">${n.description.replace(/<[^>]*>/g, '').substring(0, 100)}...</p>
+          </a>
+        `).join('')}
+      `;
+    }
+
+    loadIndustryNews();
+  </script>
+</body>
+
+</html>

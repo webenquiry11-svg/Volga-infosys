@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Solutions — Volga Infosys</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#ECF0F3;
+  --bg-alt:#D4E8F5;
+  --surface:#ffffff;
+  --surface2:#E8F1F8;
+  --accent:#E8930A;
+  --accent2:#1B4F72;
+  --accent3:#0D2B3E;
+  --accent-red:#E8501A;
+  --text:#0D1F2D;
+  --text-muted:#4A6070;
+  --border:rgba(27,79,114,0.12);
+  --glow:0 10px 30px rgba(232,147,10,0.18);
+
+  --font-display:"Orbitron",sans-serif;
+  --font-ui:"Exo 2",sans-serif;
+  --font-mono:"Space Grotesk",sans-serif;
+  --ease-out-expo:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-ui);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;height:64px;
+  background:rgba(236,240,243,0.88);backdrop-filter:blur(20px);
+  box-shadow:0 2px 16px rgba(27,79,114,0.08);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:var(--font-display);font-size:1.1rem;font-weight:700;
+  letter-spacing:3px;color:var(--accent2);text-decoration:none;
+}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  font-family:var(--font-mono);font-size:.72rem;font-weight:500;
+  color:var(--text-muted);text-decoration:none;letter-spacing:.5px;
+  text-transform:uppercase;transition:color .2s;
+}
+.nav-links a:hover{color:var(--accent2)}
+.nav-cta{
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:1px;text-transform:uppercase;
+  background:var(--accent2);color:#fff;border:none;
+  padding:10px 22px;border-radius:6px;text-decoration:none;
+  box-shadow:var(--neu-out-sm);
+  transition:all .2s;
+}
+.nav-cta:hover{background:var(--accent);box-shadow:var(--glow)}
+@media(max-width:900px){.nav-links{display:none}}
+
+/* ── HERO ── */
+.hero{
+  position:relative;min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;overflow:hidden;
+  padding-top:64px;
+}
+@media(max-width:768px){.hero{grid-template-columns:1fr}}
+
+.hero-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:80px 60px 80px;
+  background:var(--bg);position:relative;z-index:2;
+}
+.hero-eyebrow{
+  font-family:var(--font-mono);font-size:.62rem;letter-spacing:3px;
+  text-transform:uppercase;color:var(--accent);
+  display:flex;align-items:center;gap:10px;margin-bottom:20px;
+}
+.hero-eyebrow::before{content:'';width:28px;height:2px;background:var(--accent);border-radius:1px}
+.hero-h1{
+  font-family:var(--font-display);font-weight:900;
+  font-size:clamp(2.4rem,4.5vw,5rem);
+  letter-spacing:-1px;line-height:.95;
+  color:var(--accent3);margin-bottom:24px;
+}
+.hero-h1 .outline{
+  color:transparent;
+  -webkit-text-stroke:2px var(--accent2);
+}
+.hero-sub{
+  font-size:.95rem;font-weight:300;line-height:1.9;
+  color:var(--text-muted);max-width:400px;margin-bottom:40px;
+}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap}
+.hero-pill{
+  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.5px;
+  text-transform:uppercase;
+  background:var(--bg);color:var(--accent2);
+  border:1px solid rgba(27,79,114,0.2);
+  padding:7px 16px;border-radius:99px;
+  box-shadow:var(--neu-out-sm);
+  transition:all .2s;cursor:default;
+}
+.hero-pill:hover{background:var(--accent2);color:#fff;box-shadow:0 4px 16px rgba(27,79,114,0.25)}
+
+.hero-right{
+  position:relative;overflow:hidden;
+  background:var(--surface2);
+}
+.hero-img{
+  position:absolute;inset:0; 
+  background-image:url('https://images.unsplash.com/photo-1700673483543-a4a38e4e96df?w=1400&q=80&fit=crop');
+  background-size:cover; background-position:center;
+  filter:brightness(0.55) saturate(0.7);
+}
+.hero-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(90deg,var(--bg) 0%,transparent 18%),
+             linear-gradient(180deg,rgba(13,43,62,0.2) 0%,transparent 40%);
+}
+
+/* Stats bar */
+.hero-stats{
+  position:absolute;bottom:0;left:0;right:0;
+  display:grid;grid-template-columns:repeat(3,1fr);
+}
+.hstat{
+  padding:22px 24px;
+  background:rgba(236,240,243,0.82);backdrop-filter:blur(16px);
+  border-top:1px solid var(--border);border-right:1px solid var(--border);
+}
+.hstat:last-child{border-right:none}
+.hstat-n{
+  font-family:var(--font-display);font-weight:700;
+  font-size:2rem;color:var(--accent3);line-height:1;
+}
+.hstat-n em{color:var(--accent);font-style:normal}
+.hstat-l{
+  font-family:var(--font-mono);font-size:.52rem;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--text-muted);margin-top:4px;
+}
+
+/* ── SOLUTIONS SHELL ── */
+.solutions-shell{
+  display:grid;grid-template-columns:272px 1fr;
+  min-height:100vh;background:var(--bg);
+  border-top:1px solid var(--border);
+}
+@media(max-width:960px){.solutions-shell{grid-template-columns:1fr;min-height:auto}}
+
+/* Sidebar */
+.sol-sidebar{
+  background:var(--bg);
+  border-right:1px solid var(--border);
+  position:sticky;top:64px;height:calc(100vh - 64px);
+  overflow-y:auto;display:flex;flex-direction:column;
+}
+.sol-sidebar::-webkit-scrollbar{width:3px}
+.sol-sidebar::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px}
+
+.sidebar-head{
+  padding:28px 24px 20px;
+  border-bottom:1px solid var(--border);
+  background:var(--surface2);
+}
+.sidebar-eyebrow{
+  font-family:var(--font-mono);font-size:.52rem;
+  letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:6px;opacity:.6;
+}
+.sidebar-title{
+  font-family:var(--font-display);font-weight:600;
+  font-size:2rem;letter-spacing:1px;color:var(--accent2);
+}
+
+.sol-list{flex:1;padding:10px 16px;display:flex;flex-direction:column;gap:6px}
+
+.sol-btn{
+  width:100%;display:flex;align-items:center;gap:12px;
+  padding:11px 14px;border:none;cursor:pointer;
+  border-radius:10px;background:var(--bg);
+  box-shadow:var(--neu-out-sm);
+  text-align:left;transition:all .2s var(--ease-out-expo);
+  position:relative;overflow:hidden;
+}
+.sol-btn::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--accent);border-radius:0 2px 2px 0;
+  transform:scaleY(0);transform-origin:center;transition:transform .2s var(--ease-out-expo);
+}
+.sol-btn:hover{box-shadow:var(--neu-in-sm);transform:translateX(2px)}
+.sol-btn:hover::after{transform:scaleY(1)}
+.sol-btn.active{box-shadow:var(--neu-in);background:var(--surface2)}
+.sol-btn.active::after{transform:scaleY(1)}
+
+.sol-btn-icon{
+  width:32px;height:32px;flex-shrink:0;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--surface2);border:1px solid var(--border);
+  transition:all .2s;
+}
+.sol-btn-icon svg{width:14px;height:14px;stroke:var(--text-muted);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:stroke .2s}
+.sol-btn.active .sol-btn-icon,
+.sol-btn:hover .sol-btn-icon{background:var(--accent2);border-color:var(--accent2)}
+.sol-btn.active .sol-btn-icon svg,
+.sol-btn:hover .sol-btn-icon svg{stroke:#fff}
+
+.sol-btn-name{font-family:var(--font-ui);font-size:1rem;font-weight:600;color:var(--text-muted);line-height:1.2;transition:color .18s}
+.sol-btn-tag{font-family:var(--font-mono);font-size:.8rem;color:var(--text-muted);opacity:.5;margin-top:1px;transition:all .18s}
+.sol-btn.active .sol-btn-name,
+.sol-btn:hover .sol-btn-name{color:var(--accent3)}
+.sol-btn.active .sol-btn-tag{color:var(--accent);opacity:1}
+
+@media(max-width:960px){
+  .sol-sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);overflow-x:auto;overflow-y:hidden}
+  .sidebar-head{display:none}
+  .sol-list{flex-direction:row;padding:10px;min-width:max-content;gap:8px}
+  .sol-btn{border-bottom:none;white-space:nowrap;flex-shrink:0;min-width:auto;padding:9px 14px}
+  .sol-btn::after{top:auto;left:0;right:0;bottom:0;width:auto;height:3px;transform:scaleX(0);transform-origin:center}
+  .sol-btn:hover::after,.sol-btn.active::after{transform:scaleX(1)}
+  .sol-btn-tag{display:none}
+}
+
+/* Stage */
+.sol-stage{
+  display:flex;flex-direction:column;
+  background:var(--bg);min-height:calc(100vh - 64px);
+}
+
+.stage-empty{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:60px 40px;
+}
+.empty-icon{
+  width:64px;height:64px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;
+  background:var(--bg);box-shadow:var(--neu-out);
+}
+.empty-icon svg{width:26px;height:26px;stroke:var(--accent2);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;opacity:.5}
+.empty-h{font-family:var(--font-display);font-size:1.4rem;letter-spacing:1px;color:var(--primary-dark);margin-bottom:8px}
+.empty-p{font-size:.8rem;color:var(--text-muted);max-width:240px;line-height:1.7}
+
+/* Stage visual */
+.stage-visual{
+  position:relative;height:54vh;min-height:300px;
+  overflow:hidden;flex-shrink:0;
+}
+.stage-img{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  filter:brightness(0.45) saturate(0.75);
+  transition:opacity .4s ease;
+}
+.stage-img.fading{opacity:0}
+.stage-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(13,43,62,0.5) 0%,transparent 35%,rgb(212, 232, 245) 100%);
+  z-index:1;
+}
+.stage-badge{
+  position:absolute;top:24px;left:28px;z-index:2;
+  font-family:var(--font-mono);font-size:.58rem;
+  letter-spacing:2px;text-transform:uppercase;
+  color:#fff;
+  background:var(--accent);
+  padding:5px 14px;border-radius:4px;
+  box-shadow:0 4px 12px rgba(232,147,10,0.35);
+}
+.stage-title-wrap{
+  position:absolute;bottom:0;left:0;right:0;z-index:2;
+  padding:0 36px 32px;
+}
+.stage-title{
+  font-family:var(--font-display);font-weight:900;
+  font-size:clamp(2rem,4.5vw,4.8rem);
+  line-height:.9;letter-spacing:-1px;color:#0D2B3E;
+  text-shadow:0 4px 20px rgba(13,27,46,0.5);
+}
+.stage-subtitle{
+  display:block;
+  font-family:var(--font-ui);font-weight:300;
+  font-size:clamp(.85rem,1.4vw,1.05rem);
+  color:#1B4F72;letter-spacing:.3px;margin-top:8px;
+}
+
+/* Stage body */
+.stage-body{
+  flex:1;padding:36px;
+  background:var(--bg);
+}
+
+.stage-intro{
+  font-size:.99rem;line-height:1.9;font-weight:300;
+  color:var(-text-muted);
+  border-left:3px solid var(--accent);
+  padding:14px 20px;margin-bottom:32px;
+  background:var(--surface2);border-radius:0 8px 8px 0;
+  font-family: var(--font-ui);
+}
+
+/* Section label */
+.sec-label{
+  font-family:var(--font-mono);font-size:.56rem;
+  letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--text-muted);opacity:.5;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* Why */
+.stage-why{margin-bottom:32px}
+.why-text{font-size:.94rem;color:var(--text-muted);line-height:1.8;margin-bottom:12px}
+.why-pills{display:flex;flex-wrap:wrap;gap:7px}
+.why-pill{
+  font-family:var(--font-mono);font-size:.7rem;
+  color:var(--accent2);
+  background:var(--surface2);
+  border:1px solid rgba(27,79,114,0.2);
+  padding:5px 14px;border-radius:6px;
+  display:flex;align-items:center;gap:7px;
+  box-shadow:var(--neu-out-sm);
+}
+.why-pill::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+
+/* Features */
+.feats-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:12px;margin-bottom:28px;
+}
+.feat-card{
+  background:var(--bg);padding:20px;
+  box-shadow:var(--neu-out);
+  transition:all .2s var(--ease-out-expo);
+  border-bottom: 1px solid var(--text-muted);
+  border-right:1px solid var(--text-muted);
+
+  
+}
+.feat-card:hover{
+  box-shadow:var(--neu-in);
+  border-color:rgba(27,79,114,0.1);
+  transform:translateY(-1px);
+}
+.feat-icon{width:24px;height:24px;margin-bottom:10px}
+.feat-icon svg{width:100%;height:100%;stroke:var(--accent2);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.feat-title{font-family:var(--font-ui);font-size:.8rem;font-weight:600;color:var(--accent3);margin-bottom:5px}
+.feat-desc{font-size:.72rem;color:var(--text-muted);line-height:1.65}
+
+/* Chips */
+.chips-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;
+}
+@media(max-width:560px){.chips-row{grid-template-columns:1fr}}
+.chips-col{
+  background:var(--bg);padding:20px 22px;border-radius:12px;
+  box-shadow:var(--neu-out);
+}
+.chips-col-label{
+  font-family:var(--font-mono);font-size:.52px;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--text-muted);opacity:.45;margin-bottom:10px;font-size:.52rem;
+}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{
+  font-family:var(--font-mono);font-size:.68rem;color:var(--accent2);
+  background:var(--surface2);
+  border:1px solid var(--border);
+  padding:4px 12px;border-radius:99px;cursor:default;transition:all .15s;
+}
+.chip:hover{background:var(--accent2);color:#fff;border-color:var(--accent2)}
+.chip-sq{border-radius:5px;color:var(--text-muted);background:var(--bg);border-color:var(--border)}
+.chip-sq:hover{background:var(--accent3);color:#fff;border-color:var(--accent3)}
+
+/* Stage CTA */
+.stage-cta{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;
+  padding:24px 28px;
+  background:var(--accent2);border-radius:12px;
+  box-shadow:0 8px 24px rgba(27,79,114,0.25);
+}
+.stage-cta-copy h4{
+  font-family:var(--font-display);font-weight:600;
+  font-size:1rem;letter-spacing:.5px;color:#fff;margin-bottom:3px;
+}
+.stage-cta-copy p{font-size:.73rem;color:rgba(255,255,255,0.55)}
+.stage-btn{
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:1px;text-transform:uppercase;
+  background:var(--accent);color:#fff;font-weight:600;
+  padding:12px 24px;border-radius:6px;border:none;cursor:pointer;
+  text-decoration:none;transition:all .18s;white-space:nowrap;
+  box-shadow:0 4px 14px rgba(232,147,10,0.35);
+}
+.stage-btn:hover{background:#fff;color:var(--accent2);box-shadow:0 6px 20px rgba(255,255,255,0.2)}
+
+/* ── PROOF STRIP ── */
+.proof-section{
+  padding:88px 0;background:var(--surface2);
+  border-top:1px solid var(--border);overflow:hidden;
+}
+.proof-head{
+  padding:0 60px 52px;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;
+}
+.proof-eyebrow{
+  font-family:var(--font-mono);font-size:.56px;
+  letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--accent);display:flex;align-items:center;gap:8px;
+  margin-bottom:10px;font-size:.56rem;
+}
+.proof-eyebrow::before{content:'';width:18px;height:2px;background:var(--accent);border-radius:1px}
+.proof-h{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(1.8rem,3.5vw,3.5rem);letter-spacing:-1px;
+  color:var(--accent3);line-height:.95;
+}
+.proof-sub{
+  font-size:.83rem;color:var(--text-muted);
+  max-width:320px;line-height:1.75;font-weight:300;
+}
+.proof-strip{
+  display:flex;gap:16px;overflow-x:auto;scrollbar-width:none;
+  padding:0 60px 4px;
+}
+.proof-strip::-webkit-scrollbar{display:none}
+.proof-card{
+  flex-shrink:0;width:320px;height:420px;
+  border-radius:16px;overflow:hidden;cursor:pointer;
+  position:relative;box-shadow:var(--neu-out);
+  transition:transform .3s var(--ease-out-expo),box-shadow .3s;
+}
+.proof-card:first-child{width:480px}
+.proof-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(27,79,114,0.2)}
+.proof-img{
+  position:absolute;inset:0;background-size:cover;background-position:center;
+  filter:brightness(0.42) saturate(0.7);
+  transition:filter .4s,transform .6s;
+}
+.proof-card:hover .proof-img{filter:brightness(0.55) saturate(0.85);transform:scale(1.04)}
+.proof-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 40%,rgba(13,27,46,0.92) 100%);
+}
+.proof-body{position:absolute;bottom:0;left:0;right:0;padding:24px;z-index:1}
+.proof-tag{
+  font-family:var(--font-mono);font-size:.54rem;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--accent);margin-bottom:7px;
+}
+.proof-name{
+  font-family:var(--font-display);font-weight:700;
+  font-size:1.3rem;letter-spacing:.3px;color:#fff;line-height:1;margin-bottom:6px;
+}
+.proof-desc{font-size:.7rem;color:rgba(255,255,255,.45);line-height:1.5;font-weight:300}
+
+/* ── WHY ── */
+.why-section{display:grid;grid-template-columns:1fr 1fr}
+@media(max-width:800px){.why-section{grid-template-columns:1fr}}
+
+.why-left{
+  padding:72px 60px;background:var(--accent2);
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.why-left::before{
+  content:'';position:absolute;bottom:-80px;right:-80px;
+  width:320px;height:320px;border-radius:50%;
+  background:rgba(0,0,0,0.1);pointer-events:none;
+}
+.why-left-label{
+  font-family:var(--font-mono);font-size:.56rem;
+  letter-spacing:2.5px;text-transform:uppercase;
+  color:rgba(255,255,255,0.45);margin-bottom:18px;
+}
+.why-left-h{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(1.8rem,3vw,3.2rem);
+  letter-spacing:-1px;line-height:.92;color:#fff;margin-bottom:18px;
+}
+.why-left-p{
+  font-size:.87rem;color:rgba(255,255,255,0.55);
+  line-height:1.85;font-weight:300;max-width:360px;
+}
+.why-left-stat{margin-top:40px}
+.why-stat-n{
+  font-family:var(--font-display);font-weight:700;
+  font-size:3rem;color:#fff;line-height:1;
+}
+.why-stat-n em{color:var(--accent);font-style:normal}
+.why-stat-l{
+  font-family:var(--font-mono);font-size:.52rem;
+  letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,0.35);margin-top:4px;
+}
+
+.why-right{background:var(--bg);padding:40px}
+.why-cards{display:flex;flex-direction:column;gap:10px}
+.why-card{
+  background:var(--bg);padding:22px 24px;border-radius:12px;
+  display:flex;gap:16px;align-items:flex-start;
+  box-shadow:var(--neu-out);
+  transition:all .2s var(--ease-out-expo);
+}
+.why-card:hover{box-shadow:var(--neu-in);transform:translateX(3px)}
+.why-num{
+  font-family:var(--font-display);font-weight:700;
+  font-size:1.4rem;color:var(--accent);line-height:1;
+  flex-shrink:0;width:32px;opacity:.5;
+}
+.why-card:hover .why-num{opacity:1}
+.why-card-title{font-family:var(--font-ui);font-weight:600;font-size:.83rem;color:var(--accent3);margin-bottom:4px}
+.why-card-desc{font-size:.73rem;color:var(--text-muted);line-height:1.65}
+
+/* ── CTA ── */
+.cta-section{
+  position:relative;padding:120px 60px;text-align:center;
+  background:var(--accent3);overflow:hidden;
+}
+.cta-img{
+  position:absolute;inset:0;
+  background-image:url('https://images.unsplash.com/photo-1625505826533-5c80aca7d157?w=1400&q=70');
+  background-size:cover;background-position:center;
+  filter:brightness(0.1) saturate(0.4);
+}
+.cta-inner{position:relative;z-index:1}
+.cta-pre{
+  font-family:var(--font-mono);font-size:.62rem;
+  letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--accent);margin-bottom:18px;
+}
+.cta-h{
+  font-family:var(--font-display);font-weight:900;
+  font-size:clamp(2.8rem,7vw,7rem);
+  letter-spacing:-2px;line-height:.88;color:#fff;margin-bottom:18px;
+}
+.cta-h em{font-style:normal;color:var(--accent)}
+.cta-p{
+  font-size:.9rem;color:rgba(255,255,255,0.45);
+  line-height:1.85;margin-bottom:40px;
+  max-width:420px;margin-left:auto;margin-right:auto;font-weight:300;
+}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{
+  font-family:var(--font-mono);font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;
+  background:var(--accent);color:#fff;font-weight:600;
+  padding:15px 36px;border-radius:6px;border:none;cursor:pointer;
+  text-decoration:none;transition:all .2s;
+  box-shadow:0 6px 20px rgba(232,147,10,0.4);
+}
+.btn-primary:hover{background:#fff;color:var(--accent2);box-shadow:0 8px 24px rgba(255,255,255,0.2)}
+.btn-ghost{
+  font-family:var(--font-mono);font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;
+  background:transparent;color:rgba(255,255,255,0.5);
+  padding:15px 36px;border-radius:6px;
+  border:1px solid rgba(255,255,255,0.15);cursor:pointer;
+  text-decoration:none;transition:all .2s;
+}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.4);color:#fff}
+
+/* ── FOOTER ── */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:52px 60px 36px}
+.ft-logo{
+  font-family:var(--font-display);font-weight:700;
+  font-size:1rem;letter-spacing:3px;color:var(--accent2);
+  margin-bottom:40px;display:inline-block;
+}
+.ft-logo span{color:var(--accent)}
+.ft-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-bottom:40px}
+@media(max-width:700px){.ft-grid{grid-template-columns:repeat(2,1fr)}}
+.ft-col-head{
+  font-family:var(--font-mono);font-size:.52rem;
+  letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--text-muted);opacity:.45;margin-bottom:14px;
+}
+.ft-link{
+  display:block;font-size:.78rem;color:var(--text-muted);
+  margin-bottom:8px;text-decoration:none;transition:color .18s;
+}
+.ft-link:hover{color:var(--accent2)}
+.ft-bottom{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  padding-top:24px;border-top:1px solid var(--border);
+}
+.ft-copy,.ft-made{
+  font-family:var(--font-mono);font-size:.58rem;
+  color:var(--text-muted);opacity:.3;letter-spacing:1px;
+}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:2px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">VOLGA<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="solutions.html">Solutions</a></li>
+    <li><a href="industries.html">Industries</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="portfolio.html">Work</a></li>
+    <li><a href="technologies.html">Technologies</a></li>
+    <li><a href="insights-overview.html">Insights</a></li>
+    <li><a href="about.html">Company</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Contact →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Volga Infosys · Solutions</div>
+    <h1 class="hero-h1">
+      Immersive<br>
+      <span class="outline">Solutions</span>
+    </h1>
+    <p class="hero-sub">We build AR, VR, XR, AI, and Digital Twin solutions that transform how organisations train, sell, design, and operate — delivering measurable results from day one.</p>
+    <div class="hero-pills">
+      <span class="hero-pill">AR / VR</span>
+      <span class="hero-pill">XR</span>
+      <span class="hero-pill">Digital Twin</span>
+      <span class="hero-pill">AI</span>
+      <span class="hero-pill">Metaverse</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img" id="heroBg"><img src="https://www.kiksarvr.com/assets/media/Digital-Twin.webp" alt="Hero Background"></div>
+    <div class="hero-img-overlay"></div>
+    <div class="hero-stats">
+      <div class="hstat">
+        <div class="hstat-n"><span class="count-up" data-target="10">0</span><em>+</em></div>
+        <div class="hstat-l">Solution Types</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n"><span class="count-up" data-target="15">0</span><em>+</em></div>
+        <div class="hstat-l">Industries</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n"><span class="count-up" data-target="200">0</span><em>+</em></div>
+        <div class="hstat-l">Projects</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<div class="solutions-shell">
+  <aside class="sol-sidebar">
+    <div class="sidebar-head">
+      <div class="sidebar-eyebrow">What We Build</div>
+      <div class="sidebar-title">Our Solutions</div>
+    </div>
+    <div class="sol-list" id="solList"></div>
+  </aside>
+  <main class="sol-stage" id="solStage">
+    <div class="stage-empty" id="stageEmpty">
+      <div class="empty-icon">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 19 6 19 18 12 22 5 18 5 6"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <div class="empty-h">Select a Solution</div>
+      <div class="empty-p">Choose any solution from the left to explore its full capabilities and benefits.</div>
+    </div>
+    <div id="stageContent" style="display:none;flex-direction:column;flex:1"></div>
+  </main>
+</div>
+
+<!-- PROOF -->
+<section class="proof-section">
+  <div class="proof-head">
+    <div>
+      <div class="proof-eyebrow">Visual Portfolio</div>
+      <h2 class="proof-h">Solutions<br>In Action</h2>
+    </div>
+    <p class="proof-sub">Every solution we build is grounded in real-world challenges and engineered for measurable outcomes.</p>
+  </div>
+  <div class="proof-strip" id="proofStrip"></div>
+</section>
+
+<!-- WHY -->
+<section class="why-section">
+  <div class="why-left">
+    <div class="why-left-label">Why Choose Us</div>
+    <h2 class="why-left-h">Built for Measurable Business Impact</h2>
+    <p class="why-left-p">We combine cutting-edge immersive technology with creative design and user-focused development to deliver solutions that generate real business results — not demos.</p>
+    <div class="why-left-stat">
+      <div class="why-stat-n"><span class="count-up2" data-target="200">0</span><em>+</em></div>
+      <div class="why-stat-l">Projects Delivered</div>
+    </div>
+  </div>
+  <div class="why-right">
+    <div class="why-cards">
+      <div class="why-card"><div class="why-num">01</div><div><div class="why-card-title">Custom-Built, Never Templated</div><div class="why-card-desc">Every solution built from the ground up for your specific business goals, users, and workflows.</div></div></div>
+      <div class="why-card"><div class="why-num">02</div><div><div class="why-card-title">End-to-End Delivery</div><div class="why-card-desc">Discovery and design through development, deployment, and ongoing support — one partner.</div></div></div>
+      <div class="why-card"><div class="why-num">03</div><div><div class="why-card-title">Scalable & Secure Architecture</div><div class="why-card-desc">All solutions built on scalable, secure, cloud-ready infrastructure that grows with you.</div></div></div>
+      <div class="why-card"><div class="why-num">04</div><div><div class="why-card-title">Measurable ROI, Always</div><div class="why-card-desc">Clear success metrics set upfront. Every solution designed to generate trackable outcomes.</div></div></div>
+      <div class="why-card"><div class="why-num">05</div><div><div class="why-card-title">Cross-Industry Expertise</div><div class="why-card-desc">15+ industries served with deep domain knowledge — from healthcare and manufacturing to retail.</div></div></div>
+      <div class="why-card"><div class="why-num">06</div><div><div class="why-card-title">Future-Ready by Design</div><div class="why-card-desc">Built on the latest AR/VR/XR platforms so your solution remains current as technology evolves.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-img"></div>
+  <div class="cta-inner">
+    <div class="cta-pre">Ready to Begin</div>
+    <h2 class="cta-h">Transform<br>Your <em>Business</em></h2>
+    <p class="cta-p">Contact our experts to discover how immersive technology can transform customer engagement and accelerate growth.</p>
+    <div class="cta-btns">
+      <a href="contact.html" class="btn-primary">Start a Project</a>
+      <a href="contact.html" class="btn-ghost">Book a Consultation</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-logo">VOLGA<span>.</span></div>
+  <div class="ft-grid">
+    <div>
+      <div class="ft-col-head">Business</div>
+      <a class="ft-link" href="#">Training Simulation</a>
+      <a class="ft-link" href="#">3D Configurators</a>
+      <a class="ft-link" href="#">Buildings & Interiors</a>
+      <a class="ft-link" href="#">E-Commerce</a>
+      <a class="ft-link" href="#">Manufacturing</a>
+    </div>
+    <div>
+      <div class="ft-col-head">Services</div>
+      <a class="ft-link" href="#">Augmented Reality</a>
+      <a class="ft-link" href="#">Virtual Reality</a>
+      <a class="ft-link" href="#">AR Player</a>
+      <a class="ft-link" href="#">VR Player 360°</a>
+    </div>
+    <div>
+      <div class="ft-col-head">Enquiry</div>
+      <a class="ft-link" href="mailto:hello@volga.com">hello@volga.com</a>
+      <a class="ft-link" href="tel:+919824182099">+91 98241 82099</a>
+    </div>
+    <div>
+      <div class="ft-col-head">Social</div>
+      <a class="ft-link" href="#">LinkedIn</a>
+      <a class="ft-link" href="#">Instagram</a>
+      <a class="ft-link" href="#">Facebook</a>
+      <a class="ft-link" href="#">YouTube</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <span class="ft-copy">© VOLGA INFOSYS® 2026</span>
+    <span class="ft-made">MADE WITH ♦ BY VOLGA</span>
+  </div>
+</footer>
+
+<script>
+const IC={
+  ar:`<svg viewBox="0 0 24 24"><path d="M2 8V5a2 2 0 012-2h3M2 16v3a2 2 0 002 2h3M22 8V5a2 2 0 00-2-2h-3M22 16v3a2 2 0 01-2 2h-3"/><circle cx="12" cy="12" r="3"/><path d="M12 5v2M12 17v2M5 12H7M17 12h2"/></svg>`,
+  vr:`<svg viewBox="0 0 24 24"><path d="M2 10a2 2 0 012-2h16a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/><circle cx="8.5" cy="12" r="1.5"/><circle cx="15.5" cy="12" r="1.5"/><path d="M11 12h2"/></svg>`,
+  twin:`<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>`,
+  xr:`<svg viewBox="0 0 24 24"><polygon points="12 2 19 6 19 18 12 22 5 18 5 6"/><circle cx="12" cy="12" r="3"/></svg>`,
+  ai:`<svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 014 4v1h1a3 3 0 010 6h-1v1a4 4 0 01-8 0v-1H7a3 3 0 010-6h1V6a4 4 0 014-4z"/></svg>`,
+  cfg:`<svg viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/></svg>`,
+  vs:`<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg>`,
+  sim:`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><circle cx="12" cy="12" r="3"/></svg>`,
+  trn:`<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>`,
+  meta:`<svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/><circle cx="12" cy="12" r="2"/></svg>`,
+};
+const FI={
+  eye:`<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`,
+  zap:`<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+  chart:`<svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
+  book:`<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>`,
+  pin:`<svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+  shield:`<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+  cube:`<svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>`,
+  globe:`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>`,
+  users:`<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>`,
+  cog:`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>`,
+  alert:`<svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>`,
+  trending:`<svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>`,
+  mic:`<svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/></svg>`,
+  tag:`<svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/></svg>`,
+  cart:`<svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>`,
+  phone:`<svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/></svg>`,
+  refresh:`<svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>`,
+  puzzle:`<svg viewBox="0 0 24 24"><path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5l6.74-6.76z"/></svg>`,
+  award:`<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>`,
+  layers:`<svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
+  link:`<svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>`,
+  world:`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>`,
+  video:`<svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>`,
+  avatar:`<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+};
+
+const SOLUTIONS=[
+  {id:"ar",icon:IC.ar,name:"AR Solutions",tag:"Augmented Reality",
+   img:"https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1400&q=80&fit=crop",
+   title:"AR Solutions",subtitle:"Overlay intelligence on the real world",
+   intro:"Augmented Reality (AR) is revolutionizing the way businesses interact with customers, employees, and products. By seamlessly blending digital content with the physical world, AR creates immersive experiences that enhance engagement, improve understanding, and drive better decision-making.<br> At our company, we develop custom AR solutions that help businesses showcase products, simplify complex information, and create interactive customer experiences. Whether you're in retail, manufacturing, education, healthcare, or real estate, our AR technology helps bridge the gap between imagination and reality.",
+   whyNeed:"Modern customers expect interactive and personalized experiences. AR enables businesses to create engaging experiences that allow users to visualize products, interact with digital models, and access real-time information directly through smartphones, tablets, or AR devices.<br>AR technology improves customer confidence, reduces uncertainty, and increases conversion rates by helping users make informed decisions before purchasing.",whyItems:null,
+   features:[{i:FI.eye,t:"Product Visualization",d:"Let customers see products in their real space before buying — accurate size, color, placement."},{i:FI.zap,t:"Interactive Marketing",d:"Turn print media into living interactive experiences that drive brand recall."},{i:FI.chart,t:"Real-Time Overlays",d:"Surface contextual data, instructions, and specs directly onto physical objects."},{i:FI.book,t:"AR Training",d:"Immersive learning while staying connected to the physical world."},{i:FI.pin,t:"Location-Based AR",d:"Geo-aware experiences for tourism, retail, museums, and events."}],
+   benefits:["Increased engagement","Higher conversion","Fewer returns","Enhanced brand","Better training","Market differentiation"],
+   industries:["Retail","Real Estate","Manufacturing","Healthcare","Education","Automotive","Tourism"],
+   ctaH:"Ready to build an AR experience?",ctaP:"Our experts will map out a custom AR strategy for your business."},
+  {id:"vr",icon:IC.vr,name:"VR Solutions",tag:"Virtual Reality",
+   img:"https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=1400&q=80&fit=crop",
+   title:"VR Solutions",subtitle:"Transport people anywhere, instantly",
+   intro:"Virtual Reality creates fully immersive digital environments where users can explore, learn, train, and interact without physical limitations. Our VR solutions create realistic, engaging virtual environments tailored to your business goals.",
+   whyNeed:"Traditional training and product showcasing carry significant cost and logistical barriers. VR eliminates them by creating realistic virtual experiences accessible from anywhere.",whyItems:null,
+   features:[{i:FI.shield,t:"Training Simulations",d:"Hands-on learning in safe, controlled virtual environments that mirror real conditions."},{i:FI.cube,t:"Product Demos",d:"Let customers experience products virtually before purchasing."},{i:FI.globe,t:"Virtual Tours",d:"Immersive walkthroughs of properties, factories, and campuses — from anywhere."},{i:FI.users,t:"Collaborative Workspaces",d:"Remote teams meeting and working naturally inside shared virtual environments."},{i:FI.book,t:"Educational Experiences",d:"Engaging learning simulations that dramatically improve retention."}],
+   benefits:["Better learning outcomes","Reduced training cost","Operational safety","Better engagement","Remote collaboration"],
+   industries:["Education","Manufacturing","Healthcare","Real Estate","Aviation","Defense"],
+   ctaH:"Let's build your virtual future.",ctaP:"Empower your business with immersive VR experiences that engage, educate, and inspire."},
+  {id:"twin",icon:IC.twin,name:"Digital Twin",tag:"Real-Time Simulation",
+   img:"https://images.unsplash.com/photo-1655720406770-12dc5a1dc4f7?w=1400&q=80&fit=crop",
+   title:"Digital Twin",subtitle:"Mirror your physical world in real time",
+   intro:"A Digital Twin is a live virtual replica of a physical asset, system, or process. It continuously receives sensor data to monitor performance, predict issues, and optimize operations — the cornerstone of Industry 4.0.",
+   whyNeed:"Digital Twins connect physical assets with virtual models through IoT sensors and cloud analytics, giving organizations real operational intelligence and predictive power.",whyItems:null,
+   features:[{i:FI.chart,t:"Real-Time Monitoring",d:"Track asset performance continuously with live sensor and IoT data feeds."},{i:FI.alert,t:"Predictive Maintenance",d:"Catch failures before they happen, eliminating costly unplanned downtime."},{i:FI.cog,t:"Process Optimization",d:"Analyze and improve workflows without touching live operations."},{i:FI.trending,t:"Performance Simulation",d:"Test changes in the virtual world before committing in the real one."},{i:FI.shield,t:"Risk Reduction",d:"Identify and mitigate risks early, before they become disruptions."}],
+   benefits:["Asset reliability","Lower maintenance cost","Operational visibility","Increased productivity","Higher ROI"],
+   industries:["Manufacturing","Smart Cities","Energy","Utilities","Construction","Transportation"],
+   ctaH:"Build smarter operations today.",ctaP:"Leverage Digital Twin technology for complete visibility and control over your assets."},
+  {id:"xr",icon:IC.xr,name:"XR Applications",tag:"Extended Reality",
+   img:"https://images.unsplash.com/photo-1696936218573-6b80e3c8ddab?w=1400&q=80&fit=crop",
+   title:"XR Applications",subtitle:"The full spectrum of immersive reality",
+   intro:"Extended Reality (XR) unifies AR, VR, and Mixed Reality into one ecosystem. At Volga Infosys, we build custom XR applications that unlock new possibilities across training, visualization, collaboration, and industrial operations.",
+   whyNeed:"Unlike traditional apps, XR creates interactive environments where users engage with digital content in a far more natural way.",whyItems:["Interact with 3D objects","Visualize products in real space","Access contextual info","Collaborate in immersive spaces","Simulate real-world scenarios"],
+   features:[{i:FI.layers,t:"Immersive Experiences",d:"Applications that fully engage users through interactive, realistic digital environments."},{i:FI.zap,t:"Real-Time Interaction",d:"Manipulate objects and explore environments with instant response."},{i:FI.phone,t:"Cross-Platform",d:"Works across smartphones, tablets, AR glasses, VR headsets, and desktop."},{i:FI.cube,t:"Advanced 3D",d:"High-quality models providing detailed digital representations of any asset."},{i:FI.globe,t:"Cloud Infrastructure",d:"Scalable cloud integration for global deployment and collaboration."},{i:FI.chart,t:"Analytics",d:"Insights into user behavior, engagement, and application performance."}],
+   benefits:["Higher engagement","Better training","Lower cost","Faster decisions","Competitive edge"],
+   industries:["Manufacturing","Healthcare","Education","Retail","Real Estate","Automotive"],
+   ctaH:"Build your XR application.",ctaP:"Improve productivity, create immersive journeys, or build next-generation enterprise apps."},
+  {id:"ai",icon:IC.ai,name:"AI Integration",tag:"Artificial Intelligence",
+   img:"https://images.unsplash.com/photo-1712002641088-9d76f9089355?w=1400&q=80&fit=crop",
+   title:"AI Integration",subtitle:"Intelligence woven into every workflow",
+   intro:"AI has become a business necessity. We provide end-to-end AI Integration Services that seamlessly connect intelligent technologies with your existing systems, applications, and workflows — adding intelligence without replacing what works.",
+   whyNeed:"AI Integration embeds capabilities into existing platforms, enhancing them with automation, prediction, and decision-making.",whyItems:["Enterprise Applications","CRM & ERP Systems","Customer Service","E-commerce Platforms","Mobile & Web Apps","Manufacturing Systems"],
+   features:[{i:FI.cog,t:"Business Automation",d:"Automate repetitive tasks and improve operational efficiency at scale."},{i:FI.mic,t:"Chatbots & Assistants",d:"24/7 AI-powered conversational systems that enhance customer experience."},{i:FI.trending,t:"Predictive Analytics",d:"Forecast trends, behavior, and risks before they materialize."},{i:FI.eye,t:"Computer Vision",d:"Systems that analyze images, video, and visual data for automation."},{i:FI.book,t:"NLP",d:"Transform how your systems process and respond to human language."},{i:FI.tag,t:"Recommendation Engines",d:"Personalize experiences with intelligent suggestions that increase sales."}],
+   benefits:["Operational efficiency","Faster decisions","Cost reduction","Better CX","Scalable automation"],
+   industries:["Healthcare","Retail","Manufacturing","Finance","Education","Logistics"],
+   ctaH:"Transform your business with AI.",ctaP:"Advanced machine learning combined with practical business expertise."},
+  {id:"cfg",icon:IC.cfg,name:"3D Configurators",tag:"Interactive Commerce",
+   img:"https://images.unsplash.com/photo-1581092160607-ee67df832dc2?w=1400&q=80&fit=crop",
+   title:"3D Configurators",subtitle:"Let customers build exactly what they want",
+   intro:"3D Configurators empower customers to customize, visualize, and interact with products in real time — creating a more engaging and confident buying journey. Every selection updates instantly with photorealistic 3D rendering.",
+   whyNeed:"A 3D Configurator lets users personalize products — modifying colors, materials, sizes, and features — while seeing instant visual results.",whyItems:["Customize instantly","See real-time changes","Compare variations","Explore features","Generate quotes"],
+   features:[{i:FI.cog,t:"Product Customization",d:"Configure every product attribute with instant visual feedback."},{i:FI.refresh,t:"Real-Time Rendering",d:"Photorealistic 3D updates the moment a customer makes a selection."},{i:FI.phone,t:"Multi-Device",d:"Seamless across web, mobile, tablet, and AR-enabled devices."},{i:FI.tag,t:"Dynamic Pricing",d:"Pricing updates automatically based on selected configuration."},{i:FI.cart,t:"E-Commerce Integration",d:"Connect directly with your store, CRM, and ordering systems."},{i:FI.eye,t:"AR Placement",d:"Let customers place their configured product into their real space."}],
+   benefits:["Higher conversion","Fewer returns","Customer satisfaction","Faster sales cycles","More personalization"],
+   industries:["Furniture","Automotive","Fashion","Consumer Goods","Home Decor","Industrial Equipment"],
+   ctaH:"Build interactive product experiences.",ctaP:"Turn customization into a competitive advantage."},
+  {id:"vs",icon:IC.vs,name:"Virtual Showrooms",tag:"Immersive Commerce",
+   img:"https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=1400&q=80&fit=crop",
+   title:"Virtual Showrooms",subtitle:"Your showroom, open everywhere",
+   intro:"Virtual Showrooms provide immersive digital environments where customers can explore products and engage with your brand from anywhere in the world — no travel, no appointment, no limits.",
+   whyNeed:"A Virtual Showroom replicates a physical showroom online. Visitors navigate spaces, view products, and interact with digital content in real time.",whyItems:null,
+   features:[{i:FI.cube,t:"Interactive Displays",d:"Showcase products with rich 3D visualizations and interactive features."},{i:FI.globe,t:"Virtual Walkthroughs",d:"Navigate naturally from any browser, mobile device, or VR headset."},{i:FI.zap,t:"Info Hotspots",d:"Specs, videos, and brochures accessible directly inside the showroom."},{i:FI.users,t:"Live Engagement",d:"Chat, video consultation, and virtual assistance built in."},{i:FI.phone,t:"Multi-Platform",d:"Web, mobile, VR — no app download required."},{i:FI.chart,t:"Analytics",d:"Track visitor behavior and optimize for conversion continuously."}],
+   benefits:["Global reach","Reduced cost","Better engagement","Higher confidence","More conversions"],
+   industries:["Automotive","Real Estate","Retail","Manufacturing","Luxury","Home Furnishings"],
+   ctaH:"Showcase without physical limits.",ctaP:"Create digital experiences that reach customers everywhere."},
+  {id:"sim",icon:IC.sim,name:"Simulation Systems",tag:"Engineering & Training",
+   img:"https://images.unsplash.com/photo-1569234009075-f7d62cd75a6a?w=1400&q=80&fit=crop",
+   title:"Simulation Systems",subtitle:"Practice the impossible, safely",
+   intro:"Simulation systems recreate real-world environments, processes, and scenarios in a safe digital space. Volga Infosys builds high-fidelity simulations for training, engineering, manufacturing, healthcare, and defense.",
+   whyNeed:null,whyItems:null,
+   features:[{i:FI.shield,t:"Training Simulators",d:"Realistic environments for skill development without real-world risk."},{i:FI.cog,t:"Equipment Simulations",d:"Train operators on expensive machinery with zero risk of damage."},{i:FI.chart,t:"Process Simulations",d:"Analyze and optimize operations before going live."},{i:FI.alert,t:"Safety Simulations",d:"Prepare employees for emergencies in fully controlled conditions."},{i:FI.cube,t:"Engineering Simulations",d:"Test product designs and performance with physics-accurate engines."},{i:FI.trending,t:"Operational Simulations",d:"Model logistics and resource use to find hidden inefficiencies."}],
+   benefits:["Reduced risk","Lower cost","Better performance","Increased safety","Faster learning"],
+   industries:["Manufacturing","Healthcare","Aviation","Defense","Transportation","Energy"],
+   ctaH:"Build smarter, safer operations.",ctaP:"Simulation technology that improves outcomes while cutting risk."},
+  {id:"trn",icon:IC.trn,name:"Interactive Training",tag:"Learning & Development",
+   img:"https://images.unsplash.com/photo-1723736454234-b3df4a01def0?w=1400&q=80&fit=crop",
+   title:"Interactive Training",subtitle:"Learning that actually sticks",
+   intro:"Interactive Training replaces passive slideshows with immersive scenarios, real-time feedback, and hands-on simulations — dramatically improving retention and workforce readiness.",
+   whyNeed:null,whyItems:null,
+   features:[{i:FI.shield,t:"VR-Based Training",d:"Fully immersive environments for hands-on learning in any scenario."},{i:FI.eye,t:"AR-Assisted Learning",d:"Real-time guidance overlaid during actual work, in the real environment."},{i:FI.puzzle,t:"Scenario Simulations",d:"Practice real-world tasks in risk-free, repeatable virtual environments."},{i:FI.chart,t:"Skill Assessment",d:"Track and measure competency levels with data-driven analytics."},{i:FI.award,t:"Compliance Training",d:"Regulations and safety procedures that employees actually understand."},{i:FI.globe,t:"Remote Learning",d:"Deliver immersive training regardless of location or time zone."}],
+   benefits:["Better retention","Faster onboarding","Higher productivity","Lower cost","Better compliance"],
+   industries:["Manufacturing","Healthcare","Education","Logistics","Retail","Construction"],
+   ctaH:"Future-ready learning starts here.",ctaP:"Empower your workforce with training built for modern challenges."},
+  {id:"meta",icon:IC.meta,name:"Metaverse Solutions",tag:"Spatial Computing",
+   img:"https://images.unsplash.com/photo-1686161949946-1c9e7a85b69c?w=1400&q=80&fit=crop",
+   title:"Metaverse Solutions",subtitle:"Where digital and physical worlds converge",
+   intro:"The Metaverse is the next evolution of digital interaction — persistent virtual environments where users socialize, collaborate, learn, shop, and do business. Volga Infosys builds scalable Metaverse Solutions for organizations ready to lead.",
+   whyNeed:null,whyItems:null,
+   features:[{i:FI.world,t:"Virtual World Development",d:"Custom immersive environments built around your brand and business goals."},{i:FI.cart,t:"Virtual Commerce",d:"Interactive digital shopping and marketplace experiences."},{i:FI.users,t:"Metaverse Workspaces",d:"Remote teams collaborating naturally with spatial audio and presence."},{i:FI.video,t:"Virtual Events",d:"Host global events without physical constraints or travel costs."},{i:FI.link,t:"Digital Asset Integration",d:"Virtual products, collectibles, and interactive digital experiences."},{i:FI.avatar,t:"Avatar Experiences",d:"Personalized digital identities for rich user-to-user interaction."}],
+   benefits:["Global reach","New revenue streams","Better collaboration","Innovative brand","Future-ready presence"],
+   industries:["Retail","Education","Entertainment","Real Estate","Healthcare","Corporate"],
+   ctaH:"Shape the future with Metaverse.",ctaP:"Build digital ecosystems that redefine how you connect, collaborate, and grow."},
+];
+
+const PROOF=[
+  {img:"https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=900&q=80",tag:"Augmented Reality",name:"AR Product Overlay",desc:"Real-time product placement in customer environments"},
+  {img:"https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=900&q=80",tag:"Virtual Reality",name:"VR Training Platform",desc:"High-fidelity simulation for industrial training"},
+  {img:"https://images.unsplash.com/photo-1655720406770-12dc5a1dc4f7?w=900&q=80",tag:"Digital Twin",name:"Factory Digital Twin",desc:"Live monitoring of manufacturing assets"},
+  {img:"https://images.unsplash.com/photo-1696936218573-6b80e3c8ddab?w=900&q=80",tag:"Extended Reality",name:"XR Enterprise Suite",desc:"Unified immersive workspace for remote teams"},
+  {img:"https://images.unsplash.com/photo-1712002641088-9d76f9089355?w=900&q=80",tag:"AI Integration",name:"AI-Powered Analytics",desc:"Predictive intelligence embedded in business workflows"},
+];
+
+/* Build sidebar */
+const solList=document.getElementById('solList');
+SOLUTIONS.forEach(s=>{
+  const el=document.createElement('button');
+  el.className='sol-btn';el.dataset.id=s.id;
+  el.innerHTML=`<div class="sol-btn-icon">${s.icon}</div>
+    <div>
+      <div class="sol-btn-name">${s.name}</div>
+      <div class="sol-btn-tag">${s.tag}</div>
+    </div>`;
+  el.addEventListener('click',()=>showSolution(s.id));
+  solList.appendChild(el);
+});
+
+let active=null;
+const stageEmpty=document.getElementById('stageEmpty');
+const stageContent=document.getElementById('stageContent');
+
+function showSolution(id){
+  if(active===id){
+    active=null;
+    document.querySelectorAll('.sol-btn').forEach(e=>e.classList.remove('active'));
+    stageContent.style.display='none';
+    stageEmpty.style.display='flex';
+    return;
+  }
+  active=id;
+  const s=SOLUTIONS.find(x=>x.id===id);
+  document.querySelectorAll('.sol-btn').forEach(e=>e.classList.toggle('active',e.dataset.id===id));
+
+  let whyHTML='';
+  if(s.whyNeed){
+    whyHTML=`<div class="stage-why" style="margin-bottom:28px">
+      <div class="sec-label">Why businesses need this</div>
+      <div class="why-text">${s.whyNeed}</div>
+      ${s.whyItems?`<div class="why-pills">${s.whyItems.map(w=>`<div class="why-pill">${w}</div>`).join('')}</div>`:''}
+    </div>`;
+  }
+
+  stageContent.innerHTML=`
+    <div class="stage-visual">
+      <div class="stage-img" style="background-image:url('${s.img}')"></div>
+      <div class="stage-grad"></div>
+      <div class="stage-badge">${s.tag}</div>
+      <div class="stage-title-wrap">
+        <div class="stage-title">${s.title}<span class="stage-subtitle">${s.subtitle}</span></div>
+      </div>
+    </div>
+    <div class="stage-body">
+      <p class="stage-intro">${s.intro}</p>
+      ${whyHTML}
+      <div class="sec-label">Capabilities</div>
+      <div class="feats-grid">
+        ${s.features.map(f=>`<div class="feat-card"><div class="feat-icon">${f.i}</div><div class="feat-title">${f.t}</div><div class="feat-desc">${f.d}</div></div>`).join('')}
+      </div>
+      <div class="chips-row">
+        <div class="chips-col">
+          <div class="chips-col-label">Business Benefits</div>
+          <div class="chips">${s.benefits.map(b=>`<span class="chip">${b}</span>`).join('')}</div>
+        </div>
+        <div class="chips-col">
+          <div class="chips-col-label">Industries</div>
+          <div class="chips">${s.industries.map(i=>`<span class="chip chip-sq">${i}</span>`).join('')}</div>
+        </div>
+      </div>
+      <div class="stage-cta">
+        <div class="stage-cta-copy"><h4>${s.ctaH}</h4><p>${s.ctaP}</p></div>
+        <a href="contact.html" class="stage-btn">Get in Touch</a>
+      </div>
+    </div>`;
+
+  stageEmpty.style.display='none';
+  stageContent.style.display='flex';
+  window.location.hash=id;
+  if(window.innerWidth<960){
+    setTimeout(()=>stageContent.scrollIntoView({behavior:'smooth',block:'start'}),80);
+  }
+}
+
+/* Proof strip */
+const strip=document.getElementById('proofStrip');
+PROOF.forEach(p=>{
+  const el=document.createElement('div');
+  el.className='proof-card';
+  el.innerHTML=`
+    <div class="proof-img" style="background-image:url('${p.img}')"></div>
+    <div class="proof-overlay"></div>
+    <div class="proof-body">
+      <div class="proof-tag">${p.tag}</div>
+      <div class="proof-name">${p.name}</div>
+      <div class="proof-desc">${p.desc}</div>
+    </div>`;
+  strip.appendChild(el);
+});
+
+/* Count-up */
+function animateCount(el,target,dur=1800){
+  const start=performance.now();
+  const tick=now=>{
+    const t=Math.min((now-start)/dur,1);
+    const ease=1-Math.pow(1-t,3);
+    el.textContent=Math.round(ease*target);
+    if(t<1)requestAnimationFrame(tick);else el.textContent=target;
+  };
+  requestAnimationFrame(tick);
+}
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){animateCount(e.target,parseInt(e.target.dataset.target));io.unobserve(e.target);}
+  });
+},{threshold:.3});
+document.querySelectorAll('.count-up,.count-up2').forEach(el=>io.observe(el));
+
+/* Hero image */
+const heroBg=document.getElementById('heroBg');
+const img=new Image();
+img.onload=()=>heroBg.style.backgroundImage=`url('${img.src}')`;
+img.src='https://images.unsplash.com/photo-1700673483543-a4a38e4e96df?w=1400&q=80&fit=crop';
+
+/* Hash routing */
+const h=window.location.hash.replace('#','');
+if(h&&SOLUTIONS.find(s=>s.id===h))showSolution(h);
+</script>
+
+</body>
+
+</html>

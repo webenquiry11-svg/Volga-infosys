@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Volga Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css" />
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+</head>
+<body class="dash-page">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-dot">V</div>
+      VOLGA<span>ADMIN</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="#" class="nav-item active" data-view="overview">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Overview
+      </a>
+      <a href="#" class="nav-item" data-view="leads">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        Leads
+      </a>
+      <a href="#" class="nav-item" data-view="portfolio">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 21h8M12 17v4"/></svg>
+        Portfolio
+      </a>
+      <a href="#" class="nav-item" data-view="clientstories">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 10l5-4 5 4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        Client Stories
+      </a>
+      <a href="#" class="nav-item" data-view="blog">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        Blog
+      </a>
+      <a href="#" class="nav-item" data-view="casestudies">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h11.5L20 5.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-1.5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        Case Studies
+      </a>
+      <a href="#" class="nav-item" data-view="industrynews">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+        Industry News
+      </a>
+      <a href="#" class="nav-item" data-view="medialibrary">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        Media Library
+      </a>
+      <a href="#" class="nav-item" data-view="emaillogs">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 8l9 6 9-6" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 8v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        Email Logs
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn-logout" id="logoutBtn">Sign Out</button>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+
+    <!-- OVERVIEW -->
+    <section class="view active" id="view-overview">
+      <div class="page-header">
+        <h1>Overview</h1>
+        <span class="date-badge" id="todayDate"></span>
+      </div>
+      <div class="stats-grid overview-top">
+        <div class="stat-card">
+          <div class="stat-label">Active Projects</div>
+          <div class="stat-value" id="statProjects">—</div>
+          <div class="stat-mini">Projects</div>
+        </div>
+        <div class="stat-card accent-new">
+          <div class="stat-label">New Leads</div>
+          <div class="stat-value" id="statNew">—</div>
+          <div class="stat-mini">Since last week</div>
+        </div>
+        <div class="stat-card accent-contacted">
+          <div class="stat-label">Total Emails</div>
+          <div class="stat-value" id="statEmails">—</div>
+          <div class="stat-mini">All email logs</div>
+        </div>
+        <div class="stat-card accent-closed">
+          <div class="stat-label">Blog Posts</div>
+          <div class="stat-value" id="statBlogs">—</div>
+          <div class="stat-mini">Published</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Case Studies</div>
+          <div class="stat-value" id="statCaseStudies">—</div>
+          <div class="stat-mini">Published</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Industry News</div>
+          <div class="stat-value" id="statIndustryNews">—</div>
+          <div class="stat-mini">Published</div>
+        </div>
+      </div>
+
+      <div class="section-title">Leads by Service</div>
+      <div class="service-bars" id="serviceBars"></div>
+
+      <div class="section-title" style="margin-top:2.5rem">Recent Leads</div>
+      <div class="table-wrap">
+        <table class="leads-table" id="recentTable">
+          <thead><tr><th>Name</th><th>Email</th><th>Country</th><th>Service</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- LEADS -->
+    <section class="view" id="view-leads">
+      <div class="page-header">
+        <h1>All Leads</h1>
+        <div class="filter-row">
+          <select id="statusFilter">
+            <option value="">All Statuses</option>
+            <option value="new">New</option>
+            <option value="contacted">Contacted</option>
+            <option value="closed">Closed</option>
+          </select>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="leads-table" id="leadsTable">
+          <thead><tr><th>Name</th><th>Email</th><th>Company</th><th>Country</th><th>Budget</th><th>Service</th><th>Message</th><th>Status</th><th>Date</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="pagination"></div>
+    </section>
+    <!-- EMAIL LOGS -->
+    <section class="view" id="view-emaillogs">
+      <div class="page-header">
+        <h1>Email Logs</h1>
+        <div class="filter-row">
+          <select id="emailTypeFilter">
+            <option value="">All Types</option>
+            <option value="outgoing">Outgoing</option>
+            <option value="incoming">Incoming</option>
+            <option value="auto-response">Auto-response</option>
+          </select>
+          <select id="emailStatusFilter">
+            <option value="">All Statuses</option>
+            <option value="sent">Sent</option>
+            <option value="pending">Pending</option>
+            <option value="failed">Failed</option>
+            <option value="received">Received</option>
+          </select>
+          <button class="btn-delete" id="deleteAllLogsBtn" type="button">Delete All Logs</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="leads-table" id="emailLogsTable">
+          <thead><tr><th>Date</th><th>From</th><th>To</th><th>Subject</th><th>Type</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="emailPagination"></div>
+    </section>
+
+    <!-- PORTFOLIO -->
+  <section class="view" id="view-portfolio">
+    <div class="page-header">
+      <h1>Portfolio Projects</h1>
+      <a class="btn-save" href="project-edit.html">+ Add Project</a>
+    </div>
+    <div class="proj-grid" id="projGrid"></div>
+  </section>
+
+  <!-- CLIENT STORIES -->
+  <section class="view" id="view-clientstories">
+    <div class="page-header">
+      <h1>Client Stories</h1>
+      <a class="btn-save" href="client-story-edit.html">+ Add Story</a>
+    </div>
+    <div class="proj-grid" id="storiesGrid"></div>
+  </section>
+
+  <!-- BLOG -->
+  <section class="view" id="view-blog">
+    <div class="page-header">
+      <h1>Blog Posts</h1>
+      <a class="btn-save" href="blog-edit.html">+ Add Post</a>
+    </div>
+    <div class="proj-grid" id="blogGrid"></div>
+  </section>
+
+  <!-- CASE STUDIES -->
+  <section class="view" id="view-casestudies">
+    <div class="page-header">
+      <h1>Case Studies</h1>
+      <a class="btn-save" href="case-study-edit.html">+ Add Case Study</a>
+    </div>
+    <div class="proj-grid" id="caseStudyGrid"></div>
+  </section>
+
+  <!-- INDUSTRY NEWS -->
+  <section class="view" id="view-industrynews">
+    <div class="page-header">
+      <h1>Industry News</h1>
+      <a class="btn-save" href="industry-news-edit.html">+ Add News</a>
+    </div>
+    <div class="proj-grid" id="industryNewsGrid"></div>
+  </section>
+
+  <!-- MEDIA LIBRARY -->
+  <section class="view" id="view-medialibrary">
+    <div class="page-header">
+      <h1>Media Library</h1>
+      <a class="btn-save" href="media-upload.html">+ Upload Image</a>
+    </div>
+    <div class="media-grid" id="mediaGrid"></div>
+  </section>
+
+    
+
+  </main>
+
+  <!-- CASE STUDY MODAL -->
+  <div class="modal-overlay" id="caseStudyModalOverlay">
+    <div class="modal" style="max-width:640px">
+      <button class="modal-close" id="caseStudyModalClose">×</button>
+      <h2 class="modal-name" id="caseStudyModalTitle">Add Case Study</h2>
+      <div class="proj-form">
+        <div class="field"><label for="cs-title">Title *</label><input id="cs-title" placeholder="e.g. Manufacturer cuts training time by 60%" /></div>
+        <div class="proj-form-row">
+          <div class="field"><label for="cs-industry">Industry *</label><input id="cs-industry" placeholder="e.g. Manufacturing" /></div>
+          <div class="field"><label for="cs-year">Year</label><input id="cs-year" placeholder="e.g. 2026" /></div>
+        </div>
+        <div class="field"><label for="cs-description">Description *</label><textarea id="cs-description" rows="3" placeholder="Short case study summary..."></textarea></div>
+        <div class="field"><label for="cs-image">Image URL *</label><input id="cs-image" placeholder="https://..." /></div>
+        <div class="field"><label for="cs-metrics">Metrics (one per line, value | label)</label><textarea id="cs-metrics" rows="3" placeholder="60% | Faster training"></textarea></div>
+        <div class="proj-form-row">
+          <div class="field"><label for="cs-author">Author</label><input id="cs-author" placeholder="Volga Infosys" /></div>
+          <div class="field"><label for="cs-order">Order</label><input id="cs-order" type="number" placeholder="0" /></div>
+        </div>
+        <div id="caseStudyFormError" class="proj-form-error"></div>
+        <div class="modal-actions" style="margin-top:1rem">
+          <button class="btn-save" id="caseStudySaveBtn">Save Case Study</button>
+          <button class="btn-delete" id="caseStudyDeleteBtn" style="display:none">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INDUSTRY NEWS MODAL -->
+  <div class="modal-overlay" id="industryNewsModalOverlay">
+    <div class="modal" style="max-width:640px">
+      <button class="modal-close" id="industryNewsModalClose">×</button>
+      <h2 class="modal-name" id="industryNewsModalTitle">Add News</h2>
+      <div class="proj-form">
+        <div class="field"><label for="in-title">Title *</label><input id="in-title" placeholder="e.g. Enterprise XR market update" /></div>
+        <div class="proj-form-row">
+          <div class="field"><label for="in-topic">Topic *</label><input id="in-topic" placeholder="e.g. Research" /></div>
+          <div class="field"><label for="in-source">Source</label><input id="in-source" placeholder="Volga Infosys" /></div>
+        </div>
+        <div class="field"><label for="in-description">Description *</label><textarea id="in-description" rows="3" placeholder="Short news summary..."></textarea></div>
+        <div class="field"><label for="in-image">Image URL *</label><input id="in-image" placeholder="https://..." /></div>
+        <div class="proj-form-row">
+          <div class="field"><label for="in-published">Published Date</label><input id="in-published" type="date" /></div>
+          <div class="field"><label for="in-order">Order</label><input id="in-order" type="number" placeholder="0" /></div>
+        </div>
+        <div class="field"><label for="in-url">Read URL</label><input id="in-url" placeholder="https://..." /></div>
+        <div id="industryNewsFormError" class="proj-form-error"></div>
+        <div class="modal-actions" style="margin-top:1rem">
+          <button class="btn-save" id="industryNewsSaveBtn">Save News</button>
+          <button class="btn-delete" id="industryNewsDeleteBtn" style="display:none">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOG MODAL -->
+  <div class="modal-overlay" id="blogModalOverlay">
+    <div class="modal" style="max-width:800px">
+      <button class="modal-close" id="blogModalClose">✕</button>
+      <h2 class="modal-name" id="blogModalTitle">Add Post</h2>
+      <div class="proj-form">
+        <div class="field"><label for="bl-title">Title *</label><input id="bl-title" placeholder="e.g. Why VR is the Future of Training" /></div>
+        <div class="proj-form-row">
+          <div class="field"><label for="bl-category">Category *</label>
+            <select id="bl-category">
+              <option value="Virtual Reality">Virtual Reality</option>
+              <option value="Augmented Reality">Augmented Reality</option>
+              <option value="Industry">Industry</option>
+              <option value="Training">Training</option>
+              <option value="Technology">Technology</option>
+            </select>
+          </div>
+          <div class="field"><label for="bl-status">Status</label>
+            <select id="bl-status">
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+              <option value="archived">Archived</option>
+            </select>
+          </div>
+        </div>
+        <div class="proj-form-row">
+          <div class="field"><label for="bl-readtime">Read Time</label><input id="bl-readtime" placeholder="e.g. 5 min read" /></div>
+          <div class="field"><label for="bl-author">Author</label><input id="bl-author" placeholder="Volga Infosys" /></div>
+        </div>
+        <div class="field"><label for="bl-excerpt">Excerpt * (short summary)</label><textarea id="bl-excerpt" rows="2" placeholder="Brief description shown on blog listing…"></textarea></div>
+        
+        <div class="field">
+          <label for="bl-cover">Cover Image</label>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <input id="bl-cover" type="file" accept="image/*" style="flex:1;" />
+            <span style="font-size:0.8rem; color:#888;">OR</span>
+            <input id="bl-image" placeholder="https://…" style="flex:1;" />
+          </div>
+          <div id="bl-cover-preview" style="margin-top:10px;"></div>
+        </div>
+        
+        <div class="field"><label for="bl-content">Content (full article)</label><textarea id="bl-content" rows="8" placeholder="Full blog post content…"></textarea></div>
+        
+        <div class="section-title" style="margin:1.5rem 0 1rem; font-size:0.9rem; font-weight:600; border-left:3px solid var(--accent); padding-left:10px;">SEO Settings</div>
+        
+        <div class="field"><label for="bl-seotitle">SEO Title</label><input id="bl-seotitle" placeholder="SEO-optimized title" /></div>
+        <div class="field"><label for="bl-seodesc">Meta Description</label><textarea id="bl-seodesc" rows="2" placeholder="SEO meta description for search engines"></textarea></div>
+        
+        <div class="proj-form-row">
+          <div class="field"><label for="bl-order">Order</label><input id="bl-order" type="number" placeholder="0" /></div>
+          <div class="field" style="display:flex; align-items:center; gap:8px; padding-top:24px;">
+            <input type="checkbox" id="bl-featured" style="width:auto;" />
+            <label for="bl-featured" style="margin:0;">Mark as Featured Post</label>
+          </div>
+        </div>
+        
+        <div id="blogFormError" class="proj-form-error"></div>
+        <div class="modal-actions" style="margin-top:1rem">
+          <button class="btn-save" id="blogSaveBtn">Save Post</button>
+          <button class="btn-delete" id="blogDeleteBtn" style="display:none">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEDIA UPLOAD MODAL -->
+  <div class="modal-overlay" id="mediaModalOverlay">
+    <div class="modal" style="max-width:500px">
+      <button class="modal-close" id="mediaModalClose">✕</button>
+      <h2 class="modal-name">Upload Image</h2>
+      <div class="proj-form">
+        <div class="field"><label for="media-file">Select Image</label><input id="media-file" type="file" accept="image/*" /></div>
+        <div id="mediaFormError" class="proj-form-error"></div>
+        <div class="modal-actions">
+          <button class="btn-save" id="mediaSaveBtn">Upload</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT MODAL -->
+  <div class="modal-overlay" id="projectModalOverlay">
+    <div class="modal" style="max-width:600px">
+      <button class="modal-close" id="projectModalClose">✕</button>
+      <h2 class="modal-name" id="projectModalTitle">Add Project</h2>
+      <div class="proj-form">
+        <div class="proj-form-row">
+          <div class="field"><label for="pf-place">Place / Location</label><input id="pf-place" placeholder="e.g. UAE — Dubai" /></div>
+          <div class="field"><label for="pf-tag">Tag / Category</label><input id="pf-tag" placeholder="e.g. Virtual Reality" /></div>
+        </div>
+        <div class="proj-form-row">
+          <div class="field"><label for="pf-title">Title Line 1</label><input id="pf-title" placeholder="e.g. AR FURNITURE" /></div>
+          <div class="field"><label for="pf-title2">Title Line 2</label><input id="pf-title2" placeholder="e.g. CONFIGURATOR" /></div>
+        </div>
+        <div class="field"><label for="pf-desc">Description</label><textarea id="pf-desc" rows="3" placeholder="Short project description…"></textarea></div>
+        <div class="field"><label for="pf-image">Image URL</label><input id="pf-image" placeholder="https://…" /></div>
+        <div class="field"><label for="pf-order">Order (display position)</label><input id="pf-order" type="number" placeholder="0" /></div>
+        <div id="projectFormError" class="proj-form-error"></div>
+        <div class="modal-actions" style="margin-top:1rem">
+          <button class="btn-save" id="projectSaveBtn">Save Project</button>
+          <button class="btn-delete" id="projectDeleteBtn" style="display:none">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLIENT STORY MODAL -->
+  <div class="modal-overlay" id="storyModalOverlay">
+    <div class="modal" style="max-width:600px">
+      <button class="modal-close" id="storyModalClose">✕</button>
+      <h2 class="modal-name" id="storyModalTitle">Add Story</h2>
+      <div class="proj-form">
+        <div class="proj-form-row">
+          <div class="field"><label for="st-industry">Industry</label><input id="st-industry" placeholder="e.g. Healthcare" /></div>
+          <div class="field"><label for="st-clientname">Client Name</label><input id="st-clientname" placeholder="e.g. Dr. Sarah Mitchell" /></div>
+        </div>
+        <div class="field"><label for="st-clientrole">Client Role</label><input id="st-clientrole" placeholder="e.g. Chief Medical Officer" /></div>
+        <div class="field"><label for="st-testimonial">Testimonial</label><textarea id="st-testimonial" rows="3" placeholder="Client's testimonial…"></textarea></div>
+        <div class="proj-form-row">
+          <div class="field"><label for="st-image">Story Image URL</label><input id="st-image" placeholder="https://…" /></div>
+          <div class="field"><label for="st-avatar">Avatar URL</label><input id="st-avatar" placeholder="https://…" /></div>
+        </div>
+        <div class="field"><label for="st-impact">Impact Tags (comma-separated)</label><input id="st-impact" placeholder="e.g. 40% faster training, Improved outcomes" /></div>
+        <div class="field"><label for="st-order">Order (display position)</label><input id="st-order" type="number" placeholder="0" /></div>
+        <div id="storyFormError" class="proj-form-error"></div>
+        <div class="modal-actions" style="margin-top:1rem">
+          <button class="btn-save" id="storySaveBtn">Save Story</button>
+          <button class="btn-delete" id="storyDeleteBtn" style="display:none">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEAD DETAIL MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <h2 class="modal-name" id="modalName"></h2>
+      <div class="modal-grid" id="modalGrid"></div>
+      <div class="modal-message" id="modalMessage"></div>
+      <div class="modal-actions">
+        <select id="modalStatus">
+          <option value="new">New</option>
+          <option value="contacted">Contacted</option>
+          <option value="closed">Closed</option>
+        </select>
+        <button class="btn-save" id="modalSave">Save Status</button>
+        <button class="btn-delete" id="modalDelete">Delete Lead</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

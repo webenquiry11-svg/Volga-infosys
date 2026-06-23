@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volga Infosys — Building the Future of Enterprise Experiences</title>
+<link rel="stylesheet"
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="volga.css" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Updated color theme */
+    --cream:#ffffff;
+    --cream-2:#E0F2FE;
+    --ink:#0C4A6E;
+    --muted:#0369A1;
+    --line:rgba(59,130,246,0.12);
+    --navy:#1E3A8A;
+    --navy-2:#1E40AF;
+    --process-bg:#F0F9FF;
+    --process-line:rgba(59,130,246,0.18);
+    --partners-bg:#1E3A8A;
+    --coral:#F97316;
+    --coral-deep:#EA580C;
+    --amber:#F59E0B;
+    --teal:#2DD4BF;
+    --on-dark:#E0F2FE;
+    --on-dark-muted:#7DD3FC;
+    --font-display:'Fraunces', serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-body);
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--coral-deep);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{content:"//";color:var(--coral);font-weight:500;}
+  .on-dark .eyebrow{color:var(--amber);}
+  .on-process .eyebrow{color:var(--coral-deep);}
+
+  h1,h2,h3{font-family:var(--font-display);font-weight:500;letter-spacing:-0.01em;color:inherit;}
+  .h1{font-size:clamp(36px,5vw,58px);line-height:1.08;}
+  .h2{font-size:clamp(28px,3.4vw,40px);line-height:1.15;}
+  .h3{font-size:19px;line-height:1.3;font-weight:500;}
+  .lede{font-size:17px;color:var(--muted);max-width:560px;}
+  .on-dark .lede{color:var(--on-dark-muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-mono);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;
+    padding:14px 24px;border-radius:3px;border:1px solid var(--ink);
+    transition:transform 0.15s ease, background 0.15s ease;
+    cursor:pointer;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--ink);color:var(--cream);}
+  .btn-primary:hover{background:var(--coral-deep);border-color:var(--coral-deep);}
+  .btn-ghost{background:transparent;color:var(--ink);}
+  .btn-ghost:hover{background:rgba(27,26,23,0.06);}
+  .on-dark .btn{border-color:var(--on-dark);color:var(--on-dark);}
+  .on-dark .btn-primary{background:var(--amber);color:var(--navy);border-color:var(--amber);}
+  .on-dark .btn-primary:hover{background:var(--on-dark);}
+
+  /* ---------- Header ---------- */
+  .site-header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(244,239,227,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .site-header .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:76px;
+  }
+  
+  
+
+  /* ---------- Visual placeholder frames (signature device) ---------- */
+  .frame{
+    position:relative;
+    border-radius:6px;
+    background:var(--cream-2);
+    border:1px solid var(--line);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+    text-align:center;padding:24px;
+    color:var(--muted);
+  }
+  .on-dark .frame{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.12);color:var(--on-dark-muted);}
+  .frame .corner{position:absolute;width:14px;height:14px;}
+  .frame .corner.tl{top:9px;left:9px;border-top:2px solid var(--coral);border-left:2px solid var(--coral);}
+  .frame .corner.tr{top:9px;right:9px;border-top:2px solid var(--coral);border-right:2px solid var(--coral);}
+  .frame .corner.bl{bottom:9px;left:9px;border-bottom:2px solid var(--coral);border-left:2px solid var(--coral);}
+  .frame .corner.br{bottom:9px;right:9px;border-bottom:2px solid var(--coral);border-right:2px solid var(--coral);}
+  .frame svg{width:26px;height:26px;stroke:currentColor;}
+  .frame .frame-label{font-family:var(--font-mono);font-size:11px;letter-spacing:0.04em;text-transform:uppercase;}
+  .frame .frame-sub{font-size:12px;opacity:0.75;max-width:220px;}
+  .frame-sweep{position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;border-radius:6px;pointer-events:none;}
+  .frame-sweep::after{
+    content:"";position:absolute;left:-30%;top:0;width:30%;height:100%;
+    background:linear-gradient(90deg, transparent, rgba(217,102,62,0.18), transparent);
+    animation:sweep 4.5s ease-in-out infinite;
+  }
+  @keyframes sweep{0%{left:-30%;}50%{left:100%;}100%{left:100%;}}
+
+  /* ---------- Reveal-on-scroll ---------- */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity 0.6s ease, transform 0.6s ease;}
+  .reveal.is-visible{opacity:1;transform:translateY(0);}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:64px 0 80px;}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center;}
+  .hero-copy .lede{margin:22px 0 32px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+  .hero-visual .frame{height:340px;}
+  .hero-visual .frame svg{width:30px;height:30px;}
+
+  /* ---------- Thesis (dark, 4 claims) ---------- */
+  .section{padding:88px 0;}
+  .section--dark{background:var(--navy);color:var(--on-dark);}
+  .thesis-head{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;margin-bottom:48px;}
+  .thesis-head .h2{color:var(--on-dark);}
+  .claims-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.12);border-radius:6px;overflow:hidden;}
+  .claim{background:var(--navy-2);padding:28px 24px;display:flex;flex-direction:column;gap:14px;}
+  .claim .frame{height:64px;background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);}
+  .claim .frame svg{width:18px;height:18px;}
+  .claim h3{color:var(--on-dark);}
+  .claim p{font-size:13.5px;color:var(--on-dark-muted);}
+
+  /* ---------- Leadership ---------- */
+  .leadership .wrap{display:grid;grid-template-columns:0.95fr 1.05fr;gap:56px;align-items:center;}
+  .leadership .frame{height:300px;}
+  .stat-row{display:flex;gap:36px;margin-top:32px;}
+  .stat{font-family:var(--font-display);}
+  .stat .num{font-size:34px;font-weight:500;color:var(--coral-deep);}
+  .stat .label{font-family:var(--font-mono);font-size:11px;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+
+  /* ---------- Careers ---------- */
+  .careers-head{max-width:640px;margin-bottom:48px;}
+  .careers-head .h2{color:var(--on-dark);}
+  .careers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .career-card{background:var(--navy-2);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:26px;}
+  .career-card h3{color:var(--on-dark);margin-bottom:10px;}
+  .career-card p{font-size:13.5px;color:var(--on-dark-muted);}
+  .career-card--accent{background:var(--coral-deep);border-color:var(--coral-deep);}
+  .career-card--accent h3,.career-card--accent p{color:var(--cream);}
+  .career-card--accent p{color:rgba(244,239,227,0.85);}
+
+  /* ---------- Industries ---------- */
+  .industries-head{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;margin-bottom:48px;align-items:end;}
+  .industries-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .industry-card{border:1px solid var(--line);border-radius:6px;padding:20px;background:var(--cream);}
+  .industry-card .frame{height:110px;margin-bottom:16px;overflow:hidden;padding:0;}
+  .industry-card .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;z-index:0;}
+  .industry-card .frame .corner{z-index:2;}
+  .industry-card .frame svg{display:none;}
+  .industry-card .tag{font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--coral-deep);margin-bottom:8px;}
+  .industry-card h3{margin-bottom:8px;font-size:17px;}
+  .industry-card p{font-size:13.5px;color:var(--muted);}
+
+  /* ---------- Process ---------- */
+  .section--process{background:var(--process-bg);color:var(--navy);}
+  .process-head{max-width:640px;margin-bottom:56px;}
+  .process-head .h2{color:var(--navy);}
+  .process-head .lede{color:rgba(17,24,42,0.65);}
+  .process-rail{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
+  .process-rail::before{content:"";position:absolute;top:23px;left:5%;right:5%;height:1px;background:var(--process-line);}
+  .process-step{display:flex;flex-direction:column;gap:14px;padding-right:20px;position:relative;}
+  .process-step .index{
+    width:46px;height:46px;border-radius:50%;background:var(--cream);border:1px solid var(--process-line);
+    display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:13px;z-index:1;
+  }
+  .process-step h3{font-size:17px;}
+  .process-step p{font-size:13.5px;color:rgba(17,24,42,0.62);}
+
+  /* ---------- Client work / case studies ---------- */
+  .casework-head{margin-bottom:40px;max-width:600px;}
+  .casework-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .casework-card .frame{height:160px;margin-bottom:14px;}
+  .casework-card .frame svg{width:22px;height:22px;}
+  .casework-card .client{font-family:var(--font-mono);font-size:11px;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);}
+
+  /* ---------- Partners ---------- */
+  .section--partners{background:var(--partners-bg);color:var(--on-dark);text-align:center;}
+  .partners-statement{font-family:var(--font-display);font-size:clamp(22px,2.6vw,30px);font-weight:500;max-width:760px;margin:0 auto 40px;line-height:1.4;}
+  .partners-row{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;max-width:880px;margin:0 auto;}
+  .partner-logo{
+    border:1px solid rgba(255,255,255,0.16);border-radius:6px;height:64px;
+    display:flex;align-items:center;justify-content:center;color:rgba(237,233,220,0.55);
+  }
+  .partner-logo svg{width:22px;height:22px;}
+
+  /* ---------- Contact ---------- */
+  .contact .wrap{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;}
+  .contact-actions{display:flex;gap:14px;}
+
+  /* ---------- Footer ---------- */
+ 
+  
+
+  @media (max-width:900px){
+    .hero .wrap,.leadership .wrap,.thesis-head,.industries-head{grid-template-columns:1fr;}
+    .hero-visual{order:-1;}
+    .claims-grid{grid-template-columns:repeat(2,1fr);}
+    .careers-grid,.industries-grid,.casework-grid{grid-template-columns:repeat(2,1fr);}
+    .process-rail{grid-template-columns:repeat(2,1fr);row-gap:32px;}
+    .process-rail::before{display:none;}
+    .partners-row{grid-template-columns:repeat(3,1fr);}
+    .footer-columns{grid-template-columns:repeat(2,1fr);}
+    .nav-links{display:none;}
+    .nav-toggle{display:flex;}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 20px;}
+    .claims-grid,.careers-grid,.industries-grid,.casework-grid{grid-template-columns:1fr;}
+    .partners-row{grid-template-columns:repeat(2,1fr);}
+    .footer-columns{grid-template-columns:1fr;}
+    .contact .wrap{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .frame-sweep::after{animation:none;}
+    .reveal{transition:none;opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="#"><span class="mark"></span>VOLGA</a>
+    <nav class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#industries">Industries</a>
+      <a href="#process">Process</a>
+      <a href="#why">Why us</a>
+      <a href="#technologies">Technologies</a>
+      <a href="#insights">Insights</a>
+      <a href="#careers">Careers</a>
+    </nav>
+    <div class="nav-right">
+      <a class="btn btn-primary" href="#contact">Contact us</a>
+      <button class="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-copy reveal">
+      <p class="eyebrow">Company — About us</p>
+      <h1 class="h1">Building the future of enterprise experiences</h1>
+      <p class="lede">We help organizations transform ideas into immersive digital solutions through AR, VR, XR, AI, Digital Twins, and advanced software engineering.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#contact">Contact our team</a>
+        <a class="btn btn-ghost" href="#services">Explore services</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal">
+      <div class="frame">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <div class="frame-sweep"><img src="hologram.png" class="hero-video" alt="Immersive digital technology illustration"></div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--dark on-dark">
+  <div class="wrap">
+    <div class="thesis-head">
+      <div class="reveal">
+        <p class="eyebrow">Our approach</p>
+        <h2 class="h2">Volga Infosys combines immersive technology with enterprise-grade engineering.</h2>
+      </div>
+      <p class="lede reveal">We believe technology should solve real business challenges — not simply showcase innovation. Our team builds immersive solutions that improve training, accelerate decision-making, enhance customer engagement, and optimize operational efficiency.</p>
+    </div>
+    <div class="claims-grid reveal">
+      <div class="claim">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M4 16l4-8 4 5 3-4 5 7"/></svg>
+        </div>
+        <h3>Immersive technology with impact</h3>
+        <p>AR applications, VR training modules, and Digital Twin ecosystems that unlock new operational possibilities.</p>
+      </div>
+      <div class="claim">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M4 18l5-6 4 3 7-9"/></svg>
+        </div>
+        <h3>Strategic and measurable</h3>
+        <p>Deep technical expertise paired with strategic thinking, aimed at measurable business outcomes.</p>
+      </div>
+      <div class="claim">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="8" r="3"/><path d="M5 20c0-3 3-5 7-5s7 2 7 5"/></svg>
+        </div>
+        <h3>Enterprise-ready delivery</h3>
+        <p>A multidisciplinary team of strategists, developers, 3D artists, and consultants bridging business and innovation.</p>
+      </div>
+      <div class="claim">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg>
+        </div>
+        <h3>Trusted across sectors</h3>
+        <p>Over a decade partnering with enterprises, startups, and government organizations on scalable solutions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section leadership" id="leadership">
+  <div class="wrap">
+
+    <!-- Text side -->
+    <div class="reveal">
+      <p class="eyebrow">Leadership</p>
+      <h2 class="h2">Visionaries driving<br>innovation forward</h2>
+      <p class="lede" style="margin-top:18px;">Our leadership team brings together decades of experience across software development, spatial computing, enterprise consulting, product innovation, and digital transformation — tracking emerging opportunities in AR, VR, XR, AI, and Digital Twins.</p>
+      <div class="stat-row">
+        <div class="stat"><div class="num">20+</div><div class="label">Years combined</div></div>
+        <div class="stat"><div class="num">5</div><div class="label">Core disciplines</div></div>
+      </div>
+    </div>
+
+    <!-- Portrait grid (novabrew-style) -->
+    <div class="leader-grid reveal" id="leaderGrid">
+      <div class="l-card">
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=540&fit=crop&crop=faces&q=80" alt="CEO">
+        <div class="l-meta"><div class="l-nm">Arjun Mehta</div><div class="l-rl">Founder &amp; CEO</div></div>
+      </div>
+      <div class="l-card">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=540&fit=crop&crop=faces&q=80" alt="CTO">
+        <div class="l-meta"><div class="l-nm">Priya Sharma</div><div class="l-rl">CTO</div></div>
+      </div>
+      <div class="l-card">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=540&fit=crop&crop=faces&q=80" alt="Design Lead">
+        <div class="l-meta"><div class="l-nm">Marcus Webb</div><div class="l-rl">Head of Design</div></div>
+      </div>
+      <div class="l-card">
+        <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=540&fit=crop&crop=faces&q=80" alt="Strategy Lead">
+        <div class="l-meta"><div class="l-nm">Leila Nazari</div><div class="l-rl">Head of Strategy</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── Leadership overrides (novabrew portrait cards) ──── */
+  .leadership .wrap {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .leader-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .l-card {
+    aspect-ratio: 3 / 4;
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(180deg, var(--coral) 0%, #e8762b 50%, var(--coral-deep) 100%);
+    box-shadow:
+      0 24px 40px -14px rgba(217,102,62,0.45),
+      0 10px 20px -6px rgba(160,60,20,0.2),
+      inset 0 2px 0 rgba(255,210,160,0.35),
+      inset 0 -3px 6px rgba(120,30,0,0.3);
+    cursor: pointer;
+    transition: transform 0.5s cubic-bezier(0.6,0,0.2,1), box-shadow 0.5s;
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  .l-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(155deg,
+      rgba(255,255,255,0.22) 0%,
+      transparent 30%,
+      transparent 70%,
+      rgba(100,20,0,0.2) 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .l-card:hover { transform: translateY(-10px) rotate(-1deg); }
+  .l-card img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    display: block;
+  }
+  .l-meta {
+    position: absolute;
+    left: 12px; right: 12px; bottom: 12px;
+    background: rgba(15,8,4,0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #faf8f4;
+    padding: 10px 14px;
+    border-radius: 12px;
+    z-index: 3;
+    transform: translateY(8px);
+    opacity: 0;
+    transition: opacity 0.4s, transform 0.4s cubic-bezier(0.6,0,0.2,1);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .l-card:hover .l-meta { transform: translateY(0); opacity: 1; }
+  .l-nm { font-weight: 700; font-size: 13px; }
+  .l-rl { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; letter-spacing: 0.03em; }
+
+  @media (max-width: 900px) {
+    .leadership .wrap { grid-template-columns: 1fr; }
+    .leader-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .leader-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  }
+</style>
+
+<!-- ========== NOVABREW TEAM SECTION ========== -->
+<section class="nb-team-section">
+  <div class="nb-hero">
+    <h2 class="nb-small-line"><span class="nb-word"><span>Small&nbsp;team,</span></span></h2>
+    <div class="nb-big-wrap">
+      <div class="nb-big" id="nbBig">
+        <span class="nb-letter">b</span><span class="nb-letter">i</span><span class="nb-letter">g</span><span class="nb-letter">&nbsp;</span><span class="nb-letter">r</span><span class="nb-letter">e</span><span class="nb-letter">s</span><span class="nb-letter">u</span><span class="nb-letter">l</span><span class="nb-letter">t</span><span class="nb-letter">s</span>
+      </div>
+    </div>
+    <div class="nb-cards-row" id="nbCardsRow">
+      <div class="nb-card nb-card-1" data-rot="-9" data-depth="14"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=600&fit=crop&crop=faces&q=80" alt=""></div>
+      <div class="nb-card nb-card-2" data-rot="-5" data-depth="10"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop&crop=faces&q=80" alt=""></div>
+      <div class="nb-card nb-card-3" data-rot="-2" data-depth="8"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=600&fit=crop&crop=faces&q=80" alt=""></div>
+      <div class="nb-card nb-card-4" data-rot="3" data-depth="12"><img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&h=600&fit=crop&crop=faces&q=80" alt=""></div>
+      <div class="nb-card nb-card-5" data-rot="0" data-depth="6"><img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=600&fit=crop&crop=faces&q=80" alt=""></div>
+      <div class="nb-card nb-card-6" data-rot="4" data-depth="11"><img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=400&h=600&fit=crop&crop=faces&q=80" alt=""></div>
+      <div class="nb-card nb-card-7" data-rot="7" data-depth="9"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=600&fit=crop&crop=faces&q=80" alt=""></div>
+      <div class="nb-card nb-card-8" data-rot="-4" data-depth="13"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=600&fit=crop&crop=faces&q=80" alt=""></div>
+    </div>
+    <div class="nb-subline">
+      <button class="nb-pill">Meet the crew<span class="nb-ar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span></button>
+      <div class="nb-subline-text">8 specialists. 60+ shipped projects. Zero filler.</div>
+    </div>
+  </div>
+
+  <div class="nb-team-wrap">
+    <div class="nb-team-head">
+      <div>
+        <div class="nb-eyebrow">The Crew · Eight strong</div>
+        <h2 class="nb-team-h2">Designers, builders<br>and the <em>quietly brilliant</em>.</h2>
+      </div>
+      <p class="nb-team-desc">Every person here touches every project we ship. Direct work with the people doing it.</p>
+    </div>
+    <div class="nb-team-grid">
+      <div class="nb-t-card"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=540&fit=crop&crop=faces&q=80" alt=""><div class="nb-t-meta"><div class="nb-t-nm">Arjun Mehta</div><div class="nb-t-rl">Founder · CEO</div></div></div>
+      <div class="nb-t-card"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=540&fit=crop&crop=faces&q=80" alt=""><div class="nb-t-meta"><div class="nb-t-nm">Ravi Saigal</div><div class="nb-t-rl">Design Lead</div></div></div>
+      <div class="nb-t-card"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=540&fit=crop&crop=faces&q=80" alt=""><div class="nb-t-meta"><div class="nb-t-nm">Priya Sharma</div><div class="nb-t-rl">Brand Strategist</div></div></div>
+      <div class="nb-t-card"><img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&h=540&fit=crop&crop=faces&q=80" alt=""><div class="nb-t-meta"><div class="nb-t-nm">Vikram Nair</div><div class="nb-t-rl">Senior Engineer</div></div></div>
+      <div class="nb-t-card"><img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=540&fit=crop&crop=faces&q=80" alt=""><div class="nb-t-meta"><div class="nb-t-nm">Leila Nazari</div><div class="nb-t-rl">Art Direction</div></div></div>
+      <div class="nb-t-card"><img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=400&h=540&fit=crop&crop=faces&q=80" alt=""><div class="nb-t-meta"><div class="nb-t-nm">Marcus Webb</div><div class="nb-t-rl">Motion · 3D</div></div></div>
+      <div class="nb-t-card"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=540&fit=crop&crop=faces&q=80" alt=""><div class="nb-t-meta"><div class="nb-t-nm">Iris Caldwell</div><div class="nb-t-rl">Producer</div></div></div>
+      <div class="nb-t-card"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=540&fit=crop&crop=faces&q=80" alt=""><div class="nb-t-meta"><div class="nb-t-nm">Maya Okafor</div><div class="nb-t-rl">CTO · Co-Founder</div></div></div>
+    </div>
+  </div>
+
+  <div class="nb-stats-wrap">
+    <div class="nb-stats-inner">
+      <h3 class="nb-stats-h">Eight humans.<br>One <em>tight ship</em>.</h3>
+      <div class="nb-stat-block"><div class="nb-num" data-count="62"><span>0</span></div><div class="nb-lbl">Projects shipped</div></div>
+      <div class="nb-stat-block"><div class="nb-num" data-count="14"><span>0</span><small>yrs</small></div><div class="nb-lbl">Combined craft</div></div>
+      <div class="nb-stat-block"><div class="nb-num" data-count="9"><span>0</span><small>.4</small></div><div class="nb-lbl">Avg NPS</div></div>
+    </div>
+  </div>
+
+</section>
+
+<section class="section section--dark on-dark" id="careers">
+  <div class="wrap">
+    <div class="careers-head reveal">
+      <p class="eyebrow">Careers</p>
+      <h2 class="h2">Build technology that makes an impact</h2>
+      <p class="lede" style="margin-top:16px;">Join a team where creativity, engineering excellence, and innovation come together to shape the future of immersive experiences across AR, VR, XR, AI, 3D visualization, and enterprise applications.</p>
+    </div>
+    <div class="careers-grid reveal">
+      <div class="career-card"><h3>Transformative work</h3><p>Work on projects that solve real-world challenges and deliver measurable value for enterprise and global clients.</p></div>
+      <div class="career-card"><h3>Growth and mentorship</h3><p>We invest in training, mentorship, and skill development so every team member reaches their full potential.</p></div>
+      <div class="career-card"><h3>Collaborative culture</h3><p>An environment that encourages experimentation across product, design, and engineering.</p></div>
+      <div class="career-card"><h3>Enterprise exposure</h3><p>Gain experience with cutting-edge technologies, complex systems, and clients across industries.</p></div>
+      <div class="career-card"><h3>Career advancement</h3><p>Whether experienced or emerging, find an environment that values initiative and long-term growth.</p></div>
+      <div class="career-card career-card--accent"><h3>Meaningful impact</h3><p>Become part of a team that builds immersive solutions with real business outcomes.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="industries">
+  <div class="wrap">
+    <div class="industries-head reveal">
+      <div>
+        <p class="eyebrow">Industry expertise</p>
+        <h2 class="h2">Immersive solutions tailored across 10 enterprise industries</h2>
+      </div>
+      <p class="lede">From healthcare and manufacturing to real estate, education, and energy — our platform-based approach helps organizations design, train, and operate with immersive tools that deliver measurable value.</p>
+    </div>
+    <div class="industries-grid reveal">
+
+      <div class="industry-card">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&q=80" alt="Medical training">
+        </div>
+        <p class="tag">Medical &amp; clinical</p>
+        <h3>Patient care &amp; medical training</h3>
+        <p>Medical-grade virtual environments move practitioners from passive observation to experiential mastery.</p>
+      </div>
+
+      <div class="industry-card">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&q=80" alt="Manufacturing">
+        </div>
+        <p class="tag">Manufacturing &amp; production</p>
+        <h3>Smart manufacturing through digital twins</h3>
+        <p>Interactive digital twins replicate factory layouts and assembly lines so teams can iterate without stopping production.</p>
+      </div>
+
+      <div class="industry-card">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80" alt="Real estate">
+        </div>
+        <p class="tag">Property &amp; development</p>
+        <h3>Photorealistic virtual real estate tours</h3>
+        <p>Immersive showrooms let buyers and investors walk through unbuilt properties from anywhere in the world.</p>
+      </div>
+
+      <div class="industry-card">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80" alt="Education">
+        </div>
+        <p class="tag">Education &amp; training</p>
+        <h3>Experiential education for institutions</h3>
+        <p>Immersive learning ecosystems let students experience science, engineering, and history in digital spaces.</p>
+      </div>
+
+      <div class="industry-card">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&q=80" alt="Automotive">
+        </div>
+        <p class="tag">Automotive &amp; mobility</p>
+        <h3>Virtual automotive design &amp; customer journeys</h3>
+        <p>High-fidelity ecosystems simulate vehicle design, aerodynamics, and customizable showroom experiences.</p>
+      </div>
+
+      <div class="industry-card">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+         <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&q=80" alt="Automotive">
+        </div>
+        <p class="tag">Retail &amp; commerce</p>
+        <h3>Immersive spatial retail experiences</h3>
+        <p>Virtual storefronts bring the sensory engagement of physical shopping to the web.</p>
+      </div>
+
+      <div class="industry-card">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+         <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&q=80" alt="Automotive">
+        </div>
+        <p class="tag">Architecture &amp; construction</p>
+        <h3>Spatial modeling beyond blueprints</h3>
+        <p>Human-scale walkthroughs let teams review form, light, and structure before construction begins.</p>
+      </div>
+
+      <div class="industry-card">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <img src="Tactical training.png" alt="Automotive">
+        </div>
+        <p class="tag">Defense &amp; security</p>
+        <h3>Tactical training in secure environments</h3>
+        <p>Synthetic environments simulate mission rehearsal and incident command without risking equipment or personnel.</p>
+      </div>
+
+      <div class="industry-card">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&q=80" alt="Automotive">
+        </div>
+        <p class="tag">Travel &amp; hospitality</p>
+        <h3>Immersive digital tourism</h3>
+        <p>Virtual destination previews let travelers explore resorts, landmarks, and curated journeys from anywhere.</p>
+      </div>
+
+      <div class="industry-card">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&q=80" alt="Automotive">
+        </div>
+        <p class="tag">Energy &amp; utilities</p>
+        <h3>Operational intelligence for energy infrastructure</h3>
+        <p>Immersive tools train utility teams on offshore platforms, power grids, and crisis scenarios safely.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section section--process on-process" id="process">
+  <div class="wrap">
+    <div class="process-head reveal">
+      <p class="eyebrow">Our process</p>
+      <h2 class="h2">A proven framework for successful digital transformation</h2>
+      <p class="lede">From discovery to deployment, our process is designed to minimize risk and maximize value.</p>
+    </div>
+    <div class="process-rail reveal">
+      <div class="process-step">
+        <div class="index">01</div>
+        <h3>Understand the business challenge</h3>
+        <p>We work closely with stakeholders to deeply understand business challenges and goals.</p>
+      </div>
+      <div class="process-step">
+        <div class="index">02</div>
+        <h3>Prototype with purpose</h3>
+        <p>We build interactive prototypes, collaboratively refined to align with business and user needs.</p>
+      </div>
+      <div class="process-step">
+        <div class="index">03</div>
+        <h3>Launch with confidence</h3>
+        <p>Agile delivery keeps the project transparent, aligned, and on budget at every stage.</p>
+      </div>
+      <div class="process-step">
+        <div class="index">04</div>
+        <h3>Support long-term success</h3>
+        <p>Post-launch, we continue optimization, maintenance, and support as systems evolve.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="casework-head reveal">
+      <p class="eyebrow">Client work</p>
+      <h2 class="h2">Case studies from recent engagements</h2>
+    </div>
+    <div class="casework-grid reveal">
+      <div class="casework-card">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 9h18"/></svg>
+        </div>
+        <p class="client">Client / industry — healthcare</p>
+        <h3>Surgical training simulator</h3>
+      </div>
+      <div class="casework-card">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 9h18"/></svg>
+        </div>
+        <p class="client">Client / industry — manufacturing</p>
+        <h3>Plant digital twin rollout</h3>
+      </div>
+      <div class="casework-card">
+        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 9h18"/></svg>
+        </div>
+        <p class="client">Client / industry — real estate</p>
+        <h3>Pre-sale virtual showroom</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--partners on-dark">
+  <div class="wrap">
+    <p class="partners-statement reveal">Strong alliances with technology providers, platform vendors, and innovation partners help us deliver world-class digital experiences.</p>
+    <div class="partners-row reveal">
+      <div class="partner-logo"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/></svg></div>
+      <div class="partner-logo"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="8"/></svg></div>
+      <div class="partner-logo"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><polygon points="12 3 21 19 3 19"/></svg></div>
+      <div class="partner-logo"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M5 9h14M9 5v14"/></svg></div>
+      <div class="partner-logo"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M4 12a8 8 0 0116 0"/></svg></div>
+    </div>
+  </div>
+</section>
+
+<section class="section contact" id="contact">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">Contact</p>
+      <h2 class="h2">Let's create what's next together</h2>
+      <p class="lede" style="margin-top:16px;">Whether you're exploring immersive technologies, planning a transformation initiative, or building a new product, our experts are ready to help.</p>
+    </div>
+    <div class="contact-actions reveal">
+      <a class="btn btn-primary" href="#">Get in touch</a>
+      <a class="btn btn-ghost" href="#">Request consultation</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+    <div class="ft">
+  <div class="ft-top">
+    <div class="ft-eyebrow">
+      <span class="ft-eyebrow-text">Let's build work that inspires.</span>
+      <span class="ft-clock" id="clk">IST → --:--</span>
+    </div>
+    <div class="ft-headline">Ready to build<br><span>something</span> bold?</div>
+    <div class="ft-cta">
+      <a href="contact.html" >Start a collaboration</a>
+      <i class="ti ti-arrow-right" style="font-size:14px" aria-hidden="true"></i>
+    </div>
+    
+  </div>
+
+  <div class="ft-divider"></div>
+
+  <div class="ft-mid">
+    <div>
+      <div class="ft-mhead">Business</div>
+      <span class="ft-mlink">Training Simulation</span>
+      <span class="ft-mlink">3D Configurators</span>
+      <span class="ft-mlink">Buildings & Interiors</span>
+      <span class="ft-mlink">E-Commerce</span>
+      <span class="ft-mlink">Manufacturing</span>
+      <span class="ft-mlink">Entertainment</span>
+      <span class="ft-mlink">Museums & Travel</span>
+    </div>
+    <div>
+      <div class="ft-mhead">Services</div>
+      <span class="ft-mlink">Augmented Reality</span>
+      <span class="ft-mlink">Virtual Reality</span>
+      <span class="ft-mlink">AR Player</span>
+      <span class="ft-mlink">VR Player 360°</span>
+      <span class="ft-mlink">Privacy Policy</span>
+    </div>
+    <div>
+      <div class="ft-mhead">Business Enquiry</div>
+      <div class="ft-contact-val"><span class="ft-contact-label">E.</span>hello@volga.com</div>
+      <div class="ft-contact-val"><span class="ft-contact-label">P.</span>+91 98241 82099</div>
+    </div>
+    <div>
+      <div class="ft-mhead">Social</div>
+      <span class="ft-mlink">LinkedIn</span>
+      <span class="ft-mlink">Instagram</span>
+      <span class="ft-mlink">Facebook</span>
+      <span class="ft-mlink">YouTube</span>
+      <span class="ft-mlink">WhatsApp</span>
+    </div>
+  </div>
+
+  <div class="ft-wordmark-wrap">
+    <div class="ft-wordmark">VOLGA</div>
+  </div>
+
+  <div class="ft-bottom">
+    <span class="ft-copy">© Volga Infosys® 2026</span>
+    <div class="ft-blinks">
+      <span class="ft-blink">Privacy & Policy</span>
+      <span class="ft-blink">Made with ♦ by Volga</span>
+    </div>
+  </div>
+</div>
+
+</footer>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.nav-links');
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '76px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = 'var(--cream)';
+      links.style.padding = '20px 32px';
+      links.style.borderBottom = '1px solid var(--line)';
+    });
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('is-visible');
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── Novabrew section styles ────────────────────────────────
+  const nbStyle = document.createElement('style');
+  nbStyle.textContent = `
+    .nb-team-section{position:relative;overflow:hidden;}
+    .nb-hero{position:relative;min-height:90vh;padding:100px 32px 60px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(120% 70% at 50% 0%,#f8f3e7 0%,#f2ead6 60%,#e9dec3 100%);}
+    .nb-small-line{font-weight:700;font-size:clamp(36px,6vw,86px);letter-spacing:-.03em;line-height:1;color:#141416;text-align:center;position:relative;z-index:4;}
+    .nb-word{display:inline-block;overflow:hidden;vertical-align:top;}
+    .nb-word>span{display:inline-block;transform:translateY(105%);}
+    .nb-big-wrap{position:relative;width:100%;margin-top:-16px;display:flex;justify-content:center;z-index:1;}
+    .nb-big{font-style:italic;font-weight:800;font-size:clamp(100px,20vw,280px);letter-spacing:-.045em;line-height:.85;color:#c5bfae;text-align:center;white-space:nowrap;user-select:none;}
+    .nb-big .nb-letter{display:inline-block;transform-origin:bottom;}
+    .nb-cards-row{position:absolute;left:0;right:0;top:50%;height:300px;z-index:3;pointer-events:none;}
+    .nb-cards-row>*{pointer-events:auto;}
+    .nb-card{position:absolute;border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#d9351f 0%,#e85a2b 35%,#f58b4e 70%,#fdc68a 100%);box-shadow:0 28px 48px -14px rgba(180,50,20,.5),0 12px 24px -6px rgba(140,40,10,.3),inset 0 2px 0 rgba(255,220,180,.45),inset 0 -3px 6px rgba(120,20,0,.4);cursor:pointer;will-change:transform;transition:box-shadow .5s cubic-bezier(.6,0,.2,1);}
+    .nb-card::before{content:"";position:absolute;inset:0;background:linear-gradient(155deg,rgba(255,255,255,.25) 0%,transparent 30%,transparent 70%,rgba(100,20,0,.25) 100%);pointer-events:none;border-radius:inherit;z-index:2;}
+    .nb-card img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+    .nb-card-1{width:120px;height:165px;left:4%;top:28px;z-index:1;}
+    .nb-card-2{width:150px;height:205px;left:12%;top:48px;z-index:2;}
+    .nb-card-3{width:190px;height:255px;left:22%;top:18px;z-index:4;}
+    .nb-card-4{width:140px;height:190px;left:36%;top:65px;z-index:3;}
+    .nb-card-5{width:215px;height:290px;left:44%;top:0;z-index:5;}
+    .nb-card-6{width:150px;height:200px;left:59%;top:50px;z-index:3;}
+    .nb-card-7{width:165px;height:225px;left:70%;top:28px;z-index:4;}
+    .nb-card-8{width:125px;height:165px;left:84%;top:48px;z-index:2;}
+    .nb-subline{margin-top:170px;text-align:center;z-index:4;position:relative;}
+    .nb-pill{display:inline-flex;align-items:center;gap:10px;background:#141416;color:#fafaf7;border:none;padding:12px 20px 12px 24px;border-radius:999px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;box-shadow:0 14px 24px -8px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.12),inset 0 -2px 4px rgba(0,0,0,.4);transition:transform .4s cubic-bezier(.6,0,.2,1);}
+    .nb-pill:hover{transform:translateY(-2px);}
+    .nb-ar{width:26px;height:26px;border-radius:50%;background:linear-gradient(180deg,#d9351f,#f58b4e);display:flex;align-items:center;justify-content:center;color:#fff;transition:transform .4s cubic-bezier(.6,0,.2,1);}
+    .nb-pill:hover .nb-ar{transform:rotate(45deg);}
+    .nb-subline-text{margin-top:20px;font-size:13px;color:#8b847a;letter-spacing:.06em;}
+    .nb-team-wrap{padding:100px 40px 60px;max-width:1280px;margin:0 auto;}
+    .nb-team-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;margin-bottom:56px;}
+    .nb-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#8b847a;font-weight:500;margin-bottom:14px;}
+    .nb-eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:#d9351f;box-shadow:0 0 0 3px rgba(217,53,31,.2);}
+    .nb-team-h2{font-weight:700;font-size:clamp(30px,4vw,58px);line-height:1;letter-spacing:-.03em;max-width:560px;}
+    .nb-team-h2 em{font-style:italic;font-weight:800;background:linear-gradient(135deg,#d9351f,#f58b4e);-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .nb-team-desc{font-size:15px;line-height:1.55;color:#2b2b30;max-width:300px;}
+    .nb-team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+    .nb-t-card{aspect-ratio:3/4;border-radius:20px;overflow:hidden;background:linear-gradient(180deg,#d9351f 0%,#e85a2b 35%,#f58b4e 70%,#fdc68a 100%);position:relative;box-shadow:0 22px 38px -14px rgba(180,50,20,.4),0 8px 20px -5px rgba(140,40,10,.22),inset 0 2px 0 rgba(255,220,180,.4),inset 0 -3px 6px rgba(120,20,0,.3);cursor:pointer;transition:transform .5s cubic-bezier(.6,0,.2,1),box-shadow .5s;}
+    .nb-t-card::before{content:"";position:absolute;inset:0;background:linear-gradient(155deg,rgba(255,255,255,.22) 0%,transparent 30%,transparent 70%,rgba(100,20,0,.22) 100%);pointer-events:none;z-index:2;}
+    .nb-t-card:hover{transform:translateY(-10px) rotate(-1deg);}
+    .nb-t-card img{width:100%;height:100%;object-fit:cover;object-position:center top;}
+    .nb-t-meta{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(20,10,6,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fafaf7;padding:10px 14px;border-radius:12px;z-index:3;transform:translateY(8px);opacity:0;transition:opacity .4s,transform .4s cubic-bezier(.6,0,.2,1);border:1px solid rgba(255,255,255,.12);}
+    .nb-t-card:hover .nb-t-meta{transform:translateY(0);opacity:1;}
+    .nb-t-nm{font-weight:700;font-size:13px;}.nb-t-rl{font-size:11px;color:rgba(255,255,255,.65);margin-top:2px;letter-spacing:.03em;}
+    .nb-stats-wrap{padding:20px 40px 100px;}
+    .nb-stats-inner{max-width:1280px;margin:0 auto;background:#141416;border-radius:32px;padding:72px 56px;color:#f4edde;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;align-items:end;box-shadow:0 40px 80px -30px rgba(20,8,0,.45),inset 0 1px 0 rgba(255,255,255,.08);position:relative;overflow:hidden;}
+    .nb-stats-inner::before{content:"";position:absolute;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(217,102,62,.35),transparent 65%);top:-180px;right:-80px;filter:blur(40px);}
+    .nb-stats-h{font-weight:700;font-size:clamp(26px,2.8vw,40px);line-height:1.05;letter-spacing:-.03em;position:relative;z-index:1;}
+    .nb-stats-h em{font-style:italic;font-weight:800;background:linear-gradient(135deg,#f58b4e,#fdc68a);-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .nb-stat-block{position:relative;z-index:1;}
+    .nb-num{font-weight:700;font-size:clamp(40px,4vw,64px);line-height:1;letter-spacing:-.04em;display:flex;align-items:baseline;gap:4px;}
+    .nb-num small{font-size:.42em;color:#8b847a;font-weight:500;}
+    .nb-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:#8b847a;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.12);}
+    @media(max-width:1100px){.nb-team-grid{grid-template-columns:repeat(3,1fr);}.nb-stats-inner{grid-template-columns:1fr 1fr;padding:44px 28px;}}
+    @media(max-width:750px){.nb-hero{padding:80px 16px 40px;}.nb-big{font-size:22vw;}.nb-cards-row{height:210px;top:52%;}.nb-card-1{width:75px;height:105px;left:0;top:18px;}.nb-card-2{width:85px;height:122px;left:10%;top:32px;}.nb-card-3{width:105px;height:145px;left:22%;top:12px;}.nb-card-4{width:85px;height:115px;left:36%;top:48px;}.nb-card-5{width:125px;height:172px;left:46%;top:0;}.nb-card-6{width:90px;height:125px;left:62%;top:38px;}.nb-card-7{width:95px;height:132px;left:74%;top:18px;}.nb-card-8{width:76px;height:106px;left:87%;top:32px;}.nb-subline{margin-top:110px;}.nb-team-wrap{padding:60px 20px 40px;}.nb-team-grid{grid-template-columns:repeat(2,1fr);gap:14px;}.nb-stats-wrap{padding:10px 20px 60px;}.nb-stats-inner{grid-template-columns:1fr 1fr;padding:36px 22px;gap:22px;}}
+  `;
+  document.head.appendChild(nbStyle);
+
+  // ── Leader card scroll reveal ──────────────────────────────
+  const lcardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.l-card').forEach((card, i) => {
+          setTimeout(() => {
+            card.style.transition = 'opacity 0.7s ease, transform 0.7s cubic-bezier(0.34,1.56,0.64,1)';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, i * 120);
+        });
+        lcardObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  const leaderGrid = document.getElementById('leaderGrid');
+  if (leaderGrid) lcardObserver.observe(leaderGrid);
+
+  // ── Leader card hover 3D tilt ─────────────────────────────
+  document.querySelectorAll('.l-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `translateY(-10px) rotate(-1deg) rotateX(${-py * 12}deg) rotateY(${px * 12}deg) scale(1.04)`;
+      card.style.perspective = '700px';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'translateY(0) rotate(0deg) rotateX(0deg) rotateY(0deg) scale(1)';
+      card.style.transition = 'transform 0.7s cubic-bezier(0.34,1.56,0.64,1), opacity 0.7s ease';
+    });
+  });
+
+  // ── Novabrew GSAP animations ─────────────────────────────
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Initial states
+    document.querySelectorAll('.nb-card').forEach(card => {
+      const rot = parseFloat(card.dataset.rot) || 0;
+      gsap.set(card, { y: -500, rotation: rot + 22, opacity: 0, scale: 0.75 });
+    });
+    gsap.set('.nb-word > span', { y: '105%' });
+    gsap.set('.nb-big .nb-letter', { y: 70, opacity: 0 });
+    gsap.set('.nb-subline', { opacity: 0, y: 20 });
+
+    // Animate in on scroll
+    ScrollTrigger.create({
+      trigger: '.nb-hero', start: 'top 80%', once: true,
+      onEnter() {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        tl.to('.nb-word > span', { y: '0%', duration: 0.9 }, 0)
+          .to('.nb-big .nb-letter', { y: 0, opacity: 1, duration: 0.9, stagger: 0.05, ease: 'back.out(1.6)' }, 0.3)
+          .to('.nb-card', {
+            y: 0, opacity: 1, scale: 1,
+            rotation: (i, el) => parseFloat(el.dataset.rot) || 0,
+            duration: 1.1, stagger: { each: 0.08, from: 'center' }, ease: 'back.out(1.4)'
+          }, 0.5)
+          .to('.nb-subline', { opacity: 1, y: 0, duration: 0.8 }, 1.4);
+
+        // Continuous float per card
+        document.querySelectorAll('.nb-card').forEach((card, i) => {
+          const rot = parseFloat(card.dataset.rot) || 0;
+          gsap.to(card, {
+            y: `+=${7 + (i % 3) * 5}`,
+            rotation: rot + (i % 2 === 0 ? 1.5 : -1.5),
+            duration: 3 + (i % 4) * 0.5,
+            delay: 1.5 + i * 0.1,
+            ease: 'sine.inOut', yoyo: true, repeat: -1
+          });
+        });
+      }
+    });
+
+    // Mouse parallax
+    const nbHero = document.querySelector('.nb-hero');
+    if (nbHero) {
+      let mx = 0, my = 0, tx = 0, ty = 0;
+      nbHero.addEventListener('mousemove', e => {
+        const r = nbHero.getBoundingClientRect();
+        mx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+        my = ((e.clientY - r.top) / r.height - 0.5) * 2;
+      });
+      nbHero.addEventListener('mouseleave', () => { mx = 0; my = 0; });
+      (function tick() {
+        tx += (mx - tx) * 0.05; ty += (my - ty) * 0.05;
+        document.querySelectorAll('.nb-card').forEach(c => {
+          const d = parseFloat(c.dataset.depth) || 8;
+          c.style.translate = `${tx * d}px ${ty * d * 0.4}px`;
+        });
+        requestAnimationFrame(tick);
+      })();
+    }
+
+    // nb-card 3D hover
+    document.querySelectorAll('.nb-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        gsap.to(card, { rotateX: -py * 16, rotateY: px * 16, scale: 1.1, zIndex: 20, duration: 0.4, ease: 'power2.out', transformPerspective: 700, overwrite: 'auto' });
+      });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.8, ease: 'elastic.out(1,0.6)', overwrite: 'auto' });
+      });
+    });
+
+    // Team grid stagger in
+    gsap.from('.nb-t-card', {
+      y: 80, opacity: 0, scale: 0.9,
+      rotation: i => i % 2 === 0 ? -3 : 3,
+      duration: 1, stagger: 0.08, ease: 'back.out(1.3)',
+      scrollTrigger: { trigger: '.nb-team-grid', start: 'top 80%' }
+    });
+
+    // Stats bar + counters
+    ScrollTrigger.create({
+      trigger: '.nb-stats-inner', start: 'top 75%', once: true,
+      onEnter() {
+        gsap.from('.nb-stats-inner', { y: 50, opacity: 0, scale: 0.97, duration: 1.1, ease: 'power3.out' });
+        document.querySelectorAll('.nb-stat-block .nb-num').forEach(el => {
+          const target = parseFloat(el.dataset.count);
+          const span = el.querySelector('span');
+          gsap.to({ v: 0 }, {
+            v: target, duration: 2, ease: 'power2.out',
+            onUpdate() { span.textContent = Math.floor(this.targets()[0].v); }
+          });
+        });
+      }
+    });
+
+    // Big letters hover
+    const bigWrap = document.querySelector('.nb-big-wrap');
+    if (bigWrap) {
+      bigWrap.addEventListener('mouseenter', () => gsap.to('.nb-big .nb-letter', { y: -8, duration: 0.5, stagger: 0.03, ease: 'back.out(1.6)' }));
+      bigWrap.addEventListener('mouseleave', () => gsap.to('.nb-big .nb-letter', { y: 0, duration: 0.6, stagger: 0.03, ease: 'elastic.out(1,0.6)' }));
+    }
+
+    // nb-pill click pulse
+    const nbPill = document.querySelector('.nb-pill');
+    if (nbPill) {
+      nbPill.addEventListener('click', () => {
+        gsap.fromTo(nbPill, { scale: 1 }, { scale: 0.93, duration: 0.12, yoyo: true, repeat: 1, ease: 'power2.inOut' });
+      });
+    }
+  }
+</script>
+
+</body>
+</html>

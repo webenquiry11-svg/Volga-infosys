@@ -1,0 +1,419 @@
+<!-- Add this to your admin dashboard (admin/index.html or dashboard.html) -->
+
+<div class="admin-section">
+  <h2>📧 Auto-Response Management</h2>
+  
+  <!-- Statistics -->
+  <div id="emailStats" class="stats-grid">
+    <!-- Stats will be loaded here -->
+  </div>
+
+  <!-- Create Auto-Response -->
+  <div class="form-section">
+    <h3>Create New Auto-Response</h3>
+    <form id="autoResponseForm">
+      <label>Response Type:</label>
+      <select id="responseType" name="responseType" required>
+        <option value="simple">Simple Reply</option>
+        <option value="keyword-based">Keyword-Based</option>
+      </select>
+
+      <label>Subject:</label>
+      <input type="text" name="subject" placeholder="Email subject" required>
+
+      <label>Message:</label>
+      <textarea name="message" placeholder="Auto-response message" required></textarea>
+
+      <label>
+        <input type="checkbox" name="respondToContactForm" checked>
+        Respond to Contact Form Submissions
+      </label>
+
+      <label>
+        <input type="checkbox" name="respondToAllEmails">
+        Respond to All Incoming Emails
+      </label>
+
+      <label>
+        <input type="checkbox" name="respondOnlyOnce" checked>
+        Send Only Once Per Email
+      </label>
+
+      <label>Delay (seconds):</label>
+      <input type="number" name="delaySeconds" value="0" min="0">
+
+      <button type="submit">Create Auto-Response</button>
+    </form>
+  </div>
+
+  <!-- Active Auto-Responses -->
+  <div class="responses-section">
+    <h3>Active Auto-Responses</h3>
+    <div id="responsesList" class="responses-list">
+      <!-- List will be loaded here -->
+    </div>
+  </div>
+
+  <!-- Email Logs -->
+  <div class="logs-section">
+    <h3>Email Activity Log</h3>
+    <div class="filter-controls">
+      <select id="statusFilter">
+        <option value="">All Statuses</option>
+        <option value="sent">Sent</option>
+        <option value="failed">Failed</option>
+        <option value="pending">Pending</option>
+        <option value="received">Received</option>
+      </select>
+      <select id="typeFilter">
+        <option value="">All Types</option>
+        <option value="outgoing">Outgoing</option>
+        <option value="incoming">Incoming</option>
+        <option value="auto-response">Auto-Response</option>
+      </select>
+      <button onclick="refreshEmailLogs()">Refresh</button>
+    </div>
+    <table id="emailLogsTable" class="logs-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Subject</th>
+          <th>Type</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Table rows will be loaded here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+  .admin-section {
+    padding: 20px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+  }
+
+  .stat-card {
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .stat-card h4 {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+  }
+
+  .stat-card .value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0;
+  }
+
+  .form-section,
+  .responses-section,
+  .logs-section {
+    margin: 20px 0;
+    padding: 15px;
+    background: #fafafa;
+    border-radius: 8px;
+  }
+
+  .form-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .form-section label {
+    font-weight: 500;
+  }
+
+  .form-section input[type="text"],
+  .form-section input[type="number"],
+  .form-section select,
+  .form-section textarea {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+  }
+
+  .form-section button,
+  .filter-controls button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .responses-list {
+    display: grid;
+    gap: 15px;
+  }
+
+  .response-item {
+    background: white;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .response-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .response-item button {
+    padding: 5px 10px;
+    font-size: 12px;
+    margin: 0 5px;
+  }
+
+  .filter-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .logs-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+  }
+
+  .logs-table th,
+  .logs-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .logs-table th {
+    background: #f5f5f5;
+    font-weight: 600;
+  }
+
+  .status-sent { color: green; }
+  .status-failed { color: red; }
+  .status-pending { color: orange; }
+  .status-received { color: blue; }
+</style>
+
+<script>
+  // Load statistics
+  async function loadEmailStats() {
+    try {
+      const response = await fetch('/api/auto-responses/stats/dashboard', {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        const statsHtml = `
+          <div class="stat-card">
+            <h4>Total Emails</h4>
+            <div class="value">${data.data.totalEmails}</div>
+          </div>
+          <div class="stat-card">
+            <h4>Sent Successfully</h4>
+            <div class="value">${data.data.sentEmails}</div>
+          </div>
+          <div class="stat-card">
+            <h4>Failed</h4>
+            <div class="value">${data.data.failedEmails}</div>
+          </div>
+          <div class="stat-card">
+            <h4>Auto-Responses</h4>
+            <div class="value">${data.data.autoResponses}</div>
+          </div>
+          <div class="stat-card">
+            <h4>Success Rate</h4>
+            <div class="value">${data.data.successRate}%</div>
+          </div>
+          <div class="stat-card">
+            <h4>Recent (7 days)</h4>
+            <div class="value">${data.data.recentEmails}</div>
+          </div>
+        `;
+        document.getElementById('emailStats').innerHTML = statsHtml;
+      }
+    } catch (error) {
+      console.error('Error loading stats:', error);
+    }
+  }
+
+  // Load auto-responses
+  async function loadAutoResponses() {
+    try {
+      const response = await fetch('/api/auto-responses', {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        const responsesList = document.getElementById('responsesList');
+        responsesList.innerHTML = data.data.map(response => `
+          <div class="response-item">
+            <div class="response-item-header">
+              <div>
+                <h4>${response.subject}</h4>
+                <p>${response.responseType}</p>
+              </div>
+              <div>
+                <button onclick="testAutoResponse('${response._id}')">Test</button>
+                <button onclick="toggleAutoResponse('${response._id}', ${response.enabled})">
+                  ${response.enabled ? 'Disable' : 'Enable'}
+                </button>
+                <button onclick="deleteAutoResponse('${response._id}')">Delete</button>
+              </div>
+            </div>
+            <p>${response.message}</p>
+          </div>
+        `).join('');
+      }
+    } catch (error) {
+      console.error('Error loading auto-responses:', error);
+    }
+  }
+
+  // Create auto-response
+  document.getElementById('autoResponseForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    data.delaySeconds = parseInt(data.delaySeconds);
+
+    try {
+      const response = await fetch('/api/auto-responses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+        },
+        body: JSON.stringify(data)
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        alert('Auto-response created successfully');
+        e.target.reset();
+        loadAutoResponses();
+      }
+    } catch (error) {
+      console.error('Error creating auto-response:', error);
+    }
+  });
+
+  // Toggle auto-response
+  async function toggleAutoResponse(id, currentState) {
+    try {
+      const response = await fetch(`/api/auto-responses/${id}/toggle`, {
+        method: 'PATCH',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        loadAutoResponses();
+      }
+    } catch (error) {
+      console.error('Error toggling auto-response:', error);
+    }
+  }
+
+  // Delete auto-response
+  async function deleteAutoResponse(id) {
+    if (!confirm('Are you sure?')) return;
+
+    try {
+      const response = await fetch(`/api/auto-responses/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        loadAutoResponses();
+      }
+    } catch (error) {
+      console.error('Error deleting auto-response:', error);
+    }
+  }
+
+  // Test auto-response
+  async function testAutoResponse(id) {
+    try {
+      const response = await fetch(`/api/auto-responses/${id}/test`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+      });
+      const result = await response.json();
+
+      alert(result.message);
+    } catch (error) {
+      console.error('Error testing auto-response:', error);
+    }
+  }
+
+  // Load email logs
+  async function refreshEmailLogs() {
+    const status = document.getElementById('statusFilter').value;
+    const type = document.getElementById('typeFilter').value;
+    let url = '/api/auto-responses/logs/all';
+    const params = new URLSearchParams();
+    if (status) params.append('status', status);
+    if (type) params.append('type', type);
+    if (params.toString()) url += '?' + params.toString();
+
+    try {
+      const response = await fetch(url, {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        const tbody = document.querySelector('.logs-table tbody');
+        tbody.innerHTML = data.data.map(log => `
+          <tr>
+            <td>${new Date(log.createdAt).toLocaleString()}</td>
+            <td>${log.from}</td>
+            <td>${log.to}</td>
+            <td>${log.subject || '-'}</td>
+            <td>${log.type}</td>
+            <td><span class="status-${log.status}">${log.status}</span></td>
+          </tr>
+        `).join('');
+      }
+    } catch (error) {
+      console.error('Error loading email logs:', error);
+    }
+  }
+
+  // Initialize
+  window.addEventListener('load', () => {
+    loadEmailStats();
+    loadAutoResponses();
+    refreshEmailLogs();
+    
+    // Refresh every 30 seconds
+    setInterval(loadEmailStats, 30000);
+    setInterval(refreshEmailLogs, 30000);
+  });
+</script>

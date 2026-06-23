@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Volga Infosys — VR & AR Pioneers</title>
+  <link rel="stylesheet" href="volga.css" />
+  
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Orbitron:wght@400;500;700&family=Exo+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+ 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="portfolio-marquee.css" />
+
+  <!-- ▶ Cube Mission styles — scoped, no conflict with volga.css -->
+  <link rel="stylesheet" href="cube-mission.css" />
+
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════ SCROLL PROGRESS -->
+  <div class="scroll-progress-container">
+    <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- ═══════════════════════════════════════════ LOADER -->
+  <div class="loader" id="loader">
+    <div class="loader-bg" aria-hidden="true"></div>
+    <div class="loader-inner">
+      <img src="logo.png" alt="VOLGA" class="loader-logo-img" />
+      <div class="loader-bar">
+        <div class="loader-bar-fill" id="loaderFill"></div>
+      </div>
+      <div class="loader-text" id="loaderText">Initializing Reality...</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ NAV -->
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
+      <img src="logo.png" alt="VOLGA Infosys logo" />
+    </a>
+
+    <ul class="nav-links">
+      <li class="nav-item" data-menu="solutions">
+        <button class="nav-link">Solutions <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="industries">
+        <button class="nav-link">Industries <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="services">
+        <button class="nav-link">Services <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="work">
+        <button class="nav-link">Work <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="technologies">
+        <a class="nav-link" href="technologies (2).html">Technologies</a>
+      </li>
+      <li class="nav-item" data-menu="insights">
+        <a class="nav-link" href="insights-overview.html">Insights </a>
+      </li>
+      <li class="nav-item" data-menu="company">
+        <button class="nav-link">Company <span class="nav-arrow"></span></button>
+      </li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Contact Us</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose" aria-label="Close mobile menu">X</button>
+    <ul>
+      <li><a href="index.html" class="mm-link">Home</a></li>
+      <li><a href="solutions.html" class="mm-link">Solutions</a></li>
+      <li><a href="industries.html" class="mm-link">Industries</a></li>
+      <li><a href="services.html" class="mm-link">Services</a></li>
+      <li><a href="portfolio.html" class="mm-link">Work</a></li>
+      <li><a href="technologies.html" class="mm-link">Technologies</a></li>
+      <li><a href="blog.html" class="mm-link">Insights</a></li>
+      <li><a href="company.html" class="mm-link">Company</a></li>
+      <li><a href="contact.html" class="mm-link">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- MEGA MENUS -->
+  <div class="mega-menu" id="menu-solutions">
+    <div class="mega-inner">
+      <div class="mega-label">Solutions</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>AR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z"/><circle cx="12" cy="10" r="3"/></svg></span>VR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>MR / XR Applications</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Digital Twin</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>AI Integration</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>3D Configurators</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Virtual Showrooms</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>Simulation Systems</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Interactive Training</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>Metaverse Solutions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">New: AI-Powered XR</div>
+        <div class="mega-highlight-sub">Combining spatial computing with generative AI for next-gen enterprise experiences.</div>
+        <a href="#" class="mega-highlight-btn">Explore <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-industries">
+    <div class="mega-inner">
+      <div class="mega-label">Industries</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="industries.html#healthcare"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>Healthcare</a></li>
+            <li><a class="mega-item" href="industries.html#manufacturing"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>Manufacturing</a></li>
+            <li><a class="mega-item" href="industries.html#realestate"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Real Estate</a></li>
+            <li><a class="mega-item" href="industries.html#education"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>Education</a></li>
+            <li><a class="mega-item" href="industries.html#automotive"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>Automotive</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="industries.html#retail"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Retail</a></li>
+            <li><a class="mega-item" href="industries.html#architecture"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>Architecture</a></li>
+            <li><a class="mega-item" href="industries.html#defense"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Defense</a></li>
+            <li><a class="mega-item" href="industries.html#tourism"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Tourism</a></li>
+            <li><a class="mega-item" href="industries.html#energy"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>Energy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Industry Solutions</div>
+        <div class="mega-highlight-sub">Tailored immersive experiences built for your sector's unique challenges.</div>
+        <a href="industries.html" class="mega-highlight-btn">View All <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-services">
+    <div class="mega-inner">
+      <div class="mega-label">Services</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="services.html#custom-ar"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>Custom AR App Development</a></li>
+            <li><a class="mega-item" href="services.html#vr-training"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z"/><circle cx="12" cy="10" r="3"/></svg></span>VR Training Platforms</a></li>
+            <li><a class="mega-item" href="services.html#unity-dev"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>Unity Development</a></li>
+            <li><a class="mega-item" href="services.html#webgl"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>WebGL Experiences</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="services.html#3d-modeling"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>3D Modeling & Animation</a></li>
+            <li><a class="mega-item" href="services.html#uiux"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 17l10-10 4 4 6-6"/></svg></span>UI/UX Design</a></li>
+            <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>Cloud Deployment</a></li>
+            <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg></span>Maintenance & Support</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Full-Cycle Delivery</div>
+        <div class="mega-highlight-sub">From concept to deployment — we handle every stage of your XR project.</div>
+        <a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-work">
+    <div class="mega-inner">
+      <div class="mega-label">Work</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="portfolio2.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>Case Studies</a></li>
+            <li><a class="mega-item" href="portfolio.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>Portfolio</a></li>
+            <li><a class="mega-item" href="client-stories.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Client Stories</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></span>Product Demos</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Featured Project</div>
+        <div class="mega-highlight-sub">See how we transformed a global manufacturer's training program with immersive VR.</div>
+        <a href="#" class="mega-highlight-btn">View Case Study <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-company">
+    <div class="mega-inner">
+      <div class="mega-label">Company</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="about.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>About Us</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>Careers</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Partnerships</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">We're Hiring</div>
+        <div class="mega-highlight-sub">Join a team building the future of spatial computing and enterprise immersive tech.</div>
+        <a href="#" class="mega-highlight-btn">See Openings <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div id="backdrop" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════ HERO -->
+  <section class="Hero" id="Hero">
+    <div class="Hero-video-wrap">
+      <video class="Hero-video" src="hompage.mp4" alt="Hero Image" autoplay loop muted playsinline></video>
+      <div class="Hero-noise"></div>
+    </div>
+    <div class="Hero-content">
+      <h1 class="Hero-heading">
+        Engineering Immersive <em>Intelligent Systems</em> for Enterprise Growth
+      </h1>
+      <p class="Hero-sub">Build smarter training programs, interactive digital twins, and enterprise-grade AR/VR platforms that improve performance, reduce operational risk, and accelerate decision-making.
+Volga Infosys helps organizations bridge the gap between physical operations and digital intelligence through immersive technologies, AI integration, and real-time 3D environments.</p>
+      <div class="Hero-cta-row">
+        <a href="portfolio.html" class="btn-primary magnetic-btn">Explore Portfolio</a>
+        <a href="services.html" class="btn-ghost btn-ghost-light magnetic-btn">Our Services</a>
+      </div>
+    </div>
+    <div class="Hero-scroll-hint">
+      <span>Scroll to explore</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-track" id="tickerTrack">
+      <span>Virtual Reality</span><span class="ticker-dot">✦</span>
+      <span>Augmented Reality</span><span class="ticker-dot">✦</span>
+      <span>3D Visualization</span><span class="ticker-dot">✦</span>
+      <span>Immersive Tech</span><span class="ticker-dot">✦</span>
+      <span>XR Development</span><span class="ticker-dot">✦</span>
+      <span>Innovation Lab</span><span class="ticker-dot">✦</span>
+      <span>Virtual Reality</span><span class="ticker-dot">✦</span>
+      <span>Augmented Reality</span><span class="ticker-dot">✦</span>
+      <span>3D Visualization</span><span class="ticker-dot">✦</span>
+      <span>Immersive Tech</span><span class="ticker-dot">✦</span>
+      <span>XR Development</span><span class="ticker-dot">✦</span>
+      <span>Innovation Lab</span><span class="ticker-dot">✦</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ SOLUTIONS -->
+  <section class="solutionss-section" id="solutions-showcase">
+    <h2 class="sr-only">Immersive solutions with hover visual cards</h2>
+    <div class="solutionss-header">
+      <div>
+        <div class="solutionss-kicker">Solutions</div>
+        <p class="solutionss-title">Enterprise Solutions Built Around Business Outcomes</p>
+      </div>
+      <p class="solutionss-desc">Create immersive experiences that improve training, collaboration, product visualization, and operational readiness.</p>
+    </div>
+    <div class="solutionss-grid">
+      <div class="solutions-card">
+        <div class="card-default"><img class="icon" src="hologram.png" alt="AR solutions"/><h3>AR Solutions</h3></div>
+        <div class="card-hover"><div class="hover-bg-title"><span>AR Solutions</span></div><img class="hover-icon" src="hologram.png" alt=""/><p>Interactive overlays, visualization tools, and real-world product or training experiences.</p></div>
+      </div>
+      <div class="solutions-card">
+        <div class="card-default"><img class="icon" src="vr-headset-lab.jpg" alt="VR solutions"/><h3>VR Solutions</h3></div>
+        <div class="card-hover"><div class="hover-bg-title"><span>VR Solutions</span></div><img class="hover-icon" src="vr-headset-lab.jpg" alt=""/><p>Immersive environments for training, simulation, demos, and branded experiences.</p></div>
+      </div>
+      <div class="solutions-card">
+        <div class="card-default"><img class="icon" src="3d-rendering-holographic-cube-removebg-preview.png" alt="MR and XR"/><h3>MR / XR Applications</h3></div>
+        <div class="card-hover"><div class="hover-bg-title"><span>MR / XR</span></div><img class="hover-icon" src="3d-rendering-holographic-cube-removebg-preview.png" alt=""/><p>Mixed reality applications that connect physical workflows with digital interfaces.</p></div>
+      </div>
+      <div class="solutions-card">
+        <div class="card-default"><img class="icon" src="3d-twist.png" alt="Digital twin"/><h3>Digital Twin</h3></div>
+        <div class="card-hover"><div class="hover-bg-title"><span>Digital Twin</span></div><img class="hover-icon" src="3d-twist.png" alt=""/><p>Connected replicas for facilities, systems, products, and operational views.</p></div>
+      </div>
+      <div class="solutions-card">
+        <div class="card-default"><img class="icon" src="3d-simulations.jpg" alt="Interactive training"/><h3>Interactive Training</h3></div>
+        <div class="card-hover"><div class="hover-bg-title"><span>Training</span></div><img class="hover-icon" src="3d-simulations.jpg" alt=""/><p>Guided learning modules with repeatable practice, feedback, and measurable outcomes.</p></div>
+      </div>
+      <div class="solutions-card">
+        <div class="card-default"><img class="icon" src="liquid-shape.png" alt="AI integration"/><h3>AI Integration</h3></div>
+        <div class="card-hover"><div class="hover-bg-title"><span>AI Integration</span></div><img class="hover-icon" src="liquid-shape.png" alt=""/><p>AI-powered automation, intelligent interfaces, and smarter immersive workflows.</p></div>
+      </div>
+    </div>
+    <div class="solutionss-footer">
+      <a class="btn-see-all" href="solutions.html">See all Solutions</a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ STATS -->
+  <section class="home-suite-stats" aria-label="Company stats">
+    <div class="home-suite-stat">
+      <div class="home-suite-stat-num">250<span>+</span></div>
+      <div class="home-suite-stat-label">Projects delivered</div>
+    </div>
+    <div class="home-suite-stat">
+      <div class="home-suite-stat-num">10<span>+</span></div>
+      <div class="home-suite-stat-label">Years of experience</div>
+    </div>
+    <div class="home-suite-stat">
+      <div class="home-suite-stat-num">98<span>%</span></div>
+      <div class="home-suite-stat-label">Clients Satisfaction</div>
+    </div>
+    <div class="home-suite-stat">
+      <div class="home-suite-stat-num">10<span>+</span></div>
+      <div class="home-suite-stat-label">Industries served</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ SERVICES -->
+  <section class="nav-services-horizontal theme-pastel" id="software-services">
+    <div class="nav-services-sticky">
+      <div class="nav-services-intro">
+        <div class="home-suite-label">Services</div>
+        <h2>Execution capabilities</h2>
+        <p>These service panels convert the Services dropdown into a full-screen delivery journey, showing what Volga can execute from concept to launch and support.</p>
+        <a class="home-suite-link" href="services.html">See all Services <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="nav-services-grid">
+        <article class="service-tilt-card" style="--card-bg:url('ar-application.jpg')">
+          <div class="service-tilt-inner"><div class="service-tilt-glow"></div><span class="service-tilt-label">Immersive Apps</span><h3>Custom AR App Development</h3><p>Mobile and headset-ready augmented reality applications for visualization, learning, and product interaction.</p><div class="service-tilt-meta"><small>ARKit</small><small>ARCore</small><small>WebAR</small></div></div>
+        </article>
+        <article class="service-tilt-card" style="--card-bg:url('vr-headset-lab.jpg')">
+          <div class="service-tilt-inner"><div class="service-tilt-glow"></div><span class="service-tilt-label">Training</span><h3>VR Training Platforms</h3><p>Repeatable, measurable simulation platforms for safety, equipment, process, and field training.</p><div class="service-tilt-meta"><small>Simulation</small><small>Analytics</small><small>Enterprise LMS</small></div></div>
+        </article>
+        <article class="service-tilt-card" style="--card-bg:url('3d-simulations.jpg')">
+          <div class="service-tilt-inner"><div class="service-tilt-glow"></div><span class="service-tilt-label">Engine</span><h3>Unity Development</h3><p>Cross-platform immersive applications, configurators, realtime tools, and interactive 3D systems.</p><div class="service-tilt-meta"><small>Unity</small><small>OpenXR</small><small>Realtime 3D</small></div></div>
+        </article>
+        <article class="service-tilt-card" style="--card-bg:url('3d-rendering-holographic-cube-removebg-preview.png')">
+          <div class="service-tilt-inner"><div class="service-tilt-glow"></div><span class="service-tilt-label">Engine</span><h3>Unreal Engine Development</h3><p>High-fidelity visualization, virtual production, enterprise simulations, and photoreal experiences.</p><div class="service-tilt-meta"><small>Unreal</small><small>Pixel Streaming</small><small>ArchViz</small></div></div>
+        </article>
+        <article class="service-tilt-card" style="--card-bg:url('hologram.png')">
+          <div class="service-tilt-inner"><div class="service-tilt-glow"></div><span class="service-tilt-label">Web</span><h3>WebXR Experiences</h3><p>Browser-native 3D and immersive experiences that users can access without app installation.</p><div class="service-tilt-meta"><small>Three.js</small><small>WebXR</small><small>WebGL</small></div></div>
+        </article>
+        <article class="service-tilt-card" style="--card-bg:url('3d-twist.png')">
+          <div class="service-tilt-inner"><div class="service-tilt-glow"></div><span class="service-tilt-label">Experience</span><h3>UI/UX Design</h3><p>Interfaces and journeys designed for clarity, conversion, enterprise usability, and repeat use.</p><div class="service-tilt-meta"><small>Research</small><small>Design Systems</small><small>Prototypes</small></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ TESTIMONIALS -->
+  <section class="section-intro">
+    <div class="intro-content">
+      <h1>Client Testimonials</h1>
+      <p>Hear from the leaders who trusted Volga XR to transform their teams, products, and customer experiences.</p>
+      <div class="portfolio card"><img src="blog-Hero.jpg" alt="Client testimonial 1" class="pf-image"/><div class="pf-info"><h3>"Volga XR turned our training into a measurable competitive advantage."</h3><p>Our field teams onboarded 50% faster, and retention improved dramatically with the new simulation platform.</p></div><div class="portfolio-tags"><span class="pf-tag">Manufacturing</span><span class="pf-tag">Virtual Reality</span></div></div>
+      <div class="portfolio card"><img src="contact-Hero.jpg" alt="Client testimonial 2" class="pf-image"/><div class="pf-info"><h3>"The AR guidance system saved our technicians hours every week."</h3><p>Volga's solution reduced maintenance errors and helped us scale support safely across plants.</p></div><div class="portfolio-tags"><span class="pf-tag">Aerospace</span><span class="pf-tag">Augmented Reality</span></div></div>
+      <div class="portfolio card"><img src="infinity.png" alt="Client testimonial 3" class="pf-image"/><div class="pf-info"><h3>"Remote buyers now feel like they are walking through the home in person."</h3><p>The virtual tours increased qualified leads by 30% and made distant buyers feel confident.</p></div><div class="portfolio-tags"><span class="pf-tag">Real Estate</span><span class="pf-tag">Virtual Reality</span></div></div>
+      <div class="portfolio card"><img src="logo.png" alt="Client testimonial 4" class="pf-image"/><div class="pf-info"><h3>"Our product launch was seamless thanks to immersive customer previews."</h3><p>Interactive demos shortened the sales cycle and gave buyers confidence before launch.</p></div><div class="portfolio-tags"><span class="pf-tag">Retail</span><span class="pf-tag">Augmented Reality</span></div></div>
+      <div class="portfolio card"><img src="mission-2.jfif" alt="Client testimonial 5" class="pf-image"/><div class="pf-info"><h3>"Volga's VR simulations made training safer, faster, and more engaging."</h3><p>Healthcare staff practiced critical procedures in a risk-free environment, improving performance under pressure.</p></div><div class="portfolio-tags"><span class="pf-tag">Healthcare</span><span class="pf-tag">Virtual Reality</span></div></div>
+      <div class="portfolio card"><img src="ar-application.jpg" alt="Client testimonial 6" class="pf-image"/><div class="pf-info"><h3>"The AR product configurator became a customer favorite overnight."</h3><p>Shoppers visualized products in their space and confidence in our brand jumped with every interaction.</p></div><div class="portfolio-tags"><span class="pf-tag">Retail</span><span class="pf-tag">Augmented Reality</span></div></div>
+      <div class="portfolio card"><img src="global-reach.jpg" alt="Client testimonial 7" class="pf-image"/><div class="pf-info"><h3>"Immersive events created the buzz our launch needed."</h3><p>Virtual audience engagement grew across markets and generated new business inquiries.</p></div><div class="portfolio-tags"><span class="pf-tag">Entertainment</span><span class="pf-tag">Virtual Reality</span></div></div>
+      <div class="portfolio card"><img src="pexels-ayush-kumar-907951968-23466429.jpg" alt="Client testimonial 8" class="pf-image"/><div class="pf-info"><h3>"Wayfinding AR made our city feel more connected."</h3><p>Residents and visitors found routes faster with context-aware navigation and local information.</p></div><div class="portfolio-tags"><span class="pf-tag">Smart Cities</span><span class="pf-tag">Augmented Reality</span></div></div>
+      <div class="portfolio card"><img src="fixed.jpg" alt="Client testimonial 9" class="pf-image"/><div class="pf-info"><h3>"Remote collaboration finally feels natural and productive."</h3><p>Teams brainstormed in VR with real-time tools, keeping creativity flowing across continents.</p></div><div class="portfolio-tags"><span class="pf-tag">Collaboration</span><span class="pf-tag">Virtual Reality</span></div></div>
+      <button class="pf-discover" onclick="window.location.href='contact.html'">Start Your Project</button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ TECH STACK -->
+  <section class="home-suite-section" id="tech-showcase">
+    <div class="home-suite-header">
+      <div>
+        <div class="home-suite-label">Technologies</div>
+        <h2 class="home-suite-title">Technology Stack Credibility</h2>
+        <p class="home-suite-sub">The Technologies dropdown becomes a credibility layer for immersive, AI, web, and cloud delivery.</p>
+      </div>
+    </div>
+    <div class="home-suite-tech-grid">
+      <div class="home-suite-tech"><i class="fas fa-cube"></i><span>Unity Engine<small></small></span></div>
+      <div class="home-suite-tech"><i class="fas fa-cube"></i><span>Unreal Engine<small></small></span></div>
+      <div class="home-suite-tech"><i class="fas fa-code"></i><span>Three.js<small></small></span></div>
+      <div class="home-suite-tech"><i class="fas fa-vr-cardboard"></i><span>WebGL<small></small></span></div>
+      <div class="home-suite-tech"><i class="fas fa-brain"></i><span>AI / ML<small></small></span></div>
+      <div class="home-suite-tech"><i class="fas fa-glasses"></i><span>OpenXR<small></small></span></div>
+      <div class="home-suite-tech"><i class="fab fa-apple"></i><span>ARKit<small></small></span></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ BLOG -->
+  <section class="blog-section" id="blog">
+    <div class="blog-section-heading">
+      <p class="blog-heading-label">Latest Insights</p>
+      <h2>Explore stories, ideas and real work from the VOLGA team.</h2>
+      <p class="blog-heading-subline">From VR case studies to industry trends, stay ahead with expert analysis and creative thinking.</p>
+    </div>
+    <div class="blog-cards-row">
+      <div class="card"><div class="card-bg" style="background-color:#fcfcfc;"></div><div class="color-overlay" style="background:#c8541a;"></div><div class="dark-overlay"></div><div class="scan-lines"></div><div class="card-number">01</div><div class="card-genre-pill">connect server</div><div class="card-content"><div class="card-avatar">SL</div><div class="card-tag"></div><div class="card-name">Server lose</div><div class="card-bio"></div><a class="card-cta" href="blog.html">Read more <i class="fas fa-arrow-right" style="font-size:12px" aria-hidden="true"></i></a></div></div>
+      <div class="card"><div class="card-bg" style="background-color:#2c4a6e;"></div><div class="color-overlay" style="background:#1a3a5c;"></div><div class="dark-overlay"></div><div class="scan-lines"></div><div class="card-number">02</div><div class="card-genre-pill">connect server</div><div class="card-content"><div class="card-avatar">SL</div><div class="card-tag"></div><div class="card-name">Server lose</div><div class="card-bio"></div><a class="card-cta" href="blog.html">Read more <i class="fas fa-arrow-right" style="font-size:12px" aria-hidden="true"></i></a></div></div>
+      <div class="card"><div class="card-bg" style="background-color:#000000;"></div><div class="color-overlay" style="background:#203b86;"></div><div class="dark-overlay"></div><div class="scan-lines"></div><div class="card-number">03</div><div class="card-genre-pill">connect server</div><div class="card-content"><div class="card-avatar">SL</div><div class="card-tag"></div><div class="card-name">Server lose</div><div class="card-bio"></div><a class="card-cta" href="blog.html">Read more <i class="fas fa-arrow-right" style="font-size:12px" aria-hidden="true"></i></a></div></div>
+      <div class="card"><div class="card-bg" style="background-color:#126cc0;"></div><div class="color-overlay" style="background:#0f3e74;"></div><div class="scan-lines"></div><div class="card-number">04</div><div class="card-genre-pill">connect server</div><div class="card-content"><div class="card-avatar">SL</div><div class="card-tag"></div><div class="card-name">Server lose</div><div class="card-bio"></div><a class="card-cta" href="blog.html">Read more <i class="fas fa-arrow-right" style="font-size:12px" aria-hidden="true"></i></a></div></div>
+      <div class="card"><div class="card-bg" style="background-color:#ffffff;"></div><div class="color-overlay" style="background:rgb(245,145,32);"></div><div class="scan-lines"></div><div class="card-number">05</div><div class="card-genre-pill">connect server</div><div class="card-content"><div class="card-avatar">SL</div><div class="card-tag"></div><div class="card-name">Server lose</div><div class="card-bio"></div><a class="card-cta" href="blog.html">Read more <i class="fas fa-arrow-right" style="font-size:12px" aria-hidden="true"></i></a></div></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ CUBE MISSION (replaces old .mission section) -->
+  <div class="cube-mission-wrap">
+
+    
+    <div class="cube-mission-viewport">
+
+      <!-- Cube scene (absolutely positioned, pointer-events:none) -->
+      <div class="cube-mission-scene" aria-hidden="true">
+        <div id="cm-cube">
+          <div class="cm-face" data-face="top">    <span class="cm-face-ph">TOP</span></div>
+          <div class="cm-face" data-face="front">  <span class="cm-face-ph">FRONT</span></div>
+          <div class="cm-face" data-face="right">  <span class="cm-face-ph">RIGHT</span></div>
+          <div class="cm-face" data-face="back">   <span class="cm-face-ph">BACK</span></div>
+          <div class="cm-face" data-face="left">   <span class="cm-face-ph">LEFT</span></div>
+          <div class="cm-face" data-face="bottom"> <span class="cm-face-ph">BOTTOM</span></div>
+        </div>
+      </div>
+
+      <!-- HUD -->
+     
+
+      <!-- Side nav dots -->
+      <div id="cm-scene-strip" aria-hidden="true">
+        <button class="cm-dot active" aria-label="Go to slide 1"></button>
+        <button class="cm-dot" aria-label="Go to slide 2"></button>
+        <button class="cm-dot" aria-label="Go to slide 3"></button>
+        <button class="cm-dot" aria-label="Go to slide 4"></button>
+        <button class="cm-dot" aria-label="Go to slide 5"></button>
+        <button class="cm-dot" aria-label="Go to slide 6"></button>
+      </div>
+
+      <!-- Caption -->
+      <div id="cm-face-caption" aria-hidden="true">
+        <div id="cm-caption-num">00</div>
+        <div id="cm-caption-name">Intro</div>
+      </div>
+
+      <!-- Inner scroller — GSAP/ScrollTrigger never touch this div -->
+      <div class="cube-mission-scroll" role="region" aria-label="Our mission slides">
+
+        <div class="cm-slide" id="cms0">
+          <div class="cm-card">
+            <div class="cm-tag">OUR PROCESS</div>
+            <h1>From Vision <br>to Virtual<br> Reality</h1>
+            <p class="cm-body">We are shaping the next generation of immersive experiences by connecting technology, creativity, and industry expertise. Through education, innovation, and collaboration, we are expanding the possibilities of VR and AR across industries.</p>
+            <div class="cm-cta-row">
+              <a class="cm-cta" href="#cms1" data-cm-slide="1">Explore <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cm-slide" id="cms1">
+          <div class="cm-card right">
+            <div class="cm-h-line"></div>
+            <h2> Define the Opportunity</h2>
+            <p class="cm-body">Every successful digital experience begins with a clear understanding of the vision behind it. We work closely with your team to explore business goals, user expectations, existing workflows, and operational challenges. By identifying opportunities where immersive technology can create meaningful impact, we build a strong foundation for a solution that aligns with your objectives.</p>
+            <div class="cm-cta-row">
+              <a class="cm-cta-back" href="#cms0" data-cm-slide="0"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
+              <a class="cm-cta" href="#cms2" data-cm-slide="2">Next <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cm-slide" id="cms2">
+          <div class="cm-card">
+            <div class="cm-h-line"></div>
+          
+            <h2>Shape the Experience</h2>
+            <p class="cm-body">We transform ideas into engaging, intuitive experiences designed around real-world needs. Our team creates immersive concepts, user journeys, and interactive environments that combine creativity with functionality. Whether it’s VR training, AR experiences, AI-powered solutions, or digital twins, we design experiences that are purposeful, memorable, and built for your audience.</p>
+            <div class="cm-cta-row">
+              <a class="cm-cta-back" href="#cms1" data-cm-slide="1"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
+              <a class="cm-cta" href="#cms3" data-cm-slide="3">Next <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cm-slide" id="cms3">
+          <div class="cm-card right">
+            <div class="cm-h-line"></div>
+           
+            <h2>Build the Future</h2>
+            <p class="cm-body">Using advanced technologies such as AR, VR, AI, and digital twins, we turn concepts into scalable digital solutions. Our development process focuses on performance, security, usability, and seamless integration to ensure every solution is reliable and ready to support your business growth. We build technology that goes beyond innovation — delivering practical value and measurable results.</p>
+            
+            <div class="cm-cta-row">
+              <a class="cm-cta-back" href="#cms2" data-cm-slide="2"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
+              <a class="cm-cta" href="#cms4" data-cm-slide="4">Next <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cm-slide" id="cms4">
+          <div class="cm-card">
+            <div class="cm-h-line"></div>
+            
+            <h2>Bring Innovation to Life</h2>
+            <p class="cm-body">A great solution needs a smooth transition from development to real-world implementation. We handle the deployment process with a focus on reliability, accessibility, and user adoption. From enterprise platforms to immersive applications, we ensure your technology is delivered securely and prepared for successful use across your organization.</p>
+            <div class="cm-cta-row">
+              <a class="cm-cta-back" href="#cms3" data-cm-slide="3"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
+              <a class="cm-cta" href="#cms5" data-cm-slide="5">Next <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cm-slide" id="cms5">
+          <div class="cm-card center">
+            <div class="cm-h-line"></div>
+           
+            <h2>Evolve Continuously</h2>
+            <p class="cm-body">Technology continues to evolve, and so should your digital experiences. Through analytics, performance monitoring, and user feedback, we identify opportunities to improve and enhance your solution over time. Our continuous optimization approach helps maximize impact, maintain performance, and keep your immersive experiences future-ready.</p>
+            <div class="cm-cta-row" style="justify-content:center">
+              <a class="cm-cta-back" href="#cms4" data-cm-slide="4"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
+              <a class="cm-cta" href="contact.html">Start a project <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /cube-mission-scroll -->
+    </div><!-- /cube-mission-viewport -->
+  </div><!-- /cube-mission-wrap -->
+
+  <!-- ═══════════════════════════════════════════ CTA BANNER -->
+  <section class="cta-banner">
+    <div class="cta-shape-top">
+      
+    </div>
+    <div class="cta-bg"></div>
+    <div class="container cta-inner">
+      <h2 class="cta-heading reveal-split">Start Your Virtual Reality Journey Today</h2>
+      <p class="reveal-fade">Whether you're planning a VR training platform, digital twin initiative, enterprise AR solution, or metaverse ecosystem, our team can help you define the right strategy and execution roadmap.</p>
+      <div class="cta-btns reveal-fade">
+        <a href="portfolio.html" class="btn-primary">Learn More</a>
+        <a href="contact.html" class="btn-ghost btn-ghost-light">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ FOOTER -->
+  <footer class="footer">
+    <div class="ft">
+      <div class="ft-top">
+        <div class="ft-eyebrow">
+          <span class="ft-eyebrow-text">Let's build work that inspires.</span>
+          <span class="ft-clock" id="clk">IST → --:--</span>
+        </div>
+        <div class="ft-headline">Ready to build<br><span>something</span> bold?</div>
+        <div class="ft-cta">
+          <a href="contact.html">Start a collaboration</a>
+          <i class="ti ti-arrow-right" style="font-size:14px" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="ft-divider"></div>
+      <div class="ft-mid">
+        <div>
+          <div class="ft-mhead">Business</div>
+          <span class="ft-mlink">Training Simulation</span>
+          <span class="ft-mlink">3D Configurators</span>
+          <span class="ft-mlink">Buildings & Interiors</span>
+          <span class="ft-mlink">E-Commerce</span>
+          <span class="ft-mlink">Manufacturing</span>
+          <span class="ft-mlink">Entertainment</span>
+          <span class="ft-mlink">Museums & Travel</span>
+        </div>
+        <div>
+          <div class="ft-mhead">Services</div>
+          <span class="ft-mlink">Augmented Reality</span>
+          <span class="ft-mlink">Virtual Reality</span>
+          <span class="ft-mlink">AR Player</span>
+          <span class="ft-mlink">VR Player 360°</span>
+          <span class="ft-mlink">Privacy Policy</span>
+        </div>
+        <div>
+          <div class="ft-mhead">Business Enquiry</div>
+          <div class="ft-contact-val"><span class="ft-contact-label">E.</span>hello@volga.com</div>
+          <div class="ft-contact-val"><span class="ft-contact-label">P.</span>+91 98241 82099</div>
+        </div>
+        <div>
+          <div class="ft-mhead">Social</div>
+          <span class="ft-mlink">LinkedIn</span>
+          <span class="ft-mlink">Instagram</span>
+          <span class="ft-mlink">Facebook</span>
+          <span class="ft-mlink">YouTube</span>
+          <span class="ft-mlink">WhatsApp</span>
+        </div>
+      </div>
+      <div class="ft-wordmark-wrap">
+        <div class="ft-wordmark">VOLGA</div>
+      </div>
+      <div class="ft-bottom">
+        <span class="ft-copy">© Volga Infosys® 2026</span>
+        <div class="ft-blinks">
+          <span class="ft-blink">Privacy & Policy</span>
+          <span class="ft-blink">Made with ♦ by Volga</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════ SCRIPTS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const homeBlogCards = document.querySelectorAll('.blog-section .card');
+      const getInitials = (name = '') => {
+        const parts = name.trim().split(/\s+/).filter(Boolean);
+        if (!parts.length) return 'VO';
+        return parts.length === 1 ? parts[0].slice(0, 2).toUpperCase() : (parts[0][0] + parts[1][0]).toUpperCase();
+      };
+
+      async function loadHomeBlogCards() {
+        const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+          ? 'http://localhost:5000' : '';
+        try {
+          const res = await fetch(`${API}/api/blogs`);
+          if (!res.ok) throw new Error('Blog fetch failed');
+          const result = await res.json();
+          const posts = result.data || result;
+          if (!Array.isArray(posts) || !posts.length) return;
+          posts.slice(0, 5).forEach((post, index) => {
+            const card = homeBlogCards[index];
+            if (!card) return;
+            const bg = card.querySelector('.card-bg');
+            const number = card.querySelector('.card-number');
+            const genre = card.querySelector('.card-genre-pill');
+            const avatar = card.querySelector('.card-avatar');
+            const tag = card.querySelector('.card-tag');
+            const name = card.querySelector('.card-name');
+            const bio = card.querySelector('.card-bio');
+            const cta = card.querySelector('.card-cta');
+            const url = `blog-detail.html?id=${post._id}`;
+            if (bg) bg.style.backgroundImage = `url('${post.image || 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&q=80'}')`;
+            if (number) number.textContent = String(index + 1).padStart(2, '0');
+            if (genre) genre.textContent = post.category || 'Blog';
+            if (avatar) avatar.textContent = getInitials(post.author || 'Volga');
+            if (tag) tag.textContent = post.category ? post.category : 'Featured Post';
+            if (name) name.innerHTML = post.title ? post.title.replace(/\s+/, '<br>') : 'New Post';
+            if (bio) bio.textContent = post.excerpt || post.description || '';
+            if (cta) { cta.href = url; cta.setAttribute('aria-label', `Read more about ${post.title || 'this article'}`); }
+            card.addEventListener('click', (event) => {
+              if (!event.target.closest('.card-cta')) window.location.href = url;
+            });
+          });
+        } catch (err) {
+          console.warn('Unable to load homepage blog cards:', err);
+        }
+      }
+      loadHomeBlogCards();
+    });
+  </script>
+
+  <script src="volga.js"></script>
+  <script src="portfolio-marquee.js"></script>
+
+  <!-- ▶ Cube Mission — loads after volga.js, fully isolated -->
+  <script src="cube-mission.js" defer></script>
+
+  <script>
+    // Hero video keep-alive
+    document.addEventListener('DOMContentLoaded', () => {
+      const heroVideo = document.querySelector('.Hero-video');
+      if (heroVideo) {
+        heroVideo.play().catch(err => console.log('Video autoplay blocked:', err));
+        heroVideo.addEventListener('pause', () => { setTimeout(() => heroVideo.play(), 100); });
+        document.addEventListener('visibilitychange', () => {
+          if (!document.hidden) heroVideo.play().catch(() => {});
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

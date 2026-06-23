@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — Volga Infosys</title>
+  <link rel="stylesheet" href="volga.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    :root {
+      --navy: #0d1b2e;
+      --gold: #c9932a;
+      --text-dark: #1a1a2e;
+      --text-mid: #4a4a6a;
+    }
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);font-family: var(--font-ui)!important;
+    }
+   .hero{position:relative;height:480px;overflow:hidden;background:#1a1a1a}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(120deg,#0d1520 0%,#1a2a3a 40%,#2a3a2a 100%);opacity:.92}
+.hero-img-overlay{position:absolute;inset:0;background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="340"><defs><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter></defs><rect width="800" height="340" filter="url(%23noise)" opacity="0.04"/></svg>') center/cover;mix-blend-mode:overlay}
+
+/* keyboard/laptop visual suggestion via gradient blocks */
+.hero-deco{position:absolute;right:0;top:0;bottom:0;width:55%;background:linear-gradient(135deg,transparent 30%,rgba(80,120,80,.15) 60%,rgba(40,80,60,.2) 100%)}
+.hero-content{position:relative;z-index:2;padding:52px 48px;max-width:580px}
+.hero-content h1{font-family:var(--font-display);font-size: clamp(52px,8vw,88px);font-weight:800;color:#fff;line-height:1.05;letter-spacing:-.01em;margin-bottom:16px;margin-top: 60px;}
+.hero-content em {color:transparent; -webkit-text-stroke: 2px var(--accent);}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2)}
+.hero-pill::before{content:'';display:inline-block;width:28px;height:2px;background:var(--gold2)}
+    .blog-section {
+      padding: 8rem 0;
+      background: var(--bg);
+    }
+
+    .blog-filter {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-bottom: 4rem;
+    }
+
+    .blog-filter-btn {
+      padding: 0.5rem 1.4rem;
+      border-radius: 100px;
+      border: 2px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blog-filter-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      z-index: -1;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .blog-filter-btn:hover::before,
+    .blog-filter-btn.active::before {
+      transform: scaleX(1);
+    }
+
+    .blog-filter-btn:hover,
+    .blog-filter-btn.active {
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(86, 124, 141, 0.3);
+    }
+
+    .blog-featured {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 0;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 4rem;
+      transition: border-color 0.3s;
+    }
+
+    .blog-featured:hover {
+      border-color: var(--accent);
+    }
+
+    .blog-featured-img {
+      position: relative;
+      overflow: hidden;
+      min-height: 460px;
+    }
+
+    .blog-featured-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease-out-expo);
+    }
+
+    .blog-featured-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(6, 8, 16, 0.4) 100%);
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.6s;
+    }
+
+    .blog-featured:hover .blog-featured-img::after {
+      opacity: 1;
+    }
+
+    .blog-featured:hover .blog-featured-img img {
+      transform: scale(1.04);
+    }
+
+    .blog-featured-badge {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      background: linear-gradient(135deg, var(--accent), #7a9dbb);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      z-index: 3;
+      box-shadow: 0 0 20px rgba(86, 124, 141, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      animation: badgePulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes badgePulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px rgba(86, 124, 141, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      }
+
+      50% {
+        box-shadow: 0 0 30px rgba(86, 124, 141, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      }
+    }
+
+    .blog-featured-body {
+      padding: 3rem;
+      background: #0f1720;
+      color: #e6eef6;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .blog-cat {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .blog-featured-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+
+    .blog-featured-excerpt {
+      color: rgba(230, 238, 246, 0.85);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+
+    .blog-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 2rem;
+    }
+
+    .blog-meta-dot {
+      color: var(--accent);
+    }
+
+    .blog-read-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary-dark);
+      transition: gap 0.3s;
+    }
+
+    .blog-read-link:hover {
+      gap: 0.9rem;
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.6rem;
+    }
+
+    .blog-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .blog-main {
+      min-width:0;
+    }
+
+    .blog-sidebar {
+      position: relative;
+    }
+
+    .sidebar-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .browse-topics {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    .browse-topics li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.45rem 0.6rem;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .browse-topics li .topic-name {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .browse-topics li .topic-count {
+      background: rgba(86, 124, 141, 0.08);
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+    }
+
+    .trending-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    .trending-list li {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+    }
+
+    .trending-list li .t-index {
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      min-width: 28px;
+    }
+
+    .trending-list li a {
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .subscribe-box p {
+      margin-bottom: 0.8rem;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+    .written-by {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    .written-by li {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .author-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    .blog-card {
+      position: relative;
+      border-radius: 50px;
+      overflow: hidden;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      transition: transform .4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                  box-shadow .4s ease;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      animation: cardEnter 0.7s ease-out backwards;
+    }
+
+    .blog-card:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .blog-card:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .blog-card:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    .blog-card:nth-child(4) {
+      animation-delay: 0.1s;
+    }
+
+    .blog-card:nth-child(5) {
+      animation-delay: 0.2s;
+    }
+
+    .blog-card:nth-child(6) {
+      animation-delay: 0.3s;
+    }
+
+    .blog-card:nth-child(n+7) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes cardEnter {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .blog-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .blog-card.hidden {
+      display: none;
+    }
+
+    .blog-card-img {
+      width: calc(100% - 24px);
+      height: 160px;
+      object-fit: cover;
+      transition: transform .6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border-radius: 40px;
+      margin: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    .blog-card:hover .blog-card-img {
+      transform: scale(1.05);
+    }
+
+    .blog-card-body {
+      padding: 0 36px 36px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-tag {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--gold);
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+
+    .blog-card-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      line-height: 1.3;
+      color: var(--text-dark);
+      margin-bottom: 16px;
+    }
+
+    .blog-card-excerpt {
+      color: var(--text-mid);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 1rem;
+    }
+
+    .blog-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    .blog-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .author-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), #f0c060);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--navy);
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .blog-meta-text {
+      font-size: 11px;
+      color: var(--text-mid);
+    }
+
+    .read-arrow {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--navy);
+      transition: all .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .blog-card:hover .read-arrow {
+      background: var(--gold);
+      color: var(--white);
+      transform: scale(1.1) translateX(4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+
+    /* replaced above body styles with dark body layout */
+    .blog-card-footer span:first-child {
+      flex: 1;
+      position: relative;
+      padding-left: 0;
+    }
+
+    .blog-card-footer span:first-child::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: readDotPulse 1.5s infinite;
+    }
+
+    @keyframes readDotPulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: translateY(-50%) scale(1.3);
+      }
+    }
+
+    .blog-card-read {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: letter-spacing 0.3s;
+    }
+
+    .blog-card:hover .blog-card-read {
+      letter-spacing: 0.12em;
+    }
+
+    .blog-empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 4rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+    }
+
+    .blog-newsletter {
+      margin-top: 5rem;
+      padding: 4rem;
+      background: var(--bg-alt);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blog-newsletter::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 0%, rgba(86, 124, 141, 0.08) 100%);
+      z-index: 0;
+    }
+
+    .blog-newsletter>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .blog-newsletter:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 30px rgba(86, 124, 141, 0.2);
+    }
+
+    .blog-newsletter h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .blog-newsletter p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .newsletter-form input {
+      padding: 0.85rem 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: var(--surface);
+      color: var(--text);
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      outline: none;
+      min-width: 260px;
+      transition: border-color 0.3s;
+    }
+
+    .newsletter-form input:focus {
+      border-color: var(--accent);
+    }
+
+    .newsletter-form input::placeholder {
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 1024px) {
+      .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 1000px) {
+      .blog-layout {
+        grid-template-columns: 1fr 300px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-hero-content {
+        padding: 0 1.5rem;
+      }
+
+      .blog-featured {
+        grid-template-columns: 1fr;
+      }
+
+      .blog-featured-img {
+        min-height: 260px;
+      }
+
+      .blog-featured-body {
+        padding: 2rem;
+      }
+
+      .blog-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .blog-newsletter {
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .newsletter-form input {
+        min-width: 100%;
+      }
+
+      .blog-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .blog-sidebar {
+        order: 2;
+      }
+    }
+
+    /* Spatial Background Shapes */
+    .blog-bg-shape {
+      position: absolute;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.05;
+      filter: blur(8px);
+      animation: blogFloat 20s ease-in-out infinite;
+    }
+
+    @keyframes blogFloat {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate(50px, 30px) scale(1.1);
+      }
+    }
+
+    .blog-shape-1 {
+      top: 20%;
+      right: -10%;
+      width: 600px;
+    }
+
+    .blog-shape-2 {
+      bottom: 10%;
+      left: -5%;
+      width: 500px;
+      animation-delay: -10s;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- ═══════════════════════════════════════════ NAV -->
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
+      <img src="logo.png" alt="VOLGA Infosys logo" />
+    </a>
+
+    <ul class="nav-links">
+      <li class="nav-item" data-menu="solutions">
+        <button class="nav-link">Solutions <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="industries">
+        <button class="nav-link">Industries <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="services">
+        <button class="nav-link">Services <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="work">
+        <button class="nav-link">Work <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="technologies">
+        <a class="nav-link" href="technologies (1).html">Technologies</a>
+      </li>
+      <li class="nav-item" data-menu="insights">
+        <a class="nav-link" href="insights-overview.html">Insights </a>
+      </li>
+      <li class="nav-item" data-menu="company">
+        <button class="nav-link">Company <span class="nav-arrow"></span></button>
+      </li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Contact Us</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose" aria-label="Close mobile menu">X</button>
+    <ul>
+      <li><a href="index.html" class="mm-link">Home</a></li>
+      <li><a href="solutions.html" class="mm-link">Solutions</a></li>
+      <li><a href="industries.html" class="mm-link">Industries</a></li>
+      <li><a href="services.html" class="mm-link">Services</a></li>
+      <li><a href="portfolio.html" class="mm-link">Work</a></li>
+      <li><a href="technologies.html" class="mm-link">Technologies</a></li>
+      <li><a href="blog.html" class="mm-link">Insights</a></li>
+      <li><a href="company.html" class="mm-link">Company</a></li>
+      <li><a href="contact.html" class="mm-link">Contact</a></li>
+    </ul>
+  </div>
+
+
+  <!-- MEGA MENUS -->
+  <div class="mega-menu" id="menu-solutions">
+    <div class="mega-inner">
+      <div class="mega-label">Solutions</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                  </svg></span>AR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg></span>VR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg></span>MR / XR Applications</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                  </svg></span>Digital Twin</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20h9" />
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                  </svg></span>AI Integration</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                    <line x1="9" y1="9" x2="9.01" y2="9" />
+                    <line x1="15" y1="9" x2="15.01" y2="9" />
+                  </svg></span>3D Configurators</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg></span>Virtual Showrooms</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg></span>Simulation Systems</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg></span>Interactive Training</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                  </svg></span>Metaverse Solutions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">New: AI-Powered XR</div>
+        <div class="mega-highlight-sub">Combining spatial computing with generative AI for next-gen enterprise
+          experiences.</div>
+        <a href="#" class="mega-highlight-btn">Explore <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-industries">
+    <div class="mega-inner">
+      <div class="mega-label">Industries</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="industries.html#healthcare"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                  </svg></span>Healthcare</a></li>
+            <li><a class="mega-item" href="industries.html#manufacturing"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path
+                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                    <line x1="12" y1="22.08" x2="12" y2="12" />
+                  </svg></span>Manufacturing</a></li>
+            <li><a class="mega-item" href="industries.html#realestate"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg></span>Real Estate</a></li>
+            <li><a class="mega-item" href="industries.html#education"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                  </svg></span>Education</a></li>
+            <li><a class="mega-item" href="industries.html#automotive"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                    <line x1="9" y1="9" x2="9.01" y2="9" />
+                    <line x1="15" y1="9" x2="15.01" y2="9" />
+                  </svg></span>Automotive</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="industries.html#retail"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1" />
+                    <circle cx="20" cy="21" r="1" />
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                  </svg></span>Retail</a></li>
+            <li><a class="mega-item" href="industries.html#architecture"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                    <polyline points="2 17 12 22 22 17" />
+                    <polyline points="2 12 12 17 22 12" />
+                  </svg></span>Architecture</a></li>
+            <li><a class="mega-item" href="industries.html#defense"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg></span>Defense</a></li>
+            <li><a class="mega-item" href="industries.html#tourism"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg></span>Tourism</a></li>
+            <li><a class="mega-item" href="industries.html#energy"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg></span>Energy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Industry Solutions</div>
+        <div class="mega-highlight-sub">Tailored immersive experiences built for your sector's unique challenges.</div>
+        <a href="industries.html" class="mega-highlight-btn">View All <svg width="12" height="12" viewBox="0 0 12 12"
+            fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-services">
+    <div class="mega-inner">
+      <div class="mega-label">Services</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="services.html#custom-ar"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                    <line x1="12" y1="18" x2="12.01" y2="18" />
+                  </svg></span>Custom AR App Development</a></li>
+            <li><a class="mega-item" href="services.html#vr-training"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg></span>VR Training Platforms</a></li>
+            <li><a class="mega-item" href="services.html#unity-dev"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                    <polyline points="2 17 12 22 22 17" />
+                    <polyline points="2 12 12 17 22 12" />
+                  </svg></span>Unity Development</a></li>
+
+            <li><a class="mega-item" href="services.html#webgl"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                    <line x1="9" y1="9" x2="9.01" y2="9" />
+                    <line x1="15" y1="9" x2="15.01" y2="9" />
+                  </svg></span>WebGL Experiences</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+
+            <li><a class="mega-item" href="services.html#3d-modeling"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg></span>3D Modeling & Animation</a></li>
+            <li><a class="mega-item" href="services.html#uiux"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 17l10-10 4 4 6-6" />
+                  </svg></span>UI/UX Design</a></li>
+            <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
+                    <path
+                      d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
+                  </svg></span>Cloud Deployment</a></li>
+            <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z" />
+                  </svg></span>Maintenance & Support</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Full-Cycle Delivery</div>
+        <div class="mega-highlight-sub">From concept to deployment — we handle every stage of your XR project.</div>
+        <a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-work">
+    <div class="mega-inner">
+      <div class="mega-label">Work</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="portfolio2.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10 9 9 9 8 9" />
+                  </svg></span>Case Studies</a></li>
+            <li><a class="mega-item" href="portfolio.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg></span>Portfolio</a></li>
+            <li><a class="mega-item" href="client-stories.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg></span>Client Stories</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polygon points="10 8 16 12 10 16 10 8" />
+                  </svg></span>Product Demos</a></li>
+
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Featured Project</div>
+        <div class="mega-highlight-sub">See how we transformed a global manufacturer's training program with immersive
+          VR.</div>
+        <a href="#" class="mega-highlight-btn">View Case Study <svg width="12" height="12" viewBox="0 0 12 12"
+            fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <div class="mega-menu" id="menu-company">
+    <div class="mega-inner">
+      <div class="mega-label">Company</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="about.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg></span>About Us</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg></span>Leadership</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                  </svg></span>Careers</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                    <polyline points="2 12 6 12 9 21 15 3 18 12 22 12" />
+                  </svg></span>Our Process</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg></span>Partnerships</a></li>
+            <li><a class="mega-item" href="contact.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg></span>Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">We're Hiring</div>
+        <div class="mega-highlight-sub">Join a team building the future of spatial computing and enterprise immersive
+          tech.</div>
+        <a href="#" class="mega-highlight-btn">See Openings <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+  <div id="backdrop" aria-hidden="true"></div>
+
+ <section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-img-overlay"><img src="blog-hero.jpg" alt="Hero Image"></div>
+  <div class="hero-deco"></div>
+  <div class="hero-content">
+    <h1>VR/AR<br><em>INSIGHTS</em><br>&<em>STORIES</em> </h1>
+    <div class="hero-pill">Our Blog</div>
+  </div>
+</section>
+
+  <div class="ticker-wrap">
+    <div class="ticker-track" id="tickerTrack">
+      <span>Virtual Reality</span><span class="ticker-dot">✦</span>
+      <span>Augmented Reality</span><span class="ticker-dot">✦</span>
+      <span>3D Visualization</span><span class="ticker-dot">✦</span>
+      <span>Immersive Tech</span><span class="ticker-dot">✦</span>
+      <span>XR Development</span><span class="ticker-dot">✦</span>
+      <span>Innovation Lab</span><span class="ticker-dot">✦</span>
+      <span>Virtual Reality</span><span class="ticker-dot">✦</span>
+      <span>Augmented Reality</span><span class="ticker-dot">✦</span>
+      <span>3D Visualization</span><span class="ticker-dot">✦</span>
+      <span>Immersive Tech</span><span class="ticker-dot">✦</span>
+      <span>XR Development</span><span class="ticker-dot">✦</span>
+      <span>Innovation Lab</span><span class="ticker-dot">✦</span>
+    </div>
+  </div>
+
+  <section class="blog-section">
+    <img src="hologram.png" class="blog-bg-shape blog-shape-1" alt="">
+    <img src="liquid-shape.png" class="blog-bg-shape blog-shape-2" alt="">
+    <div class="container">
+
+      <div class="blog-filter reveal-fade">
+        <button class="blog-filter-btn active" data-filter="all">All Posts</button>
+        <button class="blog-filter-btn" data-filter="Virtual Reality">Virtual Reality</button>
+        <button class="blog-filter-btn" data-filter="Augmented Reality">Augmented Reality</button>
+        <button class="blog-filter-btn" data-filter="Industry">Industry</button>
+        <button class="blog-filter-btn" data-filter="Training">Training</button>
+        <button class="blog-filter-btn" data-filter="Technology">Technology</button>
+      </div>
+
+      <!-- Two-column layout: main + sidebar -->
+      <div class="blog-layout">
+        <main class="blog-main">
+          <!-- featured post injected here -->
+          <div id="blogFeatured"></div>
+
+          <!-- blog cards injected here -->
+          <div class="blog-grid" id="blogGrid">
+            <div class="blog-empty">Loading posts...</div>
+          </div>
+
+          <div class="blog-newsletter reveal-fade">
+            <div>
+              <h3>Stay Ahead of the XR Curve</h3>
+              <p>Get the latest VR/AR insights, case studies, and industry news delivered to your inbox.</p>
+            </div>
+            <form class="newsletter-form" id="newsletterForm">
+              <input type="email" placeholder="your@email.com" required />
+              <button type="submit" class="btn-primary">Subscribe →</button>
+            </form>
+          </div>
+        </main>
+
+        <aside class="blog-sidebar">
+          <div class="sidebar-card">
+            <h4>Browse Topics</h4>
+            <ul class="browse-topics" id="browseTopics">
+              <!-- topics populated by JS -->
+            </ul>
+          </div>
+
+          <div class="sidebar-card">
+            <h4>Trending</h4>
+            <ol class="trending-list" id="trendingList">
+              <!-- trending posts populated by JS -->
+            </ol>
+          </div>
+
+          <div class="sidebar-card subscribe-box">
+            <h4>Get new posts</h4>
+            <p>No noise. One email when something worth reading goes up.</p>
+            <form id="sidebarSubscribe" class="newsletter-form">
+              <input type="email" placeholder="your@email.com" required />
+              <button class="btn-primary" type="submit">Subscribe</button>
+            </form>
+          </div>
+
+          <div class="sidebar-card">
+            <h4>Written By</h4>
+            <ul class="written-by" id="writtenBy">
+              <!-- authors populated by JS -->
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="ft">
+  <div class="ft-top">
+    <div class="ft-eyebrow">
+      <span class="ft-eyebrow-text">Let's build work that inspires.</span>
+      <span class="ft-clock" id="clk">IST → --:--</span>
+    </div>
+    <div class="ft-headline">Ready to build<br><span>something</span> bold?</div>
+    <div class="ft-cta">
+      Start a collaboration
+      <i class="ti ti-arrow-right" style="font-size:14px" aria-hidden="true"></i>
+    </div>
+    
+  </div>
+
+  <div class="ft-divider"></div>
+
+  <div class="ft-mid">
+    <div>
+      <div class="ft-mhead">Business</div>
+      <span class="ft-mlink">Training Simulation</span>
+      <span class="ft-mlink">3D Configurators</span>
+      <span class="ft-mlink">Buildings & Interiors</span>
+      <span class="ft-mlink">E-Commerce</span>
+      <span class="ft-mlink">Manufacturing</span>
+      <span class="ft-mlink">Entertainment</span>
+      <span class="ft-mlink">Museums & Travel</span>
+    </div>
+    <div>
+      <div class="ft-mhead">Services</div>
+      <span class="ft-mlink">Augmented Reality</span>
+      <span class="ft-mlink">Virtual Reality</span>
+      <span class="ft-mlink">AR Player</span>
+      <span class="ft-mlink">VR Player 360°</span>
+      <span class="ft-mlink">Privacy Policy</span>
+    </div>
+    <div>
+      <div class="ft-mhead">Business Enquiry</div>
+      <div class="ft-contact-val"><span class="ft-contact-label">E.</span>hello@volga.com</div>
+      <div class="ft-contact-val"><span class="ft-contact-label">P.</span>+91 98241 82099</div>
+    </div>
+    <div>
+      <div class="ft-mhead">Social</div>
+      <span class="ft-mlink">LinkedIn</span>
+      <span class="ft-mlink">Instagram</span>
+      <span class="ft-mlink">Facebook</span>
+      <span class="ft-mlink">YouTube</span>
+      <span class="ft-mlink">WhatsApp</span>
+    </div>
+  </div>
+
+  <div class="ft-wordmark-wrap">
+    <div class="ft-wordmark">VOLGA</div>
+  </div>
+
+  <div class="ft-bottom">
+    <span class="ft-copy">© Volga Infosys® 2026</span>
+    <div class="ft-blinks">
+      <span class="ft-blink">Privacy & Policy</span>
+      <span class="ft-blink">Made with ♦ by Volga</span>
+    </div>
+  </div>
+</div>
+
+  </footer>
+
+  <script>
+    // Sample blog data for offline viewing
+    const sampleBlogs = [
+      {
+        _id: '1',
+        title: 'Extended Reality (XR) - Industry Overview',
+        category: 'Industry',
+        author: 'Volga Team',
+        role: 'Editor-in-Chief',
+        createdAt: '2026-05-15',
+        readTime: '8 min read',
+        coverImage: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIHZpZXdCb3g9IjAgMCAxMjAwIDYwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiMxQjIwMzAiLz48Y2lyY2xlIGN4PSI2MDAiIGN5PSIzMDAiIHI9IjE4MCIgc3Ryb2tlPSIjNTY3QzhEIiBzdHJva2Utd2lkdGg9IjIiLz48Y2lyY2xlIGN4PSI2MDAiIGN5PSIzMDAiIHI9IjkwIiBmaWxsPSIjNTY3QzhELTIwIi8+PHRleHQgeD0iNjAwIiB5PSIzMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM1NjdDOEQiIGZvbnQtc2l6ZT0iNDgiIGZvbnQtZmFtaWx5PSJBcmlhbCI+WFIgSW5kdXN0cnk8L3RleHQ+PC9zdmc+',
+        excerpt: 'A comprehensive guide to how extended reality is reshaping industries from healthcare to manufacturing.',
+        featured: true,
+        content: '<h2>What is Extended Reality (XR)?</h2><p>Extended Reality (XR) is an umbrella term that covers all immersive technologies, including VR, AR, and MR. These technologies are transforming how we interact with digital content and the physical world around us.</p><h3>Key Industries Adopting XR</h3><ul><li>Healthcare - Surgical training and patient education</li><li>Manufacturing - Assembly line simulation and quality control</li><li>Education - Immersive learning experiences</li><li>Retail - Virtual try-ons and product visualization</li></ul>'
+      },
+      {
+        _id: '2',
+        title: 'VR Training Platforms - Best Practices',
+        category: 'Training',
+        author: 'Sarah Johnson',
+        role: 'Training Specialist',
+        createdAt: '2026-05-12',
+        readTime: '6 min read',
+        coverImage: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIHZpZXdCb3g9IjAgMCAxMjAwIDYwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiMyOTQ1NDQiLz48cmVjdCB4PSIyMDAiIHk9IjE1MCIgd2lkdGg9IjgwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiMzNGQzOTktMjAiIHN0cm9rZT0iIzM0ZDM5OSIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNjAwIiB5PSIzMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzNGQzOTkiIGZvbnQtc2l6ZT0iNDgiIGZvbnQtZmFtaWx5PSJBcmlhbCI+VlIgVHJhaW5pbmc8L3RleHQ+PC9zdmc+',
+        excerpt: 'Learn the best practices for implementing effective VR training programs in your organization.',
+        content: '<h2>Why VR Training?</h2><p>VR training offers hands-on experience in a safe, controlled environment. It reduces training costs and improves knowledge retention rates significantly compared to traditional methods.</p><h3>Implementation Steps</h3><ol><li>Define training objectives</li><li>Choose the right VR platform</li><li>Develop or acquire content</li><li>Test with a pilot group</li><li>Scale across the organization</li></ol>'
+      },
+      {
+        _id: '3',
+        title: 'AR for Retail - Case Study',
+        category: 'Virtual Reality',
+        author: 'Mike Chen',
+        role: 'Product Manager',
+        createdAt: '2026-05-08',
+        readTime: '5 min read',
+        coverImage: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIHZpZXdCb3g9IjAgMCAxMjAwIDYwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiMzQzMyNTAiLz48cGF0aCBkPSJNMjAwIDMwMCBMNjAwIDEwMCBMMTAwMCAzMDAiIHN0cm9rZT0iI2E3OGJmYSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+PHRleHQgeD0iNjAwIiB5PSI0MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNhNzhiZmEiIGZvbnQtc2l6ZT0iNDgiIGZvbnQtZmFtaWx5PSJBcmlhbCI+QVIgUmV0YWlsPC90ZXh0Pjwvc3ZnPg==',
+        excerpt: 'See how one major retailer increased sales by 35% using AR product visualization.',
+        content: '<h2>The Challenge</h2><p>The retailer needed to reduce product returns and help customers make better purchasing decisions online.</p><h3>The Solution</h3><p>An AR app that let customers visualize products in their own space before buying.</p><h3>Results</h3><ul><li>35% increase in sales</li><li>40% reduction in returns</li><li>Higher customer satisfaction scores</li></ul>'
+      },
+      {
+        _id: '4',
+        title: 'Digital Twin Technology Explained',
+        category: 'Augmented Reality',
+        author: 'Alex Rivera',
+        role: 'Tech Lead',
+        createdAt: '2026-05-05',
+        readTime: '7 min read',
+        coverImage: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIHZpZXdCb3g9IjAgMCAxMjAwIDYwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiMyMjI4MzQiLz48Y2lyY2xlIGN4PSI0MDAiIGN5PSIzMDAiIHI9IjgwIiBmaWxsPSIjYTc4YmZhLTIwIiBzdHJva2U9IiNhNzhiZmEiIHN0cm9rZS13aWR0aD0iMiIvPjxjaXJjbGUgY3g9IjgwMCIgY3k9IjMwMCIgcj0iODAiIGZpbGw9IiMzNGQzOTktMjAiIHN0cm9rZT0iIzM0ZDM5OSIgc3Ryb2tlLXdpZHRoPSIyIi8+PGxpbmUgeDE9IjQ4MCIgeTE9IjMwMCIgeDI9IjcyMCIgeTI9IjMwMCIgc3Ryb2tlPSIjNTY3QzhEIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI2MDAiIHk9IjQwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzU2N0M4RCIgZm9udC1zaXplPSI0OCIgZm9udC1mYW1pbHk9IkFyaWFsIj5EaWdpdGFsIFdpbjwvdGV4dD48L3N2Zz4=',
+        excerpt: 'Understanding how digital twins are revolutionizing predictive maintenance and operations.',
+        content: '<h2>What is a Digital Twin?</h2><p>A digital twin is a virtual replica of a physical object, process, or system. It uses real-time data to simulate behavior and predict outcomes.</p><h3>Use Cases</h3><ul><li>Predictive maintenance for manufacturing equipment</li><li>City planning and infrastructure management</li><li>Healthcare patient monitoring</li><li>Smart building management</li></ul>'
+      }
+    ];
+    
+    const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? 'http://localhost:5000/api' : '/api';
+
+    let allPosts = [];
+    let activeFilter = 'all';
+    
+    function getImageUrl(url) {
+      if (!url) return '';
+      if (url.startsWith('http://') || url.startsWith('https://')) {
+        return url;
+      }
+      if (url.startsWith('/uploads/')) {
+        return (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+          ? `http://localhost:5000${url}`
+          : url;
+      }
+      return url;
+    }
+
+    function fmtDate(iso) {
+      return new Date(iso).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+    }
+
+    function renderFeatured(post) {
+      const el = document.getElementById('blogFeatured');
+      if (!post) { el.innerHTML = ''; return; }
+      el.innerHTML = `
+        <div class="blog-featured reveal-fade">
+          <div class="blog-featured-img">
+            <img src="${getImageUrl(post.coverImage || post.image)}" alt="${post.title}" />
+            <span class="blog-featured-badge">Featured</span>
+          </div>
+          <div class="blog-featured-body">
+            <div class="blog-cat">${post.category}</div>
+            <h2 class="blog-featured-title">${post.title}</h2>
+            <p class="blog-featured-excerpt">${post.excerpt}</p>
+            <div class="blog-meta">
+              <span>${post.author}</span>
+              <span class="blog-meta-dot">✦</span>
+              <span>${fmtDate(post.createdAt)}</span>
+              <span class="blog-meta-dot">✦</span>
+              <span>${post.readTime}</span>
+            </div>
+            <a href="blog-detail.html?id=${post._id}" class="blog-read-link">Read Article →</a>
+          </div>
+        </div>`;
+    }
+
+    function renderCards(posts) {
+      const grid = document.getElementById('blogGrid');
+      if (!posts.length) {
+        grid.innerHTML = '<div class="blog-empty">No posts found.</div>';
+        return;
+      }
+      grid.innerHTML = posts.map(p => {
+        const initials = (p.author || '').split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+        return `
+        <a href="blog-detail.html?id=${p._id}" class="blog-card" data-category="${p.category}" style="text-decoration:none">
+          <img src="${getImageUrl(p.coverImage || p.image)}" alt="${p.title}" class="blog-card-img" />
+          <div class="blog-card-body">
+            <div class="blog-tag">${p.category}</div>
+            <h3 class="blog-card-title">${p.title}</h3>
+            <p class="blog-card-excerpt">${p.excerpt}</p>
+            <div class="blog-card-footer">
+              <div class="blog-meta">
+                <div class="author-avatar">${initials}</div>
+                <span class="blog-meta-text">${fmtDate(p.createdAt)}</span>
+              </div>
+              <div class="read-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </a>`
+      }).join('');
+    }
+
+    function applyFilter(filter) {
+      activeFilter = filter;
+      document.querySelectorAll('.blog-filter-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.filter === filter)
+      );
+      const featured = allPosts.find(p => p.featured);
+      const cards = allPosts.filter(p => !p.featured);
+      if (filter === 'all') {
+        renderFeatured(featured || null);
+        renderCards(cards);
+      } else {
+        const filtered = allPosts.filter(p => p.category === filter);
+        renderFeatured(null);
+        renderCards(filtered);
+      }
+    }
+
+    async function loadBlogs() {
+      try {
+        const res = await fetch(`${API}/blogs`);
+        const data = await res.json();
+        allPosts = data.data || data; // Handle both { success: true, data: [...] } and direct array
+      } catch {
+        console.log('API failed, using sample data');
+        allPosts = sampleBlogs;
+      }
+      applyFilter('all');
+      renderSidebar(allPosts);
+    }
+
+    loadBlogs();
+
+    document.querySelectorAll('.blog-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
+    });
+
+    document.getElementById('newsletterForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = '✓ Subscribed!';
+      btn.disabled = true;
+      setTimeout(() => { btn.textContent = 'Subscribe →'; btn.disabled = false; e.target.reset(); }, 3000);
+    });
+
+    // Sidebar: topics, trending, written by
+    async function renderSidebar(posts) {
+      const topicsEl = document.getElementById('browseTopics');
+      const trendingEl = document.getElementById('trendingList');
+      const authorsEl = document.getElementById('writtenBy');
+      if (!topicsEl || !trendingEl || !authorsEl) return;
+
+      // Try to fetch dashboard stats if available (requires admin auth). If blocked, derive from posts.
+      let counts = {};
+      try {
+        const r = await fetch(`${API}/dashboard/stats`);
+        if (r.ok) {
+          const d = await r.json();
+          // Use byService as topics if present
+          if (d.byService && d.byService.length) {
+            d.byService.forEach(s => counts[s._id || s.service] = s.count);
+          }
+        } else {
+          counts = posts.reduce((acc, p) => { acc[p.category] = (acc[p.category] || 0) + 1; return acc; }, {});
+        }
+      } catch (e) {
+        counts = posts.reduce((acc, p) => { acc[p.category] = (acc[p.category] || 0) + 1; return acc; }, {});
+      }
+      const topicItems = Object.keys(counts).sort().map(t => `<li><span class="topic-name">${t}</span><span class="topic-count">${counts[t]}</span></li>`).join('');
+      topicsEl.innerHTML = topicItems || '<li>No topics</li>';
+
+      // Trending - latest 5 posts (from posts API)
+      const trending = posts.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5);
+      trendingEl.innerHTML = trending.map((p, i) =>
+        `<li><div class="t-index">0${i + 1}</div><div><a href="blog-detail.html?id=${p._id}">${p.title}</a><div class="blog-meta" style="margin-top:6px;font-size:0.72rem;color:var(--text-muted)">${fmtDate(p.createdAt)} · ${p.readTime}</div></div></li>`
+      ).join('') || '<li>No trending posts</li>';
+
+      // Authors
+      const authors = Array.from(new Map(posts.map(p => [p.author, p])).values()).slice(0, 6);
+      authorsEl.innerHTML = authors.map(a => {
+        const initials = a.author.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+        return `<li><div class="author-avatar">${initials}</div><div><strong>${a.author}</strong><div style="font-size:0.8rem;color:var(--text-muted)">${a.role || 'Contributor'}</div></div></li>`;
+      }).join('') || '<li>No authors</li>';
+    }
+
+    // Sidebar subscribe small form
+    const sidebarSubscribe = document.getElementById('sidebarSubscribe');
+    if (sidebarSubscribe) sidebarSubscribe.addEventListener('submit', e => {
+      e.preventDefault(); const btn = sidebarSubscribe.querySelector('button'); btn.textContent = '✓ Subscribed'; btn.disabled = true; setTimeout(() => { btn.textContent = 'Subscribe'; btn.disabled = false; sidebarSubscribe.reset(); }, 2000);
+    });
+  </script>
+  <script src="volga.js"></script>
+
+</body>
+
+</html>

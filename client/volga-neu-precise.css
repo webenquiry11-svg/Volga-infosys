@@ -1,0 +1,227 @@
+/* ════════════════════════════════════════════════════════════════
+   VOLGA INFOSYS — NEUMORPHIC PRECISION OVERLAY
+   Load AFTER volga.css (and portfolio-marquee.css).
+
+   Philosophy: volga.css already defines a light neumorphic system
+   (--bg:#ECF0F3, --neu-shadow-out/in, --neu-shadow-out/in-sm) and
+   already applies it to #navbar, .nav-link, .nav-cta, .solutions-card,
+   .btn-see-all and .home-suite-stat. This file does NOT replace any
+   of that — it (a) extends the SAME light recipe to the other light
+   cards on the page, and (b) introduces a matching DARK neumorphic
+   companion (--dn-*) for the dark surfaces, layered alongside their
+   existing drop-shadows rather than overriding them.
+
+   Hover language stays consistent:
+     • raised cards that LIFT  -> shadow deepens (more "out")
+     • cards that act like a PRESSED control -> shadow flips to "in"
+═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Dark neumorphic companion to the light --neu-* tokens */
+  --dn-bg: #101b2c;
+  --dn-bg-soft: #16243a;
+  --dn-hi: rgba(255, 255, 255, 0.05);
+  --dn-lo: rgba(0, 0, 0, 0.62);
+  --dn-shadow-out:    8px 8px 18px var(--dn-lo), -6px -6px 16px var(--dn-hi);
+  --dn-shadow-in:     inset 6px 6px 14px var(--dn-lo), inset -5px -5px 12px var(--dn-hi);
+  --dn-shadow-out-sm: 5px 5px 10px var(--dn-lo), -4px -4px 9px var(--dn-hi);
+  --dn-shadow-in-sm:  inset 4px 4px 8px var(--dn-lo), inset -3px -3px 7px var(--dn-hi);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .neu-particle { display: none !important; }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   1. #navbar — give .scrolled a real, deepened shadow
+      (previously identical to the resting shadow)
+─────────────────────────────────────────────────────────────── */
+#navbar.scrolled {
+  box-shadow: 10px 10px 24px var(--neu-dark), -10px -10px 24px var(--neu-light);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   2. Hero .stats — soft dark-glass neumorphic chips over the video
+─────────────────────────────────────────────────────────────── */
+.Hero .stats .stat-item {
+  padding: 14px 22px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: var(--dn-shadow-out-sm);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   3. Ticker — recessed dark channel, pauses on hover
+─────────────────────────────────────────────────────────────── */
+.ticker-wrap {
+  background: var(--dn-bg);
+  box-shadow: var(--dn-shadow-in);
+}
+.ticker-wrap:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   4. .solutions-card — already neumorphic; add a "press" micro-scale
+      to match the inset hover shadow (content swap = pressed control)
+─────────────────────────────────────────────────────────────── */
+.solutions-card {
+  transition: box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.solutions-card:hover {
+  transform: scale(0.985);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   5. .home-suite-stat — already neumorphic; add a lift that
+      deepens the "out" shadow further on hover
+─────────────────────────────────────────────────────────────── */
+.home-suite-stat {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.home-suite-stat:hover {
+  transform: translateY(-4px);
+  box-shadow: 11px 11px 24px var(--neu-dark), -11px -11px 24px var(--neu-light);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   6. .nav-services-intro / .nav-service-panel — layered dark neu,
+      stacked alongside their existing image-card drop-shadows
+─────────────────────────────────────────────────────────────── */
+.nav-services-intro {
+  position: relative;
+  overflow: hidden;
+}
+.nav-service-panel {
+  box-shadow:
+    0 28px 60px rgba(0, 0, 0, 0.24),
+    var(--dn-shadow-out-sm);
+}
+.nav-service-panel:hover {
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(232, 147, 10, 0.15),
+    10px 10px 22px var(--dn-lo),
+    -8px -8px 18px var(--dn-hi);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   7. #tech-showcase / .home-suite-tech — dark neu glass tiles
+      (keeps the existing translucent/backdrop-blur look, just adds
+      a dual-tone shadow for the embossed feel)
+─────────────────────────────────────────────────────────────── */
+#tech-showcase {
+  position: relative;
+  overflow: hidden;
+}
+.home-suite-tech {
+  box-shadow: 0 24px 65px rgba(0, 0, 0, 0.18), var(--dn-shadow-out-sm);
+}
+.home-suite-tech:hover {
+  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.22), 10px 10px 22px var(--dn-lo), -8px -8px 18px var(--dn-hi);
+}
+.home-suite-tech i {
+  box-shadow: var(--dn-shadow-out-sm);
+}
+.home-suite-tech:hover i {
+  box-shadow: var(--dn-shadow-in-sm);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   8. Testimonials — .section-intro .portfolio.card
+      Section background inherits body's var(--bg), so these become
+      true light-neumorphic cards matching the navbar language.
+─────────────────────────────────────────────────────────────── */
+.section-intro .portfolio.card {
+  background: var(--bg);
+  border: none;
+  border-radius: 22px;
+  box-shadow: var(--neu-shadow-out);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.section-intro .portfolio.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 12px 12px 26px var(--neu-dark), -12px -12px 26px var(--neu-light);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   9. Blog cards row — dark neu frame around the whole row
+      (children keep their own hover/flex behaviour untouched)
+─────────────────────────────────────────────────────────────── */
+.blog-cards-row {
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--dn-shadow-out);
+}
+.card {
+  border-right-color: rgba(255, 255, 255, 0.05);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   10. Mission flip cards — light neu frame around each .container
+       (the rotateY flip on .front/.back is untouched)
+─────────────────────────────────────────────────────────────── */
+.mission .col .container {
+  border-radius: 10px;
+  box-shadow: var(--neu-shadow-out);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   11. Footer — neu social icons (hover = "pressed", matching the
+       existing fill-on-hover animation) + ambient top highlight
+─────────────────────────────────────────────────────────────── */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+}
+.social-link-l, .social-link-i, .social-link-f, .social-link-y, .social-link-w {
+  border: none;
+  box-shadow: var(--dn-shadow-out-sm);
+  transition: box-shadow 0.25s ease, border-color 0.3s, color 0.3s;
+}
+.social-link-l:hover, .social-link-i:hover, .social-link-f:hover,
+.social-link-y:hover, .social-link-w:hover {
+  box-shadow: var(--dn-shadow-in-sm);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   12. Sitewide consistency (other pages sharing volga.css) —
+       extend the same light neu recipe to matching card families.
+       Inert on this page; harmless if classes aren't present.
+─────────────────────────────────────────────────────────────── */
+.home-suite-service-card,
+.home-suite-work-card,
+.home-suite-insight,
+.home-suite-industry,
+.home-suite-about-stats div {
+  background: var(--bg);
+  border: none;
+  box-shadow: var(--neu-shadow-out-sm);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.home-suite-service-card:hover,
+.home-suite-work-card:hover,
+.home-suite-insight:hover,
+.home-suite-industry:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--neu-shadow-out);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   13. Ambient particles (injected by volga-neu-precise.js)
+       — dark sections only, sit behind content via z-index:-1
+─────────────────────────────────────────────────────────────── */
+.neu-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(125, 211, 252, 0.55), rgba(125, 211, 252, 0) 70%);
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(0.5px);
+}

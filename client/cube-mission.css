@@ -1,0 +1,479 @@
+/* ═══════════════════════════════════════════════════════════════
+   CUBE MISSION SECTION — fully scoped, zero conflict with volga.css
+   All selectors prefixed with .cube-mission-wrap
+   No global resets, no body/html overrides
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Tokens (local only) ──────────────────────────────────────── */
+.cube-mission-wrap {
+  --cm-dark-bg: #0D2B3E;
+  --cm-fg: #ede8df;
+  --cm-muted: #8a7b6e;
+  --cm-accent: #d4a84b;
+  --cm-card-bg: #1B4F72;
+  --cm-card-border: rgba(212, 168, 75, 0.22);
+  --cm-hairline: 0.0625rem;
+  --cm-font-display: "Orbitron", sans-serif;
+  --cm-font-body: "Exo 2", var(--font-body, sans-serif);
+  --cm-reveal-offset: 0.625rem;
+  --cm-reveal-dur: 0.5s;
+}
+
+/* ── Outer wrapper — the section that sits in the page flow ───── */
+.cube-mission-wrap {
+  position: relative;
+  width: 100%;
+  background-color: var(--cm-dark-bg);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: cm-grid-move 3s linear infinite;
+  overflow: hidden;
+}
+
+@keyframes cm-grid-move {
+  0%   { background-position: 0 0; }
+  100% { background-position: 60px 60px; }
+}
+
+/* ── Section label strip above ───────────────────────────────── */
+
+.cube-mission-kicker {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--cm-accent);
+  font-family: var(--cm-font-body);
+  margin-bottom: 0rem;
+}
+.cube-mission-title {
+  font-family: var(--cm-font-display);
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  color: #1B4F72;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  margin: 0;
+}
+.cube-mission-desc {
+  max-width: 360px;
+  font-size: 0.78rem;
+  line-height: 1.75;
+  color: var(--cm-muted);
+  font-family: var(--cm-font-body);
+  margin: 0;
+  padding-top: 0.25rem;
+}
+
+/* ── Inner viewport — clips the experience ───────────────────── */
+.cube-mission-viewport {
+  position: relative;
+  width: 100%;
+  height: 100vh;        /* one screenful tall                    */
+  overflow: hidden;     /* hides the inner scroll from the page  */
+}
+
+/* ── Fixed-inside-viewport scene (cube lives here) ───────────── */
+.cube-mission-scene {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1100px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── The inner scroll container ──────────────────────────────── */
+.cube-mission-scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* hide scrollbar visually but keep it functional */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  z-index: 2;
+}
+.cube-mission-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── CUBE ─────────────────────────────────────────────────────── */
+#cm-cube {
+  --s: min(46vw, 46vh, 420px);
+  width: var(--s);
+  height: var(--s);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  transform-style: preserve-3d;
+  transform: rotateX(90deg) rotateY(0deg);
+  will-change: transform;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cm-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+  background:
+    repeating-linear-gradient(0deg,
+      rgba(255,255,255,0.02) 0,rgba(255,255,255,0.02) 1px,
+      transparent 1px, transparent 48px),
+    repeating-linear-gradient(90deg,
+      rgba(255,255,255,0.02) 0,rgba(255,255,255,0.02) 1px,
+      transparent 1px, transparent 48px),
+    #14100d;
+}
+.cm-face img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cm-face-ph {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.75rem;
+  font-family: var(--cm-font-display);
+  font-size: clamp(1.5rem, 5vw, 3.5rem);
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.06);
+  pointer-events: none;
+  user-select: none;
+}
+
+.cm-face[data-face="front"]  { transform: translateZ(calc(var(--s)/2)); }
+.cm-face[data-face="back"]   { transform: rotateY(180deg) translateZ(calc(var(--s)/2)); }
+.cm-face[data-face="right"]  { transform: rotateY(90deg)  translateZ(calc(var(--s)/2)); }
+.cm-face[data-face="left"]   { transform: rotateY(-90deg) translateZ(calc(var(--s)/2)); }
+.cm-face[data-face="top"]    { transform: rotateX(-90deg) translateZ(calc(var(--s)/2)); }
+.cm-face[data-face="bottom"] { transform: rotateX(90deg)  translateZ(calc(var(--s)/2)); }
+
+/* ── HUD (scoped inside viewport) ────────────────────────────── */
+#cm-hud {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+  text-align: right;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--cm-muted);
+  text-transform: uppercase;
+  font-family: var(--cm-font-body);
+  pointer-events: none;
+}
+.cm-progress-bar {
+  width: 7rem;
+  height: var(--cm-hairline);
+  background: var(--cm-muted);
+  margin-block-start: 0.4rem;
+  margin-inline-start: auto;
+  position: relative;
+  overflow: hidden;
+}
+.cm-progress-fill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 0%;
+  background: var(--cm-accent);
+  transition: width 0.1s linear;
+}
+.cm-scene-label {
+  font-size: 0.55rem;
+  color: var(--cm-accent);
+  margin-block-start: 0.35rem;
+}
+
+/* ── Scene dot strip ─────────────────────────────────────────── */
+#cm-scene-strip {
+  position: absolute;
+  left: 1.5rem;
+  top: 50%;
+  translate: 0 -50%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.cm-dot {
+  display: block;
+  width: 0.22rem;
+  height: 0.22rem;
+  border-radius: 50%;
+  background: var(--cm-muted);
+  transition: background 0.3s, scale 0.3s;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+.cm-dot.active {
+  background: var(--cm-accent);
+  scale: 1.8;
+}
+
+/* ── Caption ─────────────────────────────────────────────────── */
+#cm-face-caption {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  translate: -50% 0;
+  z-index: 10;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+}
+#cm-caption-num {
+  font-size: 0.55rem;
+  letter-spacing: 0.28em;
+  color: var(--cm-accent);
+  text-transform: uppercase;
+  margin-block-end: 0.12rem;
+  font-family: var(--cm-font-body);
+}
+#cm-caption-name {
+  font-family: var(--cm-font-display);
+  font-size: clamp(1.4rem, 4vw, 2.8rem);
+  letter-spacing: 0.08em;
+  color: var(--cm-muted);
+  opacity: 0.45;
+  line-height: 1;
+}
+
+/* ── Slide sections inside inner scroll ─────────────────────── */
+.cube-mission-scroll .cm-slide {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 6rem 5rem 6rem 5rem;
+  position: relative;
+  z-index: 3;
+}
+
+/* ── Text cards ──────────────────────────────────────────────── */
+.cm-card {
+  max-width: 33rem;
+  height: 29rem;
+  padding: 2rem 1.75rem;
+  background: var(--cm-card-bg);
+  border-left: var(--cm-hairline) solid var(--cm-card-border);
+  backdrop-filter: blur(8px) saturate(130%);
+  -webkit-backdrop-filter: blur(8px) saturate(130%);
+  font-family: var(--cm-font-body);
+}
+.cm-card.right {
+  margin-inline-start: auto;
+  border-left: none;
+  border-right: var(--cm-hairline) solid var(--cm-card-border);
+  text-align: right;
+}
+.cm-card.right .cm-h-line { transform-origin: right; margin-inline-start: auto; }
+.cm-card.center {
+  margin-inline: auto;
+  border-left: none;
+  border-top: var(--cm-hairline) solid var(--cm-card-border);
+  text-align: center;
+  max-width: 35rem;
+}
+.cm-card.center .cm-h-line { transform-origin: center; margin-inline: auto; }
+
+.cm-tag {
+  font-size: 0.58rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--cm-accent);
+  margin-block-end: 1rem;
+  font-family: var(--cm-font-body);
+}
+.cm-card h2 {
+  /* override any volga h2 styles with high specificity */
+  font-family: var(--cm-font-display) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.03em !important;
+  line-height: 0.92 !important;
+  font-size: clamp(2rem, 4.5vw, 3.5rem) !important;
+  color: var(--cm-fg) !important;
+  margin: 0 !important;
+}
+.cm-card h1 {
+  font-family: var(--cm-font-display) !important;
+  font-weight: 400 !important;
+  font-size: clamp(2.4rem, 5vw, 3.8rem) !important;
+  letter-spacing: 0.03em !important;
+  line-height: 0.92 !important;
+  color: var(--cm-fg) !important;
+  margin: 0 !important;
+}
+.cm-body {
+  font-size: 0.76rem;
+  line-height: 1.8;
+  color: rgba(237,232,223,0.55);
+  margin-block-start: 1.1rem;
+  font-family: var(--cm-font-body);
+}
+.cm-stat-row {
+  display: flex;
+  gap: 2rem;
+  margin-block-start: 1.75rem;
+  flex-wrap: wrap;
+}
+.cm-stat { display: flex; flex-direction: column; gap: 0.12rem; }
+.cm-stat-num {
+  font-family: var(--cm-font-display);
+  font-size: 2rem;
+  color: var(--cm-accent);
+  line-height: 1;
+}
+.cm-stat-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cm-muted);
+  font-family: var(--cm-font-body);
+}
+.cm-h-line {
+  width: 3rem;
+  height: var(--cm-hairline);
+  background: var(--cm-accent);
+  margin-block-end: 1.1rem;
+  transform-origin: left;
+}
+.cm-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-block-start: 1.5rem;
+}
+.cm-card.right .cm-cta-row { justify-content: flex-end; }
+
+.cm-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 1.1rem;
+  border: var(--cm-hairline) solid var(--cm-accent);
+  color: var(--cm-accent);
+  font-family: var(--cm-font-body);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  transition: background 0.2s, color 0.2s;
+}
+.cm-cta:hover { background: var(--cm-accent); color: var(--cm-dark-bg); }
+.cm-cta svg { width: 0.65rem; height: 0.65rem; }
+
+.cm-cta-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 1.1rem;
+  border: var(--cm-hairline) solid rgba(138,123,110,0.45);
+  color: var(--cm-muted);
+  font-family: var(--cm-font-body);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: transparent;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.cm-cta-back:hover {
+  background: rgba(138,123,110,0.12);
+  border-color: var(--cm-muted);
+  color: var(--cm-fg);
+}
+.cm-cta-back svg { width: 0.65rem; height: 0.65rem; }
+
+/* ── Reveal animations (scoped) ──────────────────────────────── */
+.cm-card .cm-tag,
+.cm-card h1,
+.cm-card h2,
+.cm-card .cm-body,
+.cm-card .cm-stat-row,
+.cm-card .cm-cta,
+.cm-card .cm-cta-back {
+  opacity: 0;
+  translate: 0 var(--cm-reveal-offset);
+}
+.cm-card h1, .cm-card h2 {
+  translate: 0 1rem;
+  transition: opacity var(--cm-reveal-dur) ease 0.08s,
+              translate var(--cm-reveal-dur) ease 0.08s;
+}
+.cm-card .cm-tag {
+  transition: opacity var(--cm-reveal-dur) ease,
+              translate var(--cm-reveal-dur) ease;
+}
+.cm-card .cm-body {
+  transition: opacity var(--cm-reveal-dur) ease 0.2s,
+              translate var(--cm-reveal-dur) ease 0.2s;
+}
+.cm-card .cm-stat-row {
+  transition: opacity var(--cm-reveal-dur) ease 0.3s,
+              translate var(--cm-reveal-dur) ease 0.3s;
+}
+.cm-card .cm-cta,
+.cm-card .cm-cta-back {
+  transition: opacity var(--cm-reveal-dur) ease 0.35s,
+              translate var(--cm-reveal-dur) ease 0.35s,
+              background 0.2s, color 0.2s, border-color 0.2s;
+}
+.cm-h-line {
+  opacity: 0;
+  scale: 0 1;
+  transition: opacity 0.4s ease, scale 0.4s ease;
+}
+
+/* visible state */
+.cm-card.cm-in .cm-tag,
+.cm-card.cm-in h1,
+.cm-card.cm-in h2,
+.cm-card.cm-in .cm-body,
+.cm-card.cm-in .cm-stat-row,
+.cm-card.cm-in .cm-cta,
+.cm-card.cm-in .cm-cta-back { opacity: 1; translate: 0 0; }
+.cm-card.cm-in .cm-h-line   { opacity: 1; scale: 1 1; }
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .cube-mission-header { padding: 3rem 1.5rem 0; }
+  .cube-mission-scroll .cm-slide { padding: 0 1.25rem 3rem; align-items: flex-end; }
+  #cm-scene-strip { display: none; }
+  .cm-card, .cm-card.right, .cm-card.center {
+    max-width: 100%;
+    padding: 1.25rem 1rem;
+  }
+  #cm-cube { --s: min(70vw, 70vh, 340px); }
+}
+
+/* ── Respect reduced motion ───────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .cm-card .cm-tag,
+  .cm-card h1, .cm-card h2,
+  .cm-card .cm-body,
+  .cm-card .cm-stat-row,
+  .cm-card .cm-cta,
+  .cm-card .cm-cta-back,
+  .cm-h-line {
+    opacity: 1 !important;
+    translate: 0 0 !important;
+    scale: 1 1 !important;
+    transition: none !important;
+  }
+}
