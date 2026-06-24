@@ -245,8 +245,6 @@ function initHeroAnimation() {
 // ─── 6. SCROLL-TRIGGERED REVEALS ─────────────────────────
 function setupScrollReveals() {
   gsap.utils.toArray('.reveal, .reveal-fade').forEach(el => {
-    // Skip footer elements — they have dedicated reveal logic
-    if (el.closest('.footer, footer')) { gsap.set(el, { opacity: 1, y: 0 }); return; }
     const delay = parseFloat(el.style.transitionDelay || 0);
     gsap.to(el, {
       opacity: 1, y: 0,
@@ -455,8 +453,8 @@ function setupGlobalTextScrollAnimation() {
 
   targets.forEach(el => {
     if (!el.offsetParent) return;
-    // FIX: Skip Hero, CTA, and footer elements — they have their own animations or must always be visible
-    if (el.closest('.Hero, .cta-banner, .cta-inner, .footer, footer')) return;
+    // FIX: Skip Hero and CTA elements — they have their own animations or must always be visible
+    if (el.closest('.Hero, .cta-banner, .cta-inner')) return;
 
     gsap.set(el, { opacity: 0, y: 24, skewY: 2, transformOrigin: 'top center' });
     gsap.to(el, {
@@ -1615,8 +1613,7 @@ function openMenu(key) {
     { opacity:1, x:0, duration:0.45, ease:'power2.out', delay:0.1 }
   );
 
-  const bd = document.getElementById('backdrop');
-  if (bd) bd.classList.add('active');
+  document.getElementById('backdrop').classList.add('active');
 }
 
 function closeMenu(delay = 0) {
@@ -1635,8 +1632,7 @@ function closeMenu(delay = 0) {
     });
 
     activeMenu = null;
-    const bd = document.getElementById('backdrop');
-    if (bd) bd.classList.remove('active');
+    document.getElementById('backdrop').classList.remove('active');
   }, delay);
 }
 
@@ -1648,8 +1644,7 @@ Object.entries(menus).forEach(([key, { item, menuEl }]) => {
   item.addEventListener('click', () => activeMenu === key ? closeMenu() : openMenu(key));
 });
 
-const _bd = document.getElementById('backdrop');
-if (_bd) _bd.addEventListener('click', () => closeMenu());
+document.getElementById('backdrop').addEventListener('click', () => closeMenu());
 
 window.addEventListener('scroll', () => {
   const navbar = document.getElementById('navbar');
