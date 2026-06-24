@@ -24,10 +24,18 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin: "*",
+  origin: function(origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, Postman)
+    // and any origin in production since frontend is on Vercel
+    callback(null, true);
+  },
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 }));
+
+// Ensure OPTIONS preflight requests are handled
+app.options("*", cors());
 app.use(express.json());
 
 const contactLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100, message: { success: false, message: "Too many submissions, try again later." } });

@@ -41,7 +41,7 @@ a { text-decoration: none; color: inherit; }
   left: 50px; top: 50%;
   transform: translateY(-50%);
   z-index: 50;
-  width: calc(50% - 80px); max-width: 460px;
+  width: calc(50% - 80px); max-width:max-content;
   max-height: calc(100% - 120px);
   overflow: hidden;
   padding: 32px 32px 32px 28px;

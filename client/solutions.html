@@ -4,8 +4,14 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Solutions — Volga Infosys</title>
+<link rel="stylesheet" href="volga.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -31,35 +37,6 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--font-ui);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
 /* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:300;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 48px;height:64px;
-  background:rgba(236,240,243,0.88);backdrop-filter:blur(20px);
-  box-shadow:0 2px 16px rgba(27,79,114,0.08);
-  border-bottom:1px solid var(--border);
-}
-.nav-logo{
-  font-family:var(--font-display);font-size:1.1rem;font-weight:700;
-  letter-spacing:3px;color:var(--accent2);text-decoration:none;
-}
-.nav-logo span{color:var(--accent)}
-.nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{
-  font-family:var(--font-mono);font-size:.72rem;font-weight:500;
-  color:var(--text-muted);text-decoration:none;letter-spacing:.5px;
-  text-transform:uppercase;transition:color .2s;
-}
-.nav-links a:hover{color:var(--accent2)}
-.nav-cta{
-  font-family:var(--font-mono);font-size:.68rem;letter-spacing:1px;text-transform:uppercase;
-  background:var(--accent2);color:#fff;border:none;
-  padding:10px 22px;border-radius:6px;text-decoration:none;
-  box-shadow:var(--neu-out-sm);
-  transition:all .2s;
-}
-.nav-cta:hover{background:var(--accent);box-shadow:var(--glow)}
-@media(max-width:900px){.nav-links{display:none}}
 
 /* ── HERO ── */
 .hero{
@@ -598,19 +575,52 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:52px 60px
 </head>
 <body>
 
-<nav>
-  <a href="index.html" class="nav-logo">VOLGA<span>.</span></a>
-  <ul class="nav-links">
-    <li><a href="solutions.html">Solutions</a></li>
-    <li><a href="industries.html">Industries</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="portfolio.html">Work</a></li>
-    <li><a href="technologies.html">Technologies</a></li>
-    <li><a href="insights-overview.html">Insights</a></li>
-    <li><a href="about.html">Company</a></li>
-  </ul>
-  <a href="contact.html" class="nav-cta">Contact →</a>
-</nav>
+  <div class="scroll-progress-container">
+    <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+  </div>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
+      <img src="logo.png" alt="VOLGA Infosys logo" />
+    </a>
+    <ul class="nav-links">
+      <li class="nav-item" data-menu="solutions"><button class="nav-link">Solutions <span class="nav-arrow"></span></button></li>
+      <li class="nav-item" data-menu="industries"><button class="nav-link">Industries <span class="nav-arrow"></span></button></li>
+      <li class="nav-item" data-menu="services"><button class="nav-link">Services <span class="nav-arrow"></span></button></li>
+      <li class="nav-item" data-menu="work"><button class="nav-link">Work <span class="nav-arrow"></span></button></li>
+      <li class="nav-item" data-menu="technologies"><a class="nav-link" href="technologies (2).html">Technologies</a></li>
+      <li class="nav-item" data-menu="insights"><a class="nav-link" href="insights-overview.html">Insights</a></li>
+      <li class="nav-item" data-menu="company"><button class="nav-link">Company <span class="nav-arrow"></span></button></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Contact Us</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span class="burger-bar"></span><span class="burger-bar"></span><span class="burger-bar"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose" aria-label="Close mobile menu">X</button>
+    <ul>
+      <li><a href="index.html" class="mm-link">Home</a></li>
+      <li><a href="solutions.html" class="mm-link">Solutions</a></li>
+      <li><a href="industries.html" class="mm-link">Industries</a></li>
+      <li><a href="services.html" class="mm-link">Services</a></li>
+      <li><a href="portfolio.html" class="mm-link">Work</a></li>
+      <li><a href="technologies.html" class="mm-link">Technologies</a></li>
+      <li><a href="blog.html" class="mm-link">Insights</a></li>
+      <li><a href="company.html" class="mm-link">Company</a></li>
+    </ul>
+  </div>
+
+  <!-- MEGA MENUS -->
+  <div class="mega-menu" id="menu-solutions"><div class="mega-inner"><div class="mega-label">Solutions</div><div class="mega-cols"><div class="mega-col"><ul class="mega-items"><li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>AR Solutions</a></li><li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z"/><circle cx="12" cy="10" r="3"/></svg></span>VR Solutions</a></li><li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>MR / XR Applications</a></li><li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Digital Twin</a></li><li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>AI Integration</a></li></ul></div><div class="mega-col"><ul class="mega-items"><li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>3D Configurators</a></li><li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Virtual Showrooms</a></li><li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>Simulation Systems</a></li><li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Interactive Training</a></li><li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>Metaverse Solutions</a></li></ul></div></div><div class="mega-highlight"><div class="mega-highlight-title">New: AI-Powered XR</div><div class="mega-highlight-sub">Combining spatial computing with generative AI for next-gen enterprise experiences.</div><a href="#" class="mega-highlight-btn">Explore <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div></div>
+  <div class="mega-menu" id="menu-industries"><div class="mega-inner"><div class="mega-label">Industries</div><div class="mega-cols"><div class="mega-col"><ul class="mega-items"><li><a class="mega-item" href="industries.html#healthcare"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>Healthcare</a></li><li><a class="mega-item" href="industries.html#manufacturing"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>Manufacturing</a></li><li><a class="mega-item" href="industries.html#realestate"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Real Estate</a></li><li><a class="mega-item" href="industries.html#education"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>Education</a></li><li><a class="mega-item" href="industries.html#automotive"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>Automotive</a></li></ul></div><div class="mega-col"><ul class="mega-items"><li><a class="mega-item" href="industries.html#retail"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Retail</a></li><li><a class="mega-item" href="industries.html#architecture"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>Architecture</a></li><li><a class="mega-item" href="industries.html#defense"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Defense</a></li><li><a class="mega-item" href="industries.html#tourism"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Tourism</a></li><li><a class="mega-item" href="industries.html#energy"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>Energy</a></li></ul></div></div><div class="mega-highlight"><div class="mega-highlight-title">Industry Solutions</div><div class="mega-highlight-sub">Tailored immersive experiences built for your sector's unique challenges.</div><a href="industries.html" class="mega-highlight-btn">View All <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div></div>
+  <div class="mega-menu" id="menu-services"><div class="mega-inner"><div class="mega-label">Services</div><div class="mega-cols"><div class="mega-col"><ul class="mega-items"><li><a class="mega-item" href="services.html#custom-ar"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>Custom AR App Development</a></li><li><a class="mega-item" href="services.html#vr-training"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z"/><circle cx="12" cy="10" r="3"/></svg></span>VR Training Platforms</a></li><li><a class="mega-item" href="services.html#unity-dev"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>Unity Development</a></li><li><a class="mega-item" href="services.html#webgl"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>WebGL Experiences</a></li></ul></div><div class="mega-col"><ul class="mega-items"><li><a class="mega-item" href="services.html#3d-modeling"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>3D Modeling & Animation</a></li><li><a class="mega-item" href="services.html#uiux"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 17l10-10 4 4 6-6"/></svg></span>UI/UX Design</a></li><li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>Cloud Deployment</a></li><li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg></span>Maintenance & Support</a></li></ul></div></div><div class="mega-highlight"><div class="mega-highlight-title">Full-Cycle Delivery</div><div class="mega-highlight-sub">From concept to deployment — we handle every stage of your XR project.</div><a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div></div>
+  <div class="mega-menu" id="menu-work"><div class="mega-inner"><div class="mega-label">Work</div><div class="mega-cols"><div class="mega-col"><ul class="mega-items"><li><a class="mega-item" href="portfolio2.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>Case Studies</a></li><li><a class="mega-item" href="portfolio.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>Portfolio</a></li><li><a class="mega-item" href="client-stories.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Client Stories</a></li><li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></span>Product Demos</a></li></ul></div></div><div class="mega-highlight"><div class="mega-highlight-title">Featured Project</div><div class="mega-highlight-sub">See how we transformed a global manufacturer's training program with immersive VR.</div><a href="#" class="mega-highlight-btn">View Case Study <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div></div>
+  <div class="mega-menu" id="menu-company"><div class="mega-inner"><div class="mega-label">Company</div><div class="mega-cols"><div class="mega-col"><ul class="mega-items"><li><a class="mega-item" href="about.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>About Us</a></li><li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>Careers</a></li><li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Partnerships</a></li></ul></div></div><div class="mega-highlight"><div class="mega-highlight-title">We're Hiring</div><div class="mega-highlight-sub">Join a team building the future of spatial computing and enterprise immersive tech.</div><a href="#" class="mega-highlight-btn">See Openings <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div></div>
+  <div id="backdrop" aria-hidden="true"></div>
 
 <!-- HERO -->
 <section class="hero">
@@ -670,17 +680,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:52px 60px
   </main>
 </div>
 
-<!-- PROOF -->
-<section class="proof-section">
-  <div class="proof-head">
-    <div>
-      <div class="proof-eyebrow">Visual Portfolio</div>
-      <h2 class="proof-h">Solutions<br>In Action</h2>
-    </div>
-    <p class="proof-sub">Every solution we build is grounded in real-world challenges and engineered for measurable outcomes.</p>
-  </div>
-  <div class="proof-strip" id="proofStrip"></div>
-</section>
+
+
 
 <!-- WHY -->
 <section class="why-section">
@@ -689,8 +690,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:52px 60px
     <h2 class="why-left-h">Built for Measurable Business Impact</h2>
     <p class="why-left-p">We combine cutting-edge immersive technology with creative design and user-focused development to deliver solutions that generate real business results — not demos.</p>
     <div class="why-left-stat">
-      <div class="why-stat-n"><span class="count-up2" data-target="200">0</span><em>+</em></div>
-      <div class="why-stat-l">Projects Delivered</div>
+      
+      
     </div>
   </div>
   <div class="why-right">
@@ -714,47 +715,87 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:52px 60px
     <p class="cta-p">Contact our experts to discover how immersive technology can transform customer engagement and accelerate growth.</p>
     <div class="cta-btns">
       <a href="contact.html" class="btn-primary">Start a Project</a>
-      <a href="contact.html" class="btn-ghost">Book a Consultation</a>
+      
     </div>
   </div>
 </section>
 
-<footer>
-  <div class="ft-logo">VOLGA<span>.</span></div>
-  <div class="ft-grid">
-    <div>
-      <div class="ft-col-head">Business</div>
-      <a class="ft-link" href="#">Training Simulation</a>
-      <a class="ft-link" href="#">3D Configurators</a>
-      <a class="ft-link" href="#">Buildings & Interiors</a>
-      <a class="ft-link" href="#">E-Commerce</a>
-      <a class="ft-link" href="#">Manufacturing</a>
+  
+ <div class="footer">
+
+  <div class="panel-light">
+    <div class="nav-bar" id="navBar">
+      <div class="logo-box">
+        <img class="logo-img" src="logo.png" alt="Volga" onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'">
+        <div id="logoFallback" style="display:none;width:42px;height:42px;border-radius:10px;background:#1a3a5c;align-items:center;justify-content:center;font-family:Exo 2", sans-serif;font-size:18px;font-weight:800;color:#fff">V</div>
+      </div>
+      <div class="nav-right">
+        
+        <button class="launch-btn" ><a href="contact.html">contact us</a></button>
+      </div>
     </div>
-    <div>
-      <div class="ft-col-head">Services</div>
-      <a class="ft-link" href="#">Augmented Reality</a>
-      <a class="ft-link" href="#">Virtual Reality</a>
-      <a class="ft-link" href="#">AR Player</a>
-      <a class="ft-link" href="#">VR Player 360°</a>
+
+    <div class="links-grid" id="linksGrid">
+      <div class="lg-col">
+        <div class="lg-col-title">Company</div>
+        <div class="lg-links">
+          <a class="lg-link">Home</a>
+          <a class="lg-link">Technology</a>
+          <a class="lg-link">Community</a>
+          <a class="lg-link">Mission</a>
+          <a class="lg-link">Careers <span class="arr">↗</span></a>
+        </div>
+      </div>
+      <div class="lg-col">
+        <div class="lg-col-title">Connect</div>
+        <div class="lg-links">
+          <a class="lg-link">Github <span class="arr">↗</span></a>
+          <a class="lg-link">Discord <span class="arr">↗</span></a>
+          <a class="lg-link">Twitter <span class="arr">↗</span></a>
+          <a class="lg-link">LinkedIn <span class="arr">↗</span></a>
+          <a class="lg-link">Instagram <span class="arr">↗</span></a>
+          <a class="lg-link">WhatsApp <span class="arr">↗</span></a>
+        </div>
+      </div>
+      <div class="lg-col">
+        <div class="lg-col-title">Resources</div>
+        <div class="lg-links">
+          <a class="lg-link">Volga Docs <span class="arr">↗</span></a>
+          <a class="lg-link">AR Academy <span class="arr">↗</span></a>
+          <a class="lg-link">Press Kit <span class="arr">↗</span></a>
+          <a class="lg-link">Privacy Policy</a>
+          <a class="lg-link">Training Sim <span class="arr">↗</span></a>
+        </div>
+      </div>
     </div>
-    <div>
-      <div class="ft-col-head">Enquiry</div>
-      <a class="ft-link" href="mailto:hello@volga.com">hello@volga.com</a>
-      <a class="ft-link" href="tel:+919824182099">+91 98241 82099</a>
+
+    <div class="panel-bottom">
+      <div class="pb-left">
+        <a class="pb-link">Terms of Service</a>
+        <a class="pb-link">Privacy Policy</a>
+      </div>
+      <span class="pb-copy">© 2026 Volga Infosys</span>
+      <div class="logo-big">VOLGA</div>
     </div>
-    <div>
-      <div class="ft-col-head">Social</div>
-      <a class="ft-link" href="#">LinkedIn</a>
-      <a class="ft-link" href="#">Instagram</a>
-      <a class="ft-link" href="#">Facebook</a>
-      <a class="ft-link" href="#">YouTube</a>
-    </div>
+    <div style="height:48px"></div>
   </div>
-  <div class="ft-bottom">
-    <span class="ft-copy">© VOLGA INFOSYS® 2026</span>
-    <span class="ft-made">MADE WITH ♦ BY VOLGA</span>
+
+  <!-- WAVE -->
+  <div class="wave-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 L0,30 Q200,60 400,35 Q600,10 720,38 Q860,62 1040,30 Q1200,4 1440,28 L1440,0 Z" fill="#ECF0F3"/>
+    </svg>
   </div>
-</footer>
+
+  <!-- 3D BAND -->
+  <div class="panel-3d" id="p3d">
+    <canvas id="c3d"></canvas>
+    <div class="custom-cur" id="cur"></div>
+    <div class="cur-ring" id="curRing"></div>
+  </div>
+
+</div>
+
 
 <script>
 const IC={
@@ -1021,6 +1062,8 @@ const h=window.location.hash.replace('#','');
 if(h&&SOLUTIONS.find(s=>s.id===h))showSolution(h);
 </script>
 
+<script src="api-config.js"></script>
+<script src="volga.js"></script>
 </body>
 
 </html>

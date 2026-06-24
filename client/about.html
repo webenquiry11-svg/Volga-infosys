@@ -4,267 +4,385 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Volga Infosys — Building the Future of Enterprise Experiences</title>
-<link rel="stylesheet"
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="volga.css" />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
-  :root{
-    /* Updated color theme */
-    --cream:#ffffff;
-    --cream-2:#E0F2FE;
-    --ink:#0C4A6E;
-    --muted:#0369A1;
-    --line:rgba(59,130,246,0.12);
-    --navy:#1E3A8A;
-    --navy-2:#1E40AF;
-    --process-bg:#F0F9FF;
-    --process-line:rgba(59,130,246,0.18);
-    --partners-bg:#1E3A8A;
-    --coral:#F97316;
-    --coral-deep:#EA580C;
-    --amber:#F59E0B;
-    --teal:#2DD4BF;
-    --on-dark:#E0F2FE;
-    --on-dark-muted:#7DD3FC;
-    --font-display:'Fraunces', serif;
-    --font-body:'Inter', sans-serif;
-    --font-mono:'IBM Plex Mono', monospace;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    font-family:var(--font-body);
-    background:var(--cream);
-    color:var(--ink);
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
-  img,svg{display:block;}
-  a{color:inherit;text-decoration:none;}
-  ul{list-style:none;}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+/* ── About page variables (prefixed to avoid overriding volga.css tokens) ── */
+:root {
+  --ab-cream: #ECF0F3;        /* matches volga --bg */
+  --ab-cream-2: #E8F1F8;      /* matches volga --surface2 */
+  --ab-ink: #0D1F2D;          /* matches volga --text */
+  --ab-muted: #4A6070;        /* matches volga --text-muted */
+  --ab-line: rgba(27,79,114,0.12); /* matches volga --border */
+  --ab-navy: #1B4F72;         /* matches volga --accent2 */
+  --ab-navy-2: #0D2B3E;       /* matches volga --accent3 */
+  --ab-process-bg: #E8F1F8;
+  --ab-process-line: rgba(27,79,114,0.18);
+  --ab-partners-bg: #0D2B3E;
+  --ab-coral: #E8930A;        /* matches volga --accent */
+  --ab-coral-deep: #E8501A;   /* matches volga --accent-red */
+  --ab-amber: #E8930A;        /* matches volga --accent */
+  --ab-on-dark: #E8F1F8;
+  --ab-on-dark-muted: #a0c4d8;
+  --ab-font-mono: "Space Grotesk", sans-serif; /* matches volga --font-mono */
+}
+.body{color:#0D2B3E}
+/* ── Page content wrapper ── */
+.wrap { max-width:1180px; margin:0 auto; padding:0 32px; }
 
-  .eyebrow{
-    font-family:var(--font-mono);
-    font-size:12px;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    color:var(--coral-deep);
-    display:flex;
-    align-items:center;
-    gap:8px;
-    margin-bottom:18px;
-  }
-  .eyebrow::before{content:"//";color:var(--coral);font-weight:500;}
-  .on-dark .eyebrow{color:var(--amber);}
-  .on-process .eyebrow{color:var(--coral-deep);}
+/* ── Eyebrow ── */
+.eyebrow {
+  font-family: var(--ab-font-mono);
+  font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ab-coral-deep);
+  display: flex; align-items: center; gap: 8px; margin-bottom: 18px;
+}
+.eyebrow::before { content: "//"; color: var(--ab-coral); font-weight: 500; }
+.on-dark .eyebrow { color: var(--ab-amber); }
 
-  h1,h2,h3{font-family:var(--font-display);font-weight:500;letter-spacing:-0.01em;color:inherit;}
-  .h1{font-size:clamp(36px,5vw,58px);line-height:1.08;}
-  .h2{font-size:clamp(28px,3.4vw,40px);line-height:1.15;}
-  .h3{font-size:19px;line-height:1.3;font-weight:500;}
-  .lede{font-size:17px;color:var(--muted);max-width:560px;}
-  .on-dark .lede{color:var(--on-dark-muted);}
+/* ── About-page heading sizes (scoped so nav is unaffected) ── */
+.hero h1, .hero h2, .hero h3,
+.section h1, .section h2, .section h3,
+.nb-team-section h1, .nb-team-section h2, .nb-team-section h3 {
+  font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em;
+}
+.h1 { font-size: clamp(36px,5vw,58px); line-height: 1.08; }
+.h2 { font-size: clamp(28px,3.4vw,40px); line-height: 1.15; }
+.h3 { font-size: 19px; line-height: 1.3; font-weight: 500; }
+.lede { font-size: 17px; color: var(--muted); max-width: 560px; }
+.on-dark .lede { color: var(--on-dark-muted); }
 
-  .btn{
-    display:inline-flex;align-items:center;gap:8px;
-    font-family:var(--font-mono);font-size:12px;letter-spacing:0.06em;text-transform:uppercase;
-    padding:14px 24px;border-radius:3px;border:1px solid var(--ink);
-    transition:transform 0.15s ease, background 0.15s ease;
-    cursor:pointer;
-  }
-  .btn:hover{transform:translateY(-1px);}
-  .btn-primary{background:var(--ink);color:var(--cream);}
-  .btn-primary:hover{background:var(--coral-deep);border-color:var(--coral-deep);}
-  .btn-ghost{background:transparent;color:var(--ink);}
-  .btn-ghost:hover{background:rgba(27,26,23,0.06);}
-  .on-dark .btn{border-color:var(--on-dark);color:var(--on-dark);}
-  .on-dark .btn-primary{background:var(--amber);color:var(--navy);border-color:var(--amber);}
-  .on-dark .btn-primary:hover{background:var(--on-dark);}
+/* ── Frame device ── */
+.frame {
+  position: relative; border-radius: 6px; background: var(--cream-2);
+  border: 1px solid var(--line);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 10px; text-align: center; padding: 24px; color: var(--muted);
+}
+.on-dark .frame { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.12); color: var(--on-dark-muted); }
+.frame .corner { position: absolute; width: 14px; height: 14px; }
+.frame .corner.tl { top:9px; left:9px; border-top:2px solid var(--ab-coral); border-left:2px solid var(--ab-coral); }
+.frame .corner.tr { top:9px; right:9px; border-top:2px solid var(--ab-coral); border-right:2px solid var(--ab-coral); }
+.frame .corner.bl { bottom:9px; left:9px; border-bottom:2px solid var(--ab-coral); border-left:2px solid var(--ab-coral); }
+.frame .corner.br { bottom:9px; right:9px; border-bottom:2px solid var(--ab-coral); border-right:2px solid var(--ab-coral); }
+.frame svg { width:26px; height:26px; stroke:currentColor; }
+.frame .frame-label { font-family:var(--font-mono); font-size:11px; letter-spacing:0.04em; text-transform:uppercase; }
+.frame .frame-sub { font-size:12px; opacity:0.75; max-width:220px; }
+.frame-sweep { position:absolute; left:0; top:0; width:100%; height:100%; overflow:hidden; border-radius:6px; pointer-events:none; }
+.frame-sweep::after {
+  content:""; position:absolute; left:-30%; top:0; width:30%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(232,147,10,0.18),transparent);
+  animation:sweep 4.5s ease-in-out infinite;
+}
+@keyframes sweep { 0%{left:-30%;} 50%{left:100%;} 100%{left:100%;} }
 
-  /* ---------- Header ---------- */
-  .site-header{
-    position:sticky;top:0;z-index:50;
-    background:rgba(244,239,227,0.92);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-  }
-  .site-header .wrap{
-    display:flex;align-items:center;justify-content:space-between;
-    height:76px;
-  }
-  
-  
+/* ── Reveal ── */
+.reveal { opacity:0; transform:translateY(16px); transition:opacity 0.6s ease,transform 0.6s ease; }
+.reveal.is-visible { opacity:1; transform:translateY(0); }
 
-  /* ---------- Visual placeholder frames (signature device) ---------- */
-  .frame{
-    position:relative;
-    border-radius:6px;
-    background:var(--cream-2);
-    border:1px solid var(--line);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
-    text-align:center;padding:24px;
-    color:var(--muted);
-  }
-  .on-dark .frame{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.12);color:var(--on-dark-muted);}
-  .frame .corner{position:absolute;width:14px;height:14px;}
-  .frame .corner.tl{top:9px;left:9px;border-top:2px solid var(--coral);border-left:2px solid var(--coral);}
-  .frame .corner.tr{top:9px;right:9px;border-top:2px solid var(--coral);border-right:2px solid var(--coral);}
-  .frame .corner.bl{bottom:9px;left:9px;border-bottom:2px solid var(--coral);border-left:2px solid var(--coral);}
-  .frame .corner.br{bottom:9px;right:9px;border-bottom:2px solid var(--coral);border-right:2px solid var(--coral);}
-  .frame svg{width:26px;height:26px;stroke:currentColor;}
-  .frame .frame-label{font-family:var(--font-mono);font-size:11px;letter-spacing:0.04em;text-transform:uppercase;}
-  .frame .frame-sub{font-size:12px;opacity:0.75;max-width:220px;}
-  .frame-sweep{position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;border-radius:6px;pointer-events:none;}
-  .frame-sweep::after{
-    content:"";position:absolute;left:-30%;top:0;width:30%;height:100%;
-    background:linear-gradient(90deg, transparent, rgba(217,102,62,0.18), transparent);
-    animation:sweep 4.5s ease-in-out infinite;
-  }
-  @keyframes sweep{0%{left:-30%;}50%{left:100%;}100%{left:100%;}}
+/* ── Hero — pad for fixed navbar ── */
+.hero { padding-top:calc(var(--navbar-height,110px) + 40px); padding-bottom:80px; }
+.hero .wrap { display:grid; grid-template-columns:1.1fr 1fr; gap:56px; align-items:center; }
+.hero-copy .lede { margin:22px 0 32px; }
+.hero-actions { display:flex; gap:14px; flex-wrap:wrap; }
+.hero-visual .frame { height:340px; }
+.hero-visual .frame svg { width:30px; height:30px; }
 
-  /* ---------- Reveal-on-scroll ---------- */
-  .reveal{opacity:0;transform:translateY(16px);transition:opacity 0.6s ease, transform 0.6s ease;}
-  .reveal.is-visible{opacity:1;transform:translateY(0);}
+/* ── Sections ── */
+.section { padding:88px 0; }
+.section--dark { background:var(--ab-navy); color:var(--ab-on-dark); }
+.section--process { background:var(--ab-process-bg); color:var(--ab-navy); }
+.section--partners { background:var(--ab-partners-bg); color:var(--ab-on-dark); text-align:center; }
 
-  /* ---------- Hero ---------- */
-  .hero{padding:64px 0 80px;}
-  .hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center;}
-  .hero-copy .lede{margin:22px 0 32px;}
-  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
-  .hero-visual .frame{height:340px;}
-  .hero-visual .frame svg{width:30px;height:30px;}
+/* ── Thesis ── */
+.thesis-head { display:grid; grid-template-columns:1.1fr 1fr; gap:48px; margin-bottom:48px; }
+.thesis-head .h2 { color:var(--ab-on-dark); }
+.claims-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(255,255,255,0.12); border-radius:6px; overflow:hidden; }
+.claim { background:var(--ab-navy-2); padding:28px 24px; display:flex; flex-direction:column; gap:14px; }
+.claim .frame { height:64px; background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.1); }
+.claim .frame svg { width:18px; height:18px; }
+.claim h3 { color:var(--ab-on-dark); }
+.claim p { font-size:13.5px; color:var(--ab-on-dark-muted); }
 
-  /* ---------- Thesis (dark, 4 claims) ---------- */
-  .section{padding:88px 0;}
-  .section--dark{background:var(--navy);color:var(--on-dark);}
-  .thesis-head{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;margin-bottom:48px;}
-  .thesis-head .h2{color:var(--on-dark);}
-  .claims-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.12);border-radius:6px;overflow:hidden;}
-  .claim{background:var(--navy-2);padding:28px 24px;display:flex;flex-direction:column;gap:14px;}
-  .claim .frame{height:64px;background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);}
-  .claim .frame svg{width:18px;height:18px;}
-  .claim h3{color:var(--on-dark);}
-  .claim p{font-size:13.5px;color:var(--on-dark-muted);}
+/* ── Leadership ── */
+.leadership .wrap { display:grid; grid-template-columns:0.95fr 1.05fr; gap:56px; align-items:center; }
+.leadership .frame { height:300px; }
+.stat-row { display:flex; gap:36px; margin-top:32px; }
+.stat { font-family:var(--font-display); }
+.stat .num { font-size:34px; font-weight:500; color:var(--ab-coral-deep); }
+.stat .label { font-family:var(--font-mono); font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:var(--ab-muted); margin-top:4px; }
 
-  /* ---------- Leadership ---------- */
-  .leadership .wrap{display:grid;grid-template-columns:0.95fr 1.05fr;gap:56px;align-items:center;}
-  .leadership .frame{height:300px;}
-  .stat-row{display:flex;gap:36px;margin-top:32px;}
-  .stat{font-family:var(--font-display);}
-  .stat .num{font-size:34px;font-weight:500;color:var(--coral-deep);}
-  .stat .label{font-family:var(--font-mono);font-size:11px;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+/* ── Careers ── */
+.careers-head { max-width:640px; margin-bottom:48px; }
+.careers-head .h2 { color:var(--ab-on-dark); }
+.careers-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.career-card { background:var(--ab-navy-2); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:26px; }
+.career-card h3 { color:var(--ab-on-dark); margin-bottom:10px; }
+.career-card p { font-size:13.5px; color:var(--ab-on-dark-muted); }
+.career-card--accent { background:var(--ab-coral-deep); border-color:var(--ab-coral-deep); }
+.career-card--accent h3, .career-card--accent p { color:#ffffff; }
 
-  /* ---------- Careers ---------- */
-  .careers-head{max-width:640px;margin-bottom:48px;}
-  .careers-head .h2{color:var(--on-dark);}
-  .careers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-  .career-card{background:var(--navy-2);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:26px;}
-  .career-card h3{color:var(--on-dark);margin-bottom:10px;}
-  .career-card p{font-size:13.5px;color:var(--on-dark-muted);}
-  .career-card--accent{background:var(--coral-deep);border-color:var(--coral-deep);}
-  .career-card--accent h3,.career-card--accent p{color:var(--cream);}
-  .career-card--accent p{color:rgba(244,239,227,0.85);}
+/* ── Industries ── */
+.industries-head { display:grid; grid-template-columns:1.1fr 1fr; gap:48px; margin-bottom:48px; align-items:end; }
+.industries-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.industry-card { border:1px solid var(--ab-line); border-radius:6px; padding:20px; background:var(--surface); }
+.industry-card .frame { height:110px; margin-bottom:16px; overflow:hidden; padding:0; }
+.industry-card .frame img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:4px; z-index:0; }
+.industry-card .frame .corner { z-index:2; }
+.industry-card .frame svg { display:none; }
+.industry-card .tag { font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ab-coral-deep); margin-bottom:8px; }
+.industry-card h3 { margin-bottom:8px; font-size:17px; }
+.industry-card p { font-size:13.5px; color:var(--ab-muted); }
 
-  /* ---------- Industries ---------- */
-  .industries-head{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;margin-bottom:48px;align-items:end;}
-  .industries-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
-  .industry-card{border:1px solid var(--line);border-radius:6px;padding:20px;background:var(--cream);}
-  .industry-card .frame{height:110px;margin-bottom:16px;overflow:hidden;padding:0;}
-  .industry-card .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:4px;z-index:0;}
-  .industry-card .frame .corner{z-index:2;}
-  .industry-card .frame svg{display:none;}
-  .industry-card .tag{font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--coral-deep);margin-bottom:8px;}
-  .industry-card h3{margin-bottom:8px;font-size:17px;}
-  .industry-card p{font-size:13.5px;color:var(--muted);}
+/* ── Process ── */
+.process-head { max-width:640px; margin-bottom:56px; }
+.process-head .h2 { color:var(--ab-navy); }
+.process-head .lede { color:var(--text-muted); }
+.process-rail { display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; }
+.process-rail::before { content:""; position:absolute; top:23px; left:5%; right:5%; height:1px; background:var(--ab-process-line); }
+.process-step { display:flex; flex-direction:column; gap:14px; padding-right:20px; position:relative; }
+.process-step .index { width:46px; height:46px; border-radius:50%; background:var(--surface); border:1px solid var(--ab-process-line); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:13px; z-index:1; }
+.process-step h3 { font-size:17px; }
+.process-step p { font-size:13.5px; color:var(--text-muted); }
 
-  /* ---------- Process ---------- */
-  .section--process{background:var(--process-bg);color:var(--navy);}
-  .process-head{max-width:640px;margin-bottom:56px;}
-  .process-head .h2{color:var(--navy);}
-  .process-head .lede{color:rgba(17,24,42,0.65);}
-  .process-rail{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
-  .process-rail::before{content:"";position:absolute;top:23px;left:5%;right:5%;height:1px;background:var(--process-line);}
-  .process-step{display:flex;flex-direction:column;gap:14px;padding-right:20px;position:relative;}
-  .process-step .index{
-    width:46px;height:46px;border-radius:50%;background:var(--cream);border:1px solid var(--process-line);
-    display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:13px;z-index:1;
-  }
-  .process-step h3{font-size:17px;}
-  .process-step p{font-size:13.5px;color:rgba(17,24,42,0.62);}
+/* ── Casework ── */
+.casework-head { margin-bottom:40px; max-width:600px; }
+.casework-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+.casework-card .frame { height:160px; margin-bottom:14px; }
+.casework-card .frame svg { width:22px; height:22px; }
+.casework-card .client { font-family:var(--font-mono); font-size:11px; letter-spacing:0.04em; text-transform:uppercase; color:var(--ab-muted); }
 
-  /* ---------- Client work / case studies ---------- */
-  .casework-head{margin-bottom:40px;max-width:600px;}
-  .casework-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
-  .casework-card .frame{height:160px;margin-bottom:14px;}
-  .casework-card .frame svg{width:22px;height:22px;}
-  .casework-card .client{font-family:var(--font-mono);font-size:11px;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);}
+/* ── Partners ── */
+.partners-statement { font-family:var(--font-display); font-size:clamp(22px,2.6vw,30px); font-weight:500; max-width:760px; margin:0 auto 40px; line-height:1.4; }
+.partners-row { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; max-width:880px; margin:0 auto; }
+.partner-logo { border:1px solid rgba(255,255,255,0.16); border-radius:6px; height:64px; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.4); }
+.partner-logo svg { width:22px; height:22px; }
 
-  /* ---------- Partners ---------- */
-  .section--partners{background:var(--partners-bg);color:var(--on-dark);text-align:center;}
-  .partners-statement{font-family:var(--font-display);font-size:clamp(22px,2.6vw,30px);font-weight:500;max-width:760px;margin:0 auto 40px;line-height:1.4;}
-  .partners-row{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;max-width:880px;margin:0 auto;}
-  .partner-logo{
-    border:1px solid rgba(255,255,255,0.16);border-radius:6px;height:64px;
-    display:flex;align-items:center;justify-content:center;color:rgba(237,233,220,0.55);
-  }
-  .partner-logo svg{width:22px;height:22px;}
+/* ── Contact section ── */
+.contact .wrap { display:grid; grid-template-columns:1fr auto; gap:40px; align-items:center; }
+.contact-actions { display:flex; gap:14px; }
 
-  /* ---------- Contact ---------- */
-  .contact .wrap{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;}
-  .contact-actions{display:flex;gap:14px;}
+/* ── About page buttons ── */
+.about-btn {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--font-mono); font-size:12px; letter-spacing:0.06em; text-transform:uppercase;
+  padding:14px 24px; border-radius:3px; border:1px solid var(--accent2);
+  transition:transform 0.15s ease, background 0.15s ease; cursor:pointer; text-decoration:none;
+}
+.about-btn:hover { transform:translateY(-1px); }
+.about-btn-solid { background:var(--accent2); color:#fff; }
+.about-btn-solid:hover { background:var(--accent); border-color:var(--accent); color:#fff; }
+.about-btn-ghost { background:transparent; color:var(--accent2); }
+.about-btn-ghost:hover { background:rgba(27,79,114,0.06); }
 
-  /* ---------- Footer ---------- */
- 
-  
-
-  @media (max-width:900px){
-    .hero .wrap,.leadership .wrap,.thesis-head,.industries-head{grid-template-columns:1fr;}
-    .hero-visual{order:-1;}
-    .claims-grid{grid-template-columns:repeat(2,1fr);}
-    .careers-grid,.industries-grid,.casework-grid{grid-template-columns:repeat(2,1fr);}
-    .process-rail{grid-template-columns:repeat(2,1fr);row-gap:32px;}
-    .process-rail::before{display:none;}
-    .partners-row{grid-template-columns:repeat(3,1fr);}
-    .footer-columns{grid-template-columns:repeat(2,1fr);}
-    .nav-links{display:none;}
-    .nav-toggle{display:flex;}
-  }
-  @media (max-width:560px){
-    .wrap{padding:0 20px;}
-    .claims-grid,.careers-grid,.industries-grid,.casework-grid{grid-template-columns:1fr;}
-    .partners-row{grid-template-columns:repeat(2,1fr);}
-    .footer-columns{grid-template-columns:1fr;}
-    .contact .wrap{grid-template-columns:1fr;}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .frame-sweep::after{animation:none;}
-    .reveal{transition:none;opacity:1;transform:none;}
-  }
+/* ── Responsive ── */
+@media (max-width:900px) {
+  .hero .wrap, .leadership .wrap, .thesis-head, .industries-head { grid-template-columns:1fr; }
+  .hero-visual { order:-1; }
+  .claims-grid { grid-template-columns:repeat(2,1fr); }
+  .careers-grid, .industries-grid, .casework-grid { grid-template-columns:repeat(2,1fr); }
+  .process-rail { grid-template-columns:repeat(2,1fr); row-gap:32px; }
+  .process-rail::before { display:none; }
+  .partners-row { grid-template-columns:repeat(3,1fr); }
+}
+@media (max-width:560px) {
+  .wrap { padding:0 20px; }
+  .claims-grid, .careers-grid, .industries-grid, .casework-grid { grid-template-columns:1fr; }
+  .partners-row { grid-template-columns:repeat(2,1fr); }
+  .contact .wrap { grid-template-columns:1fr; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .frame-sweep::after { animation:none; }
+  .reveal { transition:none; opacity:1; transform:none; }
+}
 </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="wrap">
-    <a class="logo" href="#"><span class="mark"></span>VOLGA</a>
-    <nav class="nav-links">
-      <a href="#services">Services</a>
-      <a href="#industries">Industries</a>
-      <a href="#process">Process</a>
-      <a href="#why">Why us</a>
-      <a href="#technologies">Technologies</a>
-      <a href="#insights">Insights</a>
-      <a href="#careers">Careers</a>
-    </nav>
-    <div class="nav-right">
-      <a class="btn btn-primary" href="#contact">Contact us</a>
-      <button class="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+<!-- Scroll Progress -->
+<div class="scroll-progress-container">
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+</div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
+    <img src="logo.png" alt="VOLGA Infosys logo" />
+  </a>
+  <ul class="nav-links">
+    <li class="nav-item" data-menu="solutions"><button class="nav-link">Solutions <span class="nav-arrow"></span></button></li>
+    <li class="nav-item" data-menu="industries"><button class="nav-link">Industries <span class="nav-arrow"></span></button></li>
+    <li class="nav-item" data-menu="services"><button class="nav-link">Services <span class="nav-arrow"></span></button></li>
+    <li class="nav-item" data-menu="work"><button class="nav-link">Work <span class="nav-arrow"></span></button></li>
+    <li class="nav-item" data-menu="technologies"><a class="nav-link" href="technologies(2).html">Technologies</a></li>
+    <li class="nav-item" data-menu="insights"><a class="nav-link" href="insights-overview.html">Insights</a></li>
+    <li class="nav-item" data-menu="company"><button class="nav-link">Company <span class="nav-arrow"></span></button></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Contact Us</a>
+  <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+    <span class="burger-bar"></span><span class="burger-bar"></span><span class="burger-bar"></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" aria-label="Close mobile menu">X</button>
+  <ul>
+    <li><a href="index.html" class="mm-link">Home</a></li>
+    <li><a href="solutions.html" class="mm-link">Solutions</a></li>
+    <li><a href="industries.html" class="mm-link">Industries</a></li>
+    <li><a href="services.html" class="mm-link">Services</a></li>
+    <li><a href="portfolio.html" class="mm-link">Work</a></li>
+    <li><a href="technologies.html" class="mm-link">Technologies</a></li>
+    <li><a href="blog.html" class="mm-link">Insights</a></li>
+    <li><a href="company.html" class="mm-link">Company</a></li>
+    <li><a href="contact.html" class="mm-link">Contact</a></li>
+  </ul>
+</div>
+      <li><a href="contact.html" class="mm-link">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- MEGA MENUS -->
+  <div class="mega-menu" id="menu-solutions">
+    <div class="mega-inner">
+      <div class="mega-label">Solutions</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>AR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z"/><circle cx="12" cy="10" r="3"/></svg></span>VR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>MR / XR Applications</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Digital Twin</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>AI Integration</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>3D Configurators</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Virtual Showrooms</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>Simulation Systems</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Interactive Training</a></li>
+            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>Metaverse Solutions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">New: AI-Powered XR</div>
+        <div class="mega-highlight-sub">Combining spatial computing with generative AI for next-gen enterprise experiences.</div>
+        <a href="#" class="mega-highlight-btn">Explore <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
     </div>
   </div>
-</header>
+
+  <div class="mega-menu" id="menu-industries">
+    <div class="mega-inner">
+      <div class="mega-label">Industries</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="industries.html#healthcare"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>Healthcare</a></li>
+            <li><a class="mega-item" href="industries.html#manufacturing"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>Manufacturing</a></li>
+            <li><a class="mega-item" href="industries.html#realestate"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Real Estate</a></li>
+            <li><a class="mega-item" href="industries.html#education"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>Education</a></li>
+            <li><a class="mega-item" href="industries.html#automotive"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>Automotive</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="industries.html#retail"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Retail</a></li>
+            <li><a class="mega-item" href="industries.html#architecture"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>Architecture</a></li>
+            <li><a class="mega-item" href="industries.html#defense"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Defense</a></li>
+            <li><a class="mega-item" href="industries.html#tourism"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Tourism</a></li>
+            <li><a class="mega-item" href="industries.html#energy"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>Energy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Industry Solutions</div>
+        <div class="mega-highlight-sub">Tailored immersive experiences built for your sector's unique challenges.</div>
+        <a href="industries.html" class="mega-highlight-btn">View All <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-services">
+    <div class="mega-inner">
+      <div class="mega-label">Services</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="services.html#custom-ar"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>Custom AR App Development</a></li>
+            <li><a class="mega-item" href="services.html#vr-training"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z"/><circle cx="12" cy="10" r="3"/></svg></span>VR Training Platforms</a></li>
+            <li><a class="mega-item" href="services.html#unity-dev"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>Unity Development</a></li>
+            <li><a class="mega-item" href="services.html#webgl"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>WebGL Experiences</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="services.html#3d-modeling"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>3D Modeling & Animation</a></li>
+            <li><a class="mega-item" href="services.html#uiux"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 17l10-10 4 4 6-6"/></svg></span>UI/UX Design</a></li>
+            <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>Cloud Deployment</a></li>
+            <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg></span>Maintenance & Support</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Full-Cycle Delivery</div>
+        <div class="mega-highlight-sub">From concept to deployment — we handle every stage of your XR project.</div>
+        <a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-work">
+    <div class="mega-inner">
+      <div class="mega-label">Work</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="portfolio2.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>Case Studies</a></li>
+            <li><a class="mega-item" href="portfolio.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>Portfolio</a></li>
+            <li><a class="mega-item" href="client-stories.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Client Stories</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></span>Product Demos</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Featured Project</div>
+        <div class="mega-highlight-sub">See how we transformed a global manufacturer's training program with immersive VR.</div>
+        <a href="#" class="mega-highlight-btn">View Case Study <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-company">
+    <div class="mega-inner">
+      <div class="mega-label">Company</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="about.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>About Us</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>Careers</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Partnerships</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">We're Hiring</div>
+        <div class="mega-highlight-sub">Join a team building the future of spatial computing and enterprise immersive tech.</div>
+        <a href="#" class="mega-highlight-btn">See Openings <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div id="backdrop" aria-hidden="true"></div>
 
 <section class="hero">
   <div class="wrap">
@@ -711,95 +829,84 @@
   </div>
 </section>
 
-<footer class="footer">
-    <div class="ft">
-  <div class="ft-top">
-    <div class="ft-eyebrow">
-      <span class="ft-eyebrow-text">Let's build work that inspires.</span>
-      <span class="ft-clock" id="clk">IST → --:--</span>
+  <!-- FOOTER -->
+   <div class="footer">
+
+  <div class="panel-light">
+    <div class="nav-bar" id="navBar">
+      <div class="logo-box">
+        <img class="logo-img" src="logo.png" alt="Volga" onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'">
+        <div id="logoFallback" style="display:none;width:42px;height:42px;border-radius:10px;background:#1a3a5c;align-items:center;justify-content:center;font-family:Exo 2", sans-serif;font-size:18px;font-weight:800;color:#fff">V</div>
+      </div>
+      <div class="nav-right">
+        
+        <button class="launch-btn" ><a href="contact.html">contact us</a></button>
+      </div>
     </div>
-    <div class="ft-headline">Ready to build<br><span>something</span> bold?</div>
-    <div class="ft-cta">
-      <a href="contact.html" >Start a collaboration</a>
-      <i class="ti ti-arrow-right" style="font-size:14px" aria-hidden="true"></i>
+
+    <div class="links-grid" id="linksGrid">
+      <div class="lg-col">
+        <div class="lg-col-title">Company</div>
+        <div class="lg-links">
+          <a class="lg-link">Home</a>
+          <a class="lg-link">Technology</a>
+          <a class="lg-link">Community</a>
+          <a class="lg-link">Mission</a>
+          <a class="lg-link">Careers <span class="arr">↗</span></a>
+        </div>
+      </div>
+      <div class="lg-col">
+        <div class="lg-col-title">Connect</div>
+        <div class="lg-links">
+          <a class="lg-link">Github <span class="arr">↗</span></a>
+          <a class="lg-link">Discord <span class="arr">↗</span></a>
+          <a class="lg-link">Twitter <span class="arr">↗</span></a>
+          <a class="lg-link">LinkedIn <span class="arr">↗</span></a>
+          <a class="lg-link">Instagram <span class="arr">↗</span></a>
+          <a class="lg-link">WhatsApp <span class="arr">↗</span></a>
+        </div>
+      </div>
+      <div class="lg-col">
+        <div class="lg-col-title">Resources</div>
+        <div class="lg-links">
+          <a class="lg-link">Volga Docs <span class="arr">↗</span></a>
+          <a class="lg-link">AR Academy <span class="arr">↗</span></a>
+          <a class="lg-link">Press Kit <span class="arr">↗</span></a>
+          <a class="lg-link">Privacy Policy</a>
+          <a class="lg-link">Training Sim <span class="arr">↗</span></a>
+        </div>
+      </div>
     </div>
-    
+
+    <div class="panel-bottom">
+      <div class="pb-left">
+        <a class="pb-link">Terms of Service</a>
+        <a class="pb-link">Privacy Policy</a>
+      </div>
+      <span class="pb-copy">© 2026 Volga Infosys</span>
+      <div class="logo-big">VOLGA</div>
+    </div>
+    <div style="height:48px"></div>
   </div>
 
-  <div class="ft-divider"></div>
-
-  <div class="ft-mid">
-    <div>
-      <div class="ft-mhead">Business</div>
-      <span class="ft-mlink">Training Simulation</span>
-      <span class="ft-mlink">3D Configurators</span>
-      <span class="ft-mlink">Buildings & Interiors</span>
-      <span class="ft-mlink">E-Commerce</span>
-      <span class="ft-mlink">Manufacturing</span>
-      <span class="ft-mlink">Entertainment</span>
-      <span class="ft-mlink">Museums & Travel</span>
-    </div>
-    <div>
-      <div class="ft-mhead">Services</div>
-      <span class="ft-mlink">Augmented Reality</span>
-      <span class="ft-mlink">Virtual Reality</span>
-      <span class="ft-mlink">AR Player</span>
-      <span class="ft-mlink">VR Player 360°</span>
-      <span class="ft-mlink">Privacy Policy</span>
-    </div>
-    <div>
-      <div class="ft-mhead">Business Enquiry</div>
-      <div class="ft-contact-val"><span class="ft-contact-label">E.</span>hello@volga.com</div>
-      <div class="ft-contact-val"><span class="ft-contact-label">P.</span>+91 98241 82099</div>
-    </div>
-    <div>
-      <div class="ft-mhead">Social</div>
-      <span class="ft-mlink">LinkedIn</span>
-      <span class="ft-mlink">Instagram</span>
-      <span class="ft-mlink">Facebook</span>
-      <span class="ft-mlink">YouTube</span>
-      <span class="ft-mlink">WhatsApp</span>
-    </div>
+  <!-- WAVE -->
+  <div class="wave-divider">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 L0,30 Q200,60 400,35 Q600,10 720,38 Q860,62 1040,30 Q1200,4 1440,28 L1440,0 Z" fill="#ECF0F3"/>
+    </svg>
   </div>
 
-  <div class="ft-wordmark-wrap">
-    <div class="ft-wordmark">VOLGA</div>
+  <!-- 3D BAND -->
+  <div class="panel-3d" id="p3d">
+    <canvas id="c3d"></canvas>
+    <div class="custom-cur" id="cur"></div>
+    <div class="cur-ring" id="curRing"></div>
   </div>
 
-  <div class="ft-bottom">
-    <span class="ft-copy">© Volga Infosys® 2026</span>
-    <div class="ft-blinks">
-      <span class="ft-blink">Privacy & Policy</span>
-      <span class="ft-blink">Made with ♦ by Volga</span>
-    </div>
-  </div>
 </div>
 
-</footer>
-
 <script>
-  const toggle = document.querySelector('.nav-toggle');
-  const links = document.querySelector('.nav-links');
-  if (toggle) {
-    toggle.addEventListener('click', () => {
-      links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
-      links.style.flexDirection = 'column';
-      links.style.position = 'absolute';
-      links.style.top = '76px';
-      links.style.left = '0';
-      links.style.right = '0';
-      links.style.background = 'var(--cream)';
-      links.style.padding = '20px 32px';
-      links.style.borderBottom = '1px solid var(--line)';
-    });
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('is-visible');
-    });
-  }, { threshold: 0.15 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  
 
   // ── Novabrew section styles ────────────────────────────────
   const nbStyle = document.createElement('style');
@@ -1007,6 +1114,8 @@
     }
   }
 </script>
+<script src="volga.js"></script>
+<script src="api-config.js"></script>
 
 </body>
 </html>
