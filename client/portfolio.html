@@ -454,7 +454,7 @@ async function fetchProjects() {
 function mapProjectToCard(p) {
   return {
     badge: p.tag || '',
-    img: p.image || '',
+    img: window.getVolgaImageUrl(p.image) || '',
     title: (p.title || '') + (p.title2 ? ' ' + p.title2 : ''),
     client: p.place || '',
     desc: p.description || '',

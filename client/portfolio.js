@@ -19,7 +19,7 @@ async function fetchProjects() {
     const res = await fetch(`${API_URL}/projects`);
     const projects = await res.json();
     if (Array.isArray(projects) && projects.length) {
-      const mapped = projects.map(p => ({ place: p.place, title: p.title, title2: p.title2 || '', tag: p.tag, description: p.description, image: p.image }));
+      const mapped = projects.map(p => ({ place: p.place, title: p.title, title2: p.title2 || '', tag: p.tag, description: p.description, image: window.getVolgaImageUrl(p.image) }));
       // slider needs at least 2 slides — pad with defaultData if needed
       if (mapped.length < 2) {
         const extras = defaultData.filter(d => !mapped.find(m => m.title === d.title));

@@ -30,6 +30,14 @@
   background-size: 60px 60px;
   animation: cm-grid-move 3s linear infinite;
   overflow: hidden;
+  padding: 5rem 5rem 4rem 5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Add spacing between homepage sections */
+section, .home-suite-section, .home-suite-stats, .blog-section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 }
 
 @keyframes cm-grid-move {
@@ -38,6 +46,11 @@
 }
 
 /* ── Section label strip above ───────────────────────────────── */
+.cube-mission-header {
+  padding: 4rem 5rem 0;
+  position: relative;
+  z-index: 10;
+}
 
 .cube-mission-kicker {
   font-size: 0.65rem;
@@ -49,21 +62,21 @@
 }
 .cube-mission-title {
   font-family: var(--cm-font-display);
-  font-size: clamp(1.4rem, 3vw, 2.2rem);
-  color: #1B4F72;
-  font-weight: 400;
-  letter-spacing: 0.05em;
+  font-size: clamp(2.2rem, 4vw, 2.8rem);
+  color: var(--cm-fg);
+  font-weight: 700;
+  letter-spacing: -0.02em;
   line-height: 1.1;
-  margin: 0;
+  margin: 0.75rem 0 0.5rem 0;
 }
 .cube-mission-desc {
-  max-width: 360px;
-  font-size: 0.78rem;
-  line-height: 1.75;
-  color: var(--cm-muted);
+  max-width: 600px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
   font-family: var(--cm-font-body);
   margin: 0;
-  padding-top: 0.25rem;
+  padding-top: 0.5rem;
 }
 
 /* ── Inner viewport — clips the experience ───────────────────── */

@@ -275,7 +275,7 @@
   margin: 56px auto 0;
   font-family: 'Syne', sans-serif;
   font-size: 0.9rem; font-weight: 700;
-  background: #18160f; color: #fff;
+  background: #1B4F72; color: #fff;
   padding: 14px 34px; border-radius: 100px;
   border: none; cursor: pointer;
   letter-spacing: 0.02em;
@@ -286,4 +286,5 @@
 .pf-discover:hover {
   transform: translateY(-2px);
   box-shadow: 0 14px 36px rgba(24,22,15,0.22);
+  background-color: #E8930A;
 }

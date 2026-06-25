@@ -244,177 +244,185 @@ function initHeroAnimation() {
 
 // ─── 6. SCROLL-TRIGGERED REVEALS ─────────────────────────
 function setupScrollReveals() {
-  gsap.utils.toArray('.reveal, .reveal-fade').forEach(el => {
-    const delay = parseFloat(el.style.transitionDelay || 0);
-    gsap.to(el, {
-      opacity: 1, y: 0,
-      duration: 0.75,
-      ease: 'power3.out',
-      delay,
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 88%',
-        toggleActions: 'play none none reverse'
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Helper function to animate a group of elements
+  const animateGroup = (selector, props) => {
+    const elements = gsap.utils.toArray(selector);
+    if (!elements.length) return;
+    
+    if (prefersReducedMotion) {
+      gsap.set(elements, { opacity: 1, y: 0, x: 0, scale: 1 });
+      return;
+    }
+
+    // Group by closest container
+    const containers = new Map();
+    elements.forEach(el => {
+      const container = el.closest('section, .container, div') || document.body;
+      if (!containers.has(container)) {
+        containers.set(container, []);
       }
+      containers.get(container).push(el);
     });
+
+    containers.forEach((els, container) => {
+      gsap.to(els, {
+        ...props,
+        scrollTrigger: {
+          trigger: container,
+          start: 'top 85%',
+          toggleActions: props.toggleActions || 'play none none none', // Don't reverse
+          once: true
+        }
+      });
+    });
+  };
+
+  // Animate all groups
+  animateGroup('.reveal, .reveal-fade', {
+    opacity: 1, y: 0,
+    duration: 0.75,
+    ease: 'power3.out'
   });
 
-  gsap.utils.toArray('.reveal-split').forEach(el => {
-    gsap.to(el, {
-      opacity: 1, y: 0,
-      duration: 0.9,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 85%',
-        toggleActions: 'play none none reverse'
-      }
-    });
+  animateGroup('.reveal-split', {
+    opacity: 1, y: 0,
+    duration: 0.9,
+    ease: 'power3.out'
   });
 
-  gsap.utils.toArray('.reveal-img').forEach(el => {
-    gsap.to(el, {
-      opacity: 1, y: 0, scale: 1,
-      duration: 0.9,
-      ease: 'power3.out',
-      delay: parseFloat(el.style.getPropertyValue('--delay') || 0),
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 88%',
-        toggleActions: 'play none none reverse'
-      }
-    });
+  animateGroup('.reveal-img', {
+    opacity: 1, y: 0, scale: 1,
+    duration: 0.9,
+    ease: 'power3.out'
   });
 
-  gsap.utils.toArray('.reveal-left').forEach(el => {
-    gsap.to(el, {
-      opacity: 1, x: 0,
-      duration: 0.9,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 85%',
-        toggleActions: 'play none none reverse'
-      }
-    });
+  animateGroup('.reveal-left', {
+    opacity: 1, x: 0,
+    duration: 0.9,
+    ease: 'power3.out'
   });
 
-  gsap.utils.toArray('.reveal-right').forEach(el => {
-    gsap.to(el, {
-      opacity: 1, x: 0,
-      duration: 0.9,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 85%',
-        toggleActions: 'play none none reverse'
-      }
-    });
+  animateGroup('.reveal-right', {
+    opacity: 1, x: 0,
+    duration: 0.9,
+    ease: 'power3.out'
   });
 
-  gsap.utils.toArray('.reveal-scale').forEach(el => {
-    gsap.to(el, {
-      opacity: 1, scale: 1,
-      duration: 0.8,
-      ease: 'back.out(1.4)',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 88%',
-        toggleActions: 'play none none reverse'
-      }
-    });
+  animateGroup('.reveal-scale', {
+    opacity: 1, scale: 1,
+    duration: 0.8,
+    ease: 'back.out(1.4)'
   });
 
-  gsap.utils.toArray('.reveal-service').forEach((el, i) => {
-    gsap.to(el, {
+  // Special cases with indexes
+  const revealServiceEls = gsap.utils.toArray('.reveal-service');
+  if (revealServiceEls.length && !prefersReducedMotion) {
+    gsap.to(revealServiceEls, {
       opacity: 1, x: 0,
       duration: 0.7,
       ease: 'power3.out',
-      delay: i * 0.07,
+      stagger: 0.07,
       scrollTrigger: {
-        trigger: el,
+        trigger: revealServiceEls[0].closest('section, .container') || document.body,
         start: 'top 88%',
-        toggleActions: 'play none none reverse'
+        toggleActions: 'play none none none',
+        once: true
       }
     });
-  });
+  }
 
-  gsap.utils.toArray('.reveal-step').forEach((el, i) => {
-    gsap.to(el, {
+  const revealStepEls = gsap.utils.toArray('.reveal-step');
+  if (revealStepEls.length && !prefersReducedMotion) {
+    gsap.to(revealStepEls, {
       opacity: 1, y: 0,
       duration: 0.8,
       ease: 'back.out(1.5)',
-      delay: i * 0.12,
+      stagger: 0.12,
       scrollTrigger: {
         trigger: '.process-steps',
         start: 'top 80%',
-        toggleActions: 'play none none reverse'
+        toggleActions: 'play none none none',
+        once: true
       }
     });
-  });
+  }
 
-  gsap.utils.toArray('.reveal-card').forEach((el, i) => {
-    gsap.to(el, {
+  const revealCardEls = gsap.utils.toArray('.reveal-card');
+  if (revealCardEls.length && !prefersReducedMotion) {
+    gsap.to(revealCardEls, {
       opacity: 1, y: 0,
       duration: 0.75,
       ease: 'power3.out',
-      delay: i * 0.1,
+      stagger: 0.1,
       scrollTrigger: {
         trigger: '.why-cards',
         start: 'top 82%',
-        toggleActions: 'play none none reverse'
+        toggleActions: 'play none none none',
+        once: true
       }
     });
-  });
+  }
 
-  gsap.utils.toArray('.reveal-pill').forEach((el, i) => {
-    gsap.to(el, {
+  const revealPillEls = gsap.utils.toArray('.reveal-pill');
+  if (revealPillEls.length && !prefersReducedMotion) {
+    gsap.to(revealPillEls, {
       opacity: 1, scale: 1,
       duration: 0.5,
       ease: 'back.out(2)',
-      delay: i * 0.07,
+      stagger: 0.07,
       scrollTrigger: {
         trigger: '.benefits-grid',
         start: 'top 85%',
-        toggleActions: 'play none none reverse'
+        toggleActions: 'play none none none',
+        once: true
       }
     });
-  });
+  }
 
-  gsap.utils.toArray('.reveal-mission').forEach((el, i) => {
-    gsap.to(el, {
+  const revealMissionEls = gsap.utils.toArray('.reveal-mission');
+  if (revealMissionEls.length && !prefersReducedMotion) {
+    gsap.to(revealMissionEls, {
       opacity: 1, y: 0,
       duration: 0.8,
       ease: 'power3.out',
-      delay: i * 0.15,
+      stagger: 0.15,
       scrollTrigger: {
         trigger: '.mission-grid',
         start: 'top 80%',
-        toggleActions: 'play none none reverse'
+        toggleActions: 'play none none none',
+        once: true
       }
     });
-  });
+  }
 
-  gsap.utils.toArray('.reveal-li').forEach((el, i) => {
-    gsap.to(el, {
+  const revealLiEls = gsap.utils.toArray('.reveal-li');
+  if (revealLiEls.length && !prefersReducedMotion) {
+    gsap.to(revealLiEls, {
       opacity: 1, x: 0,
       duration: 0.6,
       ease: 'power3.out',
-      delay: i * 0.1,
+      stagger: 0.1,
       scrollTrigger: {
-        trigger: el,
+        trigger: revealLiEls[0].closest('section, .container') || document.body,
         start: 'top 88%',
-        toggleActions: 'play none none reverse'
+        toggleActions: 'play none none none',
+        once: true
       }
     });
-  });
+  }
 
-  gsap.utils.toArray('.section-rule').forEach(rule => {
-    gsap.from(rule.querySelectorAll('.section-rule-line'), {
-      scaleX: 0, duration: 1.2, ease: 'power3.inOut', transformOrigin: 'left',
-      scrollTrigger: { trigger: rule, start: 'top 88%' }
+  // Section rule lines
+  const sectionRules = gsap.utils.toArray('.section-rule');
+  if (sectionRules.length && !prefersReducedMotion) {
+    sectionRules.forEach(rule => {
+      gsap.from(rule.querySelectorAll('.section-rule-line'), {
+        scaleX: 0, duration: 1.2, ease: 'power3.inOut', transformOrigin: 'left',
+        scrollTrigger: { trigger: rule, start: 'top 88%', once: true }
+      });
     });
-  });
+  }
 }
 
 function setupGlobalTextScrollAnimation() {
@@ -451,21 +459,42 @@ function setupGlobalTextScrollAnimation() {
   const targets = gsap.utils.toArray(selectors.join(','));
   if (!targets.length) return;
 
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) {
+    targets.forEach(el => {
+      if (!el.closest('.Hero, .cta-banner, .cta-inner, .cube-mission-wrap, .blog-section')) {
+        gsap.set(el, { opacity: 1, y: 0, skewY: 0 });
+      }
+    });
+    return;
+  }
+
+  // Group elements by their closest section/container
+  const containers = new Map();
   targets.forEach(el => {
     if (!el.offsetParent) return;
-    // FIX: Skip Hero and CTA elements — they have their own animations or must always be visible
-    if (el.closest('.Hero, .cta-banner, .cta-inner')) return;
+    if (el.closest('.Hero, .cta-banner, .cta-inner, .cube-mission-wrap, .blog-section')) return;
+    
+    const container = el.closest('section, .container, div') || document.body;
+    if (!containers.has(container)) {
+      containers.set(container, []);
+    }
+    containers.get(container).push(el);
+  });
 
-    gsap.set(el, { opacity: 0, y: 24, skewY: 2, transformOrigin: 'top center' });
-    gsap.to(el, {
+  // Animate each container's elements with a single ScrollTrigger
+  containers.forEach((elements, container) => {
+    gsap.set(elements, { opacity: 0, y: 24, skewY: 2, transformOrigin: 'top center' });
+    gsap.to(elements, {
       opacity: 1,
       y: 0,
       skewY: 0,
-      duration: 0.9,
+      duration: 0.75,
       ease: 'power3.out',
+      stagger: 0.05,
       scrollTrigger: {
-        trigger: el,
-        start: 'top 92%',
+        trigger: container,
+        start: 'top 85%',
         once: true
       }
     });
@@ -491,13 +520,26 @@ function setupParallax() {
 // ─── 8. MAGNETIC HOVER EFFECT ───────────────
 function setupMagnetic() {
   document.querySelectorAll('.service-item, .magnetic-btn').forEach(item => {
+    let isAnimating = false;
+    let requestId = null;
+    let targetX = 0;
+    let targetY = 0;
+
     item.addEventListener('mousemove', (e) => {
       const rect = item.getBoundingClientRect();
-      const x = (e.clientX - rect.left - rect.width / 2) * 0.2;
-      const y = (e.clientY - rect.top - rect.height / 2) * 0.2;
-      gsap.to(item, { x, y, duration: 0.4, ease: 'power2.out' });
+      targetX = (e.clientX - rect.left - rect.width / 2) * 0.2;
+      targetY = (e.clientY - rect.top - rect.height / 2) * 0.2;
+      
+      if (!isAnimating) {
+        isAnimating = true;
+        requestId = requestAnimationFrame(() => {
+          gsap.set(item, { x: targetX, y: targetY });
+          isAnimating = false;
+        });
+      }
     });
     item.addEventListener('mouseleave', () => {
+      if (requestId) cancelAnimationFrame(requestId);
       gsap.to(item, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)' });
     });
   });
@@ -608,12 +650,12 @@ function renderBlogCards(blogGrid) {
   blogGrid.innerHTML = cardsToShow.map((blog, i) => `
     <a href="blog-detail.html?id=${blog._id}" class="holo-card reveal-fade blog-card" data-blog-id="${blog._id}" style="--delay: ${i * 0.1}s">
       <div class="holo-img-wrap">
-        <img src="${blog.image || 'blog-hero.jpg'}" alt="${blog.title}" onerror="this.src='blog-hero.jpg'">
+        <img src="${window.getVolgaImageUrl(blog.coverImage || blog.image) || 'blog-hero.jpg'}" alt="${blog.title}" onerror="this.src='blog-hero.jpg'">
         <div class="holo-badge">${blog.category || 'Tech'}</div>
       </div>
       <div class="holo-content">
         <h3 class="holo-title">${blog.title}</h3>
-        <p class="holo-excerpt">${blog.excerpt || blog.content.substring(0, 120) + '...'}</p>
+        <p class="holo-excerpt">${blog.excerpt || (blog.content ? blog.content.substring(0, 120) + '...' : '')}</p>
         <div class="holo-footer">
           <span>${new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
           <div class="holo-readmore">Read <i class="fas fa-arrow-right"></i></div>
@@ -802,7 +844,7 @@ async function fetchCaseStudies() {
 function renderCaseStudies(container) {
   container.innerHTML = `<div class="blog-grid">${allCaseStudies.map((cs, i) => `
     <a href="case-study-detail.html?id=${cs._id}" class="cs-card" style="text-decoration: none;">
-      <img class="cs-img" src="${cs.image || 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=500&q=80'}" alt="${cs.title}">
+      <img class="cs-img" src="${window.getVolgaImageUrl(cs.image) || 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=500&q=80'}" alt="${cs.title}">
       <div class="cs-body">
         <div class="cs-industry">${cs.industry || 'Industry'}</div>
         <div class="cs-title">${cs.title}</div>
@@ -866,13 +908,13 @@ function renderClientStories(container) {
   container.innerHTML = allClientStories.map((story, i) => `
     <div class="story-card">
       <div class="sc-img-wrap">
-        <img class="sc-img" src="${story.image || 'https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=800&q=80'}" alt="${story.clientName}">
+        <img class="sc-img" src="${window.getVolgaImageUrl(story.image) || 'https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=800&q=80'}" alt="${story.clientName}">
         <div class="sc-industry">${story.industry || 'Industry'}</div>
       </div>
       <div class="sc-body">
         <blockquote class="sc-quote">${story.testimonial || ''}</blockquote>
         <div class="sc-author">
-          <img class="sc-avatar" src="${story.avatar || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80'}" alt="">
+          <img class="sc-avatar" src="${window.getVolgaImageUrl(story.avatar) || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80'}" alt="">
           <div>
             <div class="sc-name">${story.clientName}</div>
             <div class="sc-role">${story.clientRole || ''}</div>
@@ -928,7 +970,7 @@ function renderIndustryNews(container) {
       <div class="blog-grid">
         ${items.map(item => `
           <a href="industry-news-detail.html?id=${item._id}" class="blog-card" style="text-decoration: none;">
-            <img class="blog-card-img" src="${item.image || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=500&q=80'}" alt="${item.title}">
+            <img class="blog-card-img" src="${window.getVolgaImageUrl(item.image) || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=500&q=80'}" alt="${item.title}">
             <div class="blog-card-body">
               <div class="blog-tag">${item.topic || 'Industry News'}</div>
               <h3 class="blog-card-title">${item.title}</h3>
@@ -997,7 +1039,7 @@ function renderInsightsOverview(blogs, caseStudies, clientStories, industryNews)
         <div class="insight-cards">
           ${blogs.map(blog => `
             <a href="blog-detail.html?id=${blog._id}" class="insight-card">
-              <img src="${blog.image || 'blog-hero.jpg'}" alt="${blog.title}">
+              <img src="${window.getVolgaImageUrl(blog.coverImage || blog.image) || 'blog-hero.jpg'}" alt="${blog.title}">
               <div class="insight-card-content">
                 <span class="insight-tag">Blog</span>
                 <h4>${blog.title}</h4>
@@ -1012,7 +1054,7 @@ function renderInsightsOverview(blogs, caseStudies, clientStories, industryNews)
         <div class="insight-cards">
           ${caseStudies.map(cs => `
             <a href="case-study-detail.html?id=${cs._id}" class="insight-card">
-              <img src="${cs.image}" alt="${cs.title}">
+              <img src="${window.getVolgaImageUrl(cs.image)}" alt="${cs.title}">
               <div class="insight-card-content">
                 <span class="insight-tag">Case Study</span>
                 <h4>${cs.title}</h4>
@@ -1027,7 +1069,7 @@ function renderInsightsOverview(blogs, caseStudies, clientStories, industryNews)
         <div class="insight-cards">
           ${clientStories.map(story => `
             <a href="client-stories.html" class="insight-card">
-              <img src="${story.image}" alt="${story.clientName}">
+              <img src="${window.getVolgaImageUrl(story.image)}" alt="${story.clientName}">
               <div class="insight-card-content">
                 <span class="insight-tag">Client Story</span>
                 <h4>${story.clientName}</h4>
@@ -1042,7 +1084,7 @@ function renderInsightsOverview(blogs, caseStudies, clientStories, industryNews)
         <div class="insight-cards">
           ${industryNews.map(news => `
             <a href="industry-news-detail.html?id=${news._id}" class="insight-card">
-              <img src="${news.image}" alt="${news.title}">
+              <img src="${window.getVolgaImageUrl(news.image)}" alt="${news.title}">
               <div class="insight-card-content">
                 <span class="insight-tag">News</span>
                 <h4>${news.title}</h4>
@@ -1179,9 +1221,9 @@ function setupFooter() {
   const smokeMeshes=[];
   const smokeColors=[0x0d1e33, 0x1a2e44, 0x0a1828, 0x0f2030];
 
-  for(let i=0;i<22;i++){
+  for(let i=0;i<12;i++){ // Reduced from 22 to 12
     const sz=3+Math.random()*6;
-    const geo=new THREE.PlaneGeometry(sz,sz,22,22);
+    const geo=new THREE.PlaneGeometry(sz,sz,8,8); // Reduced from 22x22 to 8x8
     const pos=geo.attributes.position;
     for(let v=0;v<pos.count;v++) pos.setZ(v,(Math.random()-0.5)*0.7);
     pos.needsUpdate=true;
@@ -1215,13 +1257,13 @@ function setupFooter() {
   }
 
   /* GLOW BLOBS */
-  for(let i=0;i<7;i++){
+  for(let i=0;i<4;i++){ // Reduced from 7 to 4
     const c=[0x0d1e33,0x1a1000,0x1a0a00][i%3];
     const mat=new THREE.MeshStandardMaterial({
       color:c,metalness:0,roughness:0.8,
       transparent:true,opacity:0.05+Math.random()*0.12,
     });
-    const m=new THREE.Mesh(new THREE.SphereGeometry(1+Math.random()*1.5,16,16),mat);
+    const m=new THREE.Mesh(new THREE.SphereGeometry(1+Math.random()*1.5,8,8),mat); // Reduced from 16x16 to 8x8
     m.position.set((Math.random()-0.5)*10,(Math.random()-0.5)*4,(Math.random()-0.5)*2-2);
     m.userData={phase:Math.random()*Math.PI*2,spd:0.2+Math.random()*0.3};
     scene.add(m);
@@ -1241,9 +1283,9 @@ function setupFooter() {
     const m=new THREE.PointsMaterial({color,size,transparent:true,opacity});
     return new THREE.Points(g,m);
   }
-  const pts1=mkPts(300,AMBER,0.04,0.6);
-  const pts2=mkPts(200,CORAL,0.03,0.35);
-  const pts3=mkPts(150,0x4a8cbf,0.025,0.3);
+  const pts1=mkPts(150,AMBER,0.04,0.6); // Reduced from 300
+  const pts2=mkPts(100,CORAL,0.03,0.35); // Reduced from 200
+  const pts3=mkPts(75,0x4a8cbf,0.025,0.3); // Reduced from 150
   scene.add(pts1,pts2,pts3);
 
   /* MOUSE */
@@ -1343,19 +1385,28 @@ function setupHeroParallax() {
   const shapes = document.querySelectorAll('.shape');
   if (shapes.length === 0) return;
 
-  document.addEventListener('mousemove', (e) => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 20;
-    const y = (e.clientY / window.innerHeight - 0.5) * 20;
+  let targetX = 0;
+  let targetY = 0;
+  let isAnimating = false;
+  let requestId = null;
 
-    shapes.forEach((shape, index) => {
-      const multiplier = (index % 3 + 1) * 0.5;
-      gsap.to(shape, {
-        x: x * multiplier,
-        y: y * multiplier,
-        duration: 0.5,
-        ease: 'power2.out'
+  document.addEventListener('mousemove', (e) => {
+    targetX = (e.clientX / window.innerWidth - 0.5) * 20;
+    targetY = (e.clientY / window.innerHeight - 0.5) * 20;
+    
+    if (!isAnimating) {
+      isAnimating = true;
+      requestId = requestAnimationFrame(() => {
+        shapes.forEach((shape, index) => {
+          const multiplier = (index % 3 + 1) * 0.5;
+          gsap.set(shape, {
+            x: targetX * multiplier,
+            y: targetY * multiplier
+          });
+        });
+        isAnimating = false;
       });
-    });
+    }
   });
 }
 
@@ -1396,7 +1447,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const scrollProgressBar = document.getElementById('scrollProgressBar');
   if (scrollProgressBar) {
     gsap.to(scrollProgressBar, {
-      width: '100%',
+      scaleX: 1,
       ease: 'none',
       scrollTrigger: {
         trigger: document.body,

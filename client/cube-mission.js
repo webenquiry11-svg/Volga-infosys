@@ -18,11 +18,11 @@
 
   /* ── Image / face data — swap with your real images ─────────── */
   const IMAGES = [
-    { src: "factory-dark.png",  label: "EDUCATE"   },
-    { src: "hill-dark.png",     label: "INNOVATE"  },
-    { src: "street-dark.png",   label: "BUILD"     },
-    { src: "sky-dark.png",      label: "DEPLOY"    },
-    { src: "tower-dark.png",    label: "SCALE"     },
+    { src: "factory-dark.png",  label: "INTRO"   },
+    { src: "hill-dark.png",     label: "DEFINE"  },
+    { src: "street-dark.png",   label: "SHAPE"     },
+    { src: "sky-dark.png",      label: "BUILD"    },
+    { src: "tower-dark.png",    label: "LIVE"     },
     { src: "moon-dark.png",     label: "EVOLVE"    },
   ];
   const N = IMAGES.length;
