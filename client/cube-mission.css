@@ -25,9 +25,10 @@
   width: 100%;
   background-color: var(--cm-dark-bg);
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
-  background-size: 60px 60px;
+    radial-gradient(circle at 50% 50%, rgba(212, 168, 75, 0.08) 0%, transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 100% 100%, 60px 60px, 60px 60px;
   animation: cm-grid-move 3s linear infinite;
   overflow: hidden;
   padding: 5rem 5rem 4rem 5rem;
@@ -97,9 +98,58 @@ section, .home-suite-section, .home-suite-stats, .blog-section {
   display: flex;
   align-items: center;
   justify-content: center;
-  perspective: 1100px;
+  perspective: 1500px; /* Increased for more depth */
   pointer-events: none;
   z-index: 0;
+}
+
+/* Add subtle glow around cube */
+.cube-mission-scene::before {
+  content: "";
+  position: absolute;
+  width: min(60vw, 60vh, 520px);
+  height: min(60vw, 60vh, 520px);
+  background: radial-gradient(circle, rgba(212, 168, 75, 0.25) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* 3D Particles */
+#cm-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  perspective: inherit;
+  z-index: 0;
+}
+
+.cm-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--cm-accent);
+  border-radius: 50%;
+  opacity: 0.4;
+  box-shadow: 0 0 10px var(--cm-accent);
+  pointer-events: none;
+}
+
+.cm-particle-large {
+  width: 6px;
+  height: 6px;
+  opacity: 0.6;
+}
+
+.cm-particle-small {
+  width: 2px;
+  height: 2px;
+  opacity: 0.3;
 }
 
 /* ── The inner scroll container ──────────────────────────────── */
@@ -119,7 +169,7 @@ section, .home-suite-section, .home-suite-stats, .blog-section {
 
 /* ── CUBE ─────────────────────────────────────────────────────── */
 #cm-cube {
-  --s: min(46vw, 46vh, 420px);
+  --s: min(60vw, 60vh, 560px); /* Increased cube size */
   width: var(--s);
   height: var(--s);
   position: absolute;
@@ -146,6 +196,9 @@ section, .home-suite-section, .home-suite-stats, .blog-section {
       rgba(255,255,255,0.02) 0,rgba(255,255,255,0.02) 1px,
       transparent 1px, transparent 48px),
     #14100d;
+  /* Add depth to cube faces */
+  box-shadow: inset 0 0 80px rgba(212, 168, 75, 0.08);
+  border: 1px solid rgba(212, 168, 75, 0.15);
 }
 .cm-face img {
   position: absolute;
@@ -286,6 +339,13 @@ section, .home-suite-section, .home-suite-stats, .blog-section {
   backdrop-filter: blur(8px) saturate(130%);
   -webkit-backdrop-filter: blur(8px) saturate(130%);
   font-family: var(--cm-font-body);
+  /* Add depth effects */
+  box-shadow: 
+    0 0 40px rgba(212, 168, 75, 0.15),
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: translateZ(0);
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
 }
 .cm-card.right {
   margin-inline-start: auto;
@@ -389,6 +449,15 @@ section, .home-suite-section, .home-suite-stats, .blog-section {
   transition: background 0.2s, color 0.2s;
 }
 .cm-cta:hover { background: var(--cm-accent); color: var(--cm-dark-bg); }
+
+/* Card hover effect for more depth */
+.cm-card:hover {
+  box-shadow: 
+    0 0 60px rgba(212, 168, 75, 0.25),
+    0 25px 70px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transform: translateY(-5px);
+}
 .cm-cta svg { width: 0.65rem; height: 0.65rem; }
 
 .cm-cta-back {

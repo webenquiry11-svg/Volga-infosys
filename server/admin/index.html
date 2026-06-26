@@ -12,7 +12,9 @@
   <div class="dot"></div>
   <div class="dot"></div>
   <div class="dot"></div>
-  <div class="login-card">
+  
+  <!-- Login Form -->
+  <div class="login-card" id="loginCard">
     <div class="login-logo">VOLGA<span>ADMIN</span></div>
     <p class="login-sub">Sign in to your dashboard</p>
     <form id="loginForm">
@@ -27,7 +29,83 @@
       <div class="login-error" id="loginError"></div>
       <button type="submit" class="btn-login" id="loginBtn">Sign In</button>
     </form>
+    <div style="margin-top: 1rem; text-align: center;">
+      <a href="#" id="forgotPasswordLink" style="color: #e8930a; text-decoration: none; font-size: 0.9rem;">Forgot Password?</a>
+      <span style="margin: 0 0.5rem; color: #999;">|</span>
+      <a href="#" id="applyRoleLink" style="color: #e8930a; text-decoration: none; font-size: 0.9rem;">Apply for Access</a>
+    </div>
   </div>
+  
+  <!-- Forgot Password Form -->
+  <div class="login-card" id="forgotPasswordCard" style="display: none;">
+    <div class="login-logo">VOLGA<span>ADMIN</span></div>
+    <p class="login-sub">Reset your password</p>
+    <form id="forgotPasswordForm">
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="forgotEmail" placeholder="Enter your email" required />
+      </div>
+      <div class="login-error" id="forgotError"></div>
+      <div class="login-success" id="forgotSuccess"></div>
+      <button type="submit" class="btn-login" id="forgotBtn">Send Reset Link</button>
+    </form>
+    <div style="margin-top: 1rem; text-align: center;">
+      <a href="#" id="backToLoginFromForgot" style="color: #e8930a; text-decoration: none; font-size: 0.9rem;">← Back to Login</a>
+    </div>
+  </div>
+  
+  <!-- Reset Password Form -->
+  <div class="login-card" id="resetPasswordCard" style="display: none;">
+    <div class="login-logo">VOLGA<span>ADMIN</span></div>
+    <p class="login-sub">Set a new password</p>
+    <form id="resetPasswordForm">
+      <div class="field">
+        <label>New Password</label>
+        <input type="password" id="resetPassword" placeholder="Enter new password" required />
+      </div>
+      <div class="field">
+        <label>Confirm Password</label>
+        <input type="password" id="resetConfirmPassword" placeholder="Confirm new password" required />
+      </div>
+      <div class="login-error" id="resetError"></div>
+      <button type="submit" class="btn-login" id="resetBtn">Reset Password</button>
+    </form>
+  </div>
+  
+  <!-- Role Application Form -->
+  <div class="login-card" id="applyRoleCard" style="display: none;">
+    <div class="login-logo">VOLGA<span>ADMIN</span></div>
+    <p class="login-sub">Apply for dashboard access</p>
+    <form id="applyRoleForm">
+      <div class="field">
+        <label>Name</label>
+        <input type="text" id="applicantName" placeholder="Your full name" required />
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="applicantEmail" placeholder="your@email.com" required />
+      </div>
+      <div class="field">
+        <label>Requested Role</label>
+        <select id="requestedRole" required>
+          <option value="viewer">Viewer</option>
+          <option value="editor">Editor</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Reason for Access</label>
+        <textarea id="applyReason" rows="4" placeholder="Why do you need access?" required></textarea>
+      </div>
+      <div class="login-error" id="applyError"></div>
+      <div class="login-success" id="applySuccess"></div>
+      <button type="submit" class="btn-login" id="applyBtn">Submit Application</button>
+    </form>
+    <div style="margin-top: 1rem; text-align: center;">
+      <a href="#" id="backToLoginFromApply" style="color: #e8930a; text-decoration: none; font-size: 0.9rem;">← Back to Login</a>
+    </div>
+  </div>
+  
   <script src="dashboard.js"></script>
 </body>
 </html>

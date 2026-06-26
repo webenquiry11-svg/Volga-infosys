@@ -294,80 +294,291 @@ html { scroll-behavior: smooth; } body { font-family: var(--font-ui); background
 </div>
 <div style="max-width:1200px;margin:0 auto;padding:0 24px;"><div class="newsletter"><div><h2>Stay Ahead of the XR Curve</h2><p>Get the latest VR, AR insights, case studies, and industry news delivered to your inbox.</p></div><div class="newsletter-form"><input type="email" placeholder="your@email.com"><button>SUBSCRIBE →</button></div></div></div>
   <!-- FOOTER -->
-  <div class="footer">
+<style>
+.footer{margin:0;padding:0;box-sizing:border-box;}
 
-  <div class="panel-light">
-    <div class="nav-bar" id="navBar">
-      <div class="logo-box">
-        <img class="logo-img" src="logo.png" alt="Volga" onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'">
-        <div id="logoFallback" style="display:none;width:42px;height:42px;border-radius:10px;background:#1a3a5c;align-items:center;justify-content:center;font-family:Exo 2", sans-serif;font-size:18px;font-weight:800;color:#fff">V</div>
+.footer-wrap{
+  font-family:var(--font-ui);
+  background:#fff;
+  width:100%;
+  min-height:300px;
+  position:relative;
+  overflow:hidden;
+  border-top:1px solid #e8e8e8;
+}
+
+.footer-inner{
+  position:relative;
+  max-width:1900px;
+  margin:0 auto;
+  padding:60px 48px 36px;
+  min-height:460px;
+}
+
+.footer-logo{
+  width:150px;
+  margin-bottom:6px;
+  img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+}
+
+.footer-tagline{
+  font-family:var(--font-ui);
+  font-size:11px;
+  font-weight:400;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:#888;
+  margin-bottom:36px;
+}
+
+.footer-cols{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  position:relative;
+  z-index:2;
+  max-width:1900px;
+  gap:24px;
+}
+
+.col-left,.col-right,.col-extra-left,.col-extra-right{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  min-width:130px;
+}
+
+.col-label{
+  font-family:var(--font-display);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:#1a1a1a;
+  margin-bottom:10px;
+}
+
+.col-left a,.col-right a,
+.col-extra-left a,.col-extra-right a{
+  font-family:var(--font-ui);
+  font-size:14px;
+  font-weight:400;
+  color:#1a1a1a;
+  text-decoration:none;
+  letter-spacing:0.01em;
+  line-height:1.9;
+  transition:color 0.2s;
+}
+
+.col-left a:hover,.col-right a:hover,
+.col-extra-left a:hover,.col-extra-right a:hover{color:#1a4fa0;}
+
+.col-right,.col-extra-right{text-align:right;}
+
+.col-right .divider,.col-extra-right .divider{
+  width:32px;
+  height:2px;
+  background:#1a1a1a;
+  margin:4px 0 8px auto;
+}
+
+.col-extra-left .divider{
+  width:32px;
+  height:2px;
+  background:#1a1a1a;
+  margin:4px 0 8px 0;
+}
+
+
+
+.footer-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  padding-top:32px;
+  position:relative;
+  z-index:2;
+  border-top:1px solid #e8e8e8;
+  margin-top:80px;
+}
+
+.brand-name{
+  font-family:var(--font-display);
+  font-size:38px;
+  font-weight:300;
+  letter-spacing:-0.02em;
+  color:#1a1a1a;
+  line-height:1;
+}
+
+.brand-name span{font-weight:700;}
+
+.copyright{
+  font-family:var(--font-ui);
+  font-size:11px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:#888;
+}
+</style>
+
+
+<div class="footer"><div class="footer-wrap" id="volga-footer">
+  <div class="footer-inner">
+
+    <div class="footer-logo">
+      <img src="logo.png" alt="Volga Infosys®" />
+    </div>
+    <div class="footer-tagline">Crafting immersive digital realities</div>
+
+    <div class="footer-cols">
+
+      <div class="col-left" id="col-left">
+        <div class="col-label">Business</div>
+        <a href="#">Training Simulation</a>
+        <a href="#">3D Configurators</a>
+        <a href="#">Buildings &amp; Interiors</a>
+        <a href="#">E-Commerce</a>
+        <a href="#">Manufacturing</a>
+        <a href="#">Entertainment</a>
+        <a href="#">Museums &amp; Travel</a>
       </div>
-      <div class="nav-right">
-        
-        <button class="launch-btn" ><a href="contact.html">contact us</a></button>
+
+      <div class="col-extra-left" id="col-extra-left">
+        <div class="col-label">Company</div>
+        <div class="divider"></div>
+        <a href="#">About Us</a>
+        <a href="#">Our Work</a>
+        <a href="#">Careers</a>
+        <a href="#">Blog</a>
+        <a href="#">Press Kit</a>
+        <a href="#">Contact</a>
       </div>
+
+      <div class="col-extra-right" id="col-extra-right">
+        <div class="col-label" style="text-align:right;">Services</div>
+        <div class="divider"></div>
+        <a href="#">Real-Time Rendering</a>
+        <a href="#">AR / VR Solutions</a>
+        <a href="#">Motion Graphics</a>
+        <a href="#">Product Visualisation</a>
+        <a href="#">Game Development</a>
+        <a href="#">Digital Twins</a>
+      </div>
+
+      <div class="col-right" id="col-right">
+        <div class="col-label" style="text-align:right;">Social</div>
+        <div class="divider"></div>
+        <a href="#">LinkedIn</a>
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">YouTube</a>
+        <a href="#">WhatsApp</a>
+      </div>
+
     </div>
 
-    <div class="links-grid" id="linksGrid">
-      <div class="lg-col">
-        <div class="lg-col-title">Company</div>
-        <div class="lg-links">
-          <a class="lg-link">Home</a>
-          <a class="lg-link">Technology</a>
-          <a class="lg-link">Community</a>
-          <a class="lg-link">Mission</a>
-          <a class="lg-link">Careers <span class="arr">↗</span></a>
-        </div>
-      </div>
-      <div class="lg-col">
-        <div class="lg-col-title">Connect</div>
-        <div class="lg-links">
-          <a class="lg-link">Github <span class="arr">↗</span></a>
-          <a class="lg-link">Discord <span class="arr">↗</span></a>
-          <a class="lg-link">Twitter <span class="arr">↗</span></a>
-          <a class="lg-link">LinkedIn <span class="arr">↗</span></a>
-          <a class="lg-link">Instagram <span class="arr">↗</span></a>
-          <a class="lg-link">WhatsApp <span class="arr">↗</span></a>
-        </div>
-      </div>
-      <div class="lg-col">
-        <div class="lg-col-title">Resources</div>
-        <div class="lg-links">
-          <a class="lg-link">Volga Docs <span class="arr">↗</span></a>
-          <a class="lg-link">AR Academy <span class="arr">↗</span></a>
-          <a class="lg-link">Press Kit <span class="arr">↗</span></a>
-          <a class="lg-link">Privacy Policy</a>
-          <a class="lg-link">Training Sim <span class="arr">↗</span></a>
-        </div>
-      </div>
+    <div class="footer-bottom" id="footer-bottom">
+      <div class="brand-name"><span>Volga</span> Infosys®</div>
+      <div class="copyright">© Volga Infosys® 2026 &nbsp;&nbsp;|&nbsp;&nbsp; Privacy &amp; Policy &nbsp;&nbsp;|&nbsp;&nbsp; Made with ♥ by Volga</div>
     </div>
 
-    <div class="panel-bottom">
-      <div class="pb-left">
-        <a class="pb-link">Terms of Service</a>
-        <a class="pb-link">Privacy Policy</a>
-      </div>
-      <span class="pb-copy">© 2026 Volga Infosys</span>
-      <div class="logo-big">VOLGA</div>
-    </div>
-    <div style="height:48px"></div>
   </div>
-
-  <!-- WAVE -->
-  <div class="wave-divider">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,0 L0,30 Q200,60 400,35 Q600,10 720,38 Q860,62 1040,30 Q1200,4 1440,28 L1440,0 Z" fill="#ECF0F3"/>
-    </svg>
-  </div>
-
-  <!-- 3D BAND -->
-  <div class="panel-3d" id="p3d">
-    <canvas id="c3d"></canvas>
-    <div class="custom-cur" id="cur"></div>
-    <div class="cur-ring" id="curRing"></div>
-  </div>
-
 </div>
+</div>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const footer       = document.getElementById('volga-footer');
+
+const colLeft      = document.getElementById('col-left');
+const colRight     = document.getElementById('col-right');
+const colExtraLeft  = document.getElementById('col-extra-left');
+const colExtraRight = document.getElementById('col-extra-right');
+const footerBottom = document.getElementById('footer-bottom');
+
+
+gsap.set(colLeft,       { x: -30, opacity: 0 });
+gsap.set(colRight,      { x:  30, opacity: 0 });
+gsap.set(colExtraLeft,  { x: -20, opacity: 0 });
+gsap.set(colExtraRight, { x:  20, opacity: 0 });
+gsap.set(footerBottom,  { y:  20, opacity: 0 });
+
+gsap.to(balloon, {
+  y: 0, opacity: 1,
+  ease: 'power3.out',
+  scrollTrigger: {
+    trigger: footer,
+    start: 'center bottom',
+    end:   'bottom 40%',
+    scrub: 5,
+  }
+});
+
+gsap.to(colLeft, {
+  x: 0, opacity: 1,
+  ease: 'power2.out',
+  scrollTrigger: {
+    trigger: footer,
+    start: 'center bottom',
+    end:   'bottom 50%',
+    scrub: 3.5,
+  }
+});
+
+gsap.to(colExtraLeft, {
+  x: 0, opacity: 1,
+  ease: 'power2.out',
+  scrollTrigger: {
+    trigger: footer,
+    start: 'center bottom',
+    end:   'bottom 55%',
+    scrub: 3,
+  }
+});
+
+gsap.to(colExtraRight, {
+  x: 0, opacity: 1,
+  ease: 'power2.out',
+  scrollTrigger: {
+    trigger: footer,
+    start: 'center bottom',
+    end:   'bottom 55%',
+    scrub: 3,
+  }
+});
+
+gsap.to(colRight, {
+  x: 0, opacity: 1,
+  ease: 'power2.out',
+  scrollTrigger: {
+    trigger: footer,
+    start: 'center bottom',
+    end:   'bottom 50%',
+    scrub: 3.5,
+  }
+});
+
+gsap.to(footerBottom, {
+  y: 0, opacity: 1,
+  ease: 'power2.out',
+  scrollTrigger: {
+    trigger: footer,
+    start: 'center bottom',
+    end:   'bottom 60%',
+    scrub: 3,
+  }
+});
+
+
+
+
+</script>
 </body>
 <script src="volga.js"></script>
 </html>

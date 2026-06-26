@@ -15,8 +15,7 @@
 
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
 
   <style>
     :root {
@@ -36,7 +35,7 @@
 .hero-deco{position:absolute;right:0;top:0;bottom:0;width:55%;background:linear-gradient(135deg,transparent 30%,rgba(80,120,80,.15) 60%,rgba(40,80,60,.2) 100%)}
 .hero-content{position:relative;z-index:2;padding:52px 48px;max-width:580px}
 .hero-content h1{font-family:var(--font-display);font-size: clamp(52px,8vw,88px);font-weight:800;color:#fff;line-height:1.05;letter-spacing:-.01em;margin-bottom:16px;margin-top: 60px;}
-.hero-content em {color:transparent; -webkit-text-stroke: 2px var(--accent);}
+.hero-content em {color:var(--gold); }
 .hero-pill{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2)}
 .hero-pill::before{content:'';display:inline-block;width:28px;height:2px;background:var(--gold2)}
     .blog-section {
@@ -1245,265 +1244,207 @@
   </section>
 
   <!-- FOOTER -->
-  <div class="footer">
+   <style>
+.footer{margin:0;padding:0;box-sizing:border-box;}
 
-  <div class="panel-light">
-    <div class="nav-bar" id="navBar">
-      <div class="logo-box">
-        <img class="logo-img" src="logo.png" alt="Volga" onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'">
-        <div id="logoFallback" style="display:none;width:42px;height:42px;border-radius:10px;background:#1a3a5c;align-items:center;justify-content:center;font-family:Exo 2", sans-serif;font-size:18px;font-weight:800;color:#fff">V</div>
+.footer-wrap{
+  font-family:var(--font-ui);
+  background:#fff;
+  width:100%;
+  min-height:300px;
+  position:relative;
+  overflow:hidden;
+  border-top:1px solid #e8e8e8;
+}
+
+.footer-inner{
+  position:relative;
+  max-width:1900px;
+  margin:0 auto;
+  padding:60px 48px 36px;
+  min-height:460px;
+}
+
+.footer-logo{
+  width:150px;
+  margin-bottom:6px;
+  img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+}
+
+.footer-tagline{
+  font-family:var(--font-ui);
+  font-size:11px;
+  font-weight:400;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:#888;
+  margin-bottom:36px;
+}
+
+.footer-cols{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  position:relative;
+  z-index:2;
+  max-width:1900px;
+  gap:24px;
+}
+
+.col-left,.col-right,.col-extra-left,.col-extra-right{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  min-width:130px;
+}
+
+.col-label{
+  font-family:var(--font-display);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:#1a1a1a;
+  margin-bottom:10px;
+}
+
+.col-left a,.col-right a,
+.col-extra-left a,.col-extra-right a{
+  font-family:var(--font-ui);
+  font-size:14px;
+  font-weight:400;
+  color:#1a1a1a;
+  text-decoration:none;
+  letter-spacing:0.01em;
+  line-height:1.9;
+  transition:color 0.2s;
+}
+
+.col-left a:hover,.col-right a:hover,
+.col-extra-left a:hover,.col-extra-right a:hover{color:#1a4fa0;}
+
+.col-right,.col-extra-right{text-align:right;}
+
+.col-right .divider,.col-extra-right .divider{
+  width:32px;
+  height:2px;
+  background:#1a1a1a;
+  margin:4px 0 8px auto;
+}
+
+.col-extra-left .divider{
+  width:32px;
+  height:2px;
+  background:#1a1a1a;
+  margin:4px 0 8px 0;
+}
+
+
+
+.footer-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  padding-top:32px;
+  position:relative;
+  z-index:2;
+  border-top:1px solid #e8e8e8;
+  margin-top:80px;
+}
+
+.brand-name{
+  font-family:var(--font-display);
+  font-size:38px;
+  font-weight:300;
+  letter-spacing:-0.02em;
+  color:#1a1a1a;
+  line-height:1;
+}
+
+.brand-name span{font-weight:700;}
+
+.copyright{
+  font-family:var(--font-ui);
+  font-size:11px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:#888;
+}
+</style>
+
+
+<div class="footer"><div class="footer-wrap" id="volga-footer">
+  <div class="footer-inner">
+
+    <div class="footer-logo">
+      <img src="logo.png" alt="Volga Infosys®" />
+    </div>
+    <div class="footer-tagline">Crafting immersive digital realities</div>
+
+    <div class="footer-cols">
+
+      <div class="col-left" id="col-left">
+        <div class="col-label">Business</div>
+        <a href="#">Training Simulation</a>
+        <a href="#">3D Configurators</a>
+        <a href="#">Buildings &amp; Interiors</a>
+        <a href="#">E-Commerce</a>
+        <a href="#">Manufacturing</a>
+        <a href="#">Entertainment</a>
+        <a href="#">Museums &amp; Travel</a>
       </div>
-      <div class="nav-right">
-        
-        <button class="launch-btn" ><a href="contact.html">contact us</a></button>
+
+      <div class="col-extra-left" id="col-extra-left">
+        <div class="col-label">Company</div>
+        <div class="divider"></div>
+        <a href="#">About Us</a>
+        <a href="#">Our Work</a>
+        <a href="#">Careers</a>
+        <a href="#">Blog</a>
+        <a href="#">Press Kit</a>
+        <a href="#">Contact</a>
       </div>
+
+      <div class="col-extra-right" id="col-extra-right">
+        <div class="col-label" style="text-align:right;">Services</div>
+        <div class="divider"></div>
+        <a href="#">Real-Time Rendering</a>
+        <a href="#">AR / VR Solutions</a>
+        <a href="#">Motion Graphics</a>
+        <a href="#">Product Visualisation</a>
+        <a href="#">Game Development</a>
+        <a href="#">Digital Twins</a>
+      </div>
+
+      <div class="col-right" id="col-right">
+        <div class="col-label" style="text-align:right;">Social</div>
+        <div class="divider"></div>
+        <a href="#">LinkedIn</a>
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">YouTube</a>
+        <a href="#">WhatsApp</a>
+      </div>
+
     </div>
 
-    <div class="links-grid" id="linksGrid">
-      <div class="lg-col">
-        <div class="lg-col-title">Company</div>
-        <div class="lg-links">
-          <a class="lg-link">Home</a>
-          <a class="lg-link">Technology</a>
-          <a class="lg-link">Community</a>
-          <a class="lg-link">Mission</a>
-          <a class="lg-link">Careers <span class="arr">↗</span></a>
-        </div>
-      </div>
-      <div class="lg-col">
-        <div class="lg-col-title">Connect</div>
-        <div class="lg-links">
-          <a class="lg-link">Github <span class="arr">↗</span></a>
-          <a class="lg-link">Discord <span class="arr">↗</span></a>
-          <a class="lg-link">Twitter <span class="arr">↗</span></a>
-          <a class="lg-link">LinkedIn <span class="arr">↗</span></a>
-          <a class="lg-link">Instagram <span class="arr">↗</span></a>
-          <a class="lg-link">WhatsApp <span class="arr">↗</span></a>
-        </div>
-      </div>
-      <div class="lg-col">
-        <div class="lg-col-title">Resources</div>
-        <div class="lg-links">
-          <a class="lg-link">Volga Docs <span class="arr">↗</span></a>
-          <a class="lg-link">AR Academy <span class="arr">↗</span></a>
-          <a class="lg-link">Press Kit <span class="arr">↗</span></a>
-          <a class="lg-link">Privacy Policy</a>
-          <a class="lg-link">Training Sim <span class="arr">↗</span></a>
-        </div>
-      </div>
+    <div class="footer-bottom" id="footer-bottom">
+      <div class="brand-name"><span>Volga</span> Infosys®</div>
+      <div class="copyright">© Volga Infosys® 2026 &nbsp;&nbsp;|&nbsp;&nbsp; Privacy &amp; Policy &nbsp;&nbsp;|&nbsp;&nbsp; Made with ♥ by Volga</div>
     </div>
 
-    <div class="panel-bottom">
-      <div class="pb-left">
-        <a class="pb-link">Terms of Service</a>
-        <a class="pb-link">Privacy Policy</a>
-      </div>
-      <span class="pb-copy">© 2026 Volga Infosys</span>
-      <div class="logo-big">VOLGA</div>
-    </div>
-    <div style="height:48px"></div>
   </div>
-
-  <!-- WAVE -->
-  <div class="wave-divider">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,0 L0,30 Q200,60 400,35 Q600,10 720,38 Q860,62 1040,30 Q1200,4 1440,28 L1440,0 Z" fill="#ECF0F3"/>
-    </svg>
-  </div>
-
-  <!-- 3D BAND -->
-  <div class="panel-3d" id="p3d">
-    <canvas id="c3d"></canvas>
-    <div class="custom-cur" id="cur"></div>
-    <div class="cur-ring" id="curRing"></div>
-  </div>
-
+</div>
 </div>
 
-  <script src="api-config.js"></script>
-  <script>
-    // Sample blog data for offline viewing
-    const sampleBlogs = [
-      {
-        _id: '1',
-        title: 'Extended Reality (XR) - Industry Overview',
-        category: 'Industry',
-        author: 'Volga Team',
-        role: 'Editor-in-Chief',
-        createdAt: '2026-05-15',
-        readTime: '8 min read',
-        coverImage: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIHZpZXdCb3g9IjAgMCAxMjAwIDYwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiMxQjIwMzAiLz48Y2lyY2xlIGN4PSI2MDAiIGN5PSIzMDAiIHI9IjE4MCIgc3Ryb2tlPSIjNTY3QzhEIiBzdHJva2Utd2lkdGg9IjIiLz48Y2lyY2xlIGN4PSI2MDAiIGN5PSIzMDAiIHI9IjkwIiBmaWxsPSIjNTY3QzhELTIwIi8+PHRleHQgeD0iNjAwIiB5PSIzMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM1NjdDOEQiIGZvbnQtc2l6ZT0iNDgiIGZvbnQtZmFtaWx5PSJBcmlhbCI+WFIgSW5kdXN0cnk8L3RleHQ+PC9zdmc+',
-        excerpt: 'A comprehensive guide to how extended reality is reshaping industries from healthcare to manufacturing.',
-        featured: true,
-        content: '<h2>What is Extended Reality (XR)?</h2><p>Extended Reality (XR) is an umbrella term that covers all immersive technologies, including VR, AR, and MR. These technologies are transforming how we interact with digital content and the physical world around us.</p><h3>Key Industries Adopting XR</h3><ul><li>Healthcare - Surgical training and patient education</li><li>Manufacturing - Assembly line simulation and quality control</li><li>Education - Immersive learning experiences</li><li>Retail - Virtual try-ons and product visualization</li></ul>'
-      },
-      {
-        _id: '2',
-        title: 'VR Training Platforms - Best Practices',
-        category: 'Training',
-        author: 'Sarah Johnson',
-        role: 'Training Specialist',
-        createdAt: '2026-05-12',
-        readTime: '6 min read',
-        coverImage: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIHZpZXdCb3g9IjAgMCAxMjAwIDYwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiMyOTQ1NDQiLz48cmVjdCB4PSIyMDAiIHk9IjE1MCIgd2lkdGg9IjgwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiMzNGQzOTktMjAiIHN0cm9rZT0iIzM0ZDM5OSIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNjAwIiB5PSIzMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzNGQzOTkiIGZvbnQtc2l6ZT0iNDgiIGZvbnQtZmFtaWx5PSJBcmlhbCI+VlIgVHJhaW5pbmc8L3RleHQ+PC9zdmc+',
-        excerpt: 'Learn the best practices for implementing effective VR training programs in your organization.',
-        content: '<h2>Why VR Training?</h2><p>VR training offers hands-on experience in a safe, controlled environment. It reduces training costs and improves knowledge retention rates significantly compared to traditional methods.</p><h3>Implementation Steps</h3><ol><li>Define training objectives</li><li>Choose the right VR platform</li><li>Develop or acquire content</li><li>Test with a pilot group</li><li>Scale across the organization</li></ol>'
-      },
-      {
-        _id: '3',
-        title: 'AR for Retail - Case Study',
-        category: 'Virtual Reality',
-        author: 'Mike Chen',
-        role: 'Product Manager',
-        createdAt: '2026-05-08',
-        readTime: '5 min read',
-        coverImage: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIHZpZXdCb3g9IjAgMCAxMjAwIDYwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiMzQzMyNTAiLz48cGF0aCBkPSJNMjAwIDMwMCBMNjAwIDEwMCBMMTAwMCAzMDAiIHN0cm9rZT0iI2E3OGJmYSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIi8+PHRleHQgeD0iNjAwIiB5PSI0MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNhNzhiZmEiIGZvbnQtc2l6ZT0iNDgiIGZvbnQtZmFtaWx5PSJBcmlhbCI+QVIgUmV0YWlsPC90ZXh0Pjwvc3ZnPg==',
-        excerpt: 'See how one major retailer increased sales by 35% using AR product visualization.',
-        content: '<h2>The Challenge</h2><p>The retailer needed to reduce product returns and help customers make better purchasing decisions online.</p><h3>The Solution</h3><p>An AR app that let customers visualize products in their own space before buying.</p><h3>Results</h3><ul><li>35% increase in sales</li><li>40% reduction in returns</li><li>Higher customer satisfaction scores</li></ul>'
-      },
-      {
-        _id: '4',
-        title: 'Digital Twin Technology Explained',
-        category: 'Augmented Reality',
-        author: 'Alex Rivera',
-        role: 'Tech Lead',
-        createdAt: '2026-05-05',
-        readTime: '7 min read',
-        coverImage: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIHZpZXdCb3g9IjAgMCAxMjAwIDYwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IiMyMjI4MzQiLz48Y2lyY2xlIGN4PSI0MDAiIGN5PSIzMDAiIHI9IjgwIiBmaWxsPSIjYTc4YmZhLTIwIiBzdHJva2U9IiNhNzhiZmEiIHN0cm9rZS13aWR0aD0iMiIvPjxjaXJjbGUgY3g9IjgwMCIgY3k9IjMwMCIgcj0iODAiIGZpbGw9IiMzNGQzOTktMjAiIHN0cm9rZT0iIzM0ZDM5OSIgc3Ryb2tlLXdpZHRoPSIyIi8+PGxpbmUgeDE9IjQ4MCIgeTE9IjMwMCIgeDI9IjcyMCIgeTI9IjMwMCIgc3Ryb2tlPSIjNTY3QzhEIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI2MDAiIHk9IjQwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzU2N0M4RCIgZm9udC1zaXplPSI0OCIgZm9udC1mYW1pbHk9IkFyaWFsIj5EaWdpdGFsIFdpbjwvdGV4dD48L3N2Zz4=',
-        excerpt: 'Understanding how digital twins are revolutionizing predictive maintenance and operations.',
-        content: '<h2>What is a Digital Twin?</h2><p>A digital twin is a virtual replica of a physical object, process, or system. It uses real-time data to simulate behavior and predict outcomes.</p><h3>Use Cases</h3><ul><li>Predictive maintenance for manufacturing equipment</li><li>City planning and infrastructure management</li><li>Healthcare patient monitoring</li><li>Smart building management</li></ul>'
-      }
-    ];
-    
-    const API = window.VOLGA_API;
+<script>
+gsap.registerPlugin(ScrollTrigger);
 
-    let allPosts = [];
-    let activeFilter = 'all';
-    
-    function getImageUrl(url) {
-      if (!url) return '';
-      if (url.startsWith('http://') || url.startsWith('https://')) {
-        return url;
-      }
-      if (url.startsWith('/uploads/')) {
-        return window.getVolgaImageUrl(url);
-      }
-      return url;
-    }
-
-    function fmtDate(iso) {
-      return new Date(iso).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
-    }
-
-    function renderFeatured(post) {
-      const el = document.getElementById('blogFeatured');
-      if (!post) { el.innerHTML = ''; return; }
-      el.innerHTML = `
-        <div class="blog-featured reveal-fade">
-          <div class="blog-featured-img">
-            <img src="${getImageUrl(post.coverImage || post.image)}" alt="${post.title}" />
-            <span class="blog-featured-badge">Featured</span>
-          </div>
-          <div class="blog-featured-body">
-            <div class="blog-cat">${post.category}</div>
-            <h2 class="blog-featured-title">${post.title}</h2>
-            <p class="blog-featured-excerpt">${post.excerpt}</p>
-            <div class="blog-meta">
-              <span>${post.author}</span>
-              <span class="blog-meta-dot">✦</span>
-              <span>${fmtDate(post.createdAt)}</span>
-              <span class="blog-meta-dot">✦</span>
-              <span>${post.readTime}</span>
-            </div>
-            <a href="blog-detail.html?id=${post._id}" class="blog-read-link">Read Article →</a>
-          </div>
-        </div>`;
-    }
-
-    function renderCards(posts) {
-      const grid = document.getElementById('blogGrid');
-      if (!posts.length) {
-        grid.innerHTML = '<div class="blog-empty">No posts found.</div>';
-        return;
-      }
-      grid.innerHTML = posts.map(p => {
-        const initials = (p.author || '').split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
-        return `
-        <a href="blog-detail.html?id=${p._id}" class="blog-card" data-category="${p.category}" style="text-decoration:none">
-          <img src="${getImageUrl(p.coverImage || p.image)}" alt="${p.title}" class="blog-card-img" />
-          <div class="blog-card-body">
-            <div class="blog-tag">${p.category}</div>
-            <h3 class="blog-card-title">${p.title}</h3>
-            <p class="blog-card-excerpt">${p.excerpt}</p>
-            <div class="blog-card-footer">
-              <div class="blog-meta">
-                <div class="author-avatar">${initials}</div>
-                <span class="blog-meta-text">${fmtDate(p.createdAt)}</span>
-              </div>
-              <div class="read-arrow">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </a>`
-      }).join('');
-    }
-
-    function applyFilter(filter) {
-      activeFilter = filter;
-      document.querySelectorAll('.blog-filter-btn').forEach(b =>
-        b.classList.toggle('active', b.dataset.filter === filter)
-      );
-      const featured = allPosts.find(p => p.featured);
-      const cards = allPosts.filter(p => !p.featured);
-      if (filter === 'all') {
-        renderFeatured(featured || null);
-        renderCards(cards);
-      } else {
-        const filtered = allPosts.filter(p => p.category === filter);
-        renderFeatured(null);
-        renderCards(filtered);
-      }
-    }
-
-    async function loadBlogs() {
-      try {
-        const res = await fetch(`${API}/blogs`);
-        const data = await res.json();
-        allPosts = data.data || data; // Handle both { success: true, data: [...] } and direct array
-      } catch {
-        console.log('API failed, using sample data');
-        allPosts = sampleBlogs;
-      }
-      applyFilter('all');
-      renderSidebar(allPosts);
-    }
-
-    loadBlogs();
-
-    document.querySelectorAll('.blog-filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
-    });
-
-    document.getElementById('newsletterForm').addEventListener('submit', e => {
-      e.preventDefault();
-      const btn = e.target.querySelector('button');
-      btn.textContent = '✓ Subscribed!';
-      btn.disabled = true;
-      setTimeout(() => { btn.textContent = 'Subscribe →'; btn.disabled = false; e.target.reset(); }, 3000);
-    });
-
-    // Sidebar: topics, trending, written by
-    async function renderSidebar(posts) {
-      const topicsEl = document.getElementById('browseTopics');
-      const trendingEl = document.getElementById('trendingList');
-      const authorsEl = document.getElementById('writtenBy');
-      if (!topicsEl || !trendingEl || !authorsEl) return;
-
-      // Try to fetch dashboard stats if available (requires admin auth). If blocked, derive from posts.
-      let counts = {};
+const footer= document.getElementById('volga-footer');
       try {
         const r = await fetch(`${API}/dashboard/stats`);
         if (r.ok) {
@@ -1533,7 +1474,7 @@
         const initials = a.author.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
         return `<li><div class="author-avatar">${initials}</div><div><strong>${a.author}</strong><div style="font-size:0.8rem;color:var(--text-muted)">${a.role || 'Contributor'}</div></div></li>`;
       }).join('') || '<li>No authors</li>';
-    }
+    
 
     // Sidebar subscribe small form
     const sidebarSubscribe = document.getElementById('sidebarSubscribe');
@@ -1541,6 +1482,10 @@
       e.preventDefault(); const btn = sidebarSubscribe.querySelector('button'); btn.textContent = '✓ Subscribed'; btn.disabled = true; setTimeout(() => { btn.textContent = 'Subscribe'; btn.disabled = false; sidebarSubscribe.reset(); }, 2000);
     });
   </script>
+
+  <!-- ═══════════════════════════════════════════ FOOTER -->
+  
+
   <script src="volga.js"></script>
 
 </body>

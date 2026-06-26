@@ -136,7 +136,9 @@ a { text-decoration: none; color: inherit; }
   letter-spacing: 0.12em; text-transform: uppercase;
   color: #C9C1B1; margin-bottom: 0.45rem;
 }
-.field input {
+.field input,
+.field select,
+.field textarea {
   width: 100%; padding: 0.78rem 1rem;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(238,233,223,0.15);
@@ -144,6 +146,10 @@ a { text-decoration: none; color: inherit; }
   font-size: 0.9rem; font-family: var(--font);
   color: #EEE9DF; outline: none;
   transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.field select option {
+  background: #1B2632;
+  color: #EEE9DF;
 }
 .field input::placeholder { color: #C9C1B1; }
 .field input:focus {
@@ -154,6 +160,10 @@ a { text-decoration: none; color: inherit; }
 
 .login-error {
   color: #ff7b7b; font-family: var(--mono);
+  font-size: 0.75rem; min-height: 1.1rem; margin-bottom: 0.5rem;
+}
+.login-success {
+  color: #6dbf8a; font-family: var(--mono);
   font-size: 0.75rem; min-height: 1.1rem; margin-bottom: 0.5rem;
 }
 
@@ -432,6 +442,18 @@ a { text-decoration: none; color: inherit; }
 .badge-contacted::before { background: var(--contacted); }
 .badge-closed         { background: rgba(109,191,138,0.15); color: #6dbf8a; }
 .badge-closed::before { background: var(--closed); }
+.badge-viewer         { background: rgba(102, 126, 234, 0.15); color: #6b7eea; }
+.badge-viewer::before { background: #6b7eea; }
+.badge-editor         { background: rgba(155, 89, 182, 0.15); color: #9b59b6; }
+.badge-editor::before { background: #9b59b6; }
+.badge-admin         { background: rgba(231, 76, 60, 0.15); color: #e74c3c; }
+.badge-admin::before { background: #e74c3c; }
+.badge-pending         { background: rgba(243, 156, 18, 0.15); color: #f39c12; }
+.badge-pending::before { background: #f39c12; }
+.badge-approved         { background: rgba(39, 174, 96, 0.15); color: #27ae60; }
+.badge-approved::before { background: #27ae60; }
+.badge-rejected         { background: rgba(192, 57, 43, 0.15); color: #c0392b; }
+.badge-rejected::before { background: #c0392b; }
 
 /* ── BUTTONS ─────────────────────────────────────────────── */
 .btn-view {

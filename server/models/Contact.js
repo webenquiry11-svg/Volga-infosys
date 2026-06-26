@@ -30,6 +30,17 @@ const contactSchema = new mongoose.Schema(
       type: String,
       enum: ["new", "contacted", "closed"],
       default: "new"
+    },
+    tags: {
+      type: [String],
+      default: []
+    },
+    followUpDate: {
+      type: Date
+    },
+    assignedTo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Admin"
     }
   },
   {

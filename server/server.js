@@ -36,7 +36,11 @@ app.use(cors({
 app.use(express.json());
 
 const contactLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100, message: { success: false, message: "Too many submissions, try again later." } });
-const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100 });
+const authLimiter = rateLimit({ 
+  windowMs: 15 * 60 * 1000, 
+  max: 500, // Increased limit
+  message: { success: false, message: "Too many login attempts, try again later." } 
+});
 
 // Serve uploaded files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

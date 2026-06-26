@@ -42,6 +42,7 @@
   const captionName= document.getElementById("cm-caption-name");
   const dots       = [...wrap.querySelectorAll(".cm-dot")];
   const cards      = [...wrap.querySelectorAll(".cm-card")];
+  const particlesContainer = document.getElementById("cm-particles");
 
   if (!cube || !scroller) return;
 
@@ -76,9 +77,74 @@
     if (ph) ph.style.display = "none";
   });
 
+  /* ── 3D Particles System ─────────────────────────────────────── */
+  const particles = [];
+  const PARTICLE_COUNT = 60;
+  
+  function createParticles() {
+    if (!particlesContainer) return;
+    
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const particle = document.createElement('div');
+      const sizeClass = i % 3 === 0 ? 'cm-particle-large' : (i % 3 === 1 ? 'cm-particle-small' : '');
+      
+      particle.className = `cm-particle ${sizeClass}`;
+      
+      // Random 3D position
+      const particleData = {
+        x: (Math.random() - 0.5) * 800,
+        y: (Math.random() - 0.5) * 800,
+        z: (Math.random() - 0.5) * 600,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.3,
+        speedZ: (Math.random() - 0.5) * 0.2,
+        element: particle
+      };
+      
+      particles.push(particleData);
+      particlesContainer.appendChild(particle);
+    }
+  }
+  
+  function updateParticles(time, scrollProgress) {
+    particles.forEach(p => {
+      // Move particles
+      p.x += p.speedX;
+      p.y += p.speedY;
+      p.z += p.speedZ;
+      
+      // Wrap around boundaries
+      if (p.x > 400) p.x = -400;
+      if (p.x < -400) p.x = 400;
+      if (p.y > 400) p.y = -400;
+      if (p.y < -400) p.y = 400;
+      if (p.z > 300) p.z = -300;
+      if (p.z < -300) p.z = 300;
+      
+      // Apply scroll effect to Z
+      const scrollZOffset = scrollProgress * 200;
+      
+      // Update position with 3D transform
+      p.element.style.transform = `translate3d(${p.x}px, ${p.y}px, ${p.z + scrollZOffset}px)`;
+    });
+  }
+
+  /* ── Mouse Tilt Effect ───────────────────────────────────────── */
+  let mouseX = 0, mouseY = 0;
+  let targetMouseX = 0, targetMouseY = 0;
+  
+  function onMouseMove(e) {
+    const rect = viewport.getBoundingClientRect();
+    targetMouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 15; // Max tilt degrees
+    targetMouseY = ((e.clientY - rect.top) / rect.height - 0.5) * -10;
+  }
+  
+  viewport.addEventListener('mousemove', onMouseMove);
+
   /* ── Ease helpers ────────────────────────────────────────────── */
   const easeIO = t => t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
   const easeInOutCubic = t => t < 0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
+  const lerp = (a, b, t) => a + (b - a) * t;
 
   /* ── Cube transform from 0–1 progress ───────────────────────── */
   function setCubeTransform(s) {
@@ -87,8 +153,13 @@
     const i = Math.min(Math.floor(t), N - 2);
     const f = easeIO(t - i);
     const a = STOPS[i], b = STOPS[i + 1];
-    const rx = a.rx + (b.rx - a.rx) * f;
-    const ry = a.ry + (b.ry - a.ry) * f;
+    let rx = a.rx + (b.rx - a.rx) * f;
+    let ry = a.ry + (b.ry - a.ry) * f;
+    
+    // Add mouse tilt
+    rx += mouseY;
+    ry += mouseX;
+    
     cube.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
   }
 
@@ -135,21 +206,26 @@ const io = new IntersectionObserver(entries => {
 
 cards.forEach(c => io.observe(c));
 
-  /* ── Main scroll handler (reads inner scroller, NOT window) ─── */
-  let rafId = null;
-
-  function onInnerScroll() {
-    if (rafId) return;
-    rafId = requestAnimationFrame(() => {
-      rafId = null;
-      const max = scroller.scrollHeight - scroller.clientHeight;
-      const s   = max > 0 ? Math.max(0, Math.min(1, scroller.scrollTop / max)) : 0;
-      setCubeTransform(s);
-      updateHUD(s);
-    });
+  /* ── Animation Loop ──────────────────────────────────────────── */
+  let scrollProgress = 0;
+  let lastTime = performance.now();
+  
+  function animate(time) {
+    // Smooth mouse tilt
+    mouseX = lerp(mouseX, targetMouseX, 0.08);
+    mouseY = lerp(mouseY, targetMouseY, 0.08);
+    
+    // Get scroll progress
+    const max = scroller.scrollHeight - scroller.clientHeight;
+    scrollProgress = max > 0 ? Math.max(0, Math.min(1, scroller.scrollTop / max)) : 0;
+    
+    // Update everything
+    setCubeTransform(scrollProgress);
+    updateHUD(scrollProgress);
+    updateParticles(time, scrollProgress);
+    
+    requestAnimationFrame(animate);
   }
-
-  scroller.addEventListener("scroll", onInnerScroll, { passive: true });
 
   /* ── Dot click → scroll inner scroller ──────────────────────── */
   dots.forEach((dot, i) => {
@@ -195,7 +271,9 @@ cards.forEach(c => io.observe(c));
   });
 
   /* ── Init ────────────────────────────────────────────────────── */
+  createParticles();
   setCubeTransform(0);
   updateHUD(0);
+  requestAnimationFrame(animate);
 
 })();

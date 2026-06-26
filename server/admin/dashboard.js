@@ -156,6 +156,14 @@ async function apiFetch(path, options = {}) {
 const loginForm = document.getElementById("loginForm");
 if (loginForm) {
   if (getToken()) location.href = "dashboard.html";
+  
+  // Check for reset token in URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const resetToken = urlParams.get('reset');
+  if (resetToken) {
+    document.getElementById('loginCard').style.display = 'none';
+    document.getElementById('resetPasswordCard').style.display = 'block';
+  }
 
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -180,6 +188,140 @@ if (loginForm) {
     } else {
       err.textContent = data.message || "Login failed";
       btn.textContent = "Sign In";
+      btn.disabled = false;
+    }
+  });
+  
+  // Forgot password link
+  document.getElementById('forgotPasswordLink')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('loginCard').style.display = 'none';
+    document.getElementById('forgotPasswordCard').style.display = 'block';
+  });
+  
+  // Back to login from forgot
+  document.getElementById('backToLoginFromForgot')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('forgotPasswordCard').style.display = 'none';
+    document.getElementById('loginCard').style.display = 'block';
+  });
+  
+  // Forgot password form submit
+  document.getElementById('forgotPasswordForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('forgotBtn');
+    const err = document.getElementById('forgotError');
+    const success = document.getElementById('forgotSuccess');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    err.textContent = '';
+    success.textContent = '';
+    
+    try {
+      const res = await fetch(`${API}/auth/forgot-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: document.getElementById('forgotEmail').value })
+      });
+      const data = await res.json();
+      
+      if (!res.ok) throw new Error(data.message || 'Request failed');
+      
+      success.textContent = 'Password reset link has been sent to your email!';
+    } catch (e) {
+      err.textContent = e.message || 'Failed to send reset email';
+    } finally {
+      btn.textContent = 'Send Reset Link';
+      btn.disabled = false;
+    }
+  });
+  
+  // Reset password form submit
+  document.getElementById('resetPasswordForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('resetBtn');
+    const err = document.getElementById('resetError');
+    btn.textContent = 'Resetting...';
+    btn.disabled = true;
+    err.textContent = '';
+    
+    const pwd1 = document.getElementById('resetPassword').value;
+    const pwd2 = document.getElementById('resetConfirmPassword').value;
+    
+    if (pwd1 !== pwd2) {
+      err.textContent = 'Passwords do not match';
+      btn.textContent = 'Reset Password';
+      btn.disabled = false;
+      return;
+    }
+    
+    try {
+      const res = await fetch(`${API}/auth/reset-password/${resetToken}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pwd1 })
+      });
+      const data = await res.json();
+      
+      if (!res.ok) throw new Error(data.message || 'Reset failed');
+      
+      if (data.token) {
+        setToken(data.token);
+        location.href = 'dashboard.html';
+      }
+    } catch (e) {
+      err.textContent = e.message || 'Reset failed';
+    } finally {
+      btn.textContent = 'Reset Password';
+      btn.disabled = false;
+    }
+  });
+  
+  // Apply for role link
+  document.getElementById('applyRoleLink')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('loginCard').style.display = 'none';
+    document.getElementById('applyRoleCard').style.display = 'block';
+  });
+  
+  // Back to login from apply
+  document.getElementById('backToLoginFromApply')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('applyRoleCard').style.display = 'none';
+    document.getElementById('loginCard').style.display = 'block';
+  });
+  
+  // Role application form submit
+  document.getElementById('applyRoleForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('applyBtn');
+    const err = document.getElementById('applyError');
+    const success = document.getElementById('applySuccess');
+    btn.textContent = 'Submitting...';
+    btn.disabled = true;
+    err.textContent = '';
+    success.textContent = '';
+    
+    try {
+      const res = await fetch(`${API}/auth/role-applications`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          applicantName: document.getElementById('applicantName').value,
+          applicantEmail: document.getElementById('applicantEmail').value,
+          requestedRole: document.getElementById('requestedRole').value,
+          reason: document.getElementById('applyReason').value
+        })
+      });
+      const data = await res.json();
+      
+      if (!res.ok) throw new Error(data.message || 'Submission failed');
+      
+      success.textContent = 'Application submitted successfully! We will review it shortly.';
+    } catch (e) {
+      err.textContent = e.message || 'Submission failed';
+    } finally {
+      btn.textContent = 'Submit Application';
       btn.disabled = false;
     }
   });
@@ -214,7 +356,8 @@ if (document.getElementById("logoutBtn")) {
       if (item.dataset.view === "casestudies") loadCaseStudies();
       if (item.dataset.view === "industrynews") loadIndustryNews();
       if (item.dataset.view === "medialibrary") loadMediaLibrary();
-      if(item.dataset.view === "emaillogs") loadEmailLogs();
+      if (item.dataset.view === "emaillogs") loadEmailLogs();
+      if (item.dataset.view === "settings") loadCurrentUser();
       
     });
   });
@@ -277,13 +420,43 @@ if (document.getElementById("logoutBtn")) {
   async function loadLeads(page = 1) {
     currentPage = page;
     const status = document.getElementById("statusFilter").value;
-    const query = `?page=${page}&limit=15${status ? `&status=${status}` : ""}`;
-    const data = await apiFetch(`/dashboard/contacts${query}`);
+    const searchQuery = document.getElementById("searchInput").value;
+    
+    let data;
+    if (searchQuery) {
+      const query = `?q=${encodeURIComponent(searchQuery)}&page=${page}&limit=15${status ? `&status=${status}` : ""}`;
+      data = await apiFetch(`/dashboard/contacts/search${query}`);
+    } else {
+      const query = `?page=${page}&limit=15${status ? `&status=${status}` : ""}`;
+      data = await apiFetch(`/dashboard/contacts${query}`);
+    }
     renderTable(document.querySelector("#leadsTable tbody"), data.contacts, false);
     renderPagination(data.pages, page);
   }
 
+  // Search and Export listeners
+  let searchTimeout;
+  document.getElementById("searchInput")?.addEventListener("input", (e) => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => loadLeads(1), 300);
+  });
   document.getElementById("statusFilter")?.addEventListener("change", () => loadLeads(1));
+  document.getElementById("exportBtn")?.addEventListener("click", async () => {
+    const token = getToken();
+    const response = await fetch(`${API}/dashboard/contacts/export`, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'leads.csv';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  });
   document.getElementById("emailTypeFilter")?.addEventListener("change", () => loadEmailLogs(1));
   document.getElementById("emailStatusFilter")?.addEventListener("change", () => loadEmailLogs(1));
   document.getElementById("deleteAllLogsBtn")?.addEventListener("click", async () => {
@@ -375,6 +548,32 @@ if (document.getElementById("logoutBtn")) {
   // ── MODAL ──────────────────────────────────────────────
   let activeContact = null;
 
+  async function loadNotes(contactId) {
+    const notes = await apiFetch(`/dashboard/contacts/${contactId}/notes`);
+    const notesList = document.getElementById("notesList");
+    if (!notes.length) {
+      notesList.innerHTML = '<p style="color:#888;">No notes yet.</p>';
+      return;
+    }
+    notesList.innerHTML = notes.map(note => `
+      <div style="padding:0.75rem; border:1px solid #eee; border-radius:6px; margin-bottom:0.5rem;">
+        <p style="margin:0 0 0.5rem;">${note.content}</p>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.8rem; color:#888;">${new Date(note.createdAt).toLocaleString()}</span>
+          <button class="btn-delete" style="font-size:0.8rem; padding:4px 8px;" data-note-id="${note._id}">Delete</button>
+        </div>
+      </div>
+    `).join('');
+    notesList.querySelectorAll('.btn-delete').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (confirm('Delete this note?')) {
+          await apiFetch(`/dashboard/contacts/${activeContact._id}/notes/${btn.dataset.noteId}`, { method: 'DELETE' });
+          loadNotes(activeContact._id);
+        }
+      });
+    });
+  }
+
   function openModal(contact) {
     activeContact = contact;
     document.getElementById("modalName").textContent = contact.name;
@@ -384,10 +583,12 @@ if (document.getElementById("logoutBtn")) {
       <div><span>Country</span><strong>${contact.country || "—"}</strong></div>
       <div><span>Service</span><strong>${contact.serviceInterested || "—"}</strong></div>
       <div><span>Budget</span><strong>${contact.budget || "—"}</strong></div>
-      <div><span>New Field</span><strong>${contact.newField || "—"}</strong></div>
       <div><span>Date</span><strong>${fmtDate(contact.createdAt)}</strong></div>`;
     document.getElementById("modalMessage").textContent = contact.message;
     document.getElementById("modalStatus").value = contact.status;
+    document.getElementById("tagsInput").value = (contact.tags || []).join(', ');
+    document.getElementById("followUpDate").value = contact.followUpDate ? contact.followUpDate.split('T')[0] : '';
+    loadNotes(contact._id);
     document.getElementById("modalOverlay").classList.add("open");
   }
 
@@ -404,13 +605,27 @@ if (document.getElementById("logoutBtn")) {
   document.getElementById("modalSave").addEventListener("click", async () => {
     if (!activeContact) return;
     const status = document.getElementById("modalStatus").value;
+    const tags = document.getElementById("tagsInput").value.split(',').map(t => t.trim()).filter(t => t);
+    const followUpDate = document.getElementById("followUpDate").value;
     await apiFetch(`/dashboard/contacts/${activeContact._id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
+      body: JSON.stringify({ status, tags, followUpDate }),
     });
     closeModal();
     loadLeads(currentPage);
+  });
+
+  document.getElementById("addNoteBtn").addEventListener("click", async () => {
+    const content = document.getElementById("newNote").value.trim();
+    if (!content) return;
+    await apiFetch(`/dashboard/contacts/${activeContact._id}/notes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content }),
+    });
+    document.getElementById("newNote").value = '';
+    loadNotes(activeContact._id);
   });
 
   document.getElementById("modalDelete").addEventListener("click", async () => {
@@ -1020,7 +1235,223 @@ if (document.getElementById("logoutBtn")) {
   });
 }
 
-// ── UTILS ─────────────────────────────────────────────────
+// ── SETTINGS ─────────────────────────────────────────────────────────────
+  let currentUser = null;
+  let editingUserId = null;
+
+  // Load current user
+  async function loadCurrentUser() {
+    const data = await apiFetch('/auth/me');
+    currentUser = data.user;
+    document.getElementById('settings-name').value = currentUser.name || '';
+    document.getElementById('settings-email').value = currentUser.email || '';
+    
+    // Show/hide admin-only sections
+    const isAdmin = currentUser.role === 'admin';
+    document.getElementById('userManagementTitle').style.display = isAdmin ? 'block' : 'none';
+    document.getElementById('userManagementSection').style.display = isAdmin ? 'block' : 'none';
+    document.getElementById('roleApplicationsTitle').style.display = isAdmin ? 'block' : 'none';
+    document.getElementById('roleApplicationsSection').style.display = isAdmin ? 'block' : 'none';
+    
+    if (isAdmin) {
+      loadUsers();
+      loadRoleApplications();
+    }
+  }
+
+  // Update profile listener
+  document.getElementById('updateProfileBtn')?.addEventListener('click', async () => {
+    const btn = document.getElementById('updateProfileBtn');
+    btn.textContent = 'Updating...';
+    btn.disabled = true;
+    try {
+      const body = {
+        name: document.getElementById('settings-name').value.trim(),
+        email: document.getElementById('settings-email').value.trim()
+      };
+      await apiFetch('/auth/me', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      alert('Profile updated successfully!');
+    } catch (e) {
+      alert(e.message || 'Update failed');
+    } finally {
+      btn.textContent = 'Update Profile';
+      btn.disabled = false;
+    }
+  });
+
+  // Change password listener
+  document.getElementById('changePasswordBtn')?.addEventListener('click', async () => {
+    const currentPwd = document.getElementById('currentPassword').value;
+    const newPwd = document.getElementById('newPassword').value;
+    const confirmPwd = document.getElementById('confirmPassword').value;
+    
+    if (newPwd !== confirmPwd) {
+      alert('Passwords do not match');
+      return;
+    }
+    
+    const btn = document.getElementById('changePasswordBtn');
+    btn.textContent = 'Changing...';
+    btn.disabled = true;
+    try {
+      await apiFetch('/auth/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ currentPassword: currentPwd, newPassword: newPwd }) });
+      alert('Password changed successfully!');
+      document.getElementById('currentPassword').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('confirmPassword').value = '';
+    } catch (e) {
+      alert(e.message || 'Change failed');
+    } finally {
+      btn.textContent = 'Change Password';
+      btn.disabled = false;
+    }
+  });
+
+  // Load users (admin)
+  async function loadUsers() {
+    const data = await apiFetch('/auth/users');
+    const tbody = document.querySelector('#usersTable tbody');
+    if (!data.users || !data.users.length) {
+      tbody.innerHTML = '<tr><td colspan="5" class="empty">No users found</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.users.map(u => `
+      <tr>
+        <td>${u.name}</td>
+        <td>${u.email}</td>
+        <td><span class="badge badge-${u.role}">${u.role}</span></td>
+        <td>${fmtDate(u.createdAt)}</td>
+        <td><button class="btn-view edit-user-btn" data-id="${u._id}">Edit</button></td>
+      </tr>
+    `).join('');
+    
+    tbody.querySelectorAll('.edit-user-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const user = data.users.find(u => u._id === btn.dataset.id);
+        openUserModal(user);
+      });
+    });
+  }
+
+  // Open user modal
+  function openUserModal(user = null) {
+    editingUserId = user?._id || null;
+    document.getElementById('userModalTitle').textContent = user ? 'Edit User' : 'Add User';
+    document.getElementById('user-name').value = user?.name || '';
+    document.getElementById('user-email').value = user?.email || '';
+    document.getElementById('user-role').value = user?.role || 'viewer';
+    document.getElementById('user-password').value = '';
+    document.getElementById('userFormError').textContent = '';
+    document.getElementById('userDeleteBtn').style.display = user ? 'inline-block' : 'none';
+    document.getElementById('userModalOverlay').classList.add('open');
+  }
+
+  // User modal listeners
+  document.getElementById('addUserBtn')?.addEventListener('click', () => openUserModal());
+  document.getElementById('userModalClose')?.addEventListener('click', () => {
+    document.getElementById('userModalOverlay').classList.remove('open');
+  });
+  document.getElementById('userModalOverlay')?.addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) document.getElementById('userModalOverlay').classList.remove('open');
+  });
+
+  document.getElementById('userSaveBtn')?.addEventListener('click', async () => {
+    const body = {
+      name: document.getElementById('user-name').value.trim(),
+      email: document.getElementById('user-email').value.trim(),
+      role: document.getElementById('user-role').value
+    };
+    const pwd = document.getElementById('user-password').value.trim();
+    if (pwd) body.password = pwd;
+    
+    if (!body.name || !body.email) {
+      document.getElementById('userFormError').textContent = 'Name and email are required';
+      return;
+    }
+    
+    const btn = document.getElementById('userSaveBtn');
+    btn.textContent = 'Saving...';
+    btn.disabled = true;
+    try {
+      if (editingUserId) {
+        await apiFetch(`/auth/users/${editingUserId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      } else {
+        await apiFetch('/auth/users', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      }
+      document.getElementById('userModalOverlay').classList.remove('open');
+      loadUsers();
+    } catch (e) {
+      document.getElementById('userFormError').textContent = e.message || 'Save failed';
+    } finally {
+      btn.textContent = 'Save User';
+      btn.disabled = false;
+    }
+  });
+
+  document.getElementById('userDeleteBtn')?.addEventListener('click', async () => {
+    if (!editingUserId || !confirm('Delete this user?')) return;
+    try {
+      await apiFetch(`/auth/users/${editingUserId}`, { method: 'DELETE' });
+      document.getElementById('userModalOverlay').classList.remove('open');
+      loadUsers();
+    } catch (e) {
+      alert(e.message || 'Delete failed');
+    }
+  });
+
+  // Load role applications (admin)
+  async function loadRoleApplications() {
+    const data = await apiFetch('/auth/role-applications');
+    const tbody = document.querySelector('#roleApplicationsTable tbody');
+    if (!data.applications || !data.applications.length) {
+      tbody.innerHTML = '<tr><td colspan="7" class="empty">No role applications found</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.applications.map(a => `
+      <tr>
+        <td>${a.applicantName}</td>
+        <td>${a.applicantEmail}</td>
+        <td><span class="badge badge-${a.requestedRole}">${a.requestedRole}</span></td>
+        <td class="msg-cell">${a.reason}</td>
+        <td><span class="badge badge-${a.status}">${a.status}</span></td>
+        <td>${fmtDate(a.createdAt)}</td>
+        <td>
+          ${a.status === 'pending' ? `
+            <button class="btn-view approve-role-btn" data-id="${a._id}" style="background: #10b981; color: white;">Approve</button>
+            <button class="btn-delete reject-role-btn" data-id="${a._id}">Reject</button>
+          ` : ''}
+        </td>
+      </tr>
+    `).join('');
+    
+    tbody.querySelectorAll('.approve-role-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        try {
+          await apiFetch(`/auth/role-applications/${btn.dataset.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'approved' }) });
+          loadRoleApplications();
+        } catch (e) {
+          alert(e.message || 'Action failed');
+        }
+      });
+    });
+    
+    tbody.querySelectorAll('.reject-role-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (!confirm('Reject this application?')) return;
+        try {
+          await apiFetch(`/auth/role-applications/${btn.dataset.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'rejected' }) });
+          loadRoleApplications();
+        } catch (e) {
+          alert(e.message || 'Action failed');
+        }
+      });
+    });
+  }
+
+  // Load current user when dashboard initializes
+  loadCurrentUser();
+
+// ── UTILS ───────────────────────────────────────────────────────────────
 function fmtDate(iso) {
   return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
 }
