@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import Admin from "../models/Admin.js";
 import RoleApplication from "../models/RoleApplication.js";
+import PasswordChangeRequest from "../models/PasswordChangeRequest.js";
 import { sendEmail } from "../config/emailService.js";
 
 const signToken = (id) =>
@@ -168,7 +169,46 @@ export const updateUser = async (req, res) => {
 // Create user (admin only)
 export const createUser = async (req, res) => {
   try {
-    const admin = await Admin.create(req.body);
+    // Generate a temporary password
+    const tempPassword = crypto.randomBytes(8).toString("hex");
+    
+    // Create user with temp password
+    const admin = await Admin.create({
+      ...req.body,
+      password: tempPassword
+    });
+    
+    // Send email with credentials
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+          <h2 style="color: #013350;">Welcome to VOLGA Dashboard!</h2>
+          <p>Hello ${admin.name},</p>
+          <p>An admin has created a dashboard account for you! Here are your login credentials:</p>
+          <div style="background-color: #f4f4f4; padding: 15px; border-radius: 8px;">
+            <p><strong>Email:</strong> ${admin.email}</p>
+            <p><strong>Temporary Password:</strong> <span style="font-size: 18px; font-weight: bold; color: #F35F37;">${tempPassword}</span></p>
+          </div>
+          <p><strong>Important:</strong> Please log in and change your password immediately!</p>
+          <p>Best regards,<br>The VOLGA Team</p>
+        </div>
+      </body>
+      </html>
+    `;
+    
+    try {
+      await sendEmail({
+        to: admin.email,
+        subject: "Your VOLGA Dashboard Account",
+        html: htmlContent,
+        text: `An admin has created a dashboard account for you! Temporary password: ${tempPassword}. Please change it immediately after logging in.`
+      });
+    } catch (emailError) {
+      console.error("Email send failed:", emailError);
+    }
+    
     res.status(201).json({ user: { id: admin._id, name: admin.name, email: admin.email, role: admin.role } });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -233,11 +273,31 @@ export const reviewRoleApplication = async (req, res) => {
         });
         
         // Send email with temp password
+        const htmlContent = `
+          <!DOCTYPE html>
+          <html>
+          <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+            <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+              <h2 style="color: #013350;">Welcome to VOLGA Dashboard!</h2>
+              <p>Hello ${application.applicantName},</p>
+              <p>Your request to become a user has been accepted! Here are your login credentials:</p>
+              <div style="background-color: #f4f4f4; padding: 15px; border-radius: 8px;">
+                <p><strong>Email:</strong> ${application.applicantEmail}</p>
+                <p><strong>Temporary Password:</strong> <span style="font-size: 18px; font-weight: bold; color: #F35F37;">${tempPassword}</span></p>
+              </div>
+              <p><strong>Important:</strong> Please log in and change your password immediately!</p>
+              <p>Best regards,<br>The VOLGA Team</p>
+            </div>
+          </body>
+          </html>
+        `;
+        
         try {
           await sendEmail({
             to: user.email,
-            subject: "Your VOLGA Dashboard Account",
-            text: `Your account has been created! Temporary password: ${tempPassword}`
+            subject: "Your VOLGA Dashboard Account Request Accepted",
+            html: htmlContent,
+            text: `Your request to become a user has been accepted! Welcome to VOLGA Dashboard! Your account has been created. Temporary password: ${tempPassword}. Please change it immediately after logging in.`
           });
         } catch (emailError) {
           console.error("Email send failed:", emailError);
@@ -245,10 +305,194 @@ export const reviewRoleApplication = async (req, res) => {
       } else {
         user.role = application.requestedRole;
         await user.save();
+        
+        // Send email to existing user about role update
+        const htmlContent = `
+          <!DOCTYPE html>
+          <html>
+          <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+            <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+              <h2 style="color: #013350;">Role Update</h2>
+              <p>Hello ${application.applicantName},</p>
+              <p>Your dashboard role has been updated to: <strong>${application.requestedRole}</strong></p>
+              <p>Best regards,<br>The VOLGA Team</p>
+            </div>
+          </body>
+          </html>
+        `;
+        
+        try {
+          await sendEmail({
+            to: user.email,
+            subject: "Your VOLGA Dashboard Role Has Been Updated",
+            html: htmlContent,
+            text: `Hello ${application.applicantName}, your dashboard role has been updated to: ${application.requestedRole}`
+          });
+        } catch (emailError) {
+          console.error("Email send failed:", emailError);
+        }
       }
     }
     
     res.json({ application });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Upload profile picture
+export const uploadProfilePicture = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    // Update user's profile picture
+    const profilePicturePath = `/uploads/${req.file.filename}`;
+    const user = await Admin.findByIdAndUpdate(
+      req.user.id,
+      { profilePicture: profilePicturePath },
+      { new: true }
+    ).select("-password");
+
+    res.json({ user, profilePicture: profilePicturePath });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Password Change Requests
+export const createPasswordChangeRequest = async (req, res) => {
+  try {
+    const { userEmail, userName } = req.body;
+
+    // Check if there's already a pending request for this email
+    const existingPending = await PasswordChangeRequest.findOne({
+      userEmail,
+      status: "pending",
+    });
+
+    if (existingPending) {
+      return res.status(400).json({ message: "You already have a pending password change request" });
+    }
+
+    const request = await PasswordChangeRequest.create({ userEmail, userName });
+
+    // Send email notification to all admins
+    const admins = await Admin.find({ role: "admin" });
+    const adminEmails = admins.map(admin => admin.email);
+
+    if (adminEmails.length > 0) {
+      try {
+        await sendEmail({
+          to: adminEmails,
+          subject: "New Password Change Request",
+          text: `A new password change request has been submitted by ${userName} (${userEmail}). Please review it in the admin dashboard.`,
+        });
+      } catch (emailError) {
+        console.error("Failed to send admin notification email:", emailError);
+      }
+    }
+
+    res.status(201).json({ request });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export const getPasswordChangeRequests = async (req, res) => {
+  try {
+    const requests = await PasswordChangeRequest.find().populate("processedBy", "name email");
+    res.json({ requests });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const reviewPasswordChangeRequest = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const request = await PasswordChangeRequest.findById(req.params.id);
+
+    if (!request) {
+      return res.status(404).json({ message: "Request not found" });
+    }
+
+    request.status = status;
+    request.processedBy = req.user.id;
+    request.processedAt = new Date();
+
+    if (status === "approved") {
+      // Generate temporary password
+      const tempPassword = crypto.randomBytes(8).toString("hex");
+      request.tempPassword = tempPassword;
+
+      // Update user's password
+      const user = await Admin.findOne({ email: request.userEmail });
+      if (user) {
+        user.password = tempPassword;
+        await user.save();
+
+        // Send email to user with temp password
+        const htmlContent = `
+          <!DOCTYPE html>
+          <html>
+          <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+            <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+              <h2 style="color: #013350;">Password Reset Approved</h2>
+              <p>Hello ${request.userName},</p>
+              <p>Your password change request has been approved! Here's your temporary password:</p>
+              <div style="background-color: #f4f4f4; padding: 15px; border-radius: 8px;">
+                <p><strong>Temporary Password:</strong> <span style="font-size: 18px; font-weight: bold; color: #F35F37;">${tempPassword}</span></p>
+              </div>
+              <p><strong>Important:</strong> Please log in and change your password immediately!</p>
+              <p>Best regards,<br>The VOLGA Team</p>
+            </div>
+          </body>
+          </html>
+        `;
+        
+        try {
+          await sendEmail({
+            to: user.email,
+            subject: "Your Password Change Request Has Been Approved",
+            html: htmlContent,
+            text: `Your password change request has been approved! Your temporary password is: ${tempPassword}\nPlease log in and change your password immediately.`,
+          });
+        } catch (emailError) {
+          console.error("Failed to send temp password email:", emailError);
+        }
+      }
+    } else if (status === "rejected") {
+      // Send rejection email to user
+      const htmlContent = `
+        <!DOCTYPE html>
+        <html>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+          <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+            <h2 style="color: #dc3545;">Password Reset Request Rejected</h2>
+            <p>Hello ${request.userName},</p>
+            <p>Your password change request has been rejected. Please contact an admin for more information.</p>
+            <p>Best regards,<br>The VOLGA Team</p>
+          </div>
+        </body>
+        </html>
+      `;
+      
+      try {
+        await sendEmail({
+          to: request.userEmail,
+          subject: "Your Password Change Request Has Been Rejected",
+          html: htmlContent,
+          text: "Your password change request has been rejected. Please contact an admin for more information.",
+        });
+      } catch (emailError) {
+        console.error("Failed to send rejection email:", emailError);
+      }
+    }
+
+    await request.save();
+    res.json({ request });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

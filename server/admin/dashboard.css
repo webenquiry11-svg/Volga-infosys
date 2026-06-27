@@ -577,6 +577,56 @@ a { text-decoration: none; color: inherit; }
 @media (max-width: 1100px) {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ── PROFILE WIDGET ───────────────────────────────────────── */
+.profile-widget {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.profile-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4a84b, #b8860b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #1B2632;
+  flex-shrink: 0;
+}
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+.profile-name {
+  font-weight: 600;
+  color: #EEE9DF;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.profile-role {
+  font-size: 0.75rem;
+  color: #d4a84b;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+.profile-email {
+  font-size: 0.78rem;
+  color: #C9C1B1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 @media (max-width: 700px) {
   .sidebar { display: none; }
   .dash-main { margin-left: 0; padding: 1.2rem; }

@@ -139,12 +139,23 @@ const setToken = (t) => localStorage.setItem("volgaToken", t);
 const clearToken = () => localStorage.removeItem("volgaToken");
 
 async function apiFetch(path, options = {}) {
+  const headers = {
+    "Authorization": `Bearer ${getToken()}`,
+  };
+  
+  // Only add Content-Type if body is not FormData
+  if (options.body && !(options.body instanceof FormData)) {
+    headers["Content-Type"] = "application/json";
+  }
+  
+  // Merge any additional headers
+  if (options.headers) {
+    Object.assign(headers, options.headers);
+  }
+
   const res = await fetch(API + path, {
     ...options,
-    headers: {
-      "Authorization": `Bearer ${getToken()}`,
-      ...(options.headers || {}),
-    },
+    headers,
   });
   if (res.status === 401) { clearToken(); location.href = "index.html"; return null; }
   const data = await res.json();
@@ -325,6 +336,53 @@ if (loginForm) {
       btn.disabled = false;
     }
   });
+  
+  // Password change request link
+  document.getElementById('passwordChangeRequestLink')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('loginCard').style.display = 'none';
+    document.getElementById('passwordChangeRequestCard').style.display = 'block';
+  });
+  
+  // Back to login from password change request
+  document.getElementById('backToLoginFromPasswordRequest')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('passwordChangeRequestCard').style.display = 'none';
+    document.getElementById('loginCard').style.display = 'block';
+  });
+  
+  // Password change request form submit
+  document.getElementById('passwordChangeRequestForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('passwordRequestBtn');
+    const err = document.getElementById('passwordRequestError');
+    const success = document.getElementById('passwordRequestSuccess');
+    btn.textContent = 'Submitting...';
+    btn.disabled = true;
+    err.textContent = '';
+    success.textContent = '';
+    
+    try {
+      const res = await fetch(`${API}/auth/password-change-requests`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userName: document.getElementById('passwordRequestName').value,
+          userEmail: document.getElementById('passwordRequestEmail').value
+        })
+      });
+      const data = await res.json();
+      
+      if (!res.ok) throw new Error(data.message || 'Submission failed');
+      
+      success.textContent = 'Request submitted successfully! We will review it shortly and send you a new password.';
+    } catch (e) {
+      err.textContent = e.message || 'Submission failed';
+    } finally {
+      btn.textContent = 'Submit Request';
+      btn.disabled = false;
+    }
+  });
 }
 
 // ── DASHBOARD PAGE ────────────────────────────────────────
@@ -342,25 +400,24 @@ if (document.getElementById("logoutBtn")) {
   });
 
   // Sidebar nav
-  document.querySelectorAll(".nav-item").forEach((item) => {
-    item.addEventListener("click", (e) => {
-      e.preventDefault();
-      document.querySelectorAll(".nav-item").forEach((n) => n.classList.remove("active"));
-      document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
-      item.classList.add("active");
-      document.getElementById(`view-${item.dataset.view}`).classList.add("active");
-      if (item.dataset.view === "leads") loadLeads();
-      if (item.dataset.view === "portfolio") loadPortfolio();
-      if (item.dataset.view === "clientstories") loadClientStories();
-      if (item.dataset.view === "blog") loadBlogs();
-      if (item.dataset.view === "casestudies") loadCaseStudies();
-      if (item.dataset.view === "industrynews") loadIndustryNews();
-      if (item.dataset.view === "medialibrary") loadMediaLibrary();
-      if (item.dataset.view === "emaillogs") loadEmailLogs();
-      if (item.dataset.view === "settings") loadCurrentUser();
-      
+    document.querySelectorAll(".nav-item").forEach((item) => {
+      item.addEventListener("click", (e) => {
+        e.preventDefault();
+        document.querySelectorAll(".nav-item").forEach((n) => n.classList.remove("active"));
+        document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
+        item.classList.add("active");
+        document.getElementById(`view-${item.dataset.view}`).classList.add("active");
+        if (item.dataset.view === "leads") loadLeads();
+        if (item.dataset.view === "portfolio") loadPortfolio();
+        if (item.dataset.view === "clientstories") loadClientStories();
+        if (item.dataset.view === "blog") loadBlogs();
+        if (item.dataset.view === "casestudies") loadCaseStudies();
+        if (item.dataset.view === "industrynews") loadIndustryNews();
+        if (item.dataset.view === "medialibrary") loadMediaLibrary();
+        if (item.dataset.view === "emaillogs") loadEmailLogs();
+        if (item.dataset.view === "settings") loadCurrentUser();
+      });
     });
-  });
 
   // ── OVERVIEW ───────────────────────────────────────────
   async function loadOverview() {
@@ -393,8 +450,60 @@ if (document.getElementById("logoutBtn")) {
     const recent = await apiFetch("/dashboard/contacts?limit=5");
     renderTable(document.querySelector("#recentTable tbody"), recent.contacts, true);
 
+    // Recent Projects
+    const projects = await apiFetch("/projects");
+    const overviewView = document.getElementById('view-overview');
+    // Remove previous recent sections if they exist
+    const existingRecentSections = overviewView.querySelectorAll('.recent-section');
+    existingRecentSections.forEach(el => el.remove());
+    
+    // Add Recent Projects
+    if (projects.length > 0) {
+      const recentProjectsWrapper = document.createElement('div');
+      recentProjectsWrapper.className = 'recent-section';
+      recentProjectsWrapper.innerHTML = `
+        <div class="section-title" style="margin-top:2rem">Recent Projects</div>
+        <div class="proj-grid" style="margin-top:1rem">
+          ${projects.slice(0,3).map(p => `
+            <div class="proj-card">
+              <div class="proj-card-img" style="background-image:url('${p.image}')"></div>
+              <div class="proj-card-body">
+                <span class="proj-tag">${p.tag}</span>
+                <div class="proj-title">${p.title}${p.title2 ? ' ' + p.title2 : ''}</div>
+                <div class="proj-place">${p.place}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      overviewView.appendChild(recentProjectsWrapper);
+    }
+
+    // Recent Blog Posts
+    const blogData = await apiFetch('/blogs/admin/all');
+    const blogs = blogData?.data || blogData;
+    if (blogs && blogs.length > 0) {
+      const recentBlogsWrapper = document.createElement('div');
+      recentBlogsWrapper.className = 'recent-section';
+      recentBlogsWrapper.innerHTML = `
+        <div class="section-title" style="margin-top:2rem">Recent Blog Posts</div>
+        <div class="proj-grid" style="margin-top:1rem">
+          ${blogs.slice(0,3).map(b => `
+            <div class="proj-card">
+              <div class="proj-card-img" style="background-image:url('${b.coverImage || b.image}')"></div>
+              <div class="proj-card-body">
+                <span class="proj-tag">${b.category}</span>
+                <div class="proj-title">${b.title}</div>
+                <div class="proj-place">${b.author} &middot; ${b.readTime}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      overviewView.appendChild(recentBlogsWrapper);
+    }
+
     // Recent email logs (if provided)
-    const emailSection = document.getElementById('emailLogsSection');
     if (data.emailStats && data.emailStats.recent) {
       const list = data.emailStats.recent.map(e => `
         <tr>
@@ -402,13 +511,13 @@ if (document.getElementById("logoutBtn")) {
           <td>${e.from}</td>
           <td>${e.to}</td>
           <td>${(e.subject||'').slice(0,60)}</td>
-          <td><span class="status-${e.status}">${e.status}</span></td>
+          <td><span class="badge badge-${e.status}">${e.status}</span></td>
         </tr>`).join('');
       const wrapper = document.createElement('div');
-      wrapper.className = 'section-title';
+      wrapper.className = 'section-title recent-section';
       wrapper.innerHTML = '<div style="margin-top:2rem">Recent Email Activity</div>';
       document.getElementById('view-overview').appendChild(wrapper);
-      const tbl = document.createElement('div'); tbl.className='table-wrap'; tbl.innerHTML = `<table class="leads-table"><thead><tr><th>Date</th><th>From</th><th>To</th><th>Subject</th><th>Status</th></tr></thead><tbody>${list}</tbody></table>`;
+      const tbl = document.createElement('div'); tbl.className='table-wrap recent-section'; tbl.innerHTML = `<table class="leads-table"><thead><tr><th>Date</th><th>From</th><th>To</th><th>Subject</th><th>Status</th></tr></thead><tbody>${list}</tbody></table>`;
       document.getElementById('view-overview').appendChild(tbl);
     }
   }
@@ -1233,223 +1342,333 @@ if (document.getElementById("logoutBtn")) {
       saveBtn.textContent = 'Upload'; saveBtn.disabled = false;
     }
   });
-}
 
-// ── SETTINGS ─────────────────────────────────────────────────────────────
-  let currentUser = null;
-  let editingUserId = null;
+  // ── SETTINGS ─────────────────────────────────────────────────────────────
+    let currentUser = null;
+    let editingUserId = null;
 
-  // Load current user
-  async function loadCurrentUser() {
-    const data = await apiFetch('/auth/me');
-    currentUser = data.user;
-    document.getElementById('settings-name').value = currentUser.name || '';
-    document.getElementById('settings-email').value = currentUser.email || '';
-    
-    // Show/hide admin-only sections
-    const isAdmin = currentUser.role === 'admin';
-    document.getElementById('userManagementTitle').style.display = isAdmin ? 'block' : 'none';
-    document.getElementById('userManagementSection').style.display = isAdmin ? 'block' : 'none';
-    document.getElementById('roleApplicationsTitle').style.display = isAdmin ? 'block' : 'none';
-    document.getElementById('roleApplicationsSection').style.display = isAdmin ? 'block' : 'none';
-    
-    if (isAdmin) {
-      loadUsers();
-      loadRoleApplications();
-    }
-  }
-
-  // Update profile listener
-  document.getElementById('updateProfileBtn')?.addEventListener('click', async () => {
-    const btn = document.getElementById('updateProfileBtn');
-    btn.textContent = 'Updating...';
-    btn.disabled = true;
-    try {
-      const body = {
-        name: document.getElementById('settings-name').value.trim(),
-        email: document.getElementById('settings-email').value.trim()
-      };
-      await apiFetch('/auth/me', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-      alert('Profile updated successfully!');
-    } catch (e) {
-      alert(e.message || 'Update failed');
-    } finally {
-      btn.textContent = 'Update Profile';
-      btn.disabled = false;
-    }
-  });
-
-  // Change password listener
-  document.getElementById('changePasswordBtn')?.addEventListener('click', async () => {
-    const currentPwd = document.getElementById('currentPassword').value;
-    const newPwd = document.getElementById('newPassword').value;
-    const confirmPwd = document.getElementById('confirmPassword').value;
-    
-    if (newPwd !== confirmPwd) {
-      alert('Passwords do not match');
-      return;
-    }
-    
-    const btn = document.getElementById('changePasswordBtn');
-    btn.textContent = 'Changing...';
-    btn.disabled = true;
-    try {
-      await apiFetch('/auth/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ currentPassword: currentPwd, newPassword: newPwd }) });
-      alert('Password changed successfully!');
-      document.getElementById('currentPassword').value = '';
-      document.getElementById('newPassword').value = '';
-      document.getElementById('confirmPassword').value = '';
-    } catch (e) {
-      alert(e.message || 'Change failed');
-    } finally {
-      btn.textContent = 'Change Password';
-      btn.disabled = false;
-    }
-  });
-
-  // Load users (admin)
-  async function loadUsers() {
-    const data = await apiFetch('/auth/users');
-    const tbody = document.querySelector('#usersTable tbody');
-    if (!data.users || !data.users.length) {
-      tbody.innerHTML = '<tr><td colspan="5" class="empty">No users found</td></tr>';
-      return;
-    }
-    tbody.innerHTML = data.users.map(u => `
-      <tr>
-        <td>${u.name}</td>
-        <td>${u.email}</td>
-        <td><span class="badge badge-${u.role}">${u.role}</span></td>
-        <td>${fmtDate(u.createdAt)}</td>
-        <td><button class="btn-view edit-user-btn" data-id="${u._id}">Edit</button></td>
-      </tr>
-    `).join('');
-    
-    tbody.querySelectorAll('.edit-user-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const user = data.users.find(u => u._id === btn.dataset.id);
-        openUserModal(user);
-      });
-    });
-  }
-
-  // Open user modal
-  function openUserModal(user = null) {
-    editingUserId = user?._id || null;
-    document.getElementById('userModalTitle').textContent = user ? 'Edit User' : 'Add User';
-    document.getElementById('user-name').value = user?.name || '';
-    document.getElementById('user-email').value = user?.email || '';
-    document.getElementById('user-role').value = user?.role || 'viewer';
-    document.getElementById('user-password').value = '';
-    document.getElementById('userFormError').textContent = '';
-    document.getElementById('userDeleteBtn').style.display = user ? 'inline-block' : 'none';
-    document.getElementById('userModalOverlay').classList.add('open');
-  }
-
-  // User modal listeners
-  document.getElementById('addUserBtn')?.addEventListener('click', () => openUserModal());
-  document.getElementById('userModalClose')?.addEventListener('click', () => {
-    document.getElementById('userModalOverlay').classList.remove('open');
-  });
-  document.getElementById('userModalOverlay')?.addEventListener('click', (e) => {
-    if (e.target === e.currentTarget) document.getElementById('userModalOverlay').classList.remove('open');
-  });
-
-  document.getElementById('userSaveBtn')?.addEventListener('click', async () => {
-    const body = {
-      name: document.getElementById('user-name').value.trim(),
-      email: document.getElementById('user-email').value.trim(),
-      role: document.getElementById('user-role').value
-    };
-    const pwd = document.getElementById('user-password').value.trim();
-    if (pwd) body.password = pwd;
-    
-    if (!body.name || !body.email) {
-      document.getElementById('userFormError').textContent = 'Name and email are required';
-      return;
-    }
-    
-    const btn = document.getElementById('userSaveBtn');
-    btn.textContent = 'Saving...';
-    btn.disabled = true;
-    try {
-      if (editingUserId) {
-        await apiFetch(`/auth/users/${editingUserId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    // Load current user
+    async function loadCurrentUser() {
+      const data = await apiFetch('/auth/me');
+      currentUser = data.user;
+      document.getElementById('settings-name').value = currentUser.name || '';
+      document.getElementById('settings-email').value = currentUser.email || '';
+      
+      // Update profile widget
+      document.getElementById('profileName').textContent = currentUser.name || 'Admin User';
+      document.getElementById('profileEmail').textContent = currentUser.email || '';
+      document.getElementById('profileRole').textContent = currentUser.role || 'viewer';
+      
+      // Update profile picture
+      const profileAvatarImg = document.getElementById('profileAvatarImg');
+      const profileAvatarText = document.getElementById('profileAvatarText');
+      const profilePicPreview = document.getElementById('profilePicturePreview');
+      if (currentUser.profilePicture) {
+        profileAvatarImg.src = currentUser.profilePicture;
+        profileAvatarImg.style.display = 'block';
+        profileAvatarText.style.display = 'none';
+        profilePicPreview.style.backgroundImage = `url(${currentUser.profilePicture})`;
+        profilePicPreview.style.backgroundSize = 'cover';
+        profilePicPreview.style.backgroundPosition = 'center';
       } else {
-        await apiFetch('/auth/users', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        profileAvatarImg.style.display = 'none';
+        profileAvatarText.style.display = 'block';
+        profileAvatarText.textContent = (currentUser.name || 'A').charAt(0).toUpperCase();
+        profilePicPreview.style.backgroundImage = 'none';
       }
-      document.getElementById('userModalOverlay').classList.remove('open');
-      loadUsers();
-    } catch (e) {
-      document.getElementById('userFormError').textContent = e.message || 'Save failed';
-    } finally {
-      btn.textContent = 'Save User';
-      btn.disabled = false;
+      
+      // Show/hide admin-only sections
+      const isAdmin = currentUser.role === 'admin';
+      document.getElementById('userManagementTitle').style.display = isAdmin ? 'block' : 'none';
+      document.getElementById('userManagementSection').style.display = isAdmin ? 'block' : 'none';
+      document.getElementById('roleApplicationsTitle').style.display = isAdmin ? 'block' : 'none';
+      document.getElementById('roleApplicationsSection').style.display = isAdmin ? 'block' : 'none';
+      document.getElementById('passwordChangeRequestsTitle').style.display = isAdmin ? 'block' : 'none';
+      document.getElementById('passwordChangeRequestsSection').style.display = isAdmin ? 'block' : 'none';
+      // Show change password section to all logged-in users
+      document.getElementById('changePasswordTitle').style.display = 'block';
+      document.getElementById('changePasswordSection').style.display = 'block';
+      
+      if (isAdmin) {
+        loadUsers();
+        loadRoleApplications();
+        loadPasswordChangeRequests();
+      }
     }
-  });
 
-  document.getElementById('userDeleteBtn')?.addEventListener('click', async () => {
-    if (!editingUserId || !confirm('Delete this user?')) return;
-    try {
-      await apiFetch(`/auth/users/${editingUserId}`, { method: 'DELETE' });
-      document.getElementById('userModalOverlay').classList.remove('open');
-      loadUsers();
-    } catch (e) {
-      alert(e.message || 'Delete failed');
-    }
-  });
+    // Profile picture upload handler
+    document.getElementById('uploadProfilePictureBtn')?.addEventListener('click', async () => {
+      const fileInput = document.getElementById('profilePictureUpload');
+      if (!fileInput.files || !fileInput.files[0]) {
+        alert('Please select a file to upload.');
+        return;
+      }
 
-  // Load role applications (admin)
-  async function loadRoleApplications() {
-    const data = await apiFetch('/auth/role-applications');
-    const tbody = document.querySelector('#roleApplicationsTable tbody');
-    if (!data.applications || !data.applications.length) {
-      tbody.innerHTML = '<tr><td colspan="7" class="empty">No role applications found</td></tr>';
-      return;
-    }
-    tbody.innerHTML = data.applications.map(a => `
-      <tr>
-        <td>${a.applicantName}</td>
-        <td>${a.applicantEmail}</td>
-        <td><span class="badge badge-${a.requestedRole}">${a.requestedRole}</span></td>
-        <td class="msg-cell">${a.reason}</td>
-        <td><span class="badge badge-${a.status}">${a.status}</span></td>
-        <td>${fmtDate(a.createdAt)}</td>
-        <td>
-          ${a.status === 'pending' ? `
-            <button class="btn-view approve-role-btn" data-id="${a._id}" style="background: #10b981; color: white;">Approve</button>
-            <button class="btn-delete reject-role-btn" data-id="${a._id}">Reject</button>
-          ` : ''}
-        </td>
-      </tr>
-    `).join('');
-    
-    tbody.querySelectorAll('.approve-role-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        try {
-          await apiFetch(`/auth/role-applications/${btn.dataset.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'approved' }) });
-          loadRoleApplications();
-        } catch (e) {
-          alert(e.message || 'Action failed');
-        }
-      });
+      const btn = document.getElementById('uploadProfilePictureBtn');
+      btn.textContent = 'Uploading...';
+      btn.disabled = true;
+
+      try {
+        const formData = new FormData();
+        formData.append('profilePicture', fileInput.files[0]);
+        const data = await apiFetch('/auth/upload-profile-picture', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            // Don't set Content-Type, fetch will set it with boundary for FormData
+          }
+        });
+        alert('Profile picture updated successfully!');
+        loadCurrentUser();
+      } catch (e) {
+        alert(e.message || 'Upload failed');
+      } finally {
+        btn.textContent = 'Upload Picture';
+        btn.disabled = false;
+      }
     });
-    
-    tbody.querySelectorAll('.reject-role-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        if (!confirm('Reject this application?')) return;
-        try {
-          await apiFetch(`/auth/role-applications/${btn.dataset.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'rejected' }) });
-          loadRoleApplications();
-        } catch (e) {
-          alert(e.message || 'Action failed');
-        }
-      });
-    });
-  }
 
-  // Load current user when dashboard initializes
-  loadCurrentUser();
+    // Update profile listener
+    document.getElementById('updateProfileBtn')?.addEventListener('click', async () => {
+      const btn = document.getElementById('updateProfileBtn');
+      btn.textContent = 'Updating...';
+      btn.disabled = true;
+      try {
+        const body = {
+          name: document.getElementById('settings-name').value.trim(),
+          email: document.getElementById('settings-email').value.trim()
+        };
+        await apiFetch('/auth/me', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        alert('Profile updated successfully!');
+        // Refresh profile widget
+        loadCurrentUser();
+      } catch (e) {
+        alert(e.message || 'Update failed');
+      } finally {
+        btn.textContent = 'Update Profile';
+        btn.disabled = false;
+      }
+    });
+
+    // Change password listener
+    document.getElementById('changePasswordBtn')?.addEventListener('click', async () => {
+      const currentPwd = document.getElementById('currentPassword').value;
+      const newPwd = document.getElementById('newPassword').value;
+      const confirmPwd = document.getElementById('confirmPassword').value;
+      
+      if (newPwd !== confirmPwd) {
+        alert('Passwords do not match');
+        return;
+      }
+      
+      const btn = document.getElementById('changePasswordBtn');
+      btn.textContent = 'Changing...';
+      btn.disabled = true;
+      try {
+        await apiFetch('/auth/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ currentPassword: currentPwd, newPassword: newPwd }) });
+        alert('Password changed successfully!');
+        document.getElementById('currentPassword').value = '';
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+      } catch (e) {
+        alert(e.message || 'Change failed');
+      } finally {
+        btn.textContent = 'Change Password';
+        btn.disabled = false;
+      }
+    });
+
+    // Load users (admin)
+    async function loadUsers() {
+      const data = await apiFetch('/auth/users');
+      const tbody = document.querySelector('#usersTable tbody');
+      if (!data.users || !data.users.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="empty">No users found</td></tr>';
+        return;
+      }
+      tbody.innerHTML = data.users.map(u => `
+        <tr>
+          <td>${u.name}</td>
+          <td>${u.email}</td>
+          <td><span class="badge badge-${u.role}">${u.role}</span></td>
+          <td>${fmtDate(u.createdAt)}</td>
+          <td><button class="btn-view edit-user-btn" data-id="${u._id}">Edit</button></td>
+        </tr>
+      `).join('');
+      
+      tbody.querySelectorAll('.edit-user-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const user = data.users.find(u => u._id === btn.dataset.id);
+          openUserModal(user);
+        });
+      });
+    }
+
+    // Open user modal
+    function openUserModal(user = null) {
+      editingUserId = user?._id || null;
+      document.getElementById('userModalTitle').textContent = user ? 'Edit User' : 'Add User';
+      document.getElementById('user-name').value = user?.name || '';
+      document.getElementById('user-email').value = user?.email || '';
+      document.getElementById('user-role').value = user?.role || 'viewer';
+      document.getElementById('user-password').value = '';
+      document.getElementById('userFormError').textContent = '';
+      document.getElementById('userDeleteBtn').style.display = user ? 'inline-block' : 'none';
+      document.getElementById('userModalOverlay').classList.add('open');
+    }
+
+    // User modal listeners
+    document.getElementById('addUserBtn')?.addEventListener('click', () => openUserModal());
+    document.getElementById('userModalClose')?.addEventListener('click', () => {
+      document.getElementById('userModalOverlay').classList.remove('open');
+    });
+    document.getElementById('userModalOverlay')?.addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) document.getElementById('userModalOverlay').classList.remove('open');
+    });
+
+    document.getElementById('userSaveBtn')?.addEventListener('click', async () => {
+      const body = {
+        name: document.getElementById('user-name').value.trim(),
+        email: document.getElementById('user-email').value.trim(),
+        role: document.getElementById('user-role').value
+      };
+      const pwd = document.getElementById('user-password').value.trim();
+      if (pwd) body.password = pwd;
+      
+      if (!body.name || !body.email) {
+        document.getElementById('userFormError').textContent = 'Name and email are required';
+        return;
+      }
+      
+      const btn = document.getElementById('userSaveBtn');
+      btn.textContent = 'Saving...';
+      btn.disabled = true;
+      try {
+        if (editingUserId) {
+          await apiFetch(`/auth/users/${editingUserId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        } else {
+          await apiFetch('/auth/users', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        }
+        document.getElementById('userModalOverlay').classList.remove('open');
+        loadUsers();
+      } catch (e) {
+        document.getElementById('userFormError').textContent = e.message || 'Save failed';
+      } finally {
+        btn.textContent = 'Save User';
+        btn.disabled = false;
+      }
+    });
+
+    document.getElementById('userDeleteBtn')?.addEventListener('click', async () => {
+      if (!editingUserId || !confirm('Delete this user?')) return;
+      try {
+        await apiFetch(`/auth/users/${editingUserId}`, { method: 'DELETE' });
+        document.getElementById('userModalOverlay').classList.remove('open');
+        loadUsers();
+      } catch (e) {
+        alert(e.message || 'Delete failed');
+      }
+    });
+
+    // Load role applications (admin)
+    async function loadRoleApplications() {
+      const data = await apiFetch('/auth/role-applications');
+      const tbody = document.querySelector('#roleApplicationsTable tbody');
+      if (!data.applications || !data.applications.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="empty">No role applications found</td></tr>';
+        return;
+      }
+      tbody.innerHTML = data.applications.map(a => `
+        <tr>
+          <td>${a.applicantName}</td>
+          <td>${a.applicantEmail}</td>
+          <td><span class="badge badge-${a.requestedRole}">${a.requestedRole}</span></td>
+          <td class="msg-cell">${a.reason}</td>
+          <td><span class="badge badge-${a.status}">${a.status}</span></td>
+          <td>${fmtDate(a.createdAt)}</td>
+          <td>
+            ${a.status === 'pending' ? `
+              <button class="btn-view approve-role-btn" data-id="${a._id}" style="background: #10b981; color: white;">Approve</button>
+              <button class="btn-delete reject-role-btn" data-id="${a._id}">Reject</button>
+            ` : ''}
+          </td>
+        </tr>
+      `).join('');
+      
+      tbody.querySelectorAll('.approve-role-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          try {
+            await apiFetch(`/auth/role-applications/${btn.dataset.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'approved' }) });
+            loadRoleApplications();
+          } catch (e) {
+            alert(e.message || 'Action failed');
+          }
+        });
+      });
+      
+      tbody.querySelectorAll('.reject-role-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (!confirm('Reject this application?')) return;
+          try {
+            await apiFetch(`/auth/role-applications/${btn.dataset.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'rejected' }) });
+            loadRoleApplications();
+          } catch (e) {
+            alert(e.message || 'Action failed');
+          }
+        });
+      });
+    }
+
+    async function loadPasswordChangeRequests() {
+      const data = await apiFetch('/auth/password-change-requests');
+      const tbody = document.querySelector('#passwordChangeRequestsTable tbody');
+      if (!data.requests || !data.requests.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="empty">No password change requests found</td></tr>';
+        return;
+      }
+      tbody.innerHTML = data.requests.map(r => `
+        <tr>
+          <td>${r.userName}</td>
+          <td>${r.userEmail}</td>
+          <td><span class="badge badge-${r.status}">${r.status}</span></td>
+          <td>${fmtDate(r.createdAt)}</td>
+          <td>
+            ${r.status === 'pending' ? `
+              <button class="btn-view approve-pwd-btn" data-id="${r._id}" style="background: #10b981; color: white;">Approve</button>
+              <button class="btn-delete reject-pwd-btn" data-id="${r._id}">Reject</button>
+            ` : ''}
+          </td>
+        </tr>
+      `).join('');
+      
+      tbody.querySelectorAll('.approve-pwd-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          try {
+            await apiFetch(`/auth/password-change-requests/${btn.dataset.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'approved' }) });
+            loadPasswordChangeRequests();
+          } catch (e) {
+            alert(e.message || 'Action failed');
+          }
+        });
+      });
+      
+      tbody.querySelectorAll('.reject-pwd-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (!confirm('Reject this request?')) return;
+          try {
+            await apiFetch(`/auth/password-change-requests/${btn.dataset.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'rejected' }) });
+            loadPasswordChangeRequests();
+          } catch (e) {
+            alert(e.message || 'Action failed');
+          }
+        });
+      });
+    }
+
+    // Load current user when dashboard initializes
+    loadCurrentUser();
+
+}
 
 // ── UTILS ───────────────────────────────────────────────────────────────
 function fmtDate(iso) {
