@@ -1,24 +1,41 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
-import dotenv from 'dotenv';
+import mongoose from "mongoose";
+import Admin from "./models/Admin.js";
+import dotenv from "dotenv";
+
 dotenv.config();
 
-await mongoose.connect(process.env.MONGODB_URI);
+const resetPassword = async () => {
+  try {
+    console.log("Connecting to MongoDB...");
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("✅ Connected to MongoDB!");
 
-const Admin = mongoose.model('Admin', new mongoose.Schema({
-  email: String,
-  password: String
-}));
+    const email = "internweb1.star@gmail.com"; // Change this to your email
+    const newPassword = "VolgaAdmin123!"; // Change this to your desired new password
+    
+    console.log("\n🔍 Looking for user:", email);
+    const user = await Admin.findOne({ email });
+    
+    if (!user) {
+      console.log("❌ User not found!");
+      process.exit(1);
+    }
 
-const newPassword = 'Volga@2024';
-const hash = await bcrypt.hash(newPassword, 10);
+    console.log("✅ Found user:", user.email);
+    
+    // Set new password
+    user.password = newPassword;
+    await user.save();
+    console.log("\n✅ Password updated successfully!");
+    console.log("\n📧 Email:", email);
+    console.log("🔑 New Password:", newPassword);
+    console.log("\n🎉 Done!");
 
-const result = await Admin.findOneAndUpdate(
-  {},
-  { password: hash },
-  { new: true }
-);
+    await mongoose.connection.close();
+  } catch (error) {
+    console.error("❌ Error:", error);
+    process.exit(1);
+  }
+};
 
-console.log('Password reset for:', result.email);
-console.log('New password:', newPassword);
-await mongoose.disconnect();
+resetPassword();
