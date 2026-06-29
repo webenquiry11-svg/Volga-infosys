@@ -1,6 +1,13 @@
 {
   "build": {
-    "builder": "NIXPACKS"
+    "builder": "NIXPACKS",
+    "nixpacks": {
+      "phases": {
+        "setup": {
+          "nodeVersion": "20.x"
+        }
+      }
+    }
   },
   "deploy": {
     "startCommand": "node server.js",

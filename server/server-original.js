@@ -1,9 +1,3 @@
-// Fix crypto issue on Railway
-import crypto from 'crypto';
-if (!globalThis.crypto) {
-  globalThis.crypto = crypto;
-}
-
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
