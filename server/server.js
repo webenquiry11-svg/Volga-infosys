@@ -23,6 +23,18 @@ connectDB();
 
 const app = express();
 
+// Simple health check for Railway
+app.get("/health", (req, res) => {
+  console.log("✅ Health check hit at:", new Date().toISOString());
+  res.status(200).send("OK");
+});
+
+// Simple favicon handler to prevent 404s/502s
+app.get("/favicon.ico", (req, res) => {
+  console.log("✅ Favicon requested");
+  res.status(204).send(); // No content
+});
+
 app.use(cors({
   origin: function(origin, callback) {
     // Allow requests with no origin (mobile apps, curl, Postman)
@@ -72,6 +84,15 @@ app.get(/.*/, (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
+// Add error handling
+app.use((err, req, res, next) => {
+  console.error('❌ Server error:', err);
+  res.status(500).json({ success: false, message: 'Internal server error' });
+});
+
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT} (0.0.0.0)`);
+  console.log(`📍 Health check: http://0.0.0.0:${PORT}/health`);
+  console.log(`📍 Admin panel: http://0.0.0.0:${PORT}/admin`);
+  console.log(`✅ Server ready to accept requests!`);
 });
