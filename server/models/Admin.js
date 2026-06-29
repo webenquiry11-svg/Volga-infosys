@@ -23,8 +23,12 @@ const adminSchema = new mongoose.Schema({
 });
 
 adminSchema.pre("save", async function () {
-  if (this.isModified("password"))
+  console.log("Pre-save hook triggered. Is password modified?", this.isModified("password"));
+  if (this.isModified("password")) {
+    console.log("Hashing password...");
     this.password = await bcrypt.hash(this.password, 10);
+    console.log("Password hashed successfully");
+  }
 });
 
 adminSchema.methods.matchPassword = function (plain) {

@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Test Reset Flow</title>
+</head>
+<body>
+  <h1>Test Reset Flow</h1>
+
+  <h3>Step 1: Forgot Password</h3>
+  <input type="email" id="testEmail" placeholder="Enter your email" />
+  <button onclick="forgotPassword()">Send Forgot Password</button>
+  <div id="step1Result"></div>
+
+  <h3>Step 2: Reset Password (Paste Token Here)</h3>
+  <input type="text" id="testToken" placeholder="Paste reset token" style="width:400px;" />
+  <br/>
+  <input type="password" id="testNewPassword" placeholder="Enter new password" />
+  <br/>
+  <button onclick="resetPassword()">Reset Password</button>
+  <div id="step2Result"></div>
+
+  <h3>Step 3: Login with New Password</h3>
+  <input type="email" id="loginEmail" placeholder="Email" />
+  <input type="password" id="loginPassword" placeholder="Password" />
+  <button onclick="login()">Login</button>
+  <div id="step3Result"></div>
+
+  <script>
+    const API = '/api';
+
+    async function forgotPassword() {
+      const email = document.getElementById('testEmail').value;
+      const resultDiv = document.getElementById('step1Result');
+      try {
+        const res = await fetch(`${API}/auth/forgot-password`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+        resultDiv.innerHTML = `<div style="color: green;">✅ Success: ${data.message}. Check console for token (since email may not send, but token will be in server log!)</div>`;
+      } catch (err) {
+        resultDiv.innerHTML = `<div style="color: red;">❌ Error: ${err.message}</div>`;
+      }
+    }
+
+    async function resetPassword() {
+      const token = document.getElementById('testToken').value;
+      const newPassword = document.getElementById('testNewPassword').value;
+      const resultDiv = document.getElementById('step2Result');
+      try {
+        const res = await fetch(`${API}/auth/reset-password/${token}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: newPassword })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+        resultDiv.innerHTML = `<div style="color: green;">✅ Success! Token: ${data.token}</div>`;
+        localStorage.setItem('volgaToken', data.token);
+      } catch (err) {
+        resultDiv.innerHTML = `<div style="color: red;">❌ Error: ${err.message}</div>`;
+      }
+    }
+
+    async function login() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      const resultDiv = document.getElementById('step3Result');
+      try {
+        const res = await fetch(`${API}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+        resultDiv.innerHTML = `<div style="color: green;">✅ Success! You logged in!</div>`;
+      } catch (err) {
+        resultDiv.innerHTML = `<div style="color: red;">❌ Error: ${err.message}</div>`;
+      }
+    }
+  </script>
+</body>
+</html>

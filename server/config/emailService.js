@@ -17,12 +17,15 @@ export const sendEmail = async (options) => {
     contactFormId = null,
     type = "outgoing"
   } = options;
+  
+  // Ensure 'to' is always an array
+  const toArray = Array.isArray(to) ? to : [to];
 
   try {
     // Log the email
     const emailLog = await EmailLog.create({
       from,
-      to,
+      to: toArray,
       subject,
       message: html,
       type,
@@ -30,22 +33,24 @@ export const sendEmail = async (options) => {
       contactFormId
     });
 
+    // Temporarily disable DEV MODE check to send real emails (remove this later if needed)
     // In development, skip sending real email to avoid spam filter training
-    if (isDev) {
-      console.log("\n📧 ─── DEV MODE: Email not sent (logged only) ───────────");
-      console.log(`   To:      ${to}`);
-      console.log(`   From:    ${from}`);
-      console.log(`   Subject: ${subject}`);
-      console.log("────────────────────────────────────────────────────────\n");
+    // if (isDev) {
+    //   console.log("\n📧 ─── DEV MODE: Email not sent (logged only) ───────────");
+    //   console.log(`   To:      ${toArray.join(', ')}`);
+    //   console.log(`   From:    ${from}`);
+    //   console.log(`   Subject: ${subject}`);
+    //   console.log(`   Text:    ${options.text || subject}`);
+    //   console.log("────────────────────────────────────────────────────────\n");
 
-      await EmailLog.findByIdAndUpdate(emailLog._id, { status: "sent" });
-      return { success: true, messageId: "dev-mode", logId: emailLog._id };
-    }
+    //   await EmailLog.findByIdAndUpdate(emailLog._id, { status: "sent" });
+    //   return { success: true, messageId: "dev-mode", logId: emailLog._id };
+    // }
 
     // Send email
     const info = await transporter.sendMail({
       from,
-      to,
+      to: toArray.join(', '),
       subject,
       html,
       // Plain text fallback — improves deliverability significantly
@@ -77,7 +82,7 @@ export const sendEmail = async (options) => {
     // Log the failure
     const emailLog = await EmailLog.create({
       from,
-      to,
+      to: toArray,
       subject,
       message: html,
       type,

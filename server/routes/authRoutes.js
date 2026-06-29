@@ -17,7 +17,9 @@ import {
   uploadProfilePicture,
   createPasswordChangeRequest,
   getPasswordChangeRequests,
-  reviewPasswordChangeRequest
+  reviewPasswordChangeRequest,
+  logout,
+  getPermissions
 } from "../controllers/authController.js";
 import { protect, authorize } from "../middleware/auth.js";
 import upload from "../middleware/upload.js";
@@ -37,6 +39,7 @@ router.use(protect);
 router.get("/me", getMe);
 router.patch("/me", updateMe);
 router.post("/change-password", changePassword);
+router.post("/logout", logout);
 router.post("/upload-profile-picture", upload.single("profilePicture"), uploadProfilePicture);
 
 // Admin-only routes
@@ -48,5 +51,6 @@ router.get("/role-applications", authorize("admin"), getRoleApplications);
 router.patch("/role-applications/:id", authorize("admin"), reviewRoleApplication);
 router.get("/password-change-requests", authorize("admin"), getPasswordChangeRequests);
 router.patch("/password-change-requests/:id", authorize("admin"), reviewPasswordChangeRequest);
+router.get("/permissions", authorize("admin"), getPermissions);
 
 export default router;

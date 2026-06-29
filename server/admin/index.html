@@ -24,15 +24,16 @@
       </div>
       <div class="field">
         <label>Password</label>
-        <input type="password" id="loginPassword" placeholder="••••••••" required />
+        <div style="position: relative;">
+          <input type="password" id="loginPassword" placeholder="••••••••" required style="padding-right: 40px;" />
+          <button type="button" onclick="togglePasswordVisibility('loginPassword', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 18px;">👁️</button>
+        </div>
       </div>
       <div class="login-error" id="loginError"></div>
       <button type="submit" class="btn-login" id="loginBtn">Sign In</button>
     </form>
     <div style="margin-top: 1rem; text-align: center;">
       <a href="#" id="forgotPasswordLink" style="color: #e8930a; text-decoration: none; font-size: 0.9rem;">Forgot Password?</a>
-      <span style="margin: 0 0.5rem; color: #999;">|</span>
-      <a href="#" id="passwordChangeRequestLink" style="color: #e8930a; text-decoration: none; font-size: 0.9rem;">Request Password Change</a>
       <span style="margin: 0 0.5rem; color: #999;">|</span>
       <a href="#" id="applyRoleLink" style="color: #e8930a; text-decoration: none; font-size: 0.9rem;">Apply for Access</a>
     </div>
@@ -63,11 +64,17 @@
     <form id="resetPasswordForm">
       <div class="field">
         <label>New Password</label>
-        <input type="password" id="resetPassword" placeholder="Enter new password" required />
+        <div style="position: relative;">
+          <input type="password" id="resetPassword" placeholder="Enter new password" required style="padding-right: 40px;" />
+          <button type="button" onclick="togglePasswordVisibility('resetPassword', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 18px;">👁️</button>
+        </div>
       </div>
       <div class="field">
         <label>Confirm Password</label>
-        <input type="password" id="resetConfirmPassword" placeholder="Confirm new password" required />
+        <div style="position: relative;">
+          <input type="password" id="resetConfirmPassword" placeholder="Confirm new password" required style="padding-right: 40px;" />
+          <button type="button" onclick="togglePasswordVisibility('resetConfirmPassword', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 18px;">👁️</button>
+        </div>
       </div>
       <div class="login-error" id="resetError"></div>
       <button type="submit" class="btn-login" id="resetBtn">Reset Password</button>
@@ -108,28 +115,13 @@
     </div>
   </div>
   
-  <!-- Password Change Request Form -->
-  <div class="login-card" id="passwordChangeRequestCard" style="display: none;">
-    <div class="login-logo">VOLGA<span>ADMIN</span></div>
-    <p class="login-sub">Request a password change</p>
-    <form id="passwordChangeRequestForm">
-      <div class="field">
-        <label>Name</label>
-        <input type="text" id="passwordRequestName" placeholder="Your full name" required />
-      </div>
-      <div class="field">
-        <label>Email</label>
-        <input type="email" id="passwordRequestEmail" placeholder="your@email.com" required />
-      </div>
-      <div class="login-error" id="passwordRequestError"></div>
-      <div class="login-success" id="passwordRequestSuccess"></div>
-      <button type="submit" class="btn-login" id="passwordRequestBtn">Submit Request</button>
-    </form>
-    <div style="margin-top: 1rem; text-align: center;">
-      <a href="#" id="backToLoginFromPasswordRequest" style="color: #e8930a; text-decoration: none; font-size: 0.9rem;">← Back to Login</a>
-    </div>
+
+  <!-- Theme Toggle for Login Page -->
+  <div id="loginThemeToggle" style="position:fixed; bottom:1.5rem; right:1.5rem; z-index:50; display:flex; align-items:center; gap:0.5rem; cursor:pointer; background:rgba(255,255,255,0.08); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.12); padding:0.5rem 1rem; border-radius:100px; transition:background 0.2s, border-color 0.2s;" onclick="document.body.classList.add('theme-transitioning'); const isLight=document.body.classList.toggle('light-mode'); localStorage.setItem('volgaTheme', isLight?'light':'dark'); this.querySelector('span').textContent=isLight?'☀️':'🌙'; this.style.background=isLight?'rgba(0,0,0,0.05)':'rgba(255,255,255,0.08)'; this.style.borderColor=isLight?'rgba(0,0,0,0.08)':'rgba(255,255,255,0.12)'; setTimeout(()=>document.body.classList.remove('theme-transitioning'),450);">
+    <span style="font-size:1rem;">🌙</span>
+    <span style="font-size:0.78rem; font-weight:500; color:var(--text2);">Theme</span>
   </div>
-  
+
   <script src="dashboard.js"></script>
 </body>
 </html>

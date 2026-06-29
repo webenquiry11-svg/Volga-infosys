@@ -1,6 +1,54 @@
+// ── THEME TOGGLE ─────────────────────────────────────────
+(function initTheme() {
+  const saved = localStorage.getItem('volgaTheme');
+  if (saved === 'light') {
+    document.body.classList.add('light-mode');
+  }
+  // Update dashboard sidebar label
+  const label = document.getElementById('themeLabel');
+  if (label) {
+    label.textContent = saved === 'light' ? 'Dark Mode' : 'Light Mode';
+  }
+  // Update login page floating toggle icon
+  const loginToggle = document.getElementById('loginThemeToggle');
+  if (loginToggle && saved === 'light') {
+    loginToggle.querySelector('span').textContent = '☀️';
+    loginToggle.style.background = 'rgba(0,0,0,0.05)';
+    loginToggle.style.borderColor = 'rgba(0,0,0,0.08)';
+  }
+})();
+
+document.getElementById('themeToggle')?.addEventListener('click', () => {
+  // Add transition class for smooth animation
+  document.body.classList.add('theme-transitioning');
+
+  const isLight = document.body.classList.toggle('light-mode');
+  localStorage.setItem('volgaTheme', isLight ? 'light' : 'dark');
+
+  // Update label — shows the mode you'll switch TO
+  const label = document.getElementById('themeLabel');
+  if (label) label.textContent = isLight ? 'Dark Mode' : 'Light Mode';
+
+  // Remove transition class after animation completes
+  setTimeout(() => document.body.classList.remove('theme-transitioning'), 450);
+});
+
 const API = window.location.protocol.startsWith('http')
   ? `${window.location.origin}/api`
   : 'http://localhost:5000/api';
+
+
+// Toggle password visibility
+function togglePasswordVisibility(inputId, button) {
+  const input = document.getElementById(inputId);
+  if (input.type === 'password') {
+    input.type = 'text';
+    button.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    button.textContent = '👁️';
+  }
+}
 
 // ── RICH TEXT EDITORS ─────────────────────────────────────
 let editors = {};
@@ -139,6 +187,9 @@ const setToken = (t) => localStorage.setItem("volgaToken", t);
 const clearToken = () => localStorage.removeItem("volgaToken");
 
 async function apiFetch(path, options = {}) {
+  console.log("apiFetch called for:", path);
+  console.log("Token:", getToken() ? "Present" : "Missing");
+  
   const headers = {
     "Authorization": `Bearer ${getToken()}`,
   };
@@ -153,12 +204,25 @@ async function apiFetch(path, options = {}) {
     Object.assign(headers, options.headers);
   }
 
+  console.log("Request options:", { ...options, headers });
+  
   const res = await fetch(API + path, {
     ...options,
     headers,
   });
-  if (res.status === 401) { clearToken(); location.href = "index.html"; return null; }
+  
+  console.log("Response status:", res.status);
+  
+  if (res.status === 401) { 
+    console.log("401 response - logging out");
+    clearToken(); 
+    location.href = "index.html"; 
+    return null; 
+  }
+  
   const data = await res.json();
+  console.log("Response data:", data);
+  
   if (!res.ok) throw new Error(data.message || `HTTP ${res.status}`);
   return data;
 }
@@ -337,52 +401,7 @@ if (loginForm) {
     }
   });
   
-  // Password change request link
-  document.getElementById('passwordChangeRequestLink')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    document.getElementById('loginCard').style.display = 'none';
-    document.getElementById('passwordChangeRequestCard').style.display = 'block';
-  });
-  
-  // Back to login from password change request
-  document.getElementById('backToLoginFromPasswordRequest')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    document.getElementById('passwordChangeRequestCard').style.display = 'none';
-    document.getElementById('loginCard').style.display = 'block';
-  });
-  
-  // Password change request form submit
-  document.getElementById('passwordChangeRequestForm')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('passwordRequestBtn');
-    const err = document.getElementById('passwordRequestError');
-    const success = document.getElementById('passwordRequestSuccess');
-    btn.textContent = 'Submitting...';
-    btn.disabled = true;
-    err.textContent = '';
-    success.textContent = '';
-    
-    try {
-      const res = await fetch(`${API}/auth/password-change-requests`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userName: document.getElementById('passwordRequestName').value,
-          userEmail: document.getElementById('passwordRequestEmail').value
-        })
-      });
-      const data = await res.json();
-      
-      if (!res.ok) throw new Error(data.message || 'Submission failed');
-      
-      success.textContent = 'Request submitted successfully! We will review it shortly and send you a new password.';
-    } catch (e) {
-      err.textContent = e.message || 'Submission failed';
-    } finally {
-      btn.textContent = 'Submit Request';
-      btn.disabled = false;
-    }
-  });
+
 }
 
 // ── DASHBOARD PAGE ────────────────────────────────────────
@@ -395,8 +414,15 @@ if (document.getElementById("logoutBtn")) {
   });
 
   // Logout
-  document.getElementById("logoutBtn").addEventListener("click", () => {
-    clearToken(); location.href = "index.html";
+  document.getElementById("logoutBtn").addEventListener("click", async () => {
+    try {
+      await apiFetch("/auth/logout", { method: "POST" });
+    } catch (e) {
+      console.error("Logout error:", e);
+    } finally {
+      clearToken();
+      location.href = "index.html";
+    }
   });
 
   // Sidebar nav
@@ -1347,6 +1373,28 @@ if (document.getElementById("logoutBtn")) {
     let currentUser = null;
     let editingUserId = null;
 
+    // View to permission mapping
+    const viewPermissions = {
+      'overview': 'view_overview',
+      'leads': 'view_leads',
+      'portfolio': 'view_projects',
+      'clientstories': 'view_client_stories',
+      'blog': 'view_blog',
+      'casestudies': 'view_case_studies',
+      'industrynews': 'view_industry_news',
+      'medialibrary': 'view_media_library',
+      'emaillogs': 'view_email_logs',
+      'settings': 'view_settings',
+      'roleapplications': 'manage_users'
+    };
+
+    // Helper function to check if user has permission
+    function hasPermission(permission) {
+      if (!currentUser) return false;
+      if (currentUser.role === 'admin') return true;
+      return (currentUser.permissions || []).includes(permission);
+    }
+
     // Load current user
     async function loadCurrentUser() {
       const data = await apiFetch('/auth/me');
@@ -1377,14 +1425,35 @@ if (document.getElementById("logoutBtn")) {
         profilePicPreview.style.backgroundImage = 'none';
       }
       
+      // Show/hide nav items based on permissions
+      let firstVisibleNavItem = null;
+      document.querySelectorAll('.nav-item').forEach(item => {
+        const view = item.dataset.view;
+        const requiredPermission = viewPermissions[view];
+        if (hasPermission(requiredPermission)) {
+          item.style.display = 'flex';
+          if (!firstVisibleNavItem) {
+            firstVisibleNavItem = item;
+          }
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      // Ensure we're on a visible view
+      const activeView = document.querySelector('.view.active');
+      if (!activeView || activeView.style.display === 'none') {
+        if (firstVisibleNavItem) {
+          firstVisibleNavItem.click();
+        }
+      }
+      
       // Show/hide admin-only sections
       const isAdmin = currentUser.role === 'admin';
       document.getElementById('userManagementTitle').style.display = isAdmin ? 'block' : 'none';
       document.getElementById('userManagementSection').style.display = isAdmin ? 'block' : 'none';
       document.getElementById('roleApplicationsTitle').style.display = isAdmin ? 'block' : 'none';
       document.getElementById('roleApplicationsSection').style.display = isAdmin ? 'block' : 'none';
-      document.getElementById('passwordChangeRequestsTitle').style.display = isAdmin ? 'block' : 'none';
-      document.getElementById('passwordChangeRequestsSection').style.display = isAdmin ? 'block' : 'none';
       // Show change password section to all logged-in users
       document.getElementById('changePasswordTitle').style.display = 'block';
       document.getElementById('changePasswordSection').style.display = 'block';
@@ -1392,7 +1461,6 @@ if (document.getElementById("logoutBtn")) {
       if (isAdmin) {
         loadUsers();
         loadRoleApplications();
-        loadPasswordChangeRequests();
       }
     }
 
@@ -1456,6 +1524,10 @@ if (document.getElementById("logoutBtn")) {
       const newPwd = document.getElementById('newPassword').value;
       const confirmPwd = document.getElementById('confirmPassword').value;
       
+      console.log("Change password button clicked");
+      console.log("Current password:", currentPwd);
+      console.log("New password:", newPwd);
+      
       if (newPwd !== confirmPwd) {
         alert('Passwords do not match');
         return;
@@ -1465,12 +1537,15 @@ if (document.getElementById("logoutBtn")) {
       btn.textContent = 'Changing...';
       btn.disabled = true;
       try {
-        await apiFetch('/auth/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ currentPassword: currentPwd, newPassword: newPwd }) });
+        console.log("About to call apiFetch");
+        const result = await apiFetch('/auth/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ currentPassword: currentPwd, newPassword: newPwd }) });
+        console.log("apiFetch result:", result);
         alert('Password changed successfully!');
         document.getElementById('currentPassword').value = '';
         document.getElementById('newPassword').value = '';
         document.getElementById('confirmPassword').value = '';
       } catch (e) {
+        console.error("Change password error:", e);
         alert(e.message || 'Change failed');
       } finally {
         btn.textContent = 'Change Password';
@@ -1504,6 +1579,52 @@ if (document.getElementById("logoutBtn")) {
       });
     }
 
+    // Function to render permissions list
+    function renderPermissionsList(selectedPermissions = []) {
+      const permissionsList = document.getElementById('permissions-list');
+      if (!permissionsList) return;
+      
+      // Group permissions by category
+      const permissionGroups = {
+        'View Access': [
+          'view_overview', 'view_leads', 'view_projects', 
+          'view_client_stories', 'view_blog', 'view_case_studies', 
+          'view_industry_news', 'view_media_library', 
+          'view_email_logs', 'view_settings'
+        ],
+        'Edit Access': [
+          'edit_leads', 'edit_projects', 'edit_client_stories', 
+          'edit_blog', 'edit_case_studies', 'edit_industry_news', 
+          'edit_media_library'
+        ],
+        'Admin Access': [
+          'manage_users', 'manage_roles', 'manage_settings'
+        ]
+      };
+      
+      let html = '';
+      
+      for (const [groupName, permissions] of Object.entries(permissionGroups)) {
+        html += `
+          <div style="margin-bottom: 20px;">
+            <h4 style="color: #F35F37; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">${groupName}</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px;">
+              ${permissions.map(key => `
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 10px 12px; border-radius: 8px; transition: all 0.2s; background: rgba(255,255,255,0.02); border: 1px solid transparent;"
+                       onmouseover="this.style.background='rgba(243, 95, 55, 0.1)'; this.style.borderColor='rgba(243, 95, 55, 0.3)';"
+                       onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.borderColor='transparent';">
+                  <input type="checkbox" value="${key}" ${selectedPermissions.includes(key) ? 'checked' : ''} style="width: 18px; height: 18px; accent-color: #F35F37; cursor: pointer;">
+                  <span style="font-size: 13px; color: #e2e8f0; font-weight: 400;">${key.replace(/_/g, ' ')}</span>
+                </label>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      
+      permissionsList.innerHTML = html;
+    }
+    
     // Open user modal
     function openUserModal(user = null) {
       editingUserId = user?._id || null;
@@ -1514,6 +1635,11 @@ if (document.getElementById("logoutBtn")) {
       document.getElementById('user-password').value = '';
       document.getElementById('userFormError').textContent = '';
       document.getElementById('userDeleteBtn').style.display = user ? 'inline-block' : 'none';
+      
+      // Render permissions
+      const defaultPermissions = user ? user.permissions : rolePermissions[document.getElementById('user-role').value];
+      renderPermissionsList(defaultPermissions || []);
+      
       document.getElementById('userModalOverlay').classList.add('open');
     }
 
@@ -1526,11 +1652,26 @@ if (document.getElementById("logoutBtn")) {
       if (e.target === e.currentTarget) document.getElementById('userModalOverlay').classList.remove('open');
     });
 
+    // Listen for role change to update permissions
+    document.getElementById('user-role')?.addEventListener('change', (e) => {
+      const selectedRole = e.target.value;
+      const defaultPerms = rolePermissions[selectedRole] || [];
+      renderPermissionsList(defaultPerms);
+    });
+
     document.getElementById('userSaveBtn')?.addEventListener('click', async () => {
+      // Get selected permissions
+      const checkboxes = document.querySelectorAll('#permissions-list input[type="checkbox"]');
+      const selectedPermissions = [];
+      checkboxes.forEach(checkbox => {
+        if (checkbox.checked) selectedPermissions.push(checkbox.value);
+      });
+      
       const body = {
         name: document.getElementById('user-name').value.trim(),
         email: document.getElementById('user-email').value.trim(),
-        role: document.getElementById('user-role').value
+        role: document.getElementById('user-role').value,
+        permissions: selectedPermissions
       };
       const pwd = document.getElementById('user-password').value.trim();
       if (pwd) body.password = pwd;
@@ -1619,53 +1760,43 @@ if (document.getElementById("logoutBtn")) {
       });
     }
 
-    async function loadPasswordChangeRequests() {
-      const data = await apiFetch('/auth/password-change-requests');
-      const tbody = document.querySelector('#passwordChangeRequestsTable tbody');
-      if (!data.requests || !data.requests.length) {
-        tbody.innerHTML = '<tr><td colspan="5" class="empty">No password change requests found</td></tr>';
-        return;
-      }
-      tbody.innerHTML = data.requests.map(r => `
-        <tr>
-          <td>${r.userName}</td>
-          <td>${r.userEmail}</td>
-          <td><span class="badge badge-${r.status}">${r.status}</span></td>
-          <td>${fmtDate(r.createdAt)}</td>
-          <td>
-            ${r.status === 'pending' ? `
-              <button class="btn-view approve-pwd-btn" data-id="${r._id}" style="background: #10b981; color: white;">Approve</button>
-              <button class="btn-delete reject-pwd-btn" data-id="${r._id}">Reject</button>
-            ` : ''}
-          </td>
-        </tr>
-      `).join('');
-      
-      tbody.querySelectorAll('.approve-pwd-btn').forEach(btn => {
-        btn.addEventListener('click', async () => {
-          try {
-            await apiFetch(`/auth/password-change-requests/${btn.dataset.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'approved' }) });
-            loadPasswordChangeRequests();
-          } catch (e) {
-            alert(e.message || 'Action failed');
-          }
-        });
-      });
-      
-      tbody.querySelectorAll('.reject-pwd-btn').forEach(btn => {
-        btn.addEventListener('click', async () => {
-          if (!confirm('Reject this request?')) return;
-          try {
-            await apiFetch(`/auth/password-change-requests/${btn.dataset.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'rejected' }) });
-            loadPasswordChangeRequests();
-          } catch (e) {
-            alert(e.message || 'Action failed');
-          }
-        });
-      });
-    }
 
-    // Load current user when dashboard initializes
+
+    // Load permissions and current user
+    let allPermissions = {};
+    let rolePermissions = {};
+    
+    async function loadPermissions() {
+      try {
+        // Only load permissions if user is admin (since endpoint is admin-only)
+        // Wait no, let's check if user is admin first, or just let it fail silently if not admin
+        const data = await apiFetch('/auth/permissions');
+        allPermissions = data.permissions;
+        rolePermissions = data.rolePermissions;
+      } catch (e) {
+        console.error('Failed to load permissions:', e);
+        // Set default permissions object just in case
+        allPermissions = {
+          'view_overview': 'view_overview',
+          'view_leads': 'view_leads',
+          'view_projects': 'view_projects',
+          'view_client_stories': 'view_client_stories',
+          'view_blog': 'view_blog',
+          'view_case_studies': 'view_case_studies',
+          'view_industry_news': 'view_industry_news',
+          'view_media_library': 'view_media_library',
+          'view_email_logs': 'view_email_logs',
+          'view_settings': 'view_settings'
+        };
+        rolePermissions = {
+          admin: Object.values(allPermissions),
+          editor: Object.values(allPermissions),
+          viewer: Object.values(allPermissions)
+        };
+      }
+    }
+    
+    loadPermissions();
     loadCurrentUser();
 
 }

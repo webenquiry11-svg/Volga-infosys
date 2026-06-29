@@ -79,7 +79,7 @@
 
   /* ── 3D Particles System ─────────────────────────────────────── */
   const particles = [];
-  const PARTICLE_COUNT = 60;
+  const PARTICLE_COUNT = 100;
   
   function createParticles() {
     if (!particlesContainer) return;
@@ -92,12 +92,15 @@
       
       // Random 3D position
       const particleData = {
-        x: (Math.random() - 0.5) * 800,
-        y: (Math.random() - 0.5) * 800,
-        z: (Math.random() - 0.5) * 600,
-        speedX: (Math.random() - 0.5) * 0.3,
-        speedY: (Math.random() - 0.5) * 0.3,
-        speedZ: (Math.random() - 0.5) * 0.2,
+        x: (Math.random() - 0.5) * 1200,
+        y: (Math.random() - 0.5) * 1200,
+        z: (Math.random() - 0.5) * 800,
+        speedX: (Math.random() - 0.5) * 0.4,
+        speedY: (Math.random() - 0.5) * 0.4,
+        speedZ: (Math.random() - 0.5) * 0.3,
+        originalZ: (Math.random() - 0.5) * 800,
+        phase: Math.random() * Math.PI * 2,
+        sizeClass: sizeClass,
         element: particle
       };
       
@@ -107,25 +110,35 @@
   }
   
   function updateParticles(time, scrollProgress) {
-    particles.forEach(p => {
+    particles.forEach((p, index) => {
       // Move particles
       p.x += p.speedX;
       p.y += p.speedY;
       p.z += p.speedZ;
       
+      // Add subtle oscillation
+      const oscillation = Math.sin(time * 0.001 + p.phase) * 20;
+      
       // Wrap around boundaries
-      if (p.x > 400) p.x = -400;
-      if (p.x < -400) p.x = 400;
-      if (p.y > 400) p.y = -400;
-      if (p.y < -400) p.y = 400;
-      if (p.z > 300) p.z = -300;
-      if (p.z < -300) p.z = 300;
+      if (p.x > 600) p.x = -600;
+      if (p.x < -600) p.x = 600;
+      if (p.y > 600) p.y = -600;
+      if (p.y < -600) p.y = 600;
+      if (p.z > 400) p.z = -400;
+      if (p.z < -400) p.z = 400;
       
       // Apply scroll effect to Z
-      const scrollZOffset = scrollProgress * 200;
+      const scrollZOffset = scrollProgress * 300;
+      const finalZ = p.z + scrollZOffset;
+      
+      // Calculate depth-based opacity and scale (farther = more transparent and smaller)
+      const normalizedZ = (finalZ + 400) / 800; // 0 to 1
+      const depthOpacity = 0.1 + normalizedZ * 0.9;
+      const depthScale = 0.5 + normalizedZ * 0.8;
       
       // Update position with 3D transform
-      p.element.style.transform = `translate3d(${p.x}px, ${p.y}px, ${p.z + scrollZOffset}px)`;
+      p.element.style.transform = `translate3d(${p.x}px, ${p.y + oscillation}px, ${finalZ}px) scale(${depthScale})`;
+      p.element.style.opacity = depthOpacity * (p.sizeClass === 'cm-particle-large' ? 1 : (p.sizeClass === 'cm-particle-small' ? 0.6 : 0.8));
     });
   }
 
@@ -147,7 +160,7 @@
   const lerp = (a, b, t) => a + (b - a) * t;
 
   /* ── Cube transform from 0–1 progress ───────────────────────── */
-  function setCubeTransform(s) {
+  function setCubeTransform(s, time) {
     if (N < 2) return;
     const t = s * (N - 1);
     const i = Math.min(Math.floor(t), N - 2);
@@ -160,7 +173,11 @@
     rx += mouseY;
     ry += mouseX;
     
-    cube.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+    // Add subtle floating animation
+    const floatY = Math.sin(time * 0.0015) * 8;
+    const floatZ = Math.cos(time * 0.0012) * 5;
+    
+    cube.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translate3d(0, ${floatY}px, ${floatZ}px)`;
   }
 
   /* ── HUD + dot update ────────────────────────────────────────── */
@@ -220,7 +237,7 @@ cards.forEach(c => io.observe(c));
     scrollProgress = max > 0 ? Math.max(0, Math.min(1, scroller.scrollTop / max)) : 0;
     
     // Update everything
-    setCubeTransform(scrollProgress);
+    setCubeTransform(scrollProgress, time);
     updateHUD(scrollProgress);
     updateParticles(time, scrollProgress);
     
@@ -269,6 +286,26 @@ cards.forEach(c => io.observe(c));
     };
     requestAnimationFrame(tick);
   });
+
+  /* ── Navbar hide/show for cube section ──────────────────────── */
+  const navbar = document.getElementById("navbar");
+  
+  function handleScroll() {
+    const rect = wrap.getBoundingClientRect();
+    const isInCubeSection = rect.top < window.innerHeight && rect.bottom > 0;
+    
+    if (isInCubeSection) {
+      navbar.style.opacity = "0";
+      navbar.style.pointerEvents = "none";
+      navbar.style.transition = "opacity 0.5s ease";
+    } else {
+      navbar.style.opacity = "1";
+      navbar.style.pointerEvents = "auto";
+    }
+  }
+  
+  window.addEventListener("scroll", handleScroll);
+  handleScroll(); // Check initial position
 
   /* ── Init ────────────────────────────────────────────────────── */
   createParticles();
