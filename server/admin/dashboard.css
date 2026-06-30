@@ -30,7 +30,7 @@
 }
 
 /* ── DARK MODE TOKENS (Skeuomorphic) ──────────────────────── */
-body.light-mode {
+html.dark {
   --bg-main: #2b2f34;
   --bg-surface: #2b2f34;
   --text-primary: #e0e5ec;
@@ -47,19 +47,35 @@ body.light-mode {
 }
 
 /* Dark mode key element styles */
-body.light-mode .sidebar {
+html.dark .sidebar {
   background: linear-gradient(180deg, #30353a, #262a2f);
   border-right: 1px solid rgba(255,255,255,0.05);
 }
-body.light-mode .stat-card,
-body.light-mode .table-wrap,
-body.light-mode .service-bars,
-body.light-mode .proj-card,
-body.light-mode .modal {
+html.dark .stat-card,
+html.dark .table-wrap,
+html.dark .service-bars,
+html.dark .proj-card,
+html.dark .modal {
   background: linear-gradient(145deg, #30353a, #262a2f);
 }
-body.light-mode .theme-toggle {
+html.dark .theme-toggle {
   background: var(--bg-main);
+}
+
+/* ── VIEW TRANSITIONS STYLES ───────────────────────────────── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+  transition: none;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
 }
 
 /* ── RESET ───────────────────────────────────────────────── */
@@ -113,16 +129,16 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* Dark mode login page styles */
-body.light-mode.login-page {
+html.dark .login-page {
   background: linear-gradient(145deg, #262a2f, #30353a);
 }
-body.light-mode.login-page::before {
+html.dark .login-page::before {
   background: radial-gradient(circle, rgba(232,147,10,0.1) 0%, transparent 70%);
 }
-body.light-mode.login-page::after {
+html.dark .login-page::after {
   background: radial-gradient(circle, rgba(100,116,139,0.05) 0%, transparent 70%);
 }
-body.light-mode .login-card {
+html.dark .login-card {
   background: linear-gradient(145deg, #30353a, #262a2f);
 }
 
@@ -1056,27 +1072,16 @@ body.light-mode .login-card {
 }
 
 /* Active state (dark mode ON) */
-body.light-mode .toggle-thumb { transform: translateX(20px); }
-body.light-mode .toggle-track {
+html.dark .toggle-thumb { transform: translateX(20px); }
+html.dark .toggle-track {
   background: linear-gradient(145deg, #262a2f, #30353a);
 }
-body.light-mode .toggle-thumb {
-  background: linear-gradient(145deg, #f5a511, #dd9409);
-}
-body.light-mode .icon-sun { opacity: 1; color: var(--accent); }
-body.light-mode .icon-moon { opacity: 0.4; color: var(--text-secondary); }
+html.dark .icon-sun { opacity: 1; color: var(--accent); }
+html.dark .icon-moon { opacity: 0.4; color: var(--text-secondary); }
 
 /* Dark mode login page gradient */
-body.light-mode.login-page {
+html.dark .login-page {
   background: linear-gradient(145deg, #262a2f, #30353a);
-}
-
-/* Smooth transitions */
-body.theme-transitioning,
-body.theme-transitioning *,
-body.theme-transitioning *::before,
-body.theme-transitioning *::after {
-  transition: all 0.4s ease !important;
 }
 
 /* CKEditor styles */
