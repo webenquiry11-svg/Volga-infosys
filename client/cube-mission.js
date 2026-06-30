@@ -18,7 +18,7 @@
 
   /* ── Image / face data — swap with your real images ─────────── */
   const IMAGES = [
-    { src: "factory-dark.png",  label: "INTRO"   },
+    { src: "face1.jpg",  label: "INTRO"   },
     { src: "hill-dark.png",     label: "DEFINE"  },
     { src: "street-dark.png",   label: "SHAPE"     },
     { src: "sky-dark.png",      label: "BUILD"    },

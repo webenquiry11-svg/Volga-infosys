@@ -3,6 +3,13 @@ import crypto from 'crypto';
 if (!globalThis.crypto) {
   globalThis.crypto = crypto;
 }
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled Rejection:', reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+});
 
 import "dotenv/config";
 import express from "express";
