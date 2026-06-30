@@ -3,12 +3,14 @@ import EmailLog from "../models/EmailLog.js";
 
 const isDev = process.env.NODE_ENV === "development";
 
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 /**
  * Send email with logging and confirmation.
  * In development, logs to console instead of sending real email
  * to avoid triggering spam filters during testing.
  */
-export const sendEmail = async (options) => {
+export const sendEmail = async (options, retries = 3) => {
   const {
     from = `"VOLGA Infosys" <${process.env.EMAIL_USER}>`,
     to,
@@ -78,6 +80,18 @@ export const sendEmail = async (options) => {
     };
   } catch (error) {
     console.error("Email send error:", error.message);
+    
+    // Retry logic for network-related errors
+    if (retries > 0 && (
+      error.message.includes("ETIMEDOUT") || 
+      error.message.includes("ENETUNREACH") || 
+      error.message.includes("ECONNRESET") ||
+      error.message.includes("Connection timeout")
+    )) {
+      console.log(`Retrying email send... (${retries} attempts left)`);
+      await delay(2000);
+      return sendEmail(options, retries - 1);
+    }
 
     // Log the failure
     const emailLog = await EmailLog.create({
