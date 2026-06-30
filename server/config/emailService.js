@@ -10,7 +10,7 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
  * In development, logs to console instead of sending real email
  * to avoid triggering spam filters during testing.
  */
-export const sendEmail = async (options, retries = 3) => {
+export const sendEmail = async (options, retries = 3, existingLogId = null) => {
   const {
     from = `"VOLGA Infosys" <${process.env.EMAIL_USER}>`,
     to,
@@ -23,9 +23,10 @@ export const sendEmail = async (options, retries = 3) => {
   // Ensure 'to' is always an array
   const toArray = Array.isArray(to) ? to : [to];
 
-  try {
-    // Log the email
-    const emailLog = await EmailLog.create({
+  // Create email log if it doesn't exist
+  let emailLog;
+  if (!existingLogId) {
+    emailLog = await EmailLog.create({
       from,
       to: toArray,
       subject,
@@ -34,7 +35,11 @@ export const sendEmail = async (options, retries = 3) => {
       status: "pending",
       contactFormId
     });
+  } else {
+    emailLog = await EmailLog.findById(existingLogId);
+  }
 
+  try {
     // Temporarily disable DEV MODE check to send real emails (remove this later if needed)
     // In development, skip sending real email to avoid spam filter training
     // if (isDev) {
@@ -90,19 +95,13 @@ export const sendEmail = async (options, retries = 3) => {
     )) {
       console.log(`Retrying email send... (${retries} attempts left)`);
       await delay(2000);
-      return sendEmail(options, retries - 1);
+      return sendEmail(options, retries - 1, emailLog._id);
     }
 
     // Log the failure
-    const emailLog = await EmailLog.create({
-      from,
-      to: toArray,
-      subject,
-      message: html,
-      type,
+    await EmailLog.findByIdAndUpdate(emailLog._id, {
       status: "failed",
-      errorMessage: error.message,
-      contactFormId
+      errorMessage: error.message
     });
 
     return {
