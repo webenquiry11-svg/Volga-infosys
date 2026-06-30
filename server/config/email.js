@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 // Use hardcoded Gmail SMTP IPv4 address to bypass IPv6 issues
 // Gmail SMTP IPv4 addresses (these are reliable):
 // 74.125.195.108, 74.125.195.109, 173.194.219.108, etc.
-const GMAIL_SMTP_IPV4 = "74.125.195.108";
+const GMAIL_SMTP_IPV4 = "172.217.197.108";
 
 console.log("🔧 Using Gmail SMTP IPv4 address:", GMAIL_SMTP_IPV4);
 
