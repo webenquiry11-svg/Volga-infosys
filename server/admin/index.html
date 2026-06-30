@@ -132,8 +132,8 @@
   
 
   <!-- Theme Toggle for Login Page -->
-  <div id="loginThemeToggle" style="position:fixed; bottom:1.5rem; right:1.5rem; z-index:50; display:flex; align-items:center; gap:0.5rem; cursor:pointer; background:rgba(255,255,255,0.08); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.12); padding:0.5rem 1rem; border-radius:100px; transition:background 0.2s, border-color 0.2s;" onclick="document.body.classList.add('theme-transitioning'); const isLight=document.body.classList.toggle('light-mode'); localStorage.setItem('volgaTheme', isLight?'light':'dark'); this.querySelector('span').textContent=isLight?'☀️':'🌙'; this.style.background=isLight?'rgba(0,0,0,0.05)':'rgba(255,255,255,0.08)'; this.style.borderColor=isLight?'rgba(0,0,0,0.08)':'rgba(255,255,255,0.12)'; setTimeout(()=>document.body.classList.remove('theme-transitioning'),450);">
-    <span style="font-size:1rem;">🌙</span>
+  <div id="loginThemeToggle" style="position:fixed; bottom:1.5rem; right:1.5rem; z-index:50; display:flex; align-items:center; gap:0.5rem; cursor:pointer; background:rgba(255,255,255,0.08); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.12); padding:0.5rem 1rem; border-radius:100px; transition:background 0.2s, border-color 0.2s;">
+    <span id="loginThemeIcon" style="font-size:1rem;">🌙</span>
     <span style="font-size:0.78rem; font-weight:500; color:var(--text2);">Theme</span>
   </div>
 

@@ -10,11 +10,9 @@
     label.textContent = saved === 'dark' ? 'Light Mode' : 'Dark Mode';
   }
   // Update login page floating toggle icon
-  const loginToggle = document.getElementById('loginThemeToggle');
-  if (loginToggle && saved === 'dark') {
-    loginToggle.querySelector('span').textContent = '☀️';
-    loginToggle.style.background = 'rgba(0,0,0,0.05)';
-    loginToggle.style.borderColor = 'rgba(0,0,0,0.08)';
+  const loginToggleIcon = document.getElementById('loginThemeIcon');
+  if (loginToggleIcon && saved === 'dark') {
+    loginToggleIcon.textContent = '☀️';
   }
 })();
 
@@ -44,6 +42,52 @@ document.getElementById('themeToggle')?.addEventListener('click', async (e) => {
     localStorage.setItem('volgaTheme', isDark ? 'dark' : 'light');
     const label = document.getElementById('themeLabel');
     if (label) label.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+  });
+
+  // Wait for the transition to be ready
+  await transition.ready;
+
+  // Always animate the new root with expanding circle - consistent feel
+  const keyframes = [
+    { clipPath: `circle(0px at ${x}px ${y}px)` },
+    { clipPath: `circle(${endRadius * 1.05}px at ${x}px ${y}px)` }, // Slight overshoot
+    { clipPath: `circle(${endRadius}px at ${x}px ${y}px)` }
+  ];
+
+  // Animate the new root with the clip-path
+  document.documentElement.animate(keyframes, {
+    duration: 550,
+    easing: 'cubic-bezier(0.65, 0, 0.35, 1)',
+    pseudoElement: '::view-transition-new(root)'
+  });
+});
+
+document.getElementById('loginThemeToggle')?.addEventListener('click', async (e) => {
+  // Check if View Transitions API is supported
+  if (!document.startViewTransition) {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('volgaTheme', isDark ? 'dark' : 'light');
+    const icon = document.getElementById('loginThemeIcon');
+    if (icon) icon.textContent = isDark ? '☀️' : '🌙';
+    return;
+  }
+
+  // Get click position
+  const x = e.clientX;
+  const y = e.clientY;
+
+  // Calculate the maximum radius needed to cover the entire viewport
+  const endRadius = Math.hypot(
+    Math.max(x, innerWidth - x),
+    Math.max(y, innerHeight - y)
+  );
+
+  // Start the view transition
+  const transition = document.startViewTransition(() => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('volgaTheme', isDark ? 'dark' : 'light');
+    const icon = document.getElementById('loginThemeIcon');
+    if (icon) icon.textContent = isDark ? '☀️' : '🌙';
   });
 
   // Wait for the transition to be ready
