@@ -1,4 +1,5 @@
 import Blog from '../models/Blog.js';
+import { logActivity } from './dashboardController.js';
 
 // @desc    Get all blogs (public - only published)
 // @route   GET /api/blogs
@@ -8,8 +9,13 @@ export const getBlogs = async (req, res) => {
     const { category, status, search } = req.query;
     let query = {};
     
-    // Public route only gets published posts
+    // Public route only gets published posts, and only those whose publishAt <= now or null
     query.status = 'published';
+    query.$or = [
+      { publishAt: { $exists: false } },
+      { publishAt: null },
+      { publishAt: { $lte: new Date() } }
+    ];
     
     if (category) {
       query.category = category;
@@ -48,8 +54,12 @@ export const getBlog = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Blog not found' });
     }
     
-    // Check if it's published
+    // Check if it's published and available
     if (blog.status !== 'published') {
+      return res.status(404).json({ success: false, message: 'Blog not found' });
+    }
+    // Check publishAt scheduling
+    if (blog.publishAt && new Date(blog.publishAt) > new Date()) {
       return res.status(404).json({ success: false, message: 'Blog not found' });
     }
     
@@ -117,6 +127,7 @@ export const createBlog = async (req, res) => {
       coverImage: req.body.coverImage || req.body.image
     };
     const blog = await Blog.create(blogData);
+    await logActivity(req.user?._id, "create", "blog", blog._id, `Created blog: ${blog.title}`);
     res.status(201).json({ success: true, data: blog });
   } catch (error) {
     console.error('createBlog error:', error);
@@ -159,10 +170,34 @@ export const deleteBlog = async (req, res) => {
     if (!blog) {
       return res.status(404).json({ success: false, message: 'Blog not found' });
     }
+    await logActivity(req.user?._id, "delete", "blog", blog._id, `Deleted blog: ${blog.title}`);
     await blog.deleteOne();
     res.status(200).json({ success: true, message: 'Blog deleted successfully' });
   } catch (error) {
     console.error('deleteBlog error:', error);
+    res.status(500).json({ success: false, message: error.message || 'Server error' });
+  }
+};
+
+// @desc    Duplicate blog
+// @route   POST /api/blogs/:id/duplicate
+// @access  Private
+export const duplicateBlog = async (req, res) => {
+  try {
+    const source = await Blog.findById(req.params.id);
+    if (!source) return res.status(404).json({ success: false, message: 'Blog not found' });
+
+    const { _id, slug, createdAt, updatedAt, __v, ...data } = source.toObject();
+    const copy = await Blog.create({
+      ...data,
+      title: `Copy of ${data.title}`,
+      status: 'draft',
+      featured: false,
+    });
+    await logActivity(req.user?._id, "duplicate", "blog", copy._id, `Duplicated blog: ${source.title}`);
+    res.status(201).json({ success: true, data: copy });
+  } catch (error) {
+    console.error('duplicateBlog error:', error);
     res.status(500).json({ success: false, message: error.message || 'Server error' });
   }
 };

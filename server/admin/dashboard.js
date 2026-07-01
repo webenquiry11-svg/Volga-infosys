@@ -1,3 +1,47 @@
+// ── TOAST NOTIFICATIONS ─────────────────────────────────────
+function showToast(title, message = '', type = 'info', duration = 5000) {
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
+
+  const icons = {
+    success: '✓',
+    error: '✕',
+    warning: '⚠',
+    info: 'ℹ'
+  };
+
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.innerHTML = `
+    <span class="toast-icon">${icons[type]}</span>
+    <div class="toast-content">
+      <div class="toast-title">${title}</div>
+      ${message ? `<div class="toast-message">${message}</div>` : ''}
+    </div>
+    <button class="toast-close" aria-label="Close toast">&times;</button>
+  `;
+
+  container.appendChild(toast);
+
+  // Close button click handler
+  const closeBtn = toast.querySelector('.toast-close');
+  closeBtn.addEventListener('click', () => removeToast(toast));
+
+  // Auto remove after duration
+  let timer;
+  if (duration > 0) {
+    timer = setTimeout(() => removeToast(toast), duration);
+  }
+
+  function removeToast(el) {
+    if (timer) clearTimeout(timer);
+    el.classList.add('hiding');
+    el.addEventListener('animationend', () => {
+      if (el.parentNode) el.parentNode.removeChild(el);
+    });
+  }
+}
+
 // ── THEME TOGGLE ─────────────────────────────────────────
 (function initTheme() {
   const saved = localStorage.getItem('volgaTheme');
@@ -15,6 +59,43 @@
     loginToggleIcon.textContent = '☀️';
   }
 })();
+
+// ── MOBILE SIDEBAR TOGGLE ────────────────────────────────
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const sidebar = document.querySelector('.sidebar');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+
+if (mobileMenuBtn) {
+  mobileMenuBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    sidebarOverlay.classList.toggle('open');
+  });
+}
+
+if (sidebarCloseBtn) {
+  sidebarCloseBtn.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    sidebarOverlay.classList.remove('open');
+  });
+}
+
+if (sidebarOverlay) {
+  sidebarOverlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    sidebarOverlay.classList.remove('open');
+  });
+}
+
+// Close sidebar when clicking a nav item on mobile
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    if (window.innerWidth <= 700) {
+      sidebar.classList.remove('open');
+      sidebarOverlay.classList.remove('open');
+    }
+  });
+});
 
 document.getElementById('themeToggle')?.addEventListener('click', async (e) => {
   // Check if View Transitions API is supported
@@ -349,6 +430,7 @@ if (loginForm) {
       err.textContent = data.message || "Login failed";
       btn.textContent = "Sign In";
       btn.disabled = false;
+      showToast('Login Failed', data.message || 'Please check your credentials', 'error');
     }
   });
   
@@ -387,9 +469,9 @@ if (loginForm) {
       
       if (!res.ok) throw new Error(data.message || 'Request failed');
       
-      success.textContent = 'Password reset link has been sent to your email!';
+      showToast('Email Sent', 'Password reset link has been sent to your email!', 'success');
     } catch (e) {
-      err.textContent = e.message || 'Failed to send reset email';
+      showToast('Failed', e.message || 'Failed to send reset email', 'error');
     } finally {
       btn.textContent = 'Send Reset Link';
       btn.disabled = false;
@@ -409,7 +491,7 @@ if (loginForm) {
     const pwd2 = document.getElementById('resetConfirmPassword').value;
     
     if (pwd1 !== pwd2) {
-      err.textContent = 'Passwords do not match';
+      showToast('Validation Error', 'Passwords do not match', 'warning');
       btn.textContent = 'Reset Password';
       btn.disabled = false;
       return;
@@ -426,11 +508,14 @@ if (loginForm) {
       if (!res.ok) throw new Error(data.message || 'Reset failed');
       
       if (data.token) {
-        setToken(data.token);
-        location.href = 'dashboard.html';
+        showToast('Password Reset', 'Your password has been reset successfully!', 'success');
+        setTimeout(() => {
+          setToken(data.token);
+          location.href = 'dashboard.html';
+        }, 1000);
       }
     } catch (e) {
-      err.textContent = e.message || 'Reset failed';
+      showToast('Failed', e.message || 'Reset failed', 'error');
     } finally {
       btn.textContent = 'Reset Password';
       btn.disabled = false;
@@ -477,9 +562,9 @@ if (loginForm) {
       
       if (!res.ok) throw new Error(data.message || 'Submission failed');
       
-      success.textContent = 'Application submitted successfully! We will review it shortly.';
+      showToast('Application Submitted', 'Application submitted successfully! We will review it shortly.', 'success');
     } catch (e) {
-      err.textContent = e.message || 'Submission failed';
+      showToast('Submission Failed', e.message || 'Submission failed', 'error');
     } finally {
       btn.textContent = 'Submit Application';
       btn.disabled = false;
@@ -527,6 +612,7 @@ if (document.getElementById("logoutBtn")) {
         if (item.dataset.view === "medialibrary") loadMediaLibrary();
         if (item.dataset.view === "emaillogs") loadEmailLogs();
         if (item.dataset.view === "settings") loadCurrentUser();
+        if (item.dataset.view === "analytics") loadAnalytics();
       });
     });
 
@@ -681,8 +767,13 @@ if (document.getElementById("logoutBtn")) {
   document.getElementById("emailStatusFilter")?.addEventListener("change", () => loadEmailLogs(1));
   document.getElementById("deleteAllLogsBtn")?.addEventListener("click", async () => {
     if (!confirm("Delete all email logs? This cannot be undone.")) return;
-    await apiFetch("/dashboard/emails", { method: "DELETE" });
-    loadEmailLogs(1);
+    try {
+      await apiFetch("/dashboard/emails", { method: "DELETE" });
+      showToast('Email Logs Deleted', 'All email logs have been cleared', 'success');
+      loadEmailLogs(1);
+    } catch (e) {
+      showToast('Delete Failed', e.message || 'Could not delete email logs', 'error');
+    }
   });
 
   function renderTable(tbody, contacts, compact) {
@@ -786,9 +877,13 @@ if (document.getElementById("logoutBtn")) {
     `).join('');
     notesList.querySelectorAll('.btn-delete').forEach(btn => {
       btn.addEventListener('click', async () => {
-        if (confirm('Delete this note?')) {
+        if (!confirm('Delete this note?')) return;
+        try {
           await apiFetch(`/dashboard/contacts/${activeContact._id}/notes/${btn.dataset.noteId}`, { method: 'DELETE' });
+          showToast('Note Deleted', 'The note has been removed', 'success');
           loadNotes(activeContact._id);
+        } catch (e) {
+          showToast('Delete Failed', e.message || 'Could not delete note', 'error');
         }
       });
     });
@@ -827,33 +922,48 @@ if (document.getElementById("logoutBtn")) {
     const status = document.getElementById("modalStatus").value;
     const tags = document.getElementById("tagsInput").value.split(',').map(t => t.trim()).filter(t => t);
     const followUpDate = document.getElementById("followUpDate").value;
-    await apiFetch(`/dashboard/contacts/${activeContact._id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status, tags, followUpDate }),
-    });
-    closeModal();
-    loadLeads(currentPage);
+    try {
+      await apiFetch(`/dashboard/contacts/${activeContact._id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status, tags, followUpDate }),
+      });
+      showToast('Lead Updated', 'The lead has been successfully updated', 'success');
+      closeModal();
+      loadLeads(currentPage);
+    } catch (e) {
+      showToast('Update Failed', e.message || 'Failed to update lead', 'error');
+    }
   });
 
   document.getElementById("addNoteBtn").addEventListener("click", async () => {
     const content = document.getElementById("newNote").value.trim();
     if (!content) return;
-    await apiFetch(`/dashboard/contacts/${activeContact._id}/notes`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content }),
-    });
-    document.getElementById("newNote").value = '';
-    loadNotes(activeContact._id);
+    try {
+      await apiFetch(`/dashboard/contacts/${activeContact._id}/notes`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content }),
+      });
+      showToast('Note Added', 'Your note has been added successfully', 'success');
+      document.getElementById("newNote").value = '';
+      loadNotes(activeContact._id);
+    } catch (e) {
+      showToast('Failed to Add Note', e.message || 'Could not add note', 'error');
+    }
   });
 
   document.getElementById("modalDelete").addEventListener("click", async () => {
     if (!activeContact || !confirm("Delete this lead?")) return;
-    await apiFetch(`/dashboard/contacts/${activeContact._id}`, { method: "DELETE" });
-    closeModal();
-    loadLeads(currentPage);
-    loadOverview();
+    try {
+      await apiFetch(`/dashboard/contacts/${activeContact._id}`, { method: "DELETE" });
+      showToast('Lead Deleted', 'The lead has been removed', 'success');
+      closeModal();
+      loadLeads(currentPage);
+      loadOverview();
+    } catch (e) {
+      showToast('Delete Failed', e.message || 'Could not delete lead', 'error');
+    }
   });
 
   // Initialize rich text editors
@@ -919,6 +1029,7 @@ if (document.getElementById("logoutBtn")) {
     };
     if (!body.place || !body.title || !body.tag || !body.description || !body.image) {
       document.getElementById("projectFormError").textContent = "Please fill in all required fields.";
+      showToast('Validation Error', 'Please fill in all required fields', 'warning');
       return;
     }
     const errEl = document.getElementById("projectFormError");
@@ -928,14 +1039,17 @@ if (document.getElementById("logoutBtn")) {
     try {
       if (editingProjectId) {
         await apiFetch(`/projects/${editingProjectId}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+        showToast('Project Updated', 'The project has been successfully updated', 'success');
       } else {
         await apiFetch("/projects", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+        showToast('Project Added', 'The project has been successfully added', 'success');
       }
       document.getElementById("projectModalOverlay").classList.remove("open");
       loadPortfolio();
       if (typeof loadClientStories === 'function') loadClientStories();
     } catch (e) {
       errEl.textContent = e.message || "Save failed. Are you still logged in?";
+      showToast('Save Failed', e.message || 'Could not save project', 'error');
     } finally {
       saveBtn.textContent = "Save Project";
       saveBtn.disabled = false;
@@ -944,10 +1058,15 @@ if (document.getElementById("logoutBtn")) {
 
   document.getElementById("projectDeleteBtn").addEventListener("click", async () => {
     if (!editingProjectId || !confirm("Delete this project?")) return;
-    await apiFetch(`/projects/${editingProjectId}`, { method: "DELETE" });
-    document.getElementById("projectModalOverlay").classList.remove("open");
-    loadPortfolio();
-    if (typeof loadClientStories === 'function') loadClientStories();
+    try {
+      await apiFetch(`/projects/${editingProjectId}`, { method: "DELETE" });
+      showToast('Project Deleted', 'The project has been removed', 'success');
+      document.getElementById("projectModalOverlay").classList.remove("open");
+      loadPortfolio();
+      if (typeof loadClientStories === 'function') loadClientStories();
+    } catch (e) {
+      showToast('Delete Failed', e.message || 'Could not delete project', 'error');
+    }
   });
 
   // ── CLIENT STORIES ───────────────────────────────────
@@ -962,16 +1081,40 @@ if (document.getElementById("logoutBtn")) {
     }
     if (!grid) return;
     grid.innerHTML = stories.map(s => `
-      <div class="proj-card">
-        <div class="proj-card-img" style="background-image:url('${s.image}')"></div>
+      <div class="proj-card content-card" data-id="${s._id}">
+        <div class="proj-card-img" style="background-image:url('${s.image || ''}')"></div>
         <div class="proj-card-body">
           <span class="proj-tag">${s.industry}</span>
           <div class="proj-title">${s.clientName}</div>
           <div class="proj-place">${s.clientRole}</div>
           <p class="proj-desc">${s.testimonial}</p>
-          <a class="btn-view" href="client-story-edit.html?id=${s._id}">Edit</a>
+          <div class="card-actions">
+            <a class="btn-view" href="client-story-edit.html?id=${s._id}">Edit</a>
+            <button class="btn-action btn-duplicate" data-id="${s._id}" data-type="client-stories" title="Duplicate">⎘ Clone</button>
+            <button class="btn-action btn-delete-item" data-id="${s._id}" data-type="client-stories" data-name="${s.clientName.replace(/"/g,'')}" title="Delete">✕</button>
+          </div>
         </div>
       </div>`).join("");
+
+    grid.querySelectorAll('.btn-duplicate').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        try {
+          await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}/duplicate`, { method: 'POST' });
+          showToast('Cloned', 'Copy created', 'success');
+          loadClientStories();
+        } catch(e) { showToast('Error', e.message, 'error'); }
+      });
+    });
+    grid.querySelectorAll('.btn-delete-item').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (!confirm(`Delete "${btn.dataset.name}"?`)) return;
+        try {
+          await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}`, { method: 'DELETE' });
+          showToast('Deleted', 'Item removed', 'success');
+          loadClientStories();
+        } catch(e) { showToast('Error', e.message, 'error'); }
+      });
+    });
   }
 
   function openStoryModal(story = null) {
@@ -1054,20 +1197,85 @@ if (document.getElementById("logoutBtn")) {
       grid.innerHTML = `<p class="empty" style="padding:2rem">No blog posts yet. Click + Add Post to get started.</p>`;
       return;
     }
+
+    // Bulk action toolbar
+    const view = document.getElementById('view-blog');
+    let toolbar = view.querySelector('.bulk-toolbar');
+    if (!toolbar) {
+      toolbar = document.createElement('div');
+      toolbar.className = 'bulk-toolbar';
+      toolbar.innerHTML = `
+        <label class="bulk-select-all"><input type="checkbox" id="blogSelectAll"> Select all</label>
+        <button class="btn-delete bulk-delete-btn" id="blogBulkDelete" style="display:none">Delete selected</button>
+        <span class="bulk-count" id="blogBulkCount"></span>`;
+      view.querySelector('.page-header').after(toolbar);
+    }
+
     grid.innerHTML = blogs.map(b => `
-      <div class="proj-card">
-        <div class="proj-card-img" style="background-image:url('${b.coverImage || b.image}')">
-          ${b.featured ? '<span style="position:absolute;top:10px;left:10px;background:#567C8D;color:#fff;font-size:0.6rem;padding:3px 10px;border-radius:99px;letter-spacing:0.1em;">FEATURED</span>' : ''}
-          ${b.status === 'draft' ? '<span style="position:absolute;top:10px;right:10px;background:#ff9900;color:#fff;font-size:0.6rem;padding:3px 10px;border-radius:99px;letter-spacing:0.1em;">DRAFT</span>' : ''}
+      <div class="proj-card content-card" data-id="${b._id}">
+        <div class="card-select-wrap">
+          <input type="checkbox" class="card-checkbox blog-checkbox" data-id="${b._id}">
+        </div>
+        <div class="proj-card-img" style="background-image:url('${b.coverImage || b.image || ''}');position:relative;">
+          ${b.featured ? '<span class="card-badge badge-featured">★ Featured</span>' : ''}
+          <span class="card-status-badge status-${b.status}">${b.status}</span>
         </div>
         <div class="proj-card-body">
           <span class="proj-tag">${b.category}</span>
           <div class="proj-title">${b.title}</div>
-          <div class="proj-place">${b.author} &middot; ${b.readTime}</div>
-          <p class="proj-desc">${b.excerpt}</p>
-          <a class="btn-view" href="blog-edit.html?id=${b._id}">Edit</a>
+          <div class="proj-place">${b.author || '—'} · ${b.readTime || '—'}</div>
+          <p class="proj-desc">${b.excerpt || ''}</p>
+          <div class="card-actions">
+            <a class="btn-view" href="blog-edit.html?id=${b._id}">Edit</a>
+            <button class="btn-action btn-toggle-status" data-id="${b._id}" data-status="${b.status}" title="${b.status === 'published' ? 'Set to draft' : 'Publish'}">
+              ${b.status === 'published' ? '⬇ Draft' : '↑ Publish'}
+            </button>
+            <button class="btn-action btn-duplicate" data-id="${b._id}" data-type="blogs" title="Duplicate">⎘ Clone</button>
+            <button class="btn-action btn-delete-item" data-id="${b._id}" data-type="blogs" data-name="${b.title.replace(/"/g,'')}" title="Delete">✕</button>
+          </div>
         </div>
       </div>`).join('');
+
+    // Bulk checkbox logic
+    document.getElementById('blogSelectAll').onchange = function() {
+      document.querySelectorAll('.blog-checkbox').forEach(cb => cb.checked = this.checked);
+      updateBulkBar('blog');
+    };
+    document.querySelectorAll('.blog-checkbox').forEach(cb => {
+      cb.addEventListener('change', () => updateBulkBar('blog'));
+    });
+    document.getElementById('blogBulkDelete').onclick = () => bulkDelete('blog', 'blogs', loadBlogs);
+
+    // Action buttons
+    grid.querySelectorAll('.btn-toggle-status').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const newStatus = btn.dataset.status === 'published' ? 'draft' : 'published';
+        try {
+          await apiFetch(`/blogs/${btn.dataset.id}`, { method: 'PATCH', body: JSON.stringify({ status: newStatus }) });
+          showToast('Status updated', `Post set to ${newStatus}`, 'success');
+          loadBlogs();
+        } catch(e) { showToast('Error', e.message, 'error'); }
+      });
+    });
+    grid.querySelectorAll('.btn-duplicate').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        try {
+          await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}/duplicate`, { method: 'POST' });
+          showToast('Cloned', 'Draft copy created', 'success');
+          loadBlogs();
+        } catch(e) { showToast('Error', e.message, 'error'); }
+      });
+    });
+    grid.querySelectorAll('.btn-delete-item').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (!confirm(`Delete "${btn.dataset.name}"?`)) return;
+        try {
+          await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}`, { method: 'DELETE' });
+          showToast('Deleted', 'Item removed', 'success');
+          loadBlogs();
+        } catch(e) { showToast('Error', e.message, 'error'); }
+      });
+    });
   }
 
   function openBlogModal(blog = null) {
@@ -1175,16 +1383,40 @@ if (document.getElementById("logoutBtn")) {
       return;
     }
     grid.innerHTML = caseStudies.map(c => `
-      <div class="proj-card">
-        <div class="proj-card-img" style="background-image:url('${c.image}')"></div>
+      <div class="proj-card content-card" data-id="${c._id}">
+        <div class="proj-card-img" style="background-image:url('${c.image || ''}')"></div>
         <div class="proj-card-body">
           <span class="proj-tag">${c.industry}</span>
           <div class="proj-title">${c.title}</div>
-          <div class="proj-place">${c.year || 'Case Study'} &middot; ${(c.metrics || []).length} metrics</div>
+          <div class="proj-place">${c.year || 'Case Study'} · ${(c.metrics || []).length} metrics</div>
           <p class="proj-desc">${c.description}</p>
-          <a class="btn-view" href="case-study-edit.html?id=${c._id}">Edit</a>
+          <div class="card-actions">
+            <a class="btn-view" href="case-study-edit.html?id=${c._id}">Edit</a>
+            <button class="btn-action btn-duplicate" data-id="${c._id}" data-type="case-studies" title="Duplicate">⎘ Clone</button>
+            <button class="btn-action btn-delete-item" data-id="${c._id}" data-type="case-studies" data-name="${c.title.replace(/"/g,'')}" title="Delete">✕</button>
+          </div>
         </div>
       </div>`).join('');
+
+    grid.querySelectorAll('.btn-duplicate').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        try {
+          await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}/duplicate`, { method: 'POST' });
+          showToast('Cloned', 'Draft copy created', 'success');
+          loadCaseStudies();
+        } catch(e) { showToast('Error', e.message, 'error'); }
+      });
+    });
+    grid.querySelectorAll('.btn-delete-item').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (!confirm(`Delete "${btn.dataset.name}"?`)) return;
+        try {
+          await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}`, { method: 'DELETE' });
+          showToast('Deleted', 'Item removed', 'success');
+          loadCaseStudies();
+        } catch(e) { showToast('Error', e.message, 'error'); }
+      });
+    });
   }
 
   function parseMetrics(value) {
@@ -1277,16 +1509,40 @@ if (document.getElementById("logoutBtn")) {
       return;
     }
     grid.innerHTML = news.map(n => `
-      <div class="proj-card">
-        <div class="proj-card-img" style="background-image:url('${n.image}')"></div>
+      <div class="proj-card content-card" data-id="${n._id}">
+        <div class="proj-card-img" style="background-image:url('${n.image || ''}')"></div>
         <div class="proj-card-body">
           <span class="proj-tag">${n.topic}</span>
           <div class="proj-title">${n.title}</div>
-          <div class="proj-place">${n.source || 'Volga Infosys'} &middot; ${fmtDate(n.publishedAt || n.createdAt)}</div>
+          <div class="proj-place">${n.source || 'Volga Infosys'} · ${fmtDate(n.publishedAt || n.createdAt)}</div>
           <p class="proj-desc">${n.description}</p>
-          <a class="btn-view" href="industry-news-edit.html?id=${n._id}">Edit</a>
+          <div class="card-actions">
+            <a class="btn-view" href="industry-news-edit.html?id=${n._id}">Edit</a>
+            <button class="btn-action btn-duplicate" data-id="${n._id}" data-type="industry-news" title="Duplicate">⎘ Clone</button>
+            <button class="btn-action btn-delete-item" data-id="${n._id}" data-type="industry-news" data-name="${n.title.replace(/"/g,'')}" title="Delete">✕</button>
+          </div>
         </div>
       </div>`).join('');
+
+    grid.querySelectorAll('.btn-duplicate').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        try {
+          await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}/duplicate`, { method: 'POST' });
+          showToast('Cloned', 'Copy created', 'success');
+          loadIndustryNews();
+        } catch(e) { showToast('Error', e.message, 'error'); }
+      });
+    });
+    grid.querySelectorAll('.btn-delete-item').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (!confirm(`Delete "${btn.dataset.name}"?`)) return;
+        try {
+          await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}`, { method: 'DELETE' });
+          showToast('Deleted', 'Item removed', 'success');
+          loadIndustryNews();
+        } catch(e) { showToast('Error', e.message, 'error'); }
+      });
+    });
   }
 
   function dateInputValue(value) {
@@ -1387,8 +1643,7 @@ if (document.getElementById("logoutBtn")) {
     grid.querySelectorAll('.media-copy-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         navigator.clipboard.writeText(btn.dataset.url).then(() => {
-          btn.textContent = 'Copied!';
-          setTimeout(() => btn.textContent = 'Copy URL', 2000);
+          showToast('URL Copied', 'The media URL has been copied to clipboard', 'success');
         });
       });
     });
@@ -1398,9 +1653,10 @@ if (document.getElementById("logoutBtn")) {
         if (!confirm('Delete this media item?')) return;
         try {
           await apiFetch(`/media/${btn.dataset.id}`, { method: 'DELETE' });
+          showToast('Media Deleted', 'The media item has been removed', 'success');
           loadMediaLibrary();
         } catch (e) {
-          console.error('Delete failed:', e);
+          showToast('Delete Failed', e.message || 'Could not delete media item', 'error');
         }
       });
     });
@@ -1553,7 +1809,7 @@ if (document.getElementById("logoutBtn")) {
     document.getElementById('uploadProfilePictureBtn')?.addEventListener('click', async () => {
       const fileInput = document.getElementById('profilePictureUpload');
       if (!fileInput.files || !fileInput.files[0]) {
-        alert('Please select a file to upload.');
+        showToast('Validation Error', 'Please select a file to upload', 'warning');
         return;
       }
 
@@ -1571,10 +1827,10 @@ if (document.getElementById("logoutBtn")) {
             // Don't set Content-Type, fetch will set it with boundary for FormData
           }
         });
-        alert('Profile picture updated successfully!');
+        showToast('Profile Picture Updated', 'Your profile picture has been updated successfully', 'success');
         loadCurrentUser();
       } catch (e) {
-        alert(e.message || 'Upload failed');
+        showToast('Upload Failed', e.message || 'Could not upload profile picture', 'error');
       } finally {
         btn.textContent = 'Upload Picture';
         btn.disabled = false;
@@ -1592,11 +1848,11 @@ if (document.getElementById("logoutBtn")) {
           email: document.getElementById('settings-email').value.trim()
         };
         await apiFetch('/auth/me', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-        alert('Profile updated successfully!');
+        showToast('Profile Updated', 'Your profile has been updated successfully', 'success');
         // Refresh profile widget
         loadCurrentUser();
       } catch (e) {
-        alert(e.message || 'Update failed');
+        showToast('Update Failed', e.message || 'Could not update profile', 'error');
       } finally {
         btn.textContent = 'Update Profile';
         btn.disabled = false;
@@ -1609,12 +1865,8 @@ if (document.getElementById("logoutBtn")) {
       const newPwd = document.getElementById('newPassword').value;
       const confirmPwd = document.getElementById('confirmPassword').value;
       
-      console.log("Change password button clicked");
-      console.log("Current password:", currentPwd);
-      console.log("New password:", newPwd);
-      
       if (newPwd !== confirmPwd) {
-        alert('Passwords do not match');
+        showToast('Validation Error', 'Passwords do not match', 'warning');
         return;
       }
       
@@ -1622,16 +1874,13 @@ if (document.getElementById("logoutBtn")) {
       btn.textContent = 'Changing...';
       btn.disabled = true;
       try {
-        console.log("About to call apiFetch");
-        const result = await apiFetch('/auth/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ currentPassword: currentPwd, newPassword: newPwd }) });
-        console.log("apiFetch result:", result);
-        alert('Password changed successfully!');
+        await apiFetch('/auth/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ currentPassword: currentPwd, newPassword: newPwd }) });
+        showToast('Password Changed', 'Your password has been updated successfully', 'success');
         document.getElementById('currentPassword').value = '';
         document.getElementById('newPassword').value = '';
         document.getElementById('confirmPassword').value = '';
       } catch (e) {
-        console.error("Change password error:", e);
-        alert(e.message || 'Change failed');
+        showToast('Change Password Failed', e.message || 'Could not change password', 'error');
       } finally {
         btn.textContent = 'Change Password';
         btn.disabled = false;
@@ -1789,10 +2038,11 @@ if (document.getElementById("logoutBtn")) {
       if (!editingUserId || !confirm('Delete this user?')) return;
       try {
         await apiFetch(`/auth/users/${editingUserId}`, { method: 'DELETE' });
+        showToast('User Deleted', 'The user has been deleted successfully', 'success');
         document.getElementById('userModalOverlay').classList.remove('open');
         loadUsers();
       } catch (e) {
-        alert(e.message || 'Delete failed');
+        showToast('Delete Failed', e.message || 'Could not delete the user', 'error');
       }
     });
 
@@ -1825,9 +2075,10 @@ if (document.getElementById("logoutBtn")) {
         btn.addEventListener('click', async () => {
           try {
             await apiFetch(`/auth/role-applications/${btn.dataset.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'approved' }) });
+            showToast('Application Approved', 'The role application has been approved', 'success');
             loadRoleApplications();
           } catch (e) {
-            alert(e.message || 'Action failed');
+            showToast('Action Failed', e.message || 'Could not approve the application', 'error');
           }
         });
       });
@@ -1837,9 +2088,10 @@ if (document.getElementById("logoutBtn")) {
           if (!confirm('Reject this application?')) return;
           try {
             await apiFetch(`/auth/role-applications/${btn.dataset.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'rejected' }) });
+            showToast('Application Rejected', 'The role application has been rejected', 'success');
             loadRoleApplications();
           } catch (e) {
-            alert(e.message || 'Action failed');
+            showToast('Action Failed', e.message || 'Could not reject the application', 'error');
           }
         });
       });
@@ -1890,3 +2142,286 @@ if (document.getElementById("logoutBtn")) {
 function fmtDate(iso) {
   return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
 }
+
+// ── BULK SELECT HELPERS ─────────────────────────────────────────────────
+function updateBulkBar(prefix) {
+  const checked = document.querySelectorAll(`.${prefix}-checkbox:checked`);
+  const deleteBtn = document.getElementById(`${prefix}BulkDelete`);
+  const countEl  = document.getElementById(`${prefix}BulkCount`);
+  if (deleteBtn) deleteBtn.style.display = checked.length > 0 ? 'inline-flex' : 'none';
+  if (countEl)   countEl.textContent = checked.length > 0 ? `${checked.length} selected` : '';
+}
+
+async function bulkDelete(prefix, apiPath, reloadFn) {
+  const checked = [...document.querySelectorAll(`.${prefix}-checkbox:checked`)];
+  if (!checked.length) return;
+  if (!confirm(`Delete ${checked.length} item(s)? This cannot be undone.`)) return;
+  const ids = checked.map(cb => cb.dataset.id);
+  try {
+    // Delete one by one (bulk endpoint only exists for contacts)
+    await Promise.all(ids.map(id => apiFetch(`/${apiPath}/${id}`, { method: 'DELETE' })));
+    showToast('Deleted', `${ids.length} item(s) removed`, 'success');
+    reloadFn();
+  } catch(e) { showToast('Error', e.message, 'error'); }
+}
+
+// ── ANALYTICS ──────────────────────────────────────────────────────────────
+const anCharts = {};
+
+function destroyChart(key) {
+  if (anCharts[key]) { anCharts[key].destroy(); delete anCharts[key]; }
+}
+
+function getChartColors(isDark) {
+  return {
+    accent:   isDark ? '#3b82f6' : '#e8930a',
+    accent2:  isDark ? '#8b5cf6' : '#1B4F72',
+    accent3:  isDark ? '#10b981' : '#E8501A',
+    accent4:  isDark ? '#f59e0b' : '#2dd4bf',
+    grid:     isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)',
+    text:     isDark ? '#94a3b8' : '#666',
+    surface:  isDark ? '#1e293b' : '#e0e5ec',
+  };
+}
+
+async function loadAnalytics() {
+  const isDark = document.documentElement.classList.contains('dark');
+  const c = getChartColors(isDark);
+  const days = parseInt(document.getElementById('analyticsRange')?.value || '30', 10);
+
+  // Fetch all data in parallel
+  const [stats, chartData, allContacts, emailLogs] = await Promise.all([
+    apiFetch('/dashboard/stats'),
+    apiFetch('/dashboard/leads-chart'),
+    apiFetch('/dashboard/contacts?limit=1000'),
+    apiFetch('/dashboard/emails?limit=1000'),
+  ]);
+
+  const contacts = allContacts?.contacts || [];
+  const emails   = emailLogs?.emails || [];
+
+  // ── KPI Cards ──────────────────────────────────────────
+  const total = contacts.length;
+  const statusMap = {};
+  (stats.byStatus || []).forEach(s => { statusMap[s._id] = s.count; });
+  const converted = (statusMap.contacted || 0) + (statusMap.closed || 0);
+  const convRate  = total > 0 ? ((converted / total) * 100).toFixed(1) + '%' : '—';
+
+  const serviceCounts = {};
+  contacts.forEach(lead => { if (lead.serviceInterested) serviceCounts[lead.serviceInterested] = (serviceCounts[lead.serviceInterested] || 0) + 1; });
+  const topService = Object.entries(serviceCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || '—';
+
+  const countryCounts = {};
+  contacts.forEach(lead => { if (lead.country) countryCounts[lead.country] = (countryCounts[lead.country] || 0) + 1; });
+  const topCountry = Object.entries(countryCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || '—';
+
+  const budgets = contacts.map(lead => parseInt(lead.budget)).filter(n => !isNaN(n));
+  function fmtINR(val) {
+    if (val >= 10000000) return `₹${(val/10000000).toFixed(1)}Cr`;
+    if (val >= 100000)   return `₹${(val/100000).toFixed(1)}L`;
+    if (val >= 1000)     return `₹${(val/1000).toFixed(0)}K`;
+    return `₹${val.toLocaleString('en-IN')}`;
+  }
+  const totalBudget = budgets.length > 0 ? fmtINR(budgets.reduce((a, b) => a + b, 0)) : '—';
+  const avgBudget = budgets.length > 0 ? fmtINR(Math.round(budgets.reduce((a, b) => a + b, 0) / budgets.length)) : '—';
+
+  const sentEmails = emails.filter(e => e.status === 'sent').length;
+  const emailRate = emails.length > 0 ? ((sentEmails / emails.length) * 100).toFixed(0) + '%' : '—';
+
+  document.getElementById('an-totalLeads').textContent  = total;
+  document.getElementById('an-conversion').textContent  = convRate;
+  document.getElementById('an-topService').textContent  = topService;
+  document.getElementById('an-topCountry').textContent  = topCountry;
+  document.getElementById('an-avgBudget').textContent   = avgBudget;
+  document.getElementById('an-emailRate').textContent   = emailRate;
+
+  // ── Line chart: leads over time (last N days) ──────────
+  const now = new Date();
+  const cutoff = new Date(now);
+  cutoff.setDate(cutoff.getDate() - (days - 1));
+  cutoff.setHours(0, 0, 0, 0);
+
+  const dayMap = {};
+  for (let i = 0; i < days; i++) {
+    const d = new Date(cutoff);
+    d.setDate(d.getDate() + i);
+    dayMap[d.toISOString().slice(0, 10)] = 0;
+  }
+  contacts.forEach(lead => {
+    const key = new Date(lead.createdAt).toISOString().slice(0, 10);
+    if (dayMap[key] !== undefined) dayMap[key]++;
+  });
+
+  const lineLabels = Object.keys(dayMap).map(d => {
+    const dt = new Date(d);
+    return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  });
+  const lineData = Object.values(dayMap);
+
+  const startStr = Object.keys(dayMap)[0];
+  const endStr   = Object.keys(dayMap).slice(-1)[0];
+  const fmt = d => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  const dateRangeEl = document.getElementById('an-leadsDateRange');
+  if (dateRangeEl) dateRangeEl.textContent = `${fmt(startStr)} – ${fmt(endStr)}`;
+
+  destroyChart('line');
+  const lineCtx = document.getElementById('chartLeadsLine')?.getContext('2d');
+  if (lineCtx) {
+    const grad = lineCtx.createLinearGradient(0, 0, 0, 200);
+    grad.addColorStop(0, isDark ? 'rgba(59,130,246,0.3)' : 'rgba(232,147,10,0.25)');
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    anCharts.line = new Chart(lineCtx, {
+      type: 'line',
+      data: {
+        labels: lineLabels,
+        datasets: [{
+          label: 'Leads',
+          data: lineData,
+          borderColor: c.accent,
+          backgroundColor: grad,
+          borderWidth: 2.5,
+          pointBackgroundColor: c.accent,
+          pointRadius: 3,
+          pointHoverRadius: 6,
+          fill: true,
+          tension: 0.4,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+        scales: {
+          x: { grid: { color: c.grid }, ticks: { color: c.text, maxTicksLimit: 10, maxRotation: 0 } },
+          y: { grid: { color: c.grid }, ticks: { color: c.text, stepSize: 1 }, beginAtZero: true },
+        }
+      }
+    });
+  }
+
+  // ── Doughnut: leads by service ─────────────────────────
+  const serviceEntries = Object.entries(serviceCounts).sort((a, b) => b[1] - a[1]).slice(0, 7);
+  const palette = [c.accent, c.accent2, c.accent3, c.accent4,
+    '#f97316', '#a855f7', '#06b6d4'];
+
+  destroyChart('doughnut');
+  const dCtx = document.getElementById('chartServiceDoughnut')?.getContext('2d');
+  if (dCtx && serviceEntries.length) {
+    anCharts.doughnut = new Chart(dCtx, {
+      type: 'doughnut',
+      data: {
+        labels: serviceEntries.map(e => e[0]),
+        datasets: [{
+          data: serviceEntries.map(e => e[1]),
+          backgroundColor: palette,
+          borderColor: c.surface,
+          borderWidth: 3,
+          hoverOffset: 8,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, cutout: '68%',
+        plugins: { legend: { display: false }, tooltip: { callbacks: {
+          label: ctx => ` ${ctx.label}: ${ctx.parsed} (${((ctx.parsed / total) * 100).toFixed(1)}%)`
+        }}}
+      }
+    });
+    // Custom legend
+    const legend = document.getElementById('an-serviceLegend');
+    if (legend) {
+      legend.innerHTML = serviceEntries.map((e, i) => `
+        <div class="an-legend-item">
+          <span class="an-legend-dot" style="background:${palette[i]}"></span>
+          <span class="an-legend-label">${e[0]}</span>
+          <span class="an-legend-val">${e[1]}</span>
+        </div>`).join('');
+    }
+  }
+
+  // ── Bar: leads by status ───────────────────────────────
+  const statusColors = { new: c.accent, contacted: c.accent2, closed: c.accent3, proposal: c.accent4 };
+  const statusEntries = (stats.byStatus || []).filter(s => s._id);
+
+  destroyChart('statusBar');
+  const sbCtx = document.getElementById('chartStatusBar')?.getContext('2d');
+  if (sbCtx) {
+    anCharts.statusBar = new Chart(sbCtx, {
+      type: 'bar',
+      data: {
+        labels: statusEntries.map(s => s._id.charAt(0).toUpperCase() + s._id.slice(1)),
+        datasets: [{
+          label: 'Leads',
+          data: statusEntries.map(s => s.count),
+          backgroundColor: statusEntries.map(s => statusColors[s._id] || c.accent),
+          borderRadius: 8,
+          borderSkipped: false,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: c.text } },
+          y: { grid: { color: c.grid }, ticks: { color: c.text, stepSize: 1 }, beginAtZero: true },
+        }
+      }
+    });
+  }
+
+  // ── Bar: email activity ────────────────────────────────
+  const emailStats = stats.emailStats || {};
+  destroyChart('emailBar');
+  const ebCtx = document.getElementById('chartEmailBar')?.getContext('2d');
+  if (ebCtx) {
+    anCharts.emailBar = new Chart(ebCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Outgoing', 'Incoming', 'Auto-response', 'Sent', 'Failed', 'Pending'],
+        datasets: [{
+          label: 'Count',
+          data: [
+            emailStats.outgoing || 0,
+            emailStats.incoming || 0,
+            emailStats.autoResponses || 0,
+            emails.filter(e => e.status === 'sent').length,
+            emails.filter(e => e.status === 'failed').length,
+            emails.filter(e => e.status === 'pending').length,
+          ],
+          backgroundColor: [c.accent2, c.accent, c.accent4, '#10b981', '#ef4444', '#f59e0b'],
+          borderRadius: 8,
+          borderSkipped: false,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: c.grid }, ticks: { color: c.text, stepSize: 1 }, beginAtZero: true },
+          y: { grid: { display: false }, ticks: { color: c.text } },
+        }
+      }
+    });
+  }
+
+  // ── Country table ──────────────────────────────────────
+  const countryList = document.getElementById('an-countryList');
+  if (countryList) {
+    const top10 = Object.entries(countryCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    const maxVal = top10[0]?.[1] || 1;
+    countryList.innerHTML = top10.length
+      ? top10.map(([country, count]) => `
+          <div class="an-country-row">
+            <span class="an-country-name">${country}</span>
+            <div class="an-country-bar-wrap">
+              <div class="an-country-bar" style="width:${(count / maxVal) * 100}%"></div>
+            </div>
+            <span class="an-country-count">${count}</span>
+          </div>`).join('')
+      : '<p style="color:var(--text-secondary);padding:1rem">No country data yet</p>';
+  }
+}
+
+// Re-render charts on theme change (already handled by toggleClick, but also wire range change)
+document.getElementById('analyticsRange')?.addEventListener('change', () => {
+  if (document.getElementById('view-analytics')?.classList.contains('active')) loadAnalytics();
+});
+document.getElementById('analyticsRefreshBtn')?.addEventListener('click', () => loadAnalytics());

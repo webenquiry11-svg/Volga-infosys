@@ -28,15 +28,23 @@ const contactSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["new", "contacted", "closed"],
+      enum: ["new", "contacted", "proposal", "closed"],
       default: "new"
     },
     tags: {
       type: [String],
       default: []
     },
+    notes: {
+      type: String,
+      default: ""
+    },
     followUpDate: {
       type: Date
+    },
+    source: {
+      type: String,
+      default: "contact-form"
     },
     assignedTo: {
       type: mongoose.Schema.Types.ObjectId,

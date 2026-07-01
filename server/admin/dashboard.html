@@ -4,10 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Volga Dashboard</title>
-  <link rel="stylesheet" href="dashboard.css" />
+  <link rel="stylesheet" href="dashboard.css?v=6" />
 <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 </head>
 <body class="dash-page">
+  <!-- Mobile Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
   <aside class="sidebar">
     <div class="sidebar-logo">
@@ -30,6 +32,10 @@
     
     <nav class="sidebar-nav">
       <div class="nav-section-label">Main</div>
+      <a href="#" class="nav-item" data-view="analytics">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Analytics
+      </a>
       <a href="#" class="nav-item active" data-view="overview">
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
         Overview
@@ -84,6 +90,15 @@
   </aside>
 
   <main class="dash-main">
+
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
 
     <!-- OVERVIEW -->
     <section class="view active" id="view-overview">
@@ -343,8 +358,109 @@
     </div>
   </section>
 
+  <!-- ANALYTICS -->
+  <section class="view" id="view-analytics">
+    <div class="page-header">
+      <h1>Analytics</h1>
+      <div class="filter-row">
+        <select id="analyticsRange">
+          <option value="30">Last 30 days</option>
+          <option value="14">Last 14 days</option>
+          <option value="7">Last 7 days</option>
+          <option value="90">Last 90 days</option>
+        </select>
+        <button class="btn-save" id="analyticsRefreshBtn" type="button">↺ Refresh</button>
+      </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="stats-grid analytics-kpi">
+      <div class="stat-card">
+        <div class="stat-label">Total Leads</div>
+        <div class="stat-value" id="an-totalLeads">—</div>
+        <div class="stat-mini" id="an-leadsChange">All time</div>
+      </div>
+      <div class="stat-card accent-new">
+        <div class="stat-label">Conversion Rate</div>
+        <div class="stat-value" id="an-conversion">—</div>
+        <div class="stat-mini">Contacted + Closed / Total</div>
+      </div>
+      <div class="stat-card accent-contacted">
+        <div class="stat-label">Top Service</div>
+        <div class="stat-value an-small" id="an-topService">—</div>
+        <div class="stat-mini">Most requested</div>
+      </div>
+      <div class="stat-card accent-closed">
+        <div class="stat-label">Top Country</div>
+        <div class="stat-value an-small" id="an-topCountry">—</div>
+        <div class="stat-mini">Most leads from</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg Budget</div>
+        <div class="stat-value an-small" id="an-avgBudget">—</div>
+        <div class="stat-mini">Across all leads</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Email Sent Rate</div>
+        <div class="stat-value" id="an-emailRate">—</div>
+        <div class="stat-mini">Sent / Total emails</div>
+      </div>
+    </div>
+
+    <!-- Charts row 1: Line chart full width -->
+    <div class="an-chart-section">
+      <div class="an-chart-card an-full">
+        <div class="an-chart-header">
+          <span class="an-chart-title">Leads Over Time</span>
+          <span class="an-chart-sub" id="an-leadsDateRange"></span>
+        </div>
+        <div class="an-chart-wrap">
+          <canvas id="chartLeadsLine"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts row 2: Doughnut + Bar -->
+    <div class="an-chart-section an-two-col">
+      <div class="an-chart-card">
+        <div class="an-chart-header">
+          <span class="an-chart-title">Leads by Service</span>
+        </div>
+        <div class="an-chart-wrap an-doughnut-wrap">
+          <canvas id="chartServiceDoughnut"></canvas>
+        </div>
+        <div class="an-legend" id="an-serviceLegend"></div>
+      </div>
+      <div class="an-chart-card">
+        <div class="an-chart-header">
+          <span class="an-chart-title">Leads by Status</span>
+        </div>
+        <div class="an-chart-wrap">
+          <canvas id="chartStatusBar"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts row 3: Email breakdown + Country table -->
+    <div class="an-chart-section an-two-col">
+      <div class="an-chart-card">
+        <div class="an-chart-header">
+          <span class="an-chart-title">Email Activity</span>
+        </div>
+        <div class="an-chart-wrap">
+          <canvas id="chartEmailBar"></canvas>
+        </div>
+      </div>
+      <div class="an-chart-card">
+        <div class="an-chart-header">
+          <span class="an-chart-title">Top Countries</span>
+        </div>
+        <div class="an-country-list" id="an-countryList"></div>
+      </div>
+    </div>
+  </section>
+
     
-  </main>
 
   <!-- CASE STUDY MODAL -->
   <div class="modal-overlay" id="caseStudyModalOverlay">
@@ -612,6 +728,8 @@
     </div>
   </div>
 
+  <div id="toastContainer" class="toast-container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
   <script src="dashboard.js"></script>
 </body>
 </html>

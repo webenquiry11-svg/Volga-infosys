@@ -773,24 +773,54 @@
 </div>
 </div>
 
+
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
 const footer       = document.getElementById('volga-footer');
-
 const colLeft      = document.getElementById('col-left');
 const colRight     = document.getElementById('col-right');
 const colExtraLeft  = document.getElementById('col-extra-left');
 const colExtraRight = document.getElementById('col-extra-right');
 const footerBottom = document.getElementById('footer-bottom');
 
+if (footer && colLeft && colRight && colExtraLeft && colExtraRight && footerBottom) {
+  // Set initial state
+  gsap.set(colLeft,       { x: -30, opacity: 0 });
+  gsap.set(colRight,      { x:  30, opacity: 0 });
+  gsap.set(colExtraLeft,  { x: -20, opacity: 0 });
+  gsap.set(colExtraRight, { x:  20, opacity: 0 });
+  gsap.set(footerBottom,  { y:  20, opacity: 0 });
 
-gsap.set(colLeft,       { x: -30, opacity: 0 });
-gsap.set(colRight,      { x:  30, opacity: 0 });
-gsap.set(colExtraLeft,  { x: -20, opacity: 0 });
-gsap.set(colExtraRight, { x:  20, opacity: 0 });
-gsap.set(footerBottom,  { y:  20, opacity: 0 });
+  // Helper to show everything immediately
+  const showFooter = () => {
+    gsap.to(colLeft,       { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out' });
+    gsap.to(colRight,      { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.1 });
+    gsap.to(colExtraLeft,  { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.15 });
+    gsap.to(colExtraRight, { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.2 });
+    gsap.to(footerBottom,  { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.25 });
+  };
 
+  // Check if footer is already in viewport on load
+  const footerRect = footer.getBoundingClientRect();
+  const isInViewport = footerRect.top < window.innerHeight;
+  if (isInViewport) {
+    showFooter();
+  } else {
+    // Use ScrollTrigger to animate when footer enters view
+    ScrollTrigger.create({
+      trigger: footer,
+      start: 'top 90%',
+      onEnter: showFooter,
+      once: true
+    });
+  }
+
+  // Fallback: show everything after 1 second no matter what
+  setTimeout(showFooter, 1000);
+}
+
+// Keep balloon animation if it exists
 gsap.to(balloon, {
   y: 0, opacity: 1,
   ease: 'power3.out',
@@ -801,66 +831,8 @@ gsap.to(balloon, {
     scrub: 5,
   }
 });
-
-gsap.to(colLeft, {
-  x: 0, opacity: 1,
-  ease: 'power2.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 50%',
-    scrub: 3.5,
-  }
-});
-
-gsap.to(colExtraLeft, {
-  x: 0, opacity: 1,
-  ease: 'power2.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 55%',
-    scrub: 3,
-  }
-});
-
-gsap.to(colExtraRight, {
-  x: 0, opacity: 1,
-  ease: 'power2.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 55%',
-    scrub: 3,
-  }
-});
-
-gsap.to(colRight, {
-  x: 0, opacity: 1,
-  ease: 'power2.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 50%',
-    scrub: 3.5,
-  }
-});
-
-gsap.to(footerBottom, {
-  y: 0, opacity: 1,
-  ease: 'power2.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 60%',
-    scrub: 3,
-  }
-});
-
-
-
-
 </script>
+
 
 
   

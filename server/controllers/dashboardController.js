@@ -6,6 +6,18 @@ import CaseStudy from "../models/CaseStudy.js";
 import IndustryNews from "../models/IndustryNews.js";
 import ClientStory from "../models/ClientStory.js";
 import Note from "../models/Note.js";
+import ActivityLog from "../models/ActivityLog.js";
+import { sendEmail } from "../config/emailService.js";
+
+
+// ── Activity logging helper ─────────────────────────────────────────────────
+export async function logActivity(adminId, action, entity, entityId, details = "") {
+  try {
+    await ActivityLog.create({ adminId, action, entity, entityId, details });
+  } catch (err) {
+    console.error("logActivity error:", err.message);
+  }
+}
 
 
 export const getStats = async (req, res) => {
@@ -68,7 +80,6 @@ export const getStats = async (req, res) => {
 };
 
 export const getPublicStats = async (req, res) => {
-  // Get public facing stats for the website
   const [
     projectsCount, 
     caseStudiesCount, 
@@ -84,8 +95,8 @@ export const getPublicStats = async (req, res) => {
   ]);
 
   res.json({
-    solutionTypes: 10, // Static or can calculate unique from projects
-    industriesServed: 15, // Static or unique from projects/clients
+    solutionTypes: 10,
+    industriesServed: 15,
     projectsDelivered: projectsCount,
     blogsCount,
     caseStudiesCount,
@@ -132,15 +143,106 @@ export const getContacts = async (req, res) => {
 export const updateContact = async (req, res) => {
   const contact = await Contact.findByIdAndUpdate(req.params.id, req.body, { returnDocument: 'after' });
   if (!contact) return res.status(404).json({ message: "Not found" });
+
+  // Log status changes
+  if (req.body.status) {
+    await logActivity(req.user?._id, "status_update", "contact", contact._id,
+      `Status changed to ${req.body.status}`);
+  }
+
   res.json(contact);
 };
 
 export const deleteContact = async (req, res) => {
-  await Contact.findByIdAndDelete(req.params.id);
+  const contact = await Contact.findByIdAndDelete(req.params.id);
+  if (!contact) return res.status(404).json({ message: "Not found" });
+
+  await logActivity(req.user?._id, "delete", "contact", req.params.id,
+    `Deleted lead: ${contact.name}`);
+
   res.json({ message: "Deleted" });
 };
 
-// Notes Endpoints
+// ── Bulk delete contacts ────────────────────────────────────────────────────
+export const bulkDeleteContacts = async (req, res) => {
+  try {
+    const { ids } = req.body;
+    if (!ids || !Array.isArray(ids) || !ids.length) {
+      return res.status(400).json({ message: "No IDs provided" });
+    }
+    const result = await Contact.deleteMany({ _id: { $in: ids } });
+    await logActivity(req.user?._id, "bulk_delete", "contact", null,
+      `Bulk deleted ${result.deletedCount} leads`);
+    res.json({ message: `Deleted ${result.deletedCount} leads`, deletedCount: result.deletedCount });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// ── Update lead notes ────────────────────────────────────────────────────────
+export const updateContactNotes = async (req, res) => {
+  try {
+    const { notes, followUpDate } = req.body;
+    const update = {};
+    if (notes !== undefined) update.notes = notes;
+    if (followUpDate !== undefined) update.followUpDate = followUpDate || null;
+
+    const contact = await Contact.findByIdAndUpdate(
+      req.params.id,
+      update,
+      { new: true }
+    );
+    if (!contact) return res.status(404).json({ message: "Not found" });
+    res.json(contact);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// ── Quick reply email ────────────────────────────────────────────────────────
+export const replyToContact = async (req, res) => {
+  try {
+    const contact = await Contact.findById(req.params.id);
+    if (!contact) return res.status(404).json({ message: "Contact not found" });
+
+    const { subject, body } = req.body;
+    if (!subject || !body) {
+      return res.status(400).json({ message: "Subject and body are required" });
+    }
+
+    const result = await sendEmail({
+      to: contact.email,
+      subject,
+      html: `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
+        <div style="background:#013350;padding:16px 24px;border-radius:8px 8px 0 0;">
+          <span style="color:#fff;font-weight:bold;font-size:1.1rem;letter-spacing:2px;">VOLGA</span>
+        </div>
+        <div style="padding:24px;border:1px solid #e5e7eb;border-radius:0 0 8px 8px;">
+          ${body.replace(/\n/g, '<br>')}
+        </div>
+        <p style="color:#888;font-size:0.8rem;text-align:center;margin-top:12px;">
+          &copy; ${new Date().getFullYear()} VOLGA Infosys
+        </p>
+      </div>`,
+      text: body,
+      type: "outgoing",
+      contactFormId: contact._id
+    });
+
+    if (!result.success) {
+      return res.status(500).json({ message: result.error || "Email failed to send" });
+    }
+
+    await logActivity(req.user?._id, "email_reply", "contact", contact._id,
+      `Replied to ${contact.email}: ${subject}`);
+
+    res.json({ message: "Email sent", logId: result.logId });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// ── Notes Endpoints ─────────────────────────────────────────────────────────
 export const getNotes = async (req, res) => {
   try {
     const notes = await Note.find({ contactId: req.params.contactId }).sort({ createdAt: -1 });
@@ -155,7 +257,7 @@ export const addNote = async (req, res) => {
     const note = new Note({
       contactId: req.params.contactId,
       content: req.body.content,
-      author: req.user?._id // if auth is set up
+      author: req.user?._id
     });
     await note.save();
     res.status(201).json(note);
@@ -173,15 +275,13 @@ export const deleteNote = async (req, res) => {
   }
 };
 
-// Search Leads
+// ── Search Leads ────────────────────────────────────────────────────────────
 export const searchLeads = async (req, res) => {
   try {
     const { q, status, page = 1, limit = 20 } = req.query;
     const skip = (page - 1) * limit;
     const filter = {};
-    if (status) {
-      filter.status = status;
-    }
+    if (status) filter.status = status;
     if (q) {
       filter.$or = [
         { name: { $regex: q, $options: 'i' } },
@@ -198,19 +298,13 @@ export const searchLeads = async (req, res) => {
   }
 };
 
-// Export to CSV
+// ── Export to CSV ────────────────────────────────────────────────────────────
 export const exportLeads = async (req, res) => {
   try {
     const contacts = await Contact.find().sort({ createdAt: -1 });
     const headers = [
-      "Name",
-      "Email",
-      "Company",
-      "Country",
-      "Service Interested",
-      "Budget",
-      "Status",
-      "Created At"
+      "Name", "Email", "Company", "Country", "Service Interested",
+      "Budget", "Status", "Source", "Follow-up Date", "Created At"
     ];
     const csvRows = [headers.join(",")];
 
@@ -223,6 +317,8 @@ export const exportLeads = async (req, res) => {
         `"${(contact.serviceInterested || "").replace(/"/g, '""')}"`,
         `"${(contact.budget || "").replace(/"/g, '""')}"`,
         `"${(contact.status || "").replace(/"/g, '""')}"`,
+        `"${(contact.source || "").replace(/"/g, '""')}"`,
+        `"${contact.followUpDate ? contact.followUpDate.toISOString().slice(0,10) : ""}"`,
         `"${contact.createdAt.toISOString()}"`
       ];
       csvRows.push(row.join(","));
@@ -232,6 +328,91 @@ export const exportLeads = async (req, res) => {
     res.setHeader("Content-Type", "text/csv");
     res.setHeader("Content-Disposition", "attachment; filename=leads.csv");
     res.status(200).send(csvContent);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// ── Leads chart (last 30 days) ───────────────────────────────────────────────
+export const getLeadsChart = async (req, res) => {
+  try {
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now);
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 29);
+    thirtyDaysAgo.setHours(0, 0, 0, 0);
+
+    const data = await Contact.aggregate([
+      { $match: { createdAt: { $gte: thirtyDaysAgo } } },
+      {
+        $group: {
+          _id: {
+            $dateToString: { format: "%Y-%m-%d", date: "$createdAt" }
+          },
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+
+    // Fill in missing days with 0
+    const map = {};
+    data.forEach(d => { map[d._id] = d.count; });
+
+    const result = [];
+    for (let i = 0; i < 30; i++) {
+      const d = new Date(thirtyDaysAgo);
+      d.setDate(d.getDate() + i);
+      const key = d.toISOString().slice(0, 10);
+      result.push({ date: key, count: map[key] || 0 });
+    }
+
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// ── New leads count (for notification bell) ──────────────────────────────────
+export const getNewLeadsCount = async (req, res) => {
+  try {
+    const { since } = req.query;
+    const filter = { status: "new" };
+    if (since) {
+      const sinceDate = new Date(parseInt(since, 10));
+      if (!isNaN(sinceDate)) filter.createdAt = { $gt: sinceDate };
+    }
+    const count = await Contact.countDocuments(filter);
+    res.json({ count });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// ── Activity log ─────────────────────────────────────────────────────────────
+export const getActivityLog = async (req, res) => {
+  try {
+    const { page = 1, limit = 30 } = req.query;
+    const skip = (page - 1) * limit;
+    const [logs, total] = await Promise.all([
+      ActivityLog.find()
+        .sort({ createdAt: -1 })
+        .skip(Number(skip))
+        .limit(Number(limit))
+        .populate("adminId", "name email"),
+      ActivityLog.countDocuments()
+    ]);
+    res.json({ logs, total, pages: Math.ceil(total / limit) });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// ── Pipeline (kanban) contacts ────────────────────────────────────────────────
+export const getPipelineContacts = async (req, res) => {
+  try {
+    const contacts = await Contact.find({}, "name email serviceInterested status createdAt")
+      .sort({ createdAt: -1 });
+    res.json(contacts);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

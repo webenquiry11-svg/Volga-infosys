@@ -19,7 +19,8 @@ const blogSchema = new mongoose.Schema({
   featured:     { type: Boolean, default: false },
   order:        { type: Number, default: 0 },
   seoTitle:     { type: String },
-  seoDescription: { type: String }
+  seoDescription: { type: String },
+  publishAt:    { type: Date }
 }, { timestamps: true });
 
 // Pre-save hook to generate and update slug

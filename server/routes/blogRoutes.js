@@ -7,7 +7,8 @@ import {
   getAdminBlog,
   createBlog, 
   updateBlog, 
-  deleteBlog 
+  deleteBlog,
+  duplicateBlog
 } from '../controllers/blogController.js';
 
 const router = express.Router();
@@ -22,6 +23,7 @@ router.get('/:id', getBlog);
 
 // Mutating routes
 router.post('/', protect, authorize('admin', 'editor'), createBlog);
+router.post('/:id/duplicate', protect, authorize('admin', 'editor'), duplicateBlog);
 router.put('/:id', protect, authorize('admin', 'editor'), updateBlog);
 router.patch('/:id', protect, authorize('admin', 'editor'), updateBlog); // alias
 router.delete('/:id', protect, authorize('admin'), deleteBlog);

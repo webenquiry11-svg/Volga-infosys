@@ -19,7 +19,7 @@
   /* ── Image / face data — swap with your real images ─────────── */
   const IMAGES = [
     { src: "face1.jpg",  label: "INTRO"   },
-    { src: "hill-dark.png",     label: "DEFINE"  },
+    { src: "face2.png",     label: "DEFINE"  },
     { src: "street-dark.png",   label: "SHAPE"     },
     { src: "sky-dark.png",      label: "BUILD"    },
     { src: "tower-dark.png",    label: "LIVE"     },
@@ -79,7 +79,7 @@
 
   /* ── 3D Particles System ─────────────────────────────────────── */
   const particles = [];
-  const PARTICLE_COUNT = 100;
+  const PARTICLE_COUNT = 50;
   
   function createParticles() {
     if (!particlesContainer) return;
@@ -226,8 +226,28 @@ cards.forEach(c => io.observe(c));
   /* ── Animation Loop ──────────────────────────────────────────── */
   let scrollProgress = 0;
   let lastTime = performance.now();
-  
+  let animationFrameId = null;
+  let isSectionVisible = false;
+
+  // Check if section is visible
+  function checkVisibility() {
+    const rect = wrap.getBoundingClientRect();
+    isSectionVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    if (isSectionVisible && !animationFrameId) {
+      animate(performance.now());
+    }
+  }
+
+  window.addEventListener("scroll", checkVisibility, { passive: true });
+  window.addEventListener("resize", checkVisibility, { passive: true });
+  checkVisibility(); // Initial check
+
   function animate(time) {
+    if (!isSectionVisible) {
+      animationFrameId = null;
+      return;
+    }
+    
     // Smooth mouse tilt
     mouseX = lerp(mouseX, targetMouseX, 0.08);
     mouseY = lerp(mouseY, targetMouseY, 0.08);
@@ -241,7 +261,7 @@ cards.forEach(c => io.observe(c));
     updateHUD(scrollProgress);
     updateParticles(time, scrollProgress);
     
-    requestAnimationFrame(animate);
+    animationFrameId = requestAnimationFrame(animate);
   }
 
   /* ── Dot click → scroll inner scroller ──────────────────────── */
@@ -311,6 +331,5 @@ cards.forEach(c => io.observe(c));
   createParticles();
   setCubeTransform(0);
   updateHUD(0);
-  requestAnimationFrame(animate);
 
 })();

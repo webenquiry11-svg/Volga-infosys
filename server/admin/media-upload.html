@@ -51,6 +51,10 @@
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 8l9 6 9-6" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 8v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         Email Logs
       </a>
+      <a href="dashboard.html#settings" class="nav-item">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
+        Settings
+      </a>
     </nav>
     <div class="sidebar-footer">
       <button class="btn-logout" id="logoutBtn">Sign Out</button>
@@ -80,7 +84,51 @@
     <div class="media-grid" id="mediaGrid"></div>
   </main>
 
+  <div id="toastContainer" class="toast-container"></div>
+
   <script>
+    // Toast Notification System
+    function showToast(title, message = '', type = 'info', duration = 5000) {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+
+      const icons = {
+        success: '✓',
+        error: '✕',
+        warning: '⚠',
+        info: 'ℹ'
+      };
+
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.innerHTML = `
+        <span class="toast-icon">${icons[type]}</span>
+        <div class="toast-content">
+          <div class="toast-title">${title}</div>
+          ${message ? `<div class="toast-message">${message}</div>` : ''}
+        </div>
+        <button class="toast-close" aria-label="Close toast">&times;</button>
+      `;
+
+      container.appendChild(toast);
+
+      const closeBtn = toast.querySelector('.toast-close');
+      closeBtn.addEventListener('click', () => removeToast(toast));
+
+      let timer;
+      if (duration > 0) {
+        timer = setTimeout(() => removeToast(toast), duration);
+      }
+
+      function removeToast(el) {
+        if (timer) clearTimeout(timer);
+        el.classList.add('hiding');
+        el.addEventListener('animationend', () => {
+          if (el.parentNode) el.parentNode.removeChild(el);
+        });
+      }
+    }
+
     async function loadMedia() {
       const res = await apiFetch('/media');
       const items = res.data || res || [];
@@ -99,7 +147,7 @@
 
     function copyUrl(url) {
       navigator.clipboard.writeText(url).then(() => {
-        alert('URL copied to clipboard!');
+        showToast('URL Copied', 'The image URL has been copied to clipboard', 'success');
       });
     }
 
@@ -107,6 +155,7 @@
       const file = document.getElementById('media-file').files[0];
       if (!file) {
         document.getElementById('formError').textContent = 'Please select a file to upload.';
+        showToast('Validation Error', 'Please select a file to upload', 'warning');
         return;
       }
       const saveBtn = document.getElementById('saveBtn');
@@ -117,10 +166,12 @@
         const formData = new FormData();
         formData.append('file', file);
         await apiFetch('/media/upload', { method: 'POST', body: formData });
+        showToast('Upload Successful', 'The image has been uploaded successfully', 'success');
         loadMedia();
         document.getElementById('media-file').value = '';
       } catch (e) {
         document.getElementById('formError').textContent = e.message || 'Upload failed.';
+        showToast('Upload Failed', e.message || 'Could not upload the image', 'error');
       } finally {
         saveBtn.textContent = 'Upload';
         saveBtn.disabled = false;

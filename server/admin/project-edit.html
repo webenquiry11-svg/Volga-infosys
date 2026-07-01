@@ -5,198 +5,223 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Project — Volga Admin</title>
   <link rel="stylesheet" href="dashboard.css" />
-  <style>
-    .edit-layout{display:grid;grid-template-columns:1fr 320px;gap:1.5rem;margin-top:1.8rem;align-items:start}
-    @media(max-width:1000px){.edit-layout{grid-template-columns:1fr}}
-    .edit-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem;box-shadow:var(--shadow);margin-bottom:1.2rem}
-    .edit-card-title{font-family:var(--mono);font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--c4);border-left:3px solid var(--c4);padding-left:.6rem;margin-bottom:1.2rem}
-    .cover-preview-wrap{position:relative;margin-top:.7rem}
-    .cover-preview-wrap img{width:100%;border-radius:8px;object-fit:cover;max-height:180px;display:block}
-    .cover-preview-wrap .remove-img{position:absolute;top:6px;right:6px;background:rgba(163,81,57,.85);color:#fff;border:none;border-radius:6px;padding:3px 8px;font-size:.7rem;cursor:pointer;font-family:var(--mono)}
-    .upload-or{display:flex;align-items:center;gap:.7rem;margin-bottom:.5rem}
-    .upload-or span{font-family:var(--mono);font-size:.6rem;color:var(--muted);white-space:nowrap}
-    .upload-or hr{flex:1;border:none;border-top:1px solid var(--border)}
-    .char-counter{font-family:var(--mono);font-size:.62rem;color:var(--muted);text-align:right;margin-top:3px}
-    .char-counter.warn{color:#FFB162}.char-counter.over{color:#ff7b7b}
-    @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-  </style>
 </head>
 <body class="dash-page">
+
   <aside class="sidebar">
-    <div class="sidebar-logo"><div class="logo-dot">V</div>VOLGA<span>ADMIN</span></div>
+    <div class="sidebar-logo">
+      <div class="logo-dot">V</div>
+      VOLGA<span>ADMIN</span>
+    </div>
     <nav class="sidebar-nav">
       <div class="nav-section-label">Main</div>
-      <a href="dashboard.html" class="nav-item"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Overview</a>
-      <a href="dashboard.html#leads" class="nav-item"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 11-8 0 4 4 0 018 0z"/></svg>Leads</a>
-      <a href="dashboard.html#portfolio" class="nav-item active"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 21h8M12 17v4"/></svg>Portfolio</a>
-      <a href="dashboard.html#clientstories" class="nav-item"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 10l5-4 5 4" stroke-linecap="round" stroke-linejoin="round"></path></svg>Client Stories</a>
-      <a href="dashboard.html#blog" class="nav-item"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>Blog</a>
-      <a href="dashboard.html#casestudies" class="nav-item"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h11.5L20 5.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-1.5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Case Studies</a>
-      <a href="dashboard.html#industrynews" class="nav-item"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Industry News</a>
-      <a href="dashboard.html#medialibrary" class="nav-item"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>Media Library</a>
-      <a href="dashboard.html#emaillogs" class="nav-item"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 8l9 6 9-6" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 8v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Email Logs</a>
+      <a href="dashboard.html" class="nav-item">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Overview
+      </a>
+      <a href="dashboard.html#leads" class="nav-item">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        Leads
+      </a>
+      <a href="dashboard.html#portfolio" class="nav-item active">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 21h8M12 17v4"/></svg>
+        Portfolio
+      </a>
+      <a href="dashboard.html#clientstories" class="nav-item">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 10l5-4 5 4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        Client Stories
+      </a>
+      <a href="dashboard.html#blog" class="nav-item">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        Blog
+      </a>
+      <a href="dashboard.html#casestudies" class="nav-item">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h11.5L20 5.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-1.5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        Case Studies
+      </a>
+      <a href="dashboard.html#industrynews" class="nav-item">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+        Industry News
+      </a>
+      <a href="dashboard.html#medialibrary" class="nav-item">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        Media Library
+      </a>
+      <a href="dashboard.html#emaillogs" class="nav-item">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 8l9 6 9-6" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 8v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        Email Logs
+      </a>
+      <a href="dashboard.html#settings" class="nav-item">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
+        Settings
+      </a>
     </nav>
-    <div class="sidebar-footer"><button class="btn-logout" id="logoutBtn">Sign Out</button></div>
+    <div class="sidebar-footer">
+      <button class="btn-logout" id="logoutBtn">Sign Out</button>
+    </div>
   </aside>
+
   <main class="dash-main">
     <div class="page-header">
-      <div style="display:flex;gap:10px;align-items:center;">
-        <a href="dashboard.html" style="text-decoration:none;color:var(--text2);display:flex;align-items:center;padding:6px;border-radius:8px;" onmouseover="this.style.background='rgba(255,177,98,0.1)'" onmouseout="this.style.background='transparent'">
+      <div style="display:flex; gap:10px; align-items:center;">
+        <a href="dashboard.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         </a>
-        <div>
-          <div style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:2px;">Portfolio</div>
-          <h1 id="pageTitle" style="font-size:1.5rem;font-weight:800;letter-spacing:-0.02em;">Add Project</h1>
-        </div>
+        <h1 id="pageTitle">Add Project</h1>
       </div>
-      <div style="display:flex;gap:10px;align-items:center;">
-        <button class="btn-delete" id="deleteBtn" style="display:none"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right:4px;"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>Delete</button>
-        <button class="btn-save" id="saveBtn"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right:5px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save Project</button>
+      <div style="display:flex; gap:10px;">
+        <button class="btn-delete" id="deleteBtn" style="display:none">Delete</button>
+        <button class="btn-save" id="saveBtn">Save Project</button>
       </div>
     </div>
-    <div class="edit-layout">
-      <!-- LEFT -->
-      <div>
-        <div class="edit-card proj-form">
-          <div class="edit-card-title">Project Details</div>
-          <div class="proj-form-row">
-            <div class="field"><label for="pf-title">Title Line 1 <span style="color:#ff7b7b">*</span></label><input id="pf-title" placeholder="e.g. AR FURNITURE"/></div>
-            <div class="field"><label for="pf-title2">Title Line 2</label><input id="pf-title2" placeholder="e.g. CONFIGURATOR"/></div>
-          </div>
-          <div class="proj-form-row">
-            <div class="field"><label for="pf-tag">Category / Tag</label><input id="pf-tag" placeholder="e.g. Virtual Reality"/></div>
-            <div class="field"><label for="pf-place">Location</label><input id="pf-place" placeholder="e.g. UAE — Dubai"/></div>
-          </div>
-        </div>
-        <div class="edit-card proj-form">
-          <div class="edit-card-title"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:inline;margin-right:5px;vertical-align:middle;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Description</div>
-          <div class="field" style="margin-bottom:0;">
-            <textarea id="pf-desc" rows="6" placeholder="Short project description shown on the portfolio page…" maxlength="500"></textarea>
-            <div class="char-counter" id="pf-desc-count">0 / 500</div>
-          </div>
-        </div>
+
+    <div class="proj-form" style="max-width:600px; margin-top:2rem;">
+      <div class="proj-form-row">
+        <div class="field"><label for="pf-place">Place / Location</label><input id="pf-place" placeholder="e.g. UAE — Dubai" /></div>
+        <div class="field"><label for="pf-tag">Tag / Category</label><input id="pf-tag" placeholder="e.g. Virtual Reality" /></div>
       </div>
-      <!-- RIGHT -->
-      <div>
-        <div class="edit-card proj-form">
-          <div class="edit-card-title"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:inline;margin-right:5px;vertical-align:middle;"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Project Image</div>
-          <div id="pf-cover-preview" class="cover-preview-wrap" style="display:none;"><img id="pf-cover-img" src="" alt="Preview"/><button class="remove-img" id="removeCoverBtn">✕ Remove</button></div>
-          <div class="field" style="margin-bottom:.6rem;"><label for="pf-img-file">Upload File</label><input id="pf-img-file" type="file" accept="image/*"/><div id="uploadStatus" style="font-family:var(--mono);font-size:.65rem;color:var(--muted);margin-top:4px;"></div></div>
-          <div class="upload-or"><hr/><span>OR PASTE URL</span><hr/></div>
-          <div class="field" style="margin-bottom:0;"><label for="pf-image">Image URL</label><input id="pf-image" placeholder="https://…"/></div>
-        </div>
-        <div class="edit-card proj-form">
-          <div class="edit-card-title">Settings</div>
-          <div class="field" style="margin-bottom:0;"><label for="pf-order">Display Order</label><input id="pf-order" type="number" placeholder="0" min="0"/></div>
-        </div>
-        <div class="edit-card" style="padding:1.2rem 1.6rem;">
-          <div id="formError" style="font-family:var(--mono);font-size:.72rem;color:#ff7b7b;min-height:1rem;margin-bottom:.9rem;display:none;padding:.6rem .8rem;background:rgba(255,123,123,.08);border:1px solid rgba(255,123,123,.2);border-radius:6px;"></div>
-          <button class="btn-save" id="saveBtn2" style="width:100%;justify-content:center;display:flex;align-items:center;gap:6px;padding:.75rem;"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save Project</button>
-          <div style="text-align:center;margin-top:.6rem;"><a href="dashboard.html#portfolio" style="font-family:var(--mono);font-size:.62rem;color:var(--muted);text-decoration:underline;">Cancel &amp; go back</a></div>
-        </div>
+      <div class="proj-form-row">
+        <div class="field"><label for="pf-title">Title Line 1</label><input id="pf-title" placeholder="e.g. AR FURNITURE" /></div>
+        <div class="field"><label for="pf-title2">Title Line 2</label><input id="pf-title2" placeholder="e.g. CONFIGURATOR" /></div>
       </div>
+      <div class="field"><label for="pf-desc">Description</label><textarea id="pf-desc" rows="3" placeholder="Short project description…"></textarea></div>
+      <div class="field"><label for="pf-image">Image URL</label><input id="pf-image" placeholder="https://…" /></div>
+      <div class="field"><label for="pf-order">Order (display position)</label><input id="pf-order" type="number" placeholder="0" /></div>
+      <div id="formError" class="proj-form-error"></div>
     </div>
   </main>
+
+  <div id="toastContainer" class="toast-container"></div>
+
   <script>
-    const API = window.location.origin + '/api';
-    async function apiFetch(endpoint, opts = {}) {
-      const url = API + endpoint; const headers = opts.headers || {};
-      const token = localStorage.getItem('volgaToken');
-      if (token) headers['Authorization'] = 'Bearer ' + token;
-      const res = await fetch(url, { ...opts, headers, credentials: 'include' });
-      if (res.status === 401) { localStorage.removeItem('volgaToken'); window.location.href = 'index.html'; throw new Error('Unauthorized'); }
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Request failed');
-      return data;
+    // Toast Notification System
+    function showToast(title, message = '', type = 'info', duration = 5000) {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+
+      const icons = {
+        success: '✓',
+        error: '✕',
+        warning: '⚠',
+        info: 'ℹ'
+      };
+
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.innerHTML = `
+        <span class="toast-icon">${icons[type]}</span>
+        <div class="toast-content">
+          <div class="toast-title">${title}</div>
+          ${message ? `<div class="toast-message">${message}</div>` : ''}
+        </div>
+        <button class="toast-close" aria-label="Close toast">&times;</button>
+      `;
+
+      container.appendChild(toast);
+
+      const closeBtn = toast.querySelector('.toast-close');
+      closeBtn.addEventListener('click', () => removeToast(toast));
+
+      let timer;
+      if (duration > 0) {
+        timer = setTimeout(() => removeToast(toast), duration);
+      }
+
+      function removeToast(el) {
+        if (timer) clearTimeout(timer);
+        el.classList.add('hiding');
+        el.addEventListener('animationend', () => {
+          if (el.parentNode) el.parentNode.removeChild(el);
+        });
+      }
     }
 
-    let editingId = null, coverImage = null;
-    const id = new URLSearchParams(window.location.search).get('id');
-
-    function showError(msg) { const el = document.getElementById('formError'); el.textContent = msg; el.style.display = msg ? 'block' : 'none'; }
-    function setSaving(s) {
-      [document.getElementById('saveBtn'), document.getElementById('saveBtn2')].forEach(btn => {
-        if (!btn) return; btn.disabled = s;
-        btn.innerHTML = s
-          ? '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right:5px;animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>Saving…'
-          : '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-right:5px"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save Project';
-      });
-    }
-    function updateCount(el, cid, max) {
-      const n = el.value.length; const c = document.getElementById(cid);
-      c.textContent = n + ' / ' + max;
-      c.className = 'char-counter' + (n > max ? ' over' : n > max * 0.85 ? ' warn' : '');
-    }
-    function previewImg(url) { if (!url) return; coverImage = url; document.getElementById('pf-cover-img').src = url; document.getElementById('pf-cover-preview').style.display = 'block'; }
-    function removeImg() { coverImage = null; document.getElementById('pf-image').value = ''; document.getElementById('pf-cover-img').src = ''; document.getElementById('pf-cover-preview').style.display = 'none'; document.getElementById('pf-img-file').value = ''; }
+    let editingId = null;
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
 
     async function init() {
       if (id) {
         editingId = id;
         document.getElementById('pageTitle').textContent = 'Edit Project';
         document.getElementById('deleteBtn').style.display = 'inline-flex';
-        try {
-          const res = await apiFetch('/projects/' + id);
-          const p = res.data || res;
-          document.getElementById('pf-title').value = p.title || '';
-          document.getElementById('pf-title2').value = p.title2 || '';
-          document.getElementById('pf-tag').value = p.tag || '';
-          document.getElementById('pf-place').value = p.place || '';
-          document.getElementById('pf-desc').value = p.description || '';
-          document.getElementById('pf-order').value = p.order ?? 0;
-          const img = p.image || ''; if (img) { document.getElementById('pf-image').value = img; previewImg(img); }
-          updateCount(document.getElementById('pf-desc'), 'pf-desc-count', 500);
-        } catch(e) { showError('Could not load: ' + e.message); }
+        const res = await apiFetch(`/projects/${id}`);
+        const project = res.data || res;
+        document.getElementById('pf-place').value = project.place || '';
+        document.getElementById('pf-tag').value = project.tag || '';
+        document.getElementById('pf-title').value = project.title || '';
+        document.getElementById('pf-title2').value = project.title2 || '';
+        document.getElementById('pf-desc').value = project.description || '';
+        document.getElementById('pf-image').value = project.image || '';
+        document.getElementById('pf-order').value = project.order ?? 0;
       }
     }
 
-    document.getElementById('pf-img-file').addEventListener('change', async (e) => {
-      const file = e.target.files[0]; if (!file) return;
-      const st = document.getElementById('uploadStatus'); st.textContent = 'Uploading…'; st.style.color = 'var(--muted)';
-      const reader = new FileReader();
-      reader.onload = ev => { document.getElementById('pf-cover-img').src = ev.target.result; document.getElementById('pf-cover-preview').style.display = 'block'; };
-      reader.readAsDataURL(file);
+    document.getElementById('saveBtn').addEventListener('click', async () => {
+      const place = document.getElementById('pf-place').value.trim();
+      const tag = document.getElementById('pf-tag').value.trim();
+      const title = document.getElementById('pf-title').value.trim();
+      const description = document.getElementById('pf-desc').value.trim();
+
+      if (!title) {
+        document.getElementById('formError').textContent = 'Title is required.';
+        showToast('Validation Error', 'Title is required', 'warning');
+        return;
+      }
+
+      const title2 = document.getElementById('pf-title2').value.trim();
+      const image = document.getElementById('pf-image').value.trim();
+      const order = parseInt(document.getElementById('pf-order').value) || 0;
+
+      const body = { place, tag, title, title2, description, image, order };
+
+      const saveBtn = document.getElementById('saveBtn');
+      saveBtn.textContent = 'Saving...';
+      saveBtn.disabled = true;
+      document.getElementById('formError').textContent = '';
       try {
-        const fd = new FormData(); fd.append('file', file);
-        const r = await apiFetch('/media/upload', { method: 'POST', body: fd });
-        const d = r.data || r; coverImage = d.url;
-        document.getElementById('pf-image').value = coverImage;
-        document.getElementById('pf-cover-img').src = coverImage;
-        st.textContent = '✓ Uploaded'; st.style.color = '#6dbf8a';
-      } catch(err) { st.textContent = '✕ ' + err.message; st.style.color = '#ff7b7b'; }
+        if (editingId) {
+          await apiFetch(`/projects/${editingId}`, { method: 'PATCH', headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+          showToast('Project Updated', 'The project has been updated successfully', 'success');
+        } else {
+          await apiFetch('/projects', { method: 'POST', headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+          showToast('Project Added', 'The project has been added successfully', 'success');
+        }
+        setTimeout(() => { window.location.href = 'dashboard.html#portfolio'; }, 1000);
+      } catch (e) {
+        document.getElementById('formError').textContent = e.message || 'Save failed.';
+        showToast('Save Failed', e.message || 'Could not save the project', 'error');
+      } finally {
+        saveBtn.textContent = 'Save Project';
+        saveBtn.disabled = false;
+      }
     });
 
-    async function handleSave() {
-      const title = document.getElementById('pf-title').value.trim();
-      if (!title) { showError('Title is required.'); document.getElementById('pf-title').focus(); return; }
-      const body = {
-        title,
-        title2: document.getElementById('pf-title2').value.trim(),
-        tag: document.getElementById('pf-tag').value.trim(),
-        place: document.getElementById('pf-place').value.trim(),
-        description: document.getElementById('pf-desc').value.trim(),
-        image: document.getElementById('pf-image').value.trim() || coverImage || '',
-        order: parseInt(document.getElementById('pf-order').value) || 0
-      };
-      showError(''); setSaving(true);
-      try {
-        if (editingId) await apiFetch('/projects/' + editingId, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-        else await apiFetch('/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-        window.location.href = 'dashboard.html#portfolio';
-      } catch(e) { showError(e.message || 'Save failed.'); } finally { setSaving(false); }
-    }
-
-    document.getElementById('saveBtn').addEventListener('click', handleSave);
-    document.getElementById('saveBtn2').addEventListener('click', handleSave);
-    document.getElementById('pf-desc').addEventListener('input', function() { updateCount(this, 'pf-desc-count', 500); });
-    document.getElementById('pf-image').addEventListener('input', function() { previewImg(this.value); });
-    document.getElementById('removeCoverBtn').addEventListener('click', removeImg);
     document.getElementById('deleteBtn').addEventListener('click', async () => {
       if (!editingId || !confirm('Delete this project?')) return;
-      try { await apiFetch('/projects/' + editingId, { method: 'DELETE' }); window.location.href = 'dashboard.html#portfolio'; }
-      catch(e) { showError(e.message); }
+      try {
+        await apiFetch(`/projects/${editingId}`, { method: 'DELETE' });
+        showToast('Project Deleted', 'The project has been deleted', 'success');
+        setTimeout(() => { window.location.href = 'dashboard.html#portfolio'; }, 1000);
+      } catch (e) {
+        showToast('Delete Failed', e.message || 'Could not delete the project', 'error');
+      }
     });
-    document.getElementById('logoutBtn').addEventListener('click', () => { localStorage.removeItem('volgaToken'); window.location.href = 'index.html'; });
+
+    // Init
+    const API = window.location.origin + '/api';
+    async function apiFetch(endpoint, opts = {}) {
+      const url = API + endpoint;
+      const headers = opts.headers || {};
+      const token = localStorage.getItem('token');
+      if (token) headers['Authorization'] = 'Bearer ' + token;
+      const res = await fetch(url, { ...opts, headers, credentials: 'include' });
+      if (res.status === 401) { localStorage.removeItem('token'); window.location.href = 'login.html'; throw new Error('Unauthorized'); }
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Request failed');
+      return data;
+    }
+
     init();
   </script>
 </body>

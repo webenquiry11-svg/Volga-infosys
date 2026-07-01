@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -1135,7 +1135,7 @@
       </div>
       <div class="mega-highlight">
         <div class="mega-highlight-title">Full-Cycle Delivery</div>
-        <div class="mega-highlight-sub">From concept to deployment — we handle every stage of your XR project.</div>
+        <div class="mega-highlight-sub">From concept to deployment ï¿½ we handle every stage of your XR project.</div>
         <a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
             <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
               stroke-linejoin="round" />
@@ -1280,7 +1280,7 @@
       <div class="c2-left">
         <div class="c2-left-eyebrow">GET IN TOUCH</div>
         <h2 class="c2-title">Let's build<br><span>something immersive together</span></h2>
-        <p class="c2-desc">Tell us about your project and we'll come back with ideas, a timeline, and an honest quote —
+        <p class="c2-desc">Tell us about your project and we'll come back with ideas, a timeline, and an honest quote ï¿½
           no pressure, no jargon.</p>
 
         <div class="c2-status">
@@ -1300,14 +1300,14 @@
             <div class="c2-info-icon"><i class="fas fa-map-marker-alt"></i></div>
             <div class="c2-info-content">
               <h4>BASED IN</h4>
-              <p>Ludhiana, Punjab — working globally</p>
+              <p>Ludhiana, Punjab ï¿½ working globally</p>
             </div>
           </div>
           <div class="c2-info-item">
             <div class="c2-info-icon"><i class="fas fa-clock"></i></div>
             <div class="c2-info-content">
               <h4>WORKING HOURS</h4>
-              <p>Mon – Fri, 9am – 6pm IST</p>
+              <p>Mon ï¿½ Fri, 9am ï¿½ 6pm IST</p>
             </div>
           </div>
         </div>
@@ -1359,19 +1359,19 @@
             </div>
 
             <div class="c2-form-group">
-              <label class="c2-form-label" for="budgetRange">ESTIMATED BUDGET</label>
+              <label class="c2-form-label" for="budgetRange">ESTIMATED BUDGET (INR)</label>
               <div class="c2-budget-slider">
                 <div class="c2-budget-header">
-                  <span class="c2-budget-val" id="budgetVal">$3,000</span>
+                  <span class="c2-budget-val" id="budgetVal">â‚¹5,00,000</span>
                   <span class="c2-budget-hint">Drag to set range</span>
                 </div>
-                <input type="range" name="budget" min="1000" max="50000" step="1000" value="3000" id="budgetRange">
+                <input type="range" name="budget" min="50000" max="5000000" step="50000" value="500000" id="budgetRange">
                 <div class="c2-budget-labels">
-                  <span>$1k</span>
+                  <span>â‚¹50K</span>
                   <span></span>
                   <span></span>
                   <span></span>
-                  <span>$50k+</span>
+                  <span>â‚¹50L+</span>
                 </div>
               </div>
             </div>
@@ -1529,10 +1529,17 @@
         const budgetVal = document.getElementById('budgetVal');
 
         if (budgetRange && budgetVal) {
+          function formatINR(val) {
+            if (val >= 10000000) return `â‚¹${(val/10000000).toFixed(1)}Cr+`;
+            if (val >= 100000)   return `â‚¹${(val/100000).toFixed(1)}L${val >= 5000000 ? '+' : ''}`;
+            if (val >= 1000)     return `â‚¹${(val/1000).toFixed(0)}K`;
+            return `â‚¹${val.toLocaleString('en-IN')}`;
+          }
           budgetRange.addEventListener('input', (e) => {
-            const val = parseInt(e.target.value);
-            budgetVal.textContent = `$${val.toLocaleString()}${val >= 50000 ? '+' : ''}`;
+            budgetVal.textContent = formatINR(parseInt(e.target.value));
           });
+          // Set initial display
+          budgetVal.textContent = formatINR(parseInt(budgetRange.value));
         }
 
         // Contact form V2 submit
@@ -1553,6 +1560,7 @@
               serviceInterested: contactFormV2.querySelector('[name="service"]').value,
               budget: contactFormV2.querySelector('[name="budget"]').value,
               message: contactFormV2.querySelector('[name="message"]').value,
+              source: contactFormV2.querySelector('[name="source"]') ? contactFormV2.querySelector('[name="source"]').value : 'contact-form',
             };
 
             try {
@@ -1567,11 +1575,11 @@
                 contactFormV2.reset();
                 setTimeout(() => { btn.innerHTML = originalHTML; btn.disabled = false; }, 3500);
               } else {
-                btn.innerHTML = 'Failed — Try Again';
+                btn.innerHTML = 'Failed ï¿½ Try Again';
                 btn.disabled = false;
               }
             } catch (err) {
-              btn.innerHTML = 'Error — Try Again';
+              btn.innerHTML = 'Error ï¿½ Try Again';
               btn.disabled = false;
             }
           });
@@ -1717,7 +1725,7 @@
   <div class="footer-inner">
 
     <div class="footer-logo">
-      <img src="logo.png" alt="Volga Infosys®" />
+      <img src="logo.png" alt="Volga Infosysï¿½" />
     </div>
     <div class="footer-tagline">Crafting immersive digital realities</div>
 
@@ -1769,8 +1777,8 @@
     </div>
 
     <div class="footer-bottom" id="footer-bottom">
-      <div class="brand-name"><span>Volga</span> Infosys®</div>
-      <div class="copyright">© Volga Infosys® 2026 &nbsp;&nbsp;|&nbsp;&nbsp; Privacy &amp; Policy &nbsp;&nbsp;|&nbsp;&nbsp; Made with ? by Volga</div>
+      <div class="brand-name"><span>Volga</span> Infosysï¿½</div>
+      <div class="copyright">ï¿½ Volga Infosysï¿½ 2026 &nbsp;&nbsp;|&nbsp;&nbsp; Privacy &amp; Policy &nbsp;&nbsp;|&nbsp;&nbsp; Made with ? by Volga</div>
     </div>
 
   </div>

@@ -19,8 +19,6 @@
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 
 </head>
@@ -240,22 +238,73 @@
   <section class="Hero" id="Hero">
     <div class="Hero-video-wrap">
       <video class="Hero-video" src="hompage.mp4" alt="Hero Image" autoplay loop muted playsinline></video>
+      <div class="Hero-video-overlay"></div>
       <div class="Hero-noise"></div>
     </div>
+
+    <!-- Ambient glow orbs -->
+    <div class="Hero-orb Hero-orb-1" aria-hidden="true"></div>
+    <div class="Hero-orb Hero-orb-2" aria-hidden="true"></div>
+    <div class="Hero-orb Hero-orb-3" aria-hidden="true"></div>
+
+    <!-- Grid overlay -->
+    <div class="Hero-grid" aria-hidden="true"></div>
+
     <div class="Hero-content">
-      <h1 class="Hero-heading">
-        Engineering Immersive <em>Intelligent Systems</em> for Enterprise Growth
+
+      <!-- Badge -->
+      <div class="Hero-badge">
+        <span class="Hero-badge-dot"></span>
+        Enterprise XR & AI Solutions · Ludhiana, India
+      </div>
+
+      <!-- Headline — each line wrapped for split animation -->
+      <h1 class="Hero-heading" aria-label="Engineering Immersive Intelligent Systems for Enterprise Growth">
+        <span class="Hero-line">Engineering <em>Immersive</em></span>
+        <span class="Hero-line"><em>Intelligent Systems</em></span>
+        <span class="Hero-line">for Enterprise Growth</span>
       </h1>
-      <p class="Hero-sub">Build smarter training programs, interactive digital twins, and enterprise-grade AR/VR platforms that improve performance, reduce operational risk, and accelerate decision-making.
-Volga Infosys helps organizations bridge the gap between physical operations and digital intelligence through immersive technologies, AI integration, and real-time 3D environments.</p>
+
+      <p class="Hero-sub">We build AR, VR, AI, and Digital Twin platforms that improve training, reduce operational risk, and accelerate enterprise decision-making.</p>
+
       <div class="Hero-cta-row">
-        <a href="portfolio.html" class="btn-primary magnetic-btn">Explore Portfolio</a>
-        <a href="services.html" class="btn-ghost btn-ghost-light magnetic-btn">Our Services</a>
+        <a href="portfolio.html" class="btn-primary magnetic-btn">
+          Explore Portfolio
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="contact.html" class="btn-ghost btn-ghost-light magnetic-btn">Start a Project</a>
+      </div>
+
+      <!-- Stat counters -->
+      <div class="Hero-stats">
+        <div class="stat">
+          <div class="stat-num" data-val="60">0</div>
+          <div class="stat-plus">+</div>
+          <div class="stat-label">Projects Delivered</div>
+        </div>
+        <div class="stat Hero-stat-divider"></div>
+        <div class="stat">
+          <div class="stat-num" data-val="10">0</div>
+          <div class="stat-plus">+</div>
+          <div class="stat-label">Industries Served</div>
+        </div>
+        <div class="stat Hero-stat-divider"></div>
+        <div class="stat">
+          <div class="stat-num" data-val="8">0</div>
+          <div class="stat-plus">+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
       </div>
     </div>
+
+    <!-- Scroll hint -->
     <div class="Hero-scroll-hint">
+      <div class="Hero-scroll-mouse">
+        <div class="Hero-scroll-wheel"></div>
+      </div>
       <span>Scroll to explore</span>
     </div>
+
   </section>
 
   <!-- ═══════════════════════════════════════════ TICKER -->
@@ -420,8 +469,8 @@ Volga Infosys helps organizations bridge the gap between physical operations and
     </div>
     <div class="solutionss-grid">
       <div class="solutions-card">
-        <div class="card-default"><img class="icon" src="hologram.png" alt="AR solutions"/><h3>AR Solutions</h3></div>
-        <div class="card-hover"><div class="hover-bg-title"><span>AR Solutions</span></div><img class="hover-icon" src="hologram.png" alt=""/><p>Interactive overlays, visualization tools, and real-world product or training experiences.</p></div>
+        <div class="card-default"><img class="icon" src="AR SOLUTIONS.png" alt="AR solutions"/><h3>AR Solutions</h3></div>
+        <div class="card-hover"><div class="hover-bg-title"><span>AR Solutions</span></div><img class="hover-icon" src="AR SOLUTIONS.png" alt=""/><p>Interactive overlays, visualization tools, and real-world product or training experiences.</p></div>
       </div>
       <div class="solutions-card">
         <div class="card-default"><img class="icon" src="infinity.png" alt="VR solutions"/><h3>VR Solutions</h3></div>
@@ -958,66 +1007,41 @@ const colExtraLeft  = document.getElementById('col-extra-left');
 const colExtraRight = document.getElementById('col-extra-right');
 const footerBottom = document.getElementById('footer-bottom');
 
-gsap.set(colLeft,       { x: -30, opacity: 0 });
-gsap.set(colRight,      { x:  30, opacity: 0 });
-gsap.set(colExtraLeft,  { x: -20, opacity: 0 });
-gsap.set(colExtraRight, { x:  20, opacity: 0 });
-gsap.set(footerBottom,  { y:  20, opacity: 0 });
+if (footer && colLeft && colRight && colExtraLeft && colExtraRight && footerBottom) {
+  // Set initial state
+  gsap.set(colLeft,       { x: -30, opacity: 0 });
+  gsap.set(colRight,      { x:  30, opacity: 0 });
+  gsap.set(colExtraLeft,  { x: -20, opacity: 0 });
+  gsap.set(colExtraRight, { x:  20, opacity: 0 });
+  gsap.set(footerBottom,  { y:  20, opacity: 0 });
 
-gsap.to(colLeft, {
-  x: 0, opacity: 1,
-  ease: 'power2.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 50%',
-    scrub: 3.5,
-  }
-});
+  // Helper to show everything immediately
+  const showFooter = () => {
+    gsap.to(colLeft,       { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out' });
+    gsap.to(colRight,      { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.1 });
+    gsap.to(colExtraLeft,  { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.15 });
+    gsap.to(colExtraRight, { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.2 });
+    gsap.to(footerBottom,  { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.25 });
+  };
 
-gsap.to(colExtraLeft, {
-  x: 0, opacity: 1,
-  ease: 'power2.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 55%',
-    scrub: 3,
+  // Check if footer is already in viewport on load
+  const footerRect = footer.getBoundingClientRect();
+  const isInViewport = footerRect.top < window.innerHeight;
+  if (isInViewport) {
+    showFooter();
+  } else {
+    // Use ScrollTrigger to animate when footer enters view
+    ScrollTrigger.create({
+      trigger: footer,
+      start: 'top 90%',
+      onEnter: showFooter,
+      once: true
+    });
   }
-});
 
-gsap.to(colExtraRight, {
-  x: 0, opacity: 1,
-  ease: 'power2.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 55%',
-    scrub: 3,
-  }
-});
-
-gsap.to(colRight, {
-  x: 0, opacity: 1,
-  ease: 'power2.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 50%',
-    scrub: 3.5,
-  }
-});
-
-gsap.to(footerBottom, {
-  y: 0, opacity: 1,
-  ease: 'power2.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 60%',
-    scrub: 3,
-  }
-});
+  // Fallback: show everything after 1 second no matter what
+  setTimeout(showFooter, 1000);
+}
 </script>
 
 
