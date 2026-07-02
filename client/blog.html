@@ -15,6 +15,7 @@
 
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="api-config.js"></script>
 
 
   <style>
@@ -1444,44 +1445,183 @@
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-const footer= document.getElementById('volga-footer');
-      try {
-        const r = await fetch(`${API}/dashboard/stats`);
-        if (r.ok) {
-          const d = await r.json();
-          // Use byService as topics if present
-          if (d.byService && d.byService.length) {
-            d.byService.forEach(s => counts[s._id || s.service] = s.count);
-          }
-        } else {
-          counts = posts.reduce((acc, p) => { acc[p.category] = (acc[p.category] || 0) + 1; return acc; }, {});
-        }
-      } catch (e) {
-        counts = posts.reduce((acc, p) => { acc[p.category] = (acc[p.category] || 0) + 1; return acc; }, {});
-      }
-      const topicItems = Object.keys(counts).sort().map(t => `<li><span class="topic-name">${t}</span><span class="topic-count">${counts[t]}</span></li>`).join('');
-      topicsEl.innerHTML = topicItems || '<li>No topics</li>';
+const footer = document.getElementById('volga-footer');
 
-      // Trending - latest 5 posts (from posts API)
-      const trending = posts.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5);
-      trendingEl.innerHTML = trending.map((p, i) =>
-        `<li><div class="t-index">0${i + 1}</div><div><a href="blog-detail.html?id=${p._id}">${p.title}</a><div class="blog-meta" style="margin-top:6px;font-size:0.72rem;color:var(--text-muted)">${fmtDate(p.createdAt)} · ${p.readTime}</div></div></li>`
-      ).join('') || '<li>No trending posts</li>';
+// ── Helpers ──────────────────────────────────────────────
+const getAPI = () => window.VOLGA_API || 'http://localhost:5000/api';
+const imgUrl = (u) => window.getVolgaImageUrl ? window.getVolgaImageUrl(u) : u;
 
-      // Authors
-      const authors = Array.from(new Map(posts.map(p => [p.author, p])).values()).slice(0, 6);
-      authorsEl.innerHTML = authors.map(a => {
-        const initials = a.author.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
-        return `<li><div class="author-avatar">${initials}</div><div><strong>${a.author}</strong><div style="font-size:0.8rem;color:var(--text-muted)">${a.role || 'Contributor'}</div></div></li>`;
-      }).join('') || '<li>No authors</li>';
-    
+function fmtDate(d) {
+  if (!d) return '';
+  return new Date(d).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+}
 
-    // Sidebar subscribe small form
-    const sidebarSubscribe = document.getElementById('sidebarSubscribe');
-    if (sidebarSubscribe) sidebarSubscribe.addEventListener('submit', e => {
-      e.preventDefault(); const btn = sidebarSubscribe.querySelector('button'); btn.textContent = '✓ Subscribed'; btn.disabled = true; setTimeout(() => { btn.textContent = 'Subscribe'; btn.disabled = false; sidebarSubscribe.reset(); }, 2000);
-    });
-  </script>
+function cardHTML(p) {
+  const img = imgUrl(p.coverImage || p.image || '');
+  const imgTag = img
+    ? `<img src="${img}" alt="${p.title}" class="blog-card-img" loading="lazy">`
+    : `<div class="blog-card-img blog-card-img--placeholder"></div>`;
+  return `
+    <article class="blog-card" data-category="${p.category || ''}">
+      <a href="blog-detail.html?id=${p._id}" class="blog-card-link">
+        ${imgTag}
+        <div class="blog-card-body">
+          <span class="blog-tag">${p.category || 'General'}</span>
+          <h3 class="blog-card-title">${p.title}</h3>
+          <p class="blog-card-excerpt">${p.excerpt || ''}</p>
+          <div class="blog-card-meta">
+            <span>${p.author || 'Volga XR'}</span>
+            <span>${fmtDate(p.createdAt)}</span>
+            <span>${p.readTime || '5 min read'}</span>
+          </div>
+        </div>
+      </a>
+    </article>`;
+}
+
+function featuredHTML(p) {
+  const img = imgUrl(p.coverImage || p.image || '');
+  return `
+    <article class="blog-featured">
+      <a href="blog-detail.html?id=${p._id}" class="blog-featured-link">
+        ${img ? `<div class="blog-featured-img" style="background-image:url('${img}')"></div>` : ''}
+        <div class="blog-featured-body">
+          <span class="blog-featured-badge">Featured</span>
+          <span class="blog-tag">${p.category || 'General'}</span>
+          <h2 class="blog-featured-title">${p.title}</h2>
+          <p class="blog-featured-excerpt">${p.excerpt || ''}</p>
+          <div class="blog-card-meta">
+            <span>${p.author || 'Volga XR'}</span>
+            <span>${fmtDate(p.createdAt)}</span>
+            <span>${p.readTime || '5 min read'}</span>
+          </div>
+        </div>
+      </a>
+    </article>`;
+}
+
+// ── Load + render blogs ───────────────────────────────────
+let allPosts = [];
+let activeFilter = 'all';
+
+async function loadBlogs() {
+  const grid = document.getElementById('blogGrid');
+  const featuredEl = document.getElementById('blogFeatured');
+  try {
+    const res = await fetch(`${getAPI()}/blogs`);
+    if (!res.ok) throw new Error('API error');
+    const json = await res.json();
+    allPosts = json.data || json.blogs || [];
+
+    if (!allPosts.length) {
+      grid.innerHTML = '<div class="blog-empty">No posts published yet.</div>';
+      return;
+    }
+
+    renderBlogs();
+    populateSidebar(allPosts);
+  } catch (err) {
+    console.error('Blog load error:', err);
+    grid.innerHTML = '<div class="blog-empty">Could not load posts. Make sure the server is running.</div>';
+  }
+}
+
+function renderBlogs() {
+  const grid = document.getElementById('blogGrid');
+  const featuredEl = document.getElementById('blogFeatured');
+
+  const filtered = activeFilter === 'all'
+    ? allPosts
+    : allPosts.filter(p => (p.category || '').toLowerCase() === activeFilter.toLowerCase());
+
+  // Featured = first post (or first featured flag)
+  const featured = filtered.find(p => p.featured) || filtered[0];
+  const rest = filtered.filter(p => p !== featured);
+
+  if (featuredEl) {
+    featuredEl.innerHTML = featured ? featuredHTML(featured) : '';
+  }
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="blog-empty">No posts in this category.</div>';
+    return;
+  }
+
+  grid.innerHTML = rest.map(p => cardHTML(p)).join('');
+}
+
+// ── Filter buttons ────────────────────────────────────────
+document.querySelectorAll('.blog-filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.blog-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter || 'all';
+    renderBlogs();
+  });
+});
+
+// ── Sidebar ───────────────────────────────────────────────
+function populateSidebar(posts) {
+  // Topics / browse
+  const topicsEl = document.getElementById('browseTopics');
+  if (topicsEl) {
+    const counts = posts.reduce((acc, p) => {
+      const cat = p.category || 'General';
+      acc[cat] = (acc[cat] || 0) + 1;
+      return acc;
+    }, {});
+    topicsEl.innerHTML = Object.entries(counts).sort().map(([t, c]) =>
+      `<li><span class="topic-name">${t}</span><span class="topic-count">${c}</span></li>`
+    ).join('') || '<li>No topics</li>';
+  }
+
+  // Trending
+  const trendingEl = document.getElementById('trendingList');
+  if (trendingEl) {
+    const trending = posts.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5);
+    trendingEl.innerHTML = trending.map((p, i) =>
+      `<li><div class="t-index">0${i + 1}</div><div><a href="blog-detail.html?id=${p._id}">${p.title}</a><div class="blog-meta" style="margin-top:4px;font-size:0.72rem;color:var(--text-muted)">${fmtDate(p.createdAt)} · ${p.readTime || '5 min'}</div></div></li>`
+    ).join('') || '<li>No trending posts</li>';
+  }
+
+  // Authors
+  const authorsEl = document.getElementById('writtenBy');
+  if (authorsEl) {
+    const authors = Array.from(new Map(posts.map(p => [p.author, p])).values()).slice(0, 6);
+    authorsEl.innerHTML = authors.map(a => {
+      const initials = (a.author || 'V').split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+      return `<li><div class="author-avatar">${initials}</div><div><strong>${a.author || 'Volga XR'}</strong><div style="font-size:0.8rem;color:var(--text-muted)">${a.role || 'Contributor'}</div></div></li>`;
+    }).join('') || '<li>No authors</li>';
+  }
+}
+
+// Newsletter form
+const newsletterForm = document.getElementById('newsletterForm');
+if (newsletterForm) {
+  newsletterForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const btn = newsletterForm.querySelector('button');
+    btn.textContent = '✓ Subscribed!';
+    btn.disabled = true;
+    setTimeout(() => { btn.textContent = 'Subscribe →'; btn.disabled = false; newsletterForm.reset(); }, 2500);
+  });
+}
+
+// Sidebar subscribe form
+const sidebarSubscribe = document.getElementById('sidebarSubscribe');
+if (sidebarSubscribe) {
+  sidebarSubscribe.addEventListener('submit', e => {
+    e.preventDefault();
+    const btn = sidebarSubscribe.querySelector('button');
+    btn.textContent = '✓ Subscribed';
+    btn.disabled = true;
+    setTimeout(() => { btn.textContent = 'Subscribe'; btn.disabled = false; sidebarSubscribe.reset(); }, 2000);
+  });
+}
+
+// Kick off
+loadBlogs();
+</script>
 
   <!-- ═══════════════════════════════════════════ FOOTER -->
   

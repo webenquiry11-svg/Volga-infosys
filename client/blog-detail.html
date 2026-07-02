@@ -1160,9 +1160,14 @@ gsap.to(balloon, {
         document.getElementById('blogDate').textContent = fmtDate(post.createdAt);
         document.getElementById('blogReadTime').textContent = post.readTime;
 
-        // Content
+        // Content — fall back to excerpt if body is empty
         const contentEl = document.getElementById('blogContent');
-        contentEl.innerHTML = post.content || '<p>No content available.</p>';
+        const rawContent = post.content || '';
+        // CKEditor sometimes saves empty paragraphs — strip tags to check
+        const textOnly = rawContent.replace(/<[^>]*>/g, '').trim();
+        contentEl.innerHTML = textOnly
+          ? rawContent
+          : (post.excerpt ? `<p>${post.excerpt}</p>` : '<p>No content available.</p>');
         
         // Sidebar - other blogs (excluding current one)
         const otherBlogs = allPosts.filter(p => p._id !== post._id).slice(0, 3);

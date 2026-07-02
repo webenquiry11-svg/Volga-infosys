@@ -11,7 +11,7 @@
   position: relative;
   padding: 100px 0 110px;
   overflow: hidden;
-  background: var(--white);
+  background: #f4f8fb;
 }
 
 /* ── section header ── */
@@ -81,11 +81,11 @@
   inset: 0;
   background:
     linear-gradient(90deg,
-      var(--white) 0%,   transparent 11%,
-      transparent 89%,            var(--white) 100%),
+      #f4f8fb 0%,   transparent 11%,
+      transparent 89%,   #f4f8fb 100%),
     linear-gradient(180deg,
-      var(--white) 0%,   transparent 15%,
-      transparent 85%,            var(--white) 100%);
+      #f4f8fb 0%,   transparent 15%,
+      transparent 85%,   #f4f8fb 100%);
   pointer-events: none;
   z-index: 8;
 }
@@ -269,22 +269,48 @@
 .pf-tag-ar { background: #e0edfb; color: #1a5b9e; border-color: #b0cef0; }
 .pf-tag-i  { background: #f0efeb; color: #5a5650; border-color: #d8d5ce; }
 
-/* ── CTA button ── */
+/* ── CTA button — skeuomorphic raised key (light version) ── */
 .pf-discover {
   display: block;
   margin: 56px auto 0;
   font-family: 'Syne', sans-serif;
-  font-size: 0.9rem; font-weight: 700;
-  background: #1B4F72; color: #fff;
-  padding: 14px 34px; border-radius: 100px;
-  border: none; cursor: pointer;
-  letter-spacing: 0.02em;
-  box-shadow: 0 8px 24px rgba(24,22,15,0.17);
-  transition: transform 0.25s, box-shadow 0.25s;
-  position: relative; z-index: 4;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #164b70;
+  padding: 14px 40px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 4;
+  background: linear-gradient(145deg, #e8f2f8 0%, #d8eaf5 60%, #cce2f0 100%);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, color 0.16s ease;
+  box-shadow:
+    -1px -1px 0 rgba(255,255,255,0.9),
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    3px 4px 0 rgba(27,79,114,0.22),
+    4px 6px 12px rgba(27,79,114,0.15),
+    0 0 0 1px rgba(27,79,114,0.1);
 }
+
 .pf-discover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 36px rgba(24,22,15,0.22);
-  background-color: #E8930A;
+  transform: translateY(-3px) translateX(-1px);
+  color: #e8930a;
+  box-shadow:
+    -1px -1px 0 rgba(255,255,255,0.95),
+    inset 0 1px 0 rgba(255,255,255,0.75),
+    5px 6px 0 rgba(27,79,114,0.25),
+    6px 9px 16px rgba(27,79,114,0.2),
+    0 0 0 1px rgba(27,79,114,0.12),
+    0 0 18px rgba(232,147,10,0.15);
+}
+
+.pf-discover:active {
+  transform: translateY(2px) translateX(2px);
+  box-shadow:
+    inset 2px 2px 5px rgba(27,79,114,0.18),
+    0 0 0 1px rgba(27,79,114,0.12);
+  transition: transform 0.06s, box-shadow 0.06s;
 }

@@ -1,5 +1,5 @@
 /* ── FONTS ───────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Exo+2:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 /* ── TOKENS ─────────────────────────────────────────────── */
 :root {
@@ -25,8 +25,8 @@
   --radius-md: 14px;
   --radius-sm: 10px;
   
-  --font: 'Outfit', sans-serif;
-  --mono: 'Space Mono', monospace;
+  --font: "Orbitron", sans-serif;
+  --mono: "Exo 2", sans-serif;
 }
 
 /* ── DARK MODE TOKENS (Skeuomorphic) ──────────────────────── */

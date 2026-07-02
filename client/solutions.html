@@ -40,7 +40,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-ui);overflow-
 
 /* ── HERO ── */
 .hero{
-  position:relative;min-height:100vh;
+  position:relative;min: height 70vh;
   display:grid;grid-template-columns:1fr 1fr;overflow:hidden;
   
  
@@ -207,7 +207,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-ui);overflow-
 .sol-btn:hover .sol-btn-icon svg{stroke:#fff}
 
 .sol-btn-name{font-family:var(--font-ui);font-size:1rem;font-weight:600;color:var(--text-muted);line-height:1.2;transition:color .18s}
-.sol-btn-tag{font-family:var(--font-mono);font-size:.8rem;color:var(--text-muted);opacity:.5;margin-top:1px;transition:all .18s}
+.sol-btn-tag{font-family:var(--font-mono);font-size:.8rem;color:var(--text);margin-top:1px;transition:all .18s}
 .sol-btn.active .sol-btn-name,
 .sol-btn:hover .sol-btn-name{color:var(--accent3)}
 .sol-btn.active .sol-btn-tag{color:var(--accent);opacity:1}
@@ -307,7 +307,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-ui);overflow-
 .sec-label{
   font-family:var(--font-mono);font-size:.56rem;
   letter-spacing:2.5px;text-transform:uppercase;
-  color:var(--text-muted);opacity:.5;margin-bottom:14px;
+  color:var(--text);margin-bottom:14px;
   display:flex;align-items:center;gap:8px;
 }
 .sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
@@ -959,11 +959,19 @@ function showSolution(id){
 
   stageEmpty.style.display='none';
   stageContent.style.display='flex';
-  window.location.hash=id;
+  if(document.readyState === 'complete') window.location.hash = id;
   if(window.innerWidth<960){
     setTimeout(()=>stageContent.scrollIntoView({behavior:'smooth',block:'start'}),80);
   }
 }
+
+// ── Default tab: use URL hash if present, otherwise open "ar" ──
+(function initDefaultTab() {
+  const hash = window.location.hash.replace('#', '');
+  const validIds = SOLUTIONS.map(s => s.id);
+  const target = validIds.includes(hash) ? hash : 'ar';
+  showSolution(target);
+})();
 
 /* Proof strip */
 const strip=document.getElementById('proofStrip');
@@ -1225,16 +1233,7 @@ gsap.set(colExtraLeft,  { x: -20, opacity: 0 });
 gsap.set(colExtraRight, { x:  20, opacity: 0 });
 gsap.set(footerBottom,  { y:  20, opacity: 0 });
 
-gsap.to(balloon, {
-  y: 0, opacity: 1,
-  ease: 'power3.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 40%',
-    scrub: 5,
-  }
-});
+
 
 gsap.to(colLeft, {
   x: 0, opacity: 1,
