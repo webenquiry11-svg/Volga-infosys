@@ -63,6 +63,17 @@ try {
           onComplete: () => {
             loader.style.display = 'none';
             initHeroAnimation();
+            // Initialize all our new enhancements after loader is done
+            initCustomCursor();
+            setupEnhancedServices();
+            setupCinematicTransitions();
+            setupHeroParallax();
+            
+            // Initialize other existing functions
+            if (typeof setupScrollReveals === 'function') setupScrollReveals();
+            if (typeof setupParallax === 'function') setupParallax();
+            if (typeof setupMagnetic === 'function') setupMagnetic();
+            if (typeof setupGlobalTextScrollAnimation === 'function') setupGlobalTextScrollAnimation();
           }
         });
       }, 400);
@@ -1720,3 +1731,142 @@ document.querySelectorAll('.btn-primary, .btn-ghost, .btn-ghost-light, .nav-cta,
     this.style.setProperty('--ripple-y', '50%');
   });
 });
+
+// ─── CUSTOM CURSOR & INTERACTIVE ENHANCEMENTS ─────────────
+function initCustomCursor() {
+  const cursor = document.getElementById('cursor');
+  const cursorFollower = document.getElementById('cursorFollower');
+  const cursorLight = document.getElementById('cursorLight');
+
+  if (!cursor || !cursorFollower) return;
+
+  let mouseX = 0, mouseY = 0;
+  let cursorX = 0, cursorY = 0;
+  let followerX = 0, followerY = 0;
+
+  // Track mouse movement
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  // Animate cursor positions
+  function animate() {
+    // Main cursor follows immediately
+    cursorX = mouseX;
+    cursorY = mouseY;
+    gsap.set(cursor, { x: cursorX - 4, y: cursorY - 4 });
+
+    // Follower follows with delay
+    followerX += (mouseX - followerX) * 0.15;
+    followerY += (mouseY - followerY) * 0.15;
+    gsap.set(cursorFollower, { x: followerX - 20, y: followerY - 20 });
+
+    // Cursor light follows
+    if (cursorLight) {
+      gsap.set(cursorLight, { x: mouseX - 300, y: mouseY - 300 });
+    }
+
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  // Interactive elements - add hover effect
+  const interactiveElements = document.querySelectorAll('a, button, .solutions-card, .nav-link, .btn-primary, .btn-ghost, .mega-item');
+  interactiveElements.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursorFollower.classList.add('hover');
+    });
+    el.addEventListener('mouseleave', () => {
+      cursorFollower.classList.remove('hover');
+    });
+  });
+}
+
+// ─── ENHANCED SERVICES CARDS WITH 3D EFFECT ────────────────
+function setupEnhancedServices() {
+  const cards = document.querySelectorAll('.solutions-card');
+  if (!cards.length) return;
+
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = (y - centerY) / 10;
+      const rotateY = (centerX - x) / 10;
+
+      gsap.to(card, {
+        rotateX: rotateX,
+        rotateY: rotateY,
+        transformPerspective: 1000,
+        duration: 0.3,
+        ease: 'power2.out'
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      gsap.to(card, {
+        rotateX: 0,
+        rotateY: 0,
+        duration: 0.5,
+        ease: 'elastic.out(1, 0.3)'
+      });
+    });
+  });
+}
+
+// ─── CINEMATIC SCROLL TRANSITIONS ──────────────────────────
+function setupCinematicTransitions() {
+  // Add subtle scale and fade to sections as they scroll
+  const sections = document.querySelectorAll('section');
+  sections.forEach(section => {
+    gsap.fromTo(section,
+      { scale: 0.95, opacity: 0.8 },
+      {
+        scale: 1,
+        opacity: 1,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          end: 'top 20%',
+          scrub: 0.5
+        }
+      }
+    );
+  });
+}
+
+// ─── ENHANCED HERO WITH PARALLAX LAYERS ─────────────────────
+function setupHeroParallax() {
+  const heroOrbs = document.querySelectorAll('.Hero-orb');
+  heroOrbs.forEach((orb, index) => {
+    gsap.to(orb, {
+      y: (index + 1) * 50,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.Hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1
+      }
+    });
+  });
+
+  // Parallax hero content
+  gsap.to('.Hero-content', {
+    y: 100,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.Hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 0.5
+    }
+  });
+}
+
