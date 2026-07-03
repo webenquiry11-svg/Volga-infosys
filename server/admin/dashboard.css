@@ -92,8 +92,9 @@ html.dark .login-logo,
 html.dark .stat-value {
   font-weight: 900;
 }
-html.dark .sidebar-logo {
-  font-weight: 900;
+html.dark .sidebar-logo img {
+  height: 30px;
+  width: 30px;
 }
 /* Dark mode table header */
 html.dark .leads-table thead {
@@ -147,7 +148,7 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(145deg, #d0d5dc, #f8fffe);
+  background: linear-gradient(145deg, #080c14 0%, #0d1b2e 50%, #0a1220 100%);
   position: relative;
   overflow: hidden;
 }

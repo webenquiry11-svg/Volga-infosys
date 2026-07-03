@@ -170,13 +170,110 @@
 /* ── Process ── */
 .process-head { max-width:640px; margin-bottom:56px; }
 .process-head .h2 { color:var(--ab-navy); }
+/* ── Process rail — skeuomorphic production line ── */
 .process-head .lede { color:var(--text-muted); }
-.process-rail { display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; }
-.process-rail::before { content:""; position:absolute; top:23px; left:5%; right:5%; height:1px; background:var(--ab-process-line); }
-.process-step { display:flex; flex-direction:column; gap:14px; padding-right:20px; position:relative; }
-.process-step .index { width:46px; height:46px; border-radius:50%; background:var(--surface); border:1px solid var(--ab-process-line); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:13px; z-index:1; }
-.process-step h3 { font-size:17px; }
-.process-step p { font-size:13.5px; color:var(--text-muted); }
+
+.process-rail {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 0;
+  position: relative;
+}
+
+/* Connecting track — recessed groove */
+.process-rail::before {
+  content: "";
+  position: absolute;
+  top: 22px;
+  left: calc(12.5% + 4px);
+  right: calc(12.5% + 4px);
+  height: 3px;
+  background: linear-gradient(90deg, #0c1a26 0%, #0f2030 50%, #0c1a26 100%);
+  box-shadow:
+    inset 0 1px 3px rgba(0,0,0,0.8),
+    inset 0 -1px 1px rgba(255,255,255,0.04),
+    0 1px 0 rgba(255,255,255,0.06);
+  border-radius: 2px;
+}
+
+/* Amber progress fill on the track */
+.process-rail::after {
+  content: "";
+  position: absolute;
+  top: 22px;
+  left: calc(12.5% + 4px);
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #e8930a, #c87800);
+  box-shadow: 0 0 8px rgba(232,147,10,0.5);
+  border-radius: 2px;
+  animation: trackFill 2.5s ease-out 0.5s forwards;
+}
+@keyframes trackFill {
+  from { width: 0%; }
+  to   { width: calc(75% - 8px); }
+}
+
+.process-step {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-right: 20px;
+  position: relative;
+  align-items: flex-start;
+}
+
+/* Numbered coin — raised physical token */
+.process-step .index {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  /* Radial gradient gives the coin a convex curved-surface feel */
+  background: radial-gradient(circle at 35% 30%, #2a4560, #0d1b26);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: #e8930a;
+  text-shadow: 0 0 8px rgba(232,147,10,0.5);
+  z-index: 1;
+  position: relative;
+  /* Raised coin bevel */
+  box-shadow:
+    -1px -1px 0 rgba(255,255,255,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.1),
+    2px 3px 0 rgba(0,0,0,0.5),
+    3px 5px 8px rgba(0,0,0,0.55),
+    0 0 0 1px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.process-step:hover .index {
+  transform: translateY(-3px) translateX(-1px);
+  box-shadow:
+    -1px -1px 0 rgba(255,255,255,0.14),
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    4px 5px 0 rgba(0,0,0,0.52),
+    5px 8px 12px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(0,0,0,0.4),
+    0 0 12px rgba(232,147,10,0.25);
+}
+
+/* Inner specular ring on the coin */
+.process-step .index::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.08);
+  pointer-events: none;
+}
+
+.process-step h3 { font-size: 17px; }
+.process-step p  { font-size: 13.5px; color: var(--text-muted); }
 
 /* ── Light section text overrides ── */
 .section--light h1,

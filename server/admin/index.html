@@ -138,6 +138,116 @@
   </div>
 
   <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Dot Field background (React Bits port) -->
+  <canvas id="smokeCanvas" style="position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
+
+  <script>
+  (function () {
+    const canvas = document.getElementById('smokeCanvas');
+    const ctx    = canvas.getContext('2d');
+
+    // Config — tweak these
+    const GAP        = 28;     // grid spacing px
+    const DOT_BASE   = 1.8;    // base dot radius
+    const DOT_MAX    = 5.5;    // max radius near mouse
+    const WAVE_SPEED = 0.0018; // how fast the idle wave travels
+    const MOUSE_R    = 130;    // mouse influence radius px
+    const COLOR_1    = [232, 147, 10];  // amber  #e8930a
+    const COLOR_2    = [27,  79,  114]; // navy   #1b4f72
+    const COLOR_BG   = [8,   12,  22];  // background
+
+    let W, H, cols, rows, dots = [];
+    let mx = -9999, my = -9999;
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      cols = Math.ceil(W / GAP) + 1;
+      rows = Math.ceil(H / GAP) + 1;
+      buildGrid();
+    }
+
+    function buildGrid() {
+      dots = [];
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          dots.push({
+            x:    c * GAP,
+            y:    r * GAP,
+            wave: Math.random() * Math.PI * 2, // random phase
+          });
+        }
+      }
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Track real mouse
+    window.addEventListener('mousemove', e => {
+      mx = e.clientX;
+      my = e.clientY;
+    });
+    window.addEventListener('mouseleave', () => { mx = -9999; my = -9999; });
+
+    let t = 0;
+
+    function lerp(a, b, n) { return a + (b - a) * n; }
+    function lerpC(c1, c2, n) {
+      return [
+        Math.round(lerp(c1[0], c2[0], n)),
+        Math.round(lerp(c1[1], c2[1], n)),
+        Math.round(lerp(c1[2], c2[2], n)),
+      ];
+    }
+
+    function draw() {
+      requestAnimationFrame(draw);
+      t += WAVE_SPEED;
+
+      // Background fill
+      ctx.fillStyle = `rgb(${COLOR_BG[0]},${COLOR_BG[1]},${COLOR_BG[2]})`;
+      ctx.fillRect(0, 0, W, H);
+
+      for (let i = 0; i < dots.length; i++) {
+        const d  = dots[i];
+
+        // Idle wave: each dot oscillates based on diagonal position + time
+        const wave = Math.sin(d.x * 0.018 + d.y * 0.018 + t * 50 + d.wave);
+        // map -1..1 → 0..1
+        const wn   = (wave + 1) * 0.5;
+
+        // Distance to mouse
+        const dx   = d.x - mx;
+        const dy   = d.y - my;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const near = Math.max(0, 1 - dist / MOUSE_R); // 0..1
+
+        // Radius: base + wave bump + mouse bump
+        const r = DOT_BASE + wn * 1.4 + near * (DOT_MAX - DOT_BASE);
+
+        // Colour: wave blends navy→amber, mouse adds full amber
+        const c = lerpC(
+          lerpC(COLOR_2, COLOR_1, wn * 0.6),
+          COLOR_1,
+          near
+        );
+
+        // Opacity: dim far dots, brighter near mouse
+        const alpha = 0.18 + wn * 0.25 + near * 0.57;
+
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${alpha})`;
+        ctx.fill();
+      }
+    }
+
+    draw();
+  })();
+  </script>
+
   <script src="dashboard.js"></script>
 </body>
 </html>
