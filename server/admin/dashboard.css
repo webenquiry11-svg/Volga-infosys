@@ -25,7 +25,7 @@
   --radius-md: 14px;
   --radius-sm: 10px;
   
-  --font: "Orbitron", sans-serif;
+  --mono: "Orbitron", sans-serif;
   --mono: "Exo 2", sans-serif;
 }
 
@@ -92,9 +92,14 @@ html.dark .login-logo,
 html.dark .stat-value {
   font-weight: 900;
 }
-html.dark .sidebar-logo img {
-  height: 30px;
-  width: 30px;
+html.dark .sidebar-logo .logo-dot {
+  width: 84px;
+  height: 84px;
+}
+html.dark .sidebar-logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 /* Dark mode table header */
 html.dark .leads-table thead {
@@ -137,7 +142,7 @@ html.dark .stat-label {
 /* ── RESET ───────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 15px; }
-body { font-family: var(--font); color: var(--text-primary); background: var(--bg-main); overflow-x: hidden; }
+body { font-family: var(--mono); color: var(--text-primary); background: var(--bg-main); overflow-x: hidden; }
 a { text-decoration: none; color: inherit; }
 
 /* ════════════════════════════════════════════════════════════
@@ -148,35 +153,42 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(145deg, #080c14 0%, #0d1b2e 50%, #0a1220 100%);
   position: relative;
   overflow: hidden;
+  background-color: #081016; /* fallback */
+  background-image: url('login-light.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
-/* Skeuomorphic orbs */
+/* Dark theme login background image */
+html.dark .login-page {
+  background-image: url('login-dark.png');
+}
+
+/* Hide decorative orb elements when using image backgrounds */
 .login-page::before,
 .login-page::after {
+  /* hide decorative orb elements when using image backgrounds */
+  display: none;
+  content: none;
+}
+
+/* Subtle overlay/vignette to improve contrast between background image and card */
+.login-page::before {
+  display: block;
   content: '';
   position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.6;
-  animation: orbFloat 8s ease-in-out infinite alternate;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.25) 60%, rgba(0,0,0,0.45) 100%);
+  mix-blend-mode: multiply;
+  opacity: 0.95;
 }
-.login-page::before {
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(232,147,10,0.15) 0%, transparent 70%);
-  top: -150px;
-  left: -150px;
-}
-.login-page::after {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(100,116,139,0.1) 0%, transparent 70%);
-  bottom: -100px;
-  right: -100px;
-  animation-direction: alternate-reverse;
+html.dark .login-page::before {
+  background: radial-gradient(circle at center, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.65) 100%);
 }
 
 @keyframes orbFloat {
@@ -184,21 +196,30 @@ a { text-decoration: none; color: inherit; }
   to   { transform: translate(40px, 30px) scale(1.08); }
 }
 
-/* Dark mode login card */
+/* Dark mode login card — translucent, blurred to match background vibe */
 html.dark .login-card {
-  background: linear-gradient(145deg, #1e293b, #0f172a);
+  background: rgba(8,14,24,0.56);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: calc(var(--radius-lg) - 4px);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 20px 40px rgba(2,6,23,0.6), inset 0 2px 8px rgba(255,255,255,0.02);
+  transform: translateZ(0);
 }
 
 /* Skeuomorphic login card */
 .login-card {
   position: relative;
   z-index: 10;
-  background: linear-gradient(145deg, #e6ebf2, #d1d6dd);
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: var(--radius-lg);
-  padding: 2.5rem 2.2rem;
+  padding: 2.2rem 2rem;
   width: 100%;
-  max-width: 440px;
-  box-shadow: var(--shadow-soft);
+  max-width: 480px;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 18px 36px rgba(0,0,0,0.14), inset 0 2px 8px rgba(255,255,255,0.6);
 }
 @media (max-width: 500px) {
   .login-card {
@@ -211,12 +232,18 @@ html.dark .login-card {
 }
 
 .login-logo {
-  font-family: var(--mono);
-  font-size: 1.4rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+.login-logo img {
+  max-width: 140px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.12));
 }
 .login-logo span {
   color: var(--accent);
@@ -248,7 +275,7 @@ html.dark .login-card {
   border: none;
   border-radius: var(--radius-sm);
   font-size: 0.9rem;
-  font-family: var(--font);
+  font-family: var(--mono);
   color: var(--text-primary);
   outline: none;
   box-shadow: var(--shadow-inset-small);
@@ -282,20 +309,22 @@ html.dark .login-card {
 .btn-login {
   width: 100%;
   padding: 0.95rem;
-  background: linear-gradient(145deg, #f5a511, #dd9409);
+  background: linear-gradient(145deg, #f6a61a, #e08b0a);
   color: #fff;
   border: none;
   border-radius: var(--radius-sm);
   font-size: 0.9rem;
   font-weight: 700;
-  font-family: var(--font);
+  font-family: var(--mono);
   letter-spacing: 0.04em;
   cursor: pointer;
-  box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
-  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  box-shadow: 0 10px 24px rgba(224,138,20,0.12), inset 0 1px 0 rgba(255,255,255,0.08);
+  transition: transform 0.18s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.18s, background 0.18s;
 }
 .btn-login:hover {
-  background: linear-gradient(145deg, #dd9409, #c88308);
+  background: linear-gradient(145deg, #e08b0a, #c77508);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(224,138,20,0.18);
 }
 .btn-login:active {
   transform: translateY(1px);
@@ -365,18 +394,22 @@ html.dark .login-card {
   white-space: nowrap;
 }
 .sidebar-logo .logo-dot {
-  width: 34px;
-  height: 34px;
-  border-radius: 12px;
-  background: linear-gradient(145deg, #f5a511, #dd9409);
+  width: 84px;
+  height: 84px;
+  border-radius: 10px;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
-  font-weight: 800;
-  color: #fff;
-  flex-shrink: 0;
-  box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+  padding: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+.sidebar-logo-image {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  display: block;
 }
 .sidebar-logo span,
 .sidebar-logo .logo-text { 
@@ -455,8 +488,8 @@ html.dark .login-card {
   margin-bottom: 2rem;
 }
 .page-header h1 {
-  font-size: 1.6rem;
-  font-weight: 800;
+  font-size: 2rem;
+  font-weight: 900;
   letter-spacing: -0.02em;
   color: var(--text-primary);
 }
@@ -477,7 +510,7 @@ html.dark .login-card {
   border: none;
   border-radius: var(--radius-sm);
   font-size: 0.82rem;
-  font-family: var(--font);
+  font-family: var(--mono);
   color: var(--text-primary);
   outline: none;
   cursor: pointer;
@@ -527,7 +560,7 @@ html.dark .login-card {
 }
 .stat-label {
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.9rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -545,7 +578,7 @@ html.dark .login-card {
 /* ── SECTION TITLE ───────────────────────────────────────── */
 .section-title {
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.9rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -835,7 +868,7 @@ html.dark .login-card {
   border: none;
   border-radius: var(--radius-sm);
   font-size: 0.85rem;
-  font-family: var(--font);
+  font-family: var(--mono);
   color: var(--text-primary);
   outline: none;
   cursor: pointer;
@@ -850,7 +883,7 @@ html.dark .login-card {
   border-radius: var(--radius-sm);
   font-size: 0.85rem;
   font-weight: 800;
-  font-family: var(--font);
+  font-family: var(--mono);
   cursor: pointer;
   box-shadow: var(--shadow-sm);
   transition: all 0.15s;
@@ -871,7 +904,7 @@ html.dark .login-card {
   border-radius: var(--radius-sm);
   font-size: 0.85rem;
   font-weight: 800;
-  font-family: var(--font);
+  font-family: var(--mono);
   cursor: pointer;
   margin-left: auto;
   box-shadow: var(--shadow-sm);
@@ -1010,6 +1043,7 @@ html.dark .login-card {
   }
   .sidebar-logo span { display: none; }
   .sidebar-logo .logo-dot { margin: 0; }
+  .sidebar-logo-image { width: 44px; height: 44px; }
   .profile-widget {
     margin: 0 0.5rem 0.5rem;
     padding: 0.8rem 0.5rem;
@@ -1217,7 +1251,7 @@ html.dark .login-card {
   border: none;
   border-radius: var(--radius-sm);
   font-size: 0.86rem;
-  font-family: var(--font);
+  font-family: var(--mono);
   color: var(--text-primary);
   outline: none;
   box-shadow: var(--shadow-sm-inset);
@@ -1317,9 +1351,12 @@ html.dark .toggle-track {
 html.dark .icon-sun { opacity: 1; color: var(--accent); }
 html.dark .icon-moon { opacity: 0.4; color: var(--text-secondary); }
 
-/* Dark mode login page gradient */
+/* Dark mode login page background image override */
 html.dark .login-page {
-  background: linear-gradient(145deg, #262a2f, #30353a);
+  background-image: url('login-dark.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
 /* CKEditor styles */

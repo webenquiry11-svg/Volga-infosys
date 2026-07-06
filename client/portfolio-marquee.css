@@ -4,7 +4,7 @@
    Scripts needed: GSAP 3 + ScrollTrigger
    ══════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Bebas+Neue&display=swap');
 
 /* ── section shell ── */
 .section-intro {
@@ -16,7 +16,7 @@
 
 /* ── section header ── */
 .intro-content > h1 {
-  font-family: "Orbitron", sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-size: clamp(2rem, 4vw, 3.4rem);
   font-weight: 800;
   letter-spacing: -0.03em;

@@ -63,11 +63,12 @@ try {
           onComplete: () => {
             loader.style.display = 'none';
             initHeroAnimation();
-            // Initialize all our new enhancements after loader is done
-            initCustomCursor();
+            // Initialize only lightweight features after loader is done
+            // initCustomCursor(); // Disabled for performance
             setupEnhancedServices();
-            setupCinematicTransitions();
-            setupHeroParallax();
+            // setupCinematicTransitions(); // Disabled for performance
+            // setupHeroParallax(); // Disabled for performance
+            setupTextScramble();
             
             // Initialize other existing functions
             if (typeof setupScrollReveals === 'function') setupScrollReveals();
@@ -552,6 +553,60 @@ function setupMagnetic() {
     item.addEventListener('mouseleave', () => {
       if (requestId) cancelAnimationFrame(requestId);
       gsap.to(item, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)' });
+    });
+  });
+}
+
+// ─── 9. TEXT SCRAMBLE HOVER EFFECT ───────────────
+function setupTextScramble() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+  const selectors = [
+    '.svc-card .svc-card-label', '.svc-card h3', '.svc-card p', '.svc-card .svc-card-tags small'
+  ];
+
+  document.querySelectorAll(selectors.join(',')).forEach(el => {
+    const originalText = el.innerText.trim();
+    if (originalText.length === 0) return;
+
+    let isScrambling = false;
+    let animationFrameId = null;
+    let iterations = 0;
+
+    const scramble = () => {
+      if (iterations > originalText.length / 2) {
+        el.innerText = originalText;
+        isScrambling = false;
+        return;
+      }
+
+      el.innerText = originalText
+        .split('')
+        .map((char, index) => {
+          if (index < iterations || char.match(/\s/)) {
+            return originalText[index];
+          }
+          return chars[Math.floor(Math.random() * chars.length)];
+        })
+        .join('');
+
+      iterations += 1 / 3;
+      animationFrameId = requestAnimationFrame(scramble);
+    };
+
+    el.addEventListener('mouseenter', () => {
+      if (!isScrambling) {
+        isScrambling = true;
+        iterations = 0;
+        scramble();
+      }
+    });
+
+    el.addEventListener('mouseleave', () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+      el.innerText = originalText;
+      isScrambling = false;
     });
   });
 }
@@ -1200,8 +1255,8 @@ function setupFooter() {
   const CORAL  = 0xe84c2b;
   const NAVY_D = 0x050c18;
 
-  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:false});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  const renderer = new THREE.WebGLRenderer({canvas, antialias:false, alpha:false});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.setClearColor(NAVY_D, 1);
 
   const scene  = new THREE.Scene();
@@ -1736,7 +1791,6 @@ document.querySelectorAll('.btn-primary, .btn-ghost, .btn-ghost-light, .nav-cta,
 function initCustomCursor() {
   const cursor = document.getElementById('cursor');
   const cursorFollower = document.getElementById('cursorFollower');
-  const cursorLight = document.getElementById('cursorLight');
 
   if (!cursor || !cursorFollower) return;
 
@@ -1762,24 +1816,70 @@ function initCustomCursor() {
     followerY += (mouseY - followerY) * 0.15;
     gsap.set(cursorFollower, { x: followerX - 20, y: followerY - 20 });
 
-    // Cursor light follows
-    if (cursorLight) {
-      gsap.set(cursorLight, { x: mouseX - 300, y: mouseY - 300 });
-    }
-
     requestAnimationFrame(animate);
   }
   animate();
 
-  // Interactive elements - add hover effect
-  const interactiveElements = document.querySelectorAll('a, button, .solutions-card, .nav-link, .btn-primary, .btn-ghost, .mega-item');
-  interactiveElements.forEach(el => {
-    el.addEventListener('mouseenter', () => {
+  // Function to wrap every character in a span for text elements
+  function wrapTextCharacters() {
+    const textSelectors = 'h1, h2, h3, h4, h5, h6, p, a, button, .nav-link, .btn-primary, .btn-ghost, .mega-item';
+    document.querySelectorAll(textSelectors).forEach(el => {
+      // Skip if already processed
+      if (el.dataset.processed) return;
+      el.dataset.processed = 'true';
+      
+      // Preserve HTML structure, only wrap text nodes
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+      const textNodes = [];
+      let node;
+      while ((node = walker.nextNode())) {
+        textNodes.push(node);
+      }
+      
+      textNodes.forEach(textNode => {
+        if (textNode.textContent.trim()) {
+          const spanWrapper = document.createElement('span');
+          spanWrapper.className = 'char-container';
+          
+          const chars = textNode.textContent.split('');
+          chars.forEach(char => {
+            const charSpan = document.createElement('span');
+            charSpan.textContent = char;
+            charSpan.className = 'char-span';
+            spanWrapper.appendChild(charSpan);
+          });
+          
+          textNode.parentNode.replaceChild(spanWrapper, textNode);
+        }
+      });
+    });
+  }
+
+  // Call wrap function
+  wrapTextCharacters();
+
+  // Track cursor and apply effect only to hovered character
+  document.addEventListener('mousemove', (e) => {
+    // Remove active class from all char spans
+    document.querySelectorAll('.char-span.active').forEach(span => {
+      span.classList.remove('active');
+    });
+
+    // Find the char span under cursor
+    const hoveredEl = document.elementFromPoint(e.clientX, e.clientY);
+    if (hoveredEl && hoveredEl.classList.contains('char-span')) {
+      hoveredEl.classList.add('active');
+    }
+
+    // Cursor follower still works for containers
+    const isOverInteractive = document.querySelectorAll('a, button, .solutions-card, .nav-link, .btn-primary, .btn-ghost, .mega-item').some(el => 
+      el.contains(hoveredEl)
+    );
+    if (isOverInteractive) {
       cursorFollower.classList.add('hover');
-    });
-    el.addEventListener('mouseleave', () => {
+    } else {
       cursorFollower.classList.remove('hover');
-    });
+    }
   });
 }
 
@@ -1789,22 +1889,30 @@ function setupEnhancedServices() {
   if (!cards.length) return;
 
   cards.forEach(card => {
+    let isThrottled = false;
     card.addEventListener('mousemove', (e) => {
+      if (isThrottled) return;
+      isThrottled = true;
+      
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
-      const rotateX = (y - centerY) / 10;
-      const rotateY = (centerX - x) / 10;
+      const rotateX = (y - centerY) / 50; // Reduced sensitivity
+      const rotateY = (centerX - x) / 50; // Reduced sensitivity
 
       gsap.to(card, {
         rotateX: rotateX,
         rotateY: rotateY,
         transformPerspective: 1000,
-        duration: 0.3,
+        duration: 0.5, // Slower animation
         ease: 'power2.out'
       });
+      
+      setTimeout(() => {
+        isThrottled = false;
+      }, 50); // Update every 50ms instead of every mousemove
     });
 
     card.addEventListener('mouseleave', () => {
@@ -1812,7 +1920,7 @@ function setupEnhancedServices() {
         rotateX: 0,
         rotateY: 0,
         duration: 0.5,
-        ease: 'elastic.out(1, 0.3)'
+        ease: 'power2.out' // Changed from elastic for performance
       });
     });
   });

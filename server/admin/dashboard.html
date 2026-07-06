@@ -13,8 +13,10 @@
 
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-dot"><img src="logo.png"></div>
-      VOLGA<span>ADMIN</span>
+      <div class="logo-dot">
+        <img src="logo.png" alt="Volga Admin Logo" class="sidebar-logo-image">
+      </div>
+    <span>ADMIN</span>
     </div>
     
     <!-- Profile Widget -->
@@ -751,5 +753,37 @@
   <div id="toastContainer" class="toast-container"></div>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
   <script src="dashboard.js"></script>
+  <script>
+    // Prevent showing authenticated UI from back-forward cache.
+    window.addEventListener('pageshow', function (event) {
+      if (event.persisted) {
+        const t = localStorage.getItem('volgaToken');
+        if (!t) {
+          window.location.href = 'index.html';
+          return;
+        }
+        // Verify token with server; if invalid, redirect to login
+        fetch((window.location.origin || '') + '/api/auth/me', {
+          headers: { 'Authorization': `Bearer ${t}` }
+        }).then(res => {
+          if (res.status === 401) {
+            localStorage.removeItem('volgaToken');
+            window.location.href = 'index.html';
+          }
+        }).catch(() => {
+          localStorage.removeItem('volgaToken');
+          window.location.href = 'index.html';
+        });
+      }
+    });
+
+    // On regular load, ensure token exists
+    document.addEventListener('DOMContentLoaded', function () {
+      const t = localStorage.getItem('volgaToken');
+      if (!t) {
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
 </body>
 </html>

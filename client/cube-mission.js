@@ -18,12 +18,12 @@
 
   /* ── Image / face data — swap with your real images ─────────── */
   const IMAGES = [
-    { src: "face1.jpg",  label: "INTRO"   },
-    { src: "face2.png",     label: "DEFINE"  },
-    { src: "street-dark.png",   label: "SHAPE"     },
-    { src: "sky-dark.png",      label: "BUILD"    },
-    { src: "tower-dark.png",    label: "LIVE"     },
-    { src: "moon-dark.png",     label: "EVOLVE"    },
+    { src: "face1.png",  label: "INTRO"   },
+    { src: "face 2.png",     label: "DEFINE"  },
+    { src: "face3.png",   label: "SHAPE"     },
+    { src: "face4.png",      label: "BUILD"    },
+    { src: "face5.png",    label: "LIVE"     },
+    { src: "face6.png",     label: "EVOLVE"    },
   ];
   const N = IMAGES.length;
 
@@ -79,7 +79,7 @@
 
   /* ── 3D Particles System ─────────────────────────────────────── */
   const particles = [];
-  const PARTICLE_COUNT = 50;
+  const PARTICLE_COUNT = 15; // Reduced for performance
   
   function createParticles() {
     if (!particlesContainer) return;
@@ -143,16 +143,17 @@
   }
 
   /* ── Mouse Tilt Effect ───────────────────────────────────────── */
+  // Disabled for performance
   let mouseX = 0, mouseY = 0;
   let targetMouseX = 0, targetMouseY = 0;
   
-  function onMouseMove(e) {
-    const rect = viewport.getBoundingClientRect();
-    targetMouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 15; // Max tilt degrees
-    targetMouseY = ((e.clientY - rect.top) / rect.height - 0.5) * -10;
-  }
-  
-  viewport.addEventListener('mousemove', onMouseMove);
+  // function onMouseMove(e) {
+  //   const rect = viewport.getBoundingClientRect();
+  //   targetMouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 15; // Max tilt degrees
+  //   targetMouseY = ((e.clientY - rect.top) / rect.height - 0.5) * -10;
+  // }
+  // 
+  // viewport.addEventListener('mousemove', onMouseMove);
 
   /* ── Ease helpers ────────────────────────────────────────────── */
   const easeIO = t => t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
@@ -169,15 +170,8 @@
     let rx = a.rx + (b.rx - a.rx) * f;
     let ry = a.ry + (b.ry - a.ry) * f;
     
-    // Add mouse tilt
-    rx += mouseY;
-    ry += mouseX;
-    
-    // Add subtle floating animation
-    const floatY = Math.sin(time * 0.0015) * 8;
-    const floatZ = Math.cos(time * 0.0012) * 5;
-    
-    cube.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translate3d(0, ${floatY}px, ${floatZ}px)`;
+    // Simplified for performance - no mouse tilt, no floating animation
+    cube.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
   }
 
   /* ── HUD + dot update ────────────────────────────────────────── */

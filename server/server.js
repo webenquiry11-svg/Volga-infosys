@@ -83,7 +83,24 @@ app.use("/api/media", mediaRoutes);
 app.get("/api/stats", getPublicStats);
 
 // Serve admin panel — only accessible at /admin
-app.use("/admin", express.static(path.join(__dirname, "admin")));
+const adminPath = path.join(__dirname, "admin");
+const adminStaticOptions = {
+  setHeaders: (res, filePath) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+  }
+};
+app.use(
+  "/admin",
+  (req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    next();
+  },
+  express.static(adminPath, adminStaticOptions)
+);
 app.get("/admin", (req, res) => res.sendFile(path.join(__dirname, "admin", "index.html")));
 
 // Serve frontend static files

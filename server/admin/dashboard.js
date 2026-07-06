@@ -591,7 +591,8 @@ if (document.getElementById("logoutBtn")) {
       console.error("Logout error:", e);
     } finally {
       clearToken();
-      location.href = "index.html";
+      // Replace history entry so back button won't return to authenticated dashboard
+      location.replace("index.html");
     }
   });
 
