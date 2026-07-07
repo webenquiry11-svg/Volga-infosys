@@ -37,10 +37,12 @@ html { scroll-behavior: smooth; } body { font-family: var(--font-ui); background
 .nav-pill { padding: 7px 16px; border-radius: 20px; font-size: 12px; font-weight: 500; cursor: pointer; border: 1.5px solid rgba(200,200,200,0.5); background: rgba(255,255,255,0.2); color: var(--text-mid); transition: all .2s; text-transform: uppercase; text-decoration: none; backdrop-filter: blur(5px); }
 .nav-pill.active, .nav-pill:hover { background: var(--gold); border-color: var(--gold); color: var(--white); box-shadow: 0 4px 12px rgba(201,147,42,0.3); }
 /* Case study list card */
-.blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
-.cs-card { position: relative; border-radius: 50px; overflow: hidden; cursor: pointer; background: rgba(255,255,255,0.3); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.3); box-shadow: 0 8px 32px rgba(0,0,0,0.1); transition: transform .4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow .4s ease; display: flex; flex-direction: column; text-decoration: none; }
+.blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; padding-inline: 0; box-sizing: border-box; width: 100%; }
+.cs-card { position: relative; border-radius: 50px; overflow: hidden; cursor: pointer; background: rgba(255,255,255,0.3); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.3); box-shadow: 0 8px 32px rgba(0,0,0,0.1); transition: transform .4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow .4s ease; display: flex; flex-direction: column; text-decoration: none; width: 100%; max-width: 100%; box-sizing: border-box; margin: 0; }
 .cs-card:hover { transform: translateY(-12px) scale(1.02); box-shadow: 0 12px 40px rgba(0,0,0,0.15); background: rgba(255,255,255,0.4); }
-.cs-img { width: calc(100% - 24px); height: 200px; object-fit: cover; transition: transform .6s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 40px; margin: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+.cs-img { width: 100%; height: 200px; object-fit: cover; transition: transform .6s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 18px 18px 0 0; margin: 0; display: block; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+/* Force images and cards to respect container width and avoid overflow */
+.cs-img, .cs-card { box-sizing: border-box; }
 .cs-card:hover .cs-img { transform: scale(1.05); }
 .cs-body { padding: 0 24px 24px 24px; display: flex; flex-direction: column; gap: 12px; }
 .cs-industry { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); display: inline-block; }
@@ -82,7 +84,68 @@ html { scroll-behavior: smooth; } body { font-family: var(--font-ui); background
   outline: none; background: rgba(255,255,255,0.4); backdrop-filter: blur(5px); }
 .newsletter-form button { background: var(--navy); color: var(--white); border: none; border-radius: 12px; padding: 12px 22px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: var(--font-mono); transition: all 0.2s ease; }
 .newsletter-form button:hover { background: var(--gold); box-shadow: 0 4px 12px rgba(201,147,42,0.3); }
+  @media (max-width: 1200px) {
+    .page-wrapper { grid-template-columns: 1fr minmax(200px, 300px); gap: 22px; padding: 32px 20px; }
+    .blog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .cs-card { border-radius: 28px; }
+    .cs-img { width: 100%; margin: 0; height: 220px; }
+    .newsletter { padding: 30px; gap: 22px; }
+    .newsletter-form input { width: 100%; }
+  }
 
+  @media (max-width: 1000px) {
+    .blog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  }
+
+  @media (max-width: 900px) {
+    .hero { min-height: 420px; height: auto; }
+    .hero-content { padding: 28px 16px 20px; }
+    .hero-title { font-size: clamp(40px, 10vw, 56px); }
+    .page-wrapper { grid-template-columns: 1fr; padding: 20px 14px 18px; gap: 16px; }
+    .blog-grid { grid-template-columns: 1fr; gap: 16px; }
+    .cs-card { border-radius: 18px; }
+    .cs-img { height: 200px; width: 100%; margin: 0; border-radius: 14px 14px 0 0; display: block; }
+    .cs-body { padding: 16px; }
+    .cs-title { font-size: 16px; }
+    .cs-desc { font-size: 13px; }
+    .cs-stats { flex-wrap: wrap; gap: 10px; }
+    .cs-stat-num { font-size: 20px; }
+    .cs-footer { flex-direction: column; align-items: stretch; gap: 10px; }
+    .newsletter { grid-template-columns: 1fr; padding: 22px; margin: 14px 0 80px; }
+    .newsletter-form { flex-direction: column; gap: 12px; }
+    .newsletter-form input { width: 100%; }
+    .sidebar { margin-top: 10px; }
+    .nav-pills { overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 8px; }
+    .nav-pill { flex: 0 0 auto; padding: 8px 12px; font-size: 11px; }
+  }
+
+  @media (max-width: 640px) {
+    .hero-title { font-size: clamp(34px, 12vw, 46px); line-height: 1.04; }
+    .hero-badge { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .sidebar-card { padding: 18px; }
+    .sidebar-title { margin-bottom: 10px; }
+    .newsletter { padding: 24px 18px; gap: 18px; }
+    .newsletter h2 { font-size: 26px; }
+    .newsletter-form input { padding: 12px 14px; }
+    .newsletter-form button { padding: 12px 16px; }
+  }
+
+  /* Extra-small devices (iPhone SE and similar) */
+  @media (max-width: 360px) {
+    html, body { width: 100%; overflow-x: hidden; }
+    .page-wrapper { padding: 12px 10px; grid-template-columns: 1fr; gap: 12px; }
+    .hero-content { padding: 14px 10px 12px; }
+    .hero { height: auto; min-height: 220px; }
+    .hero-title { font-size: clamp(28px, 10vw, 36px); }
+    .blog-grid { gap: 12px; grid-template-columns: 1fr; padding-inline: 0; }
+    .cs-card { border-radius: 12px; overflow: hidden; }
+    .cs-img { height: 150px; border-radius: 12px 12px 0 0; width: 100%; display: block; margin: 0; }
+    .cs-body { padding: 12px; }
+    .cs-title { font-size: 15px; }
+    .cs-desc { font-size: 13px; }
+    .nav-pills { padding-left: 6px; }
+    .read-arrow { width: 38px; height: 38px; }
+  }
 </style>
 </head>
 <body>
@@ -305,262 +368,8 @@ html { scroll-behavior: smooth; } body { font-family: var(--font-ui); background
 
 
   <!-- ═══════════════════════════════════════════ FOOTER -->
- <style>
-.footer{margin:0;padding:0;box-sizing:border-box;}
-
-.footer-wrap{
-  font-family:var(--font-ui);
-  background:#fff;
-  width:100%;
-  min-height:300px;
-  position:relative;
-  overflow:hidden;
-  border-top:1px solid #e8e8e8;
-}
-
-.footer-inner{
-  position:relative;
-  max-width:1900px;
-  margin:0 auto;
-  padding:60px 48px 36px;
-  min-height:460px;
-}
-
-.footer-logo{
-  width:150px;
-  margin-bottom:6px;
-  img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-  }
-}
-
-.footer-tagline{
-  font-family:var(--font-ui);
-  font-size:11px;
-  font-weight:400;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:#888;
-  margin-bottom:36px;
-}
-
-.footer-cols{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  position:relative;
-  z-index:2;
-  max-width:1900px;
-  gap:24px;
-}
-
-.col-left,.col-right,.col-extra-left,.col-extra-right{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  min-width:130px;
-}
-
-.col-label{
-  font-family:var(--font-display);
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  color:#1a1a1a;
-  margin-bottom:10px;
-}
-
-.col-left a,.col-right a,
-.col-extra-left a,.col-extra-right a{
-  font-family:var(--font-ui);
-  font-size:14px;
-  font-weight:400;
-  color:#1a1a1a;
-  text-decoration:none;
-  letter-spacing:0.01em;
-  line-height:1.9;
-  transition:color 0.2s;
-}
-
-.col-left a:hover,.col-right a:hover,
-.col-extra-left a:hover,.col-extra-right a:hover{color:#1a4fa0;}
-
-.col-right,.col-extra-right{text-align:right;}
-
-.col-right .divider,.col-extra-right .divider{
-  width:32px;
-  height:2px;
-  background:#1a1a1a;
-  margin:4px 0 8px auto;
-}
-
-.col-extra-left .divider{
-  width:32px;
-  height:2px;
-  background:#1a1a1a;
-  margin:4px 0 8px 0;
-}
-
-
-
-.footer-bottom{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  padding-top:32px;
-  position:relative;
-  z-index:2;
-  border-top:1px solid #e8e8e8;
-  margin-top:80px;
-}
-
-.brand-name{
-  font-family:var(--font-display);
-  font-size:38px;
-  font-weight:300;
-  letter-spacing:-0.02em;
-  color:#1a1a1a;
-  line-height:1;
-}
-
-.brand-name span{font-weight:700;}
-
-.copyright{
-  font-family:var(--font-ui);
-  font-size:11px;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  color:#888;
-}
-</style>
-
-
-<div class="footer"><div class="footer-wrap" id="volga-footer">
-  <div class="footer-inner">
-
-    <div class="footer-logo">
-      <img src="logo.png" alt="Volga Infosys®" />
-    </div>
-    <div class="footer-tagline">Crafting immersive digital realities</div>
-
-    <div class="footer-cols">
-
-      <div class="col-left" id="col-left">
-        <div class="col-label">Business</div>
-        <a href="#">Training Simulation</a>
-        <a href="#">3D Configurators</a>
-        <a href="#">Buildings &amp; Interiors</a>
-        <a href="#">E-Commerce</a>
-        <a href="#">Manufacturing</a>
-        <a href="#">Entertainment</a>
-        <a href="#">Museums &amp; Travel</a>
-      </div>
-
-      <div class="col-extra-left" id="col-extra-left">
-        <div class="col-label">Company</div>
-        <div class="divider"></div>
-        <a href="#">About Us</a>
-        <a href="#">Our Work</a>
-        <a href="#">Careers</a>
-        <a href="#">Blog</a>
-        <a href="#">Press Kit</a>
-        <a href="#">Contact</a>
-      </div>
-
-      <div class="col-extra-right" id="col-extra-right">
-        <div class="col-label" style="text-align:right;">Services</div>
-        <div class="divider"></div>
-        <a href="#">Real-Time Rendering</a>
-        <a href="#">AR / VR Solutions</a>
-        <a href="#">Motion Graphics</a>
-        <a href="#">Product Visualisation</a>
-        <a href="#">Game Development</a>
-        <a href="#">Digital Twins</a>
-      </div>
-
-      <div class="col-right" id="col-right">
-        <div class="col-label" style="text-align:right;">Social</div>
-        <div class="divider"></div>
-        <a href="#">LinkedIn</a>
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">YouTube</a>
-        <a href="#">WhatsApp</a>
-      </div>
-
-    </div>
-
-    <div class="footer-bottom" id="footer-bottom">
-      <div class="brand-name"><span>Volga</span> Infosys®</div>
-      <div class="copyright">© Volga Infosys® 2026 &nbsp;&nbsp;|&nbsp;&nbsp; Privacy &amp; Policy &nbsp;&nbsp;|&nbsp;&nbsp; Made with ♥ by Volga</div>
-    </div>
-
-  </div>
-</div>
-</div>
-
-
-<script>
-gsap.registerPlugin(ScrollTrigger);
-
-const footer       = document.getElementById('volga-footer');
-const colLeft      = document.getElementById('col-left');
-const colRight     = document.getElementById('col-right');
-const colExtraLeft  = document.getElementById('col-extra-left');
-const colExtraRight = document.getElementById('col-extra-right');
-const footerBottom = document.getElementById('footer-bottom');
-
-if (footer && colLeft && colRight && colExtraLeft && colExtraRight && footerBottom) {
-  // Set initial state
-  gsap.set(colLeft,       { x: -30, opacity: 0 });
-  gsap.set(colRight,      { x:  30, opacity: 0 });
-  gsap.set(colExtraLeft,  { x: -20, opacity: 0 });
-  gsap.set(colExtraRight, { x:  20, opacity: 0 });
-  gsap.set(footerBottom,  { y:  20, opacity: 0 });
-
-  // Helper to show everything immediately
-  const showFooter = () => {
-    gsap.to(colLeft,       { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out' });
-    gsap.to(colRight,      { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.1 });
-    gsap.to(colExtraLeft,  { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.15 });
-    gsap.to(colExtraRight, { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.2 });
-    gsap.to(footerBottom,  { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.25 });
-  };
-
-  // Check if footer is already in viewport on load
-  const footerRect = footer.getBoundingClientRect();
-  const isInViewport = footerRect.top < window.innerHeight;
-  if (isInViewport) {
-    showFooter();
-  } else {
-    // Use ScrollTrigger to animate when footer enters view
-    ScrollTrigger.create({
-      trigger: footer,
-      start: 'top 90%',
-      onEnter: showFooter,
-      once: true
-    });
-  }
-
-  // Fallback: show everything after 1 second no matter what
-  setTimeout(showFooter, 1000);
-}
-
-// Keep balloon animation if it exists
-gsap.to(balloon, {
-  y: 0, opacity: 1,
-  ease: 'power3.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 40%',
-    scrub: 5,
-  }
-});
-</script>
+ <div id="site-footer-mount"></div>
+<script src="footer-include.js"></script>
 
 
 </body>

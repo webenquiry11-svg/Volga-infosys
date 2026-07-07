@@ -1,7 +1,18 @@
+// ── HTML ESCAPE HELPER (prevents XSS / CWE-94) ─────────────
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s ?? '';
+  return d.innerHTML;
+}
+
 // ── TOAST NOTIFICATIONS ─────────────────────────────────────
 function showToast(title, message = '', type = 'info', duration = 5000) {
   const container = document.getElementById('toastContainer');
   if (!container) return;
+
+  // Limit visible toasts to 4
+  const existing = container.querySelectorAll('.toast:not(.hiding)');
+  if (existing.length >= 4) existing[0].dispatchEvent(new Event('animationend'));
 
   const icons = {
     success: '✓',
@@ -192,6 +203,10 @@ document.getElementById('loginThemeToggle')?.addEventListener('click', async (e)
 const API = window.location.protocol.startsWith('http')
   ? `${window.location.origin}/api`
   : 'http://localhost:5000/api';
+
+// Session handling defaults (must match server defaults)
+const INACTIVITY_TIMEOUT_MS = parseInt(window.INACTIVITY_TIMEOUT_MS || String(30 * 60 * 1000)); // 30m
+const SESSION_WARNING_MS = 60 * 1000; // 1 minute before expiry
 
 
 // Toggle password visibility
@@ -596,6 +611,43 @@ if (document.getElementById("logoutBtn")) {
     }
   });
 
+  // Session keepalive & inactivity watcher
+  let lastInteraction = Date.now();
+  function resetInteraction() { lastInteraction = Date.now(); }
+  ['click','mousemove','keydown','touchstart'].forEach(ev => window.addEventListener(ev, resetInteraction));
+
+  async function extendSession() {
+    try {
+      await apiFetch('/auth/sessions/extend', { method: 'POST' });
+      lastInteraction = Date.now();
+      showToast('Session extended', 'Your session has been extended', 'success', 1500);
+    } catch (e) {
+      console.warn('Failed to extend session', e);
+    }
+  }
+
+  // Periodic check for inactivity and warning
+  setInterval(() => {
+    const now = Date.now();
+    const idle = now - lastInteraction;
+    const timeLeft = INACTIVITY_TIMEOUT_MS - idle;
+    if (timeLeft <= 0) {
+      // Force logout
+      clearToken();
+      showToast('Session expired', 'You have been logged out due to inactivity', 'warning');
+      setTimeout(() => location.replace('index.html'), 900);
+    } else if (timeLeft <= SESSION_WARNING_MS) {
+      // Show a simple confirm-based warning to extend
+      if (!document.getElementById('sessionWarningShown')) {
+        const keep = confirm('Your session is about to expire. Stay signed in?');
+        const el = document.createElement('div'); el.id = 'sessionWarningShown'; el.style.display='none'; document.body.appendChild(el);
+        if (keep) {
+          extendSession();
+        }
+      }
+    }
+  }, 5000);
+
   // Sidebar nav
     document.querySelectorAll(".nav-item").forEach((item) => {
       item.addEventListener("click", (e) => {
@@ -664,11 +716,11 @@ if (document.getElementById("logoutBtn")) {
         <div class="proj-grid" style="margin-top:1rem">
           ${projects.slice(0,3).map(p => `
             <div class="proj-card">
-              <div class="proj-card-img" style="background-image:url('${p.image}')"></div>
+              <div class="proj-card-img" style="background-image:url('${esc(p.image)}')"></div>
               <div class="proj-card-body">
-                <span class="proj-tag">${p.tag}</span>
-                <div class="proj-title">${p.title}${p.title2 ? ' ' + p.title2 : ''}</div>
-                <div class="proj-place">${p.place}</div>
+                <span class="proj-tag">${esc(p.tag)}</span>
+                <div class="proj-title">${esc(p.title)}${p.title2 ? ' ' + esc(p.title2) : ''}</div>
+                <div class="proj-place">${esc(p.place)}</div>
               </div>
             </div>
           `).join('')}
@@ -688,11 +740,11 @@ if (document.getElementById("logoutBtn")) {
         <div class="proj-grid" style="margin-top:1rem">
           ${blogs.slice(0,3).map(b => `
             <div class="proj-card">
-              <div class="proj-card-img" style="background-image:url('${b.coverImage || b.image}')"></div>
+              <div class="proj-card-img" style="background-image:url('${esc(b.coverImage || b.image)}')"></div>
               <div class="proj-card-body">
-                <span class="proj-tag">${b.category}</span>
-                <div class="proj-title">${b.title}</div>
-                <div class="proj-place">${b.author} &middot; ${b.readTime}</div>
+                <span class="proj-tag">${esc(b.category)}</span>
+                <div class="proj-title">${esc(b.title)}</div>
+                <div class="proj-place">${esc(b.author)} &middot; ${esc(b.readTime)}</div>
               </div>
             </div>
           `).join('')}
@@ -706,10 +758,10 @@ if (document.getElementById("logoutBtn")) {
       const list = data.emailStats.recent.map(e => `
         <tr>
           <td>${new Date(e.createdAt).toLocaleString()}</td>
-          <td>${e.from}</td>
-          <td>${e.to}</td>
-          <td>${(e.subject||'').slice(0,60)}</td>
-          <td><span class="badge badge-${e.status}">${e.status}</span></td>
+          <td>${esc(e.from)}</td>
+          <td>${esc(e.to)}</td>
+          <td>${esc((e.subject||'').slice(0,60))}</td>
+          <td><span class="badge badge-${esc(e.status)}">${esc(e.status)}</span></td>
         </tr>`).join('');
       const wrapper = document.createElement('div');
       wrapper.className = 'section-title recent-section';
@@ -786,8 +838,8 @@ if (document.getElementById("logoutBtn")) {
     contacts.forEach((c) => {
       const row = document.createElement("tr");
       row.innerHTML = compact
-        ? `<td>${c.name}</td><td>${c.email}</td><td>${c.country || "—"}</td><td>${c.serviceInterested || "—"}</td><td><span class="badge badge-${c.status}">${c.status}</span></td><td>${fmtDate(c.createdAt)}</td>`
-        : `<td>${c.name}</td><td>${c.email}</td><td>${c.company || "—"}</td><td>${c.country || "—"}</td><td>${c.budget || "—"}</td><td>${c.serviceInterested || "—"}</td><td class="msg-cell">${c.message}</td><td><span class="badge badge-${c.status}">${c.status}</span></td><td>${fmtDate(c.createdAt)}</td><td><button class="btn-view" data-id="${c._id}">View</button></td>`;
+        ? `<td>${esc(c.name)}</td><td>${esc(c.email)}</td><td>${esc(c.country) || "—"}</td><td>${esc(c.serviceInterested) || "—"}</td><td><span class="badge badge-${esc(c.status)}">${esc(c.status)}</span></td><td>${fmtDate(c.createdAt)}</td>`
+        : `<td>${esc(c.name)}</td><td>${esc(c.email)}</td><td>${esc(c.company) || "—"}</td><td>${esc(c.country) || "—"}</td><td>${esc(c.budget) || "—"}</td><td>${esc(c.serviceInterested) || "—"}</td><td class="msg-cell">${esc(c.message)}</td><td><span class="badge badge-${esc(c.status)}">${esc(c.status)}</span></td><td>${fmtDate(c.createdAt)}</td><td><button class="btn-view" data-id="${esc(c._id)}">View</button></td>`;
       tbody.appendChild(row);
     });
     if (!compact) {
@@ -828,12 +880,12 @@ if (document.getElementById("logoutBtn")) {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${fmtDate(e.createdAt)} ${new Date(e.createdAt).toLocaleTimeString()}</td>
-        <td>${e.from}</td>
-        <td>${e.to}</td>
-        <td>${(e.subject||'').slice(0,80)}</td>
-        <td>${e.type}</td>
-        <td><span class="badge badge-${e.status}">${e.status}</span></td>
-        <td><button class="btn-delete btn-delete-log" data-id="${e._id}">Delete</button></td>
+        <td>${esc(e.from)}</td>
+        <td>${esc(e.to)}</td>
+        <td>${esc((e.subject||'').slice(0,80))}</td>
+        <td>${esc(e.type)}</td>
+        <td><span class="badge badge-${esc(e.status)}">${esc(e.status)}</span></td>
+        <td><button class="btn-delete btn-delete-log" data-id="${esc(e._id)}">Delete</button></td>
       `;
       tbody.appendChild(tr);
     });
@@ -869,10 +921,10 @@ if (document.getElementById("logoutBtn")) {
     }
     notesList.innerHTML = notes.map(note => `
       <div style="padding:0.75rem; border:1px solid #eee; border-radius:6px; margin-bottom:0.5rem;">
-        <p style="margin:0 0 0.5rem;">${note.content}</p>
+        <p style="margin:0 0 0.5rem;">${esc(note.content)}</p>
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <span style="font-size:0.8rem; color:#888;">${new Date(note.createdAt).toLocaleString()}</span>
-          <button class="btn-delete" style="font-size:0.8rem; padding:4px 8px;" data-note-id="${note._id}">Delete</button>
+          <button class="btn-delete" style="font-size:0.8rem; padding:4px 8px;" data-note-id="${esc(note._id)}">Delete</button>
         </div>
       </div>
     `).join('');
@@ -894,11 +946,11 @@ if (document.getElementById("logoutBtn")) {
     activeContact = contact;
     document.getElementById("modalName").textContent = contact.name;
     document.getElementById("modalGrid").innerHTML = `
-      <div><span>Email</span><strong>${contact.email}</strong></div>
-      <div><span>Company</span><strong>${contact.company || "—"}</strong></div>
-      <div><span>Country</span><strong>${contact.country || "—"}</strong></div>
-      <div><span>Service</span><strong>${contact.serviceInterested || "—"}</strong></div>
-      <div><span>Budget</span><strong>${contact.budget || "—"}</strong></div>
+      <div><span>Email</span><strong>${esc(contact.email)}</strong></div>
+      <div><span>Company</span><strong>${esc(contact.company) || "—"}</strong></div>
+      <div><span>Country</span><strong>${esc(contact.country) || "—"}</strong></div>
+      <div><span>Service</span><strong>${esc(contact.serviceInterested) || "—"}</strong></div>
+      <div><span>Budget</span><strong>${esc(contact.budget) || "—"}</strong></div>
       <div><span>Date</span><strong>${fmtDate(contact.createdAt)}</strong></div>`;
     document.getElementById("modalMessage").textContent = contact.message;
     document.getElementById("modalStatus").value = contact.status;
@@ -984,13 +1036,13 @@ if (document.getElementById("logoutBtn")) {
     }
     grid.innerHTML = projects.map(p => `
       <div class="proj-card">
-        <div class="proj-card-img" style="background-image:url('${p.image}')"></div>
+        <div class="proj-card-img" style="background-image:url('${esc(p.image)}')"></div>
         <div class="proj-card-body">
-          <span class="proj-tag">${p.tag}</span>
-          <div class="proj-title">${p.title}${p.title2 ? ' ' + p.title2 : ''}</div>
-          <div class="proj-place">${p.place}</div>
-          <p class="proj-desc">${p.description}</p>
-          <a class="btn-view" href="project-edit.html?id=${p._id}">Edit</a>
+          <span class="proj-tag">${esc(p.tag)}</span>
+          <div class="proj-title">${esc(p.title)}${p.title2 ? ' ' + esc(p.title2) : ''}</div>
+          <div class="proj-place">${esc(p.place)}</div>
+          <p class="proj-desc">${esc(p.description)}</p>
+          <a class="btn-view" href="project-edit.html?id=${esc(p._id)}">Edit</a>
         </div>
       </div>`).join("");
   }
@@ -1082,17 +1134,17 @@ if (document.getElementById("logoutBtn")) {
     }
     if (!grid) return;
     grid.innerHTML = stories.map(s => `
-      <div class="proj-card content-card" data-id="${s._id}">
-        <div class="proj-card-img" style="background-image:url('${s.image || ''}')"></div>
+      <div class="proj-card content-card" data-id="${esc(s._id)}">
+        <div class="proj-card-img" style="background-image:url('${esc(s.image || '')}')"></div>
         <div class="proj-card-body">
-          <span class="proj-tag">${s.industry}</span>
-          <div class="proj-title">${s.clientName}</div>
-          <div class="proj-place">${s.clientRole}</div>
-          <p class="proj-desc">${s.testimonial}</p>
+          <span class="proj-tag">${esc(s.industry)}</span>
+          <div class="proj-title">${esc(s.clientName)}</div>
+          <div class="proj-place">${esc(s.clientRole)}</div>
+          <p class="proj-desc">${esc(s.testimonial)}</p>
           <div class="card-actions">
-            <a class="btn-view" href="client-story-edit.html?id=${s._id}">Edit</a>
-            <button class="btn-action btn-duplicate" data-id="${s._id}" data-type="client-stories" title="Duplicate">⎘ Clone</button>
-            <button class="btn-action btn-delete-item" data-id="${s._id}" data-type="client-stories" data-name="${s.clientName.replace(/"/g,'')}" title="Delete">✕</button>
+            <a class="btn-view" href="client-story-edit.html?id=${esc(s._id)}">Edit</a>
+            <button class="btn-action btn-duplicate" data-id="${esc(s._id)}" data-type="client-stories" title="Duplicate">⎘ Clone</button>
+            <button class="btn-action btn-delete-item" data-id="${esc(s._id)}" data-type="client-stories" data-name="${esc(s.clientName.replace(/"/g,''))}" title="Delete">✕</button>
           </div>
         </div>
       </div>`).join("");
@@ -1213,26 +1265,26 @@ if (document.getElementById("logoutBtn")) {
     }
 
     grid.innerHTML = blogs.map(b => `
-      <div class="proj-card content-card" data-id="${b._id}">
+      <div class="proj-card content-card" data-id="${esc(b._id)}">
         <div class="card-select-wrap">
-          <input type="checkbox" class="card-checkbox blog-checkbox" data-id="${b._id}">
+          <input type="checkbox" class="card-checkbox blog-checkbox" data-id="${esc(b._id)}">
         </div>
-        <div class="proj-card-img" style="background-image:url('${b.coverImage || b.image || ''}');position:relative;">
+        <div class="proj-card-img" style="background-image:url('${esc(b.coverImage || b.image || '')}');position:relative;">
           ${b.featured ? '<span class="card-badge badge-featured">★ Featured</span>' : ''}
-          <span class="card-status-badge status-${b.status}">${b.status}</span>
+          <span class="card-status-badge status-${esc(b.status)}">${esc(b.status)}</span>
         </div>
         <div class="proj-card-body">
-          <span class="proj-tag">${b.category}</span>
-          <div class="proj-title">${b.title}</div>
-          <div class="proj-place">${b.author || '—'} · ${b.readTime || '—'}</div>
-          <p class="proj-desc">${b.excerpt || ''}</p>
+          <span class="proj-tag">${esc(b.category)}</span>
+          <div class="proj-title">${esc(b.title)}</div>
+          <div class="proj-place">${esc(b.author) || '—'} · ${esc(b.readTime) || '—'}</div>
+          <p class="proj-desc">${esc(b.excerpt) || ''}</p>
           <div class="card-actions">
-            <a class="btn-view" href="blog-edit.html?id=${b._id}">Edit</a>
-            <button class="btn-action btn-toggle-status" data-id="${b._id}" data-status="${b.status}" title="${b.status === 'published' ? 'Set to draft' : 'Publish'}">
+            <a class="btn-view" href="blog-edit.html?id=${esc(b._id)}">Edit</a>
+            <button class="btn-action btn-toggle-status" data-id="${esc(b._id)}" data-status="${esc(b.status)}" title="${b.status === 'published' ? 'Set to draft' : 'Publish'}">
               ${b.status === 'published' ? '⬇ Draft' : '↑ Publish'}
             </button>
-            <button class="btn-action btn-duplicate" data-id="${b._id}" data-type="blogs" title="Duplicate">⎘ Clone</button>
-            <button class="btn-action btn-delete-item" data-id="${b._id}" data-type="blogs" data-name="${b.title.replace(/"/g,'')}" title="Delete">✕</button>
+            <button class="btn-action btn-duplicate" data-id="${esc(b._id)}" data-type="blogs" title="Duplicate">⎘ Clone</button>
+            <button class="btn-action btn-delete-item" data-id="${esc(b._id)}" data-type="blogs" data-name="${esc(b.title.replace(/"/g,''))}" title="Delete">✕</button>
           </div>
         </div>
       </div>`).join('');
@@ -1384,17 +1436,17 @@ if (document.getElementById("logoutBtn")) {
       return;
     }
     grid.innerHTML = caseStudies.map(c => `
-      <div class="proj-card content-card" data-id="${c._id}">
-        <div class="proj-card-img" style="background-image:url('${c.image || ''}')"></div>
+      <div class="proj-card content-card" data-id="${esc(c._id)}">
+        <div class="proj-card-img" style="background-image:url('${esc(c.image || '')}')"></div>
         <div class="proj-card-body">
-          <span class="proj-tag">${c.industry}</span>
-          <div class="proj-title">${c.title}</div>
-          <div class="proj-place">${c.year || 'Case Study'} · ${(c.metrics || []).length} metrics</div>
-          <p class="proj-desc">${c.description}</p>
+          <span class="proj-tag">${esc(c.industry)}</span>
+          <div class="proj-title">${esc(c.title)}</div>
+          <div class="proj-place">${esc(c.year) || 'Case Study'} · ${(c.metrics || []).length} metrics</div>
+          <p class="proj-desc">${esc(c.description)}</p>
           <div class="card-actions">
-            <a class="btn-view" href="case-study-edit.html?id=${c._id}">Edit</a>
-            <button class="btn-action btn-duplicate" data-id="${c._id}" data-type="case-studies" title="Duplicate">⎘ Clone</button>
-            <button class="btn-action btn-delete-item" data-id="${c._id}" data-type="case-studies" data-name="${c.title.replace(/"/g,'')}" title="Delete">✕</button>
+            <a class="btn-view" href="case-study-edit.html?id=${esc(c._id)}">Edit</a>
+            <button class="btn-action btn-duplicate" data-id="${esc(c._id)}" data-type="case-studies" title="Duplicate">⎘ Clone</button>
+            <button class="btn-action btn-delete-item" data-id="${esc(c._id)}" data-type="case-studies" data-name="${esc(c.title.replace(/"/g,''))}" title="Delete">✕</button>
           </div>
         </div>
       </div>`).join('');
@@ -1510,17 +1562,17 @@ if (document.getElementById("logoutBtn")) {
       return;
     }
     grid.innerHTML = news.map(n => `
-      <div class="proj-card content-card" data-id="${n._id}">
-        <div class="proj-card-img" style="background-image:url('${n.image || ''}')"></div>
+      <div class="proj-card content-card" data-id="${esc(n._id)}">
+        <div class="proj-card-img" style="background-image:url('${esc(n.image || '')}')"></div>
         <div class="proj-card-body">
-          <span class="proj-tag">${n.topic}</span>
-          <div class="proj-title">${n.title}</div>
-          <div class="proj-place">${n.source || 'Volga Infosys'} · ${fmtDate(n.publishedAt || n.createdAt)}</div>
-          <p class="proj-desc">${n.description}</p>
+          <span class="proj-tag">${esc(n.topic)}</span>
+          <div class="proj-title">${esc(n.title)}</div>
+          <div class="proj-place">${esc(n.source) || 'Volga Infosys'} · ${fmtDate(n.publishedAt || n.createdAt)}</div>
+          <p class="proj-desc">${esc(n.description)}</p>
           <div class="card-actions">
-            <a class="btn-view" href="industry-news-edit.html?id=${n._id}">Edit</a>
-            <button class="btn-action btn-duplicate" data-id="${n._id}" data-type="industry-news" title="Duplicate">⎘ Clone</button>
-            <button class="btn-action btn-delete-item" data-id="${n._id}" data-type="industry-news" data-name="${n.title.replace(/"/g,'')}" title="Delete">✕</button>
+            <a class="btn-view" href="industry-news-edit.html?id=${esc(n._id)}">Edit</a>
+            <button class="btn-action btn-duplicate" data-id="${esc(n._id)}" data-type="industry-news" title="Duplicate">⎘ Clone</button>
+            <button class="btn-action btn-delete-item" data-id="${esc(n._id)}" data-type="industry-news" data-name="${esc(n.title.replace(/"/g,''))}" title="Delete">✕</button>
           </div>
         </div>
       </div>`).join('');
@@ -1630,13 +1682,13 @@ if (document.getElementById("logoutBtn")) {
     }
     grid.innerHTML = mediaItems.map(m => `
       <div class="proj-card" style="flex: 0 0 calc(33.333% - 1rem); max-width: calc(33.333% - 1rem);">
-        <div class="proj-card-img" style="background-image:url('${m.url}'); height: 150px;"></div>
+        <div class="proj-card-img" style="background-image:url('${esc(m.url)}'); height: 150px;"></div>
         <div class="proj-card-body">
-          <div class="proj-title" style="font-size: 0.9rem;">${m.filename}</div>
+          <div class="proj-title" style="font-size: 0.9rem;">${esc(m.filename)}</div>
           <div class="proj-place" style="font-size: 0.75rem;">${(m.size / 1024).toFixed(1)} KB</div>
           <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
-            <button class="btn-view media-copy-btn" data-url="${m.url}">Copy URL</button>
-            <button class="btn-delete media-delete-btn" data-id="${m._id}">Delete</button>
+            <button class="btn-view media-copy-btn" data-url="${esc(m.url)}">Copy URL</button>
+            <button class="btn-delete media-delete-btn" data-id="${esc(m._id)}">Delete</button>
           </div>
         </div>
       </div>`).join('');
@@ -1898,11 +1950,11 @@ if (document.getElementById("logoutBtn")) {
       }
       tbody.innerHTML = data.users.map(u => `
         <tr>
-          <td>${u.name}</td>
-          <td>${u.email}</td>
-          <td><span class="badge badge-${u.role}">${u.role}</span></td>
+          <td>${esc(u.name)}</td>
+          <td>${esc(u.email)}</td>
+          <td><span class="badge badge-${esc(u.role)}">${esc(u.role)}</span></td>
           <td>${fmtDate(u.createdAt)}</td>
-          <td><button class="btn-view edit-user-btn" data-id="${u._id}">Edit</button></td>
+          <td><button class="btn-view edit-user-btn" data-id="${esc(u._id)}">Edit</button></td>
         </tr>
       `).join('');
       
@@ -2057,16 +2109,16 @@ if (document.getElementById("logoutBtn")) {
       }
       tbody.innerHTML = data.applications.map(a => `
         <tr>
-          <td>${a.applicantName}</td>
-          <td>${a.applicantEmail}</td>
-          <td><span class="badge badge-${a.requestedRole}">${a.requestedRole}</span></td>
-          <td class="msg-cell">${a.reason}</td>
-          <td><span class="badge badge-${a.status}">${a.status}</span></td>
+          <td>${esc(a.applicantName)}</td>
+          <td>${esc(a.applicantEmail)}</td>
+          <td><span class="badge badge-${esc(a.requestedRole)}">${esc(a.requestedRole)}</span></td>
+          <td class="msg-cell">${esc(a.reason)}</td>
+          <td><span class="badge badge-${esc(a.status)}">${esc(a.status)}</span></td>
           <td>${fmtDate(a.createdAt)}</td>
           <td>
             ${a.status === 'pending' ? `
-              <button class="btn-view approve-role-btn" data-id="${a._id}" style="background: #10b981; color: white;">Approve</button>
-              <button class="btn-delete reject-role-btn" data-id="${a._id}">Reject</button>
+              <button class="btn-view approve-role-btn" data-id="${esc(a._id)}" style="background: #10b981; color: white;">Approve</button>
+              <button class="btn-delete reject-role-btn" data-id="${esc(a._id)}">Reject</button>
             ` : ''}
           </td>
         </tr>

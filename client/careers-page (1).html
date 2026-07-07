@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Careers · Nexoria — Build the Future of Extended Reality</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="volga.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script crossorigin="anonymous"
+    src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --surface: #F6F8FA;
+      --surface-alt: #EEF2F6;
+      --card: #FFFFFF;
+      --navy: #0B2545;
+      --navy-deep: #081B33;
+      --primary: #2452D9;
+      --primary-dark: #1B3FB0;
+      --success: #127A3C;
+      --warning: #B5590A;
+      --text: #101828;
+      --text-secondary: #5B6779;
+      --text-on-navy: #D7E0EE;
+      --border: #E3E8EF;
+      --border-strong: #CBD3DF;
+      --radius-sm: 6px;
+      --radius: 10px;
+      --radius-lg: 14px;
+      --font-display: 'Inter', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+      --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
+      --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
+      --shadow-lg: 0 16px 40px rgba(16, 24, 40, 0.10);
+      --ease: cubic-bezier(.22, 1, .36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    input,
+    select {
+      font-family: inherit;
+    }
+
+    ::selection {
+      background: rgba(36, 82, 217, 0.14);
+      color: var(--navy);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    section {
+      position: relative;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 16px;
+      height: 2px;
+      background: var(--primary);
+    }
+
+    .section-head {
+      max-width: 620px;
+      margin: 0 0 52px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(26px, 3.6vw, 38px);
+      margin-top: 12px;
+      color: var(--navy);
+    }
+
+    .section-head p {
+      margin-top: 14px;
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+
+    .section-head.center {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 24px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 14.5px;
+      border: 1px solid transparent;
+      transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-ghost {
+      background: #fff;
+      color: var(--navy);
+      border-color: var(--border-strong);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--navy);
+      background: var(--surface);
+    }
+
+    .btn-sm {
+      padding: 9px 16px;
+      font-size: 13px;
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    /* Card base */
+    .glass {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .6s var(--ease), transform .6s var(--ease);
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+
+
+    /* ============ HERO ============ */
+    .hero {
+      padding: 150px 0 100px;
+      position: relative;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero .container {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 0.92fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid var(--border-strong);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      color: var(--navy);
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .badge .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    .hero h1 {
+      font-size: clamp(34px, 4.6vw, 54px);
+      line-height: 1.12;
+      color: var(--navy);
+    }
+
+    .hero h1 .grad {
+      color: var(--primary);
+    }
+
+    .hero p.lead {
+      margin-top: 22px;
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 500px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      margin-top: 34px;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 40px;
+      margin-top: 52px;
+      flex-wrap: wrap;
+      padding-top: 32px;
+      border-top: 1px solid var(--border-strong);
+    }
+
+    .hero-meta div {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hero-meta .num {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .hero-meta .label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      letter-spacing: 0.04em;
+    }
+
+    /* Hero visual — corporate metrics panel */
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-image {
+      border-radius: var(--radius-lg);
+      background: linear-gradient(150deg, var(--navy) 0%, #143564 60%, #1D4590 100%);
+      aspect-ratio: 4/3.1;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 30%, transparent 90%);
+    }
+
+    .hero-image-badge {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: #fff;
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-image-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #3CE07A;
+    }
+
+    .hero-image-caption {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      right: 24px;
+      color: #fff;
+    }
+
+    .hero-image-caption h4 {
+      color: #fff;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .hero-image-caption p {
+      color: var(--text-on-navy);
+      font-size: 13px;
+    }
+
+    .hero-float-card {
+      position: absolute;
+      bottom: -28px;
+      left: -28px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      padding: 18px 22px;
+      display: flex;
+      gap: 20px;
+      z-index: 3;
+    }
+
+    .hero-float-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .hero-float-stat .num {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--navy);
+    }
+
+    .hero-float-stat .label {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+
+    .hero-float-divider {
+      width: 1px;
+      background: var(--border-strong);
+    }
+
+    @media(max-width:1080px) {
+      .hero .container {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        margin-top: 20px;
+      }
+
+      .hero-float-card {
+        position: static;
+        margin-top: 20px;
+        display: flex;
+        box-shadow: none;
+        border-radius: var(--radius);
+      }
+
+      .hero-meta {
+        gap: 24px;
+      }
+    }
+
+    /* ============ CULTURE ============ */
+    .culture {
+      padding: 100px 0;
+    }
+
+    .culture-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature-card {
+      padding: 30px 26px;
+      border-radius: var(--radius-lg);
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-strong);
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    .feature-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--primary);
+    }
+
+    .feature-card h3 {
+      font-size: 17.5px;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 14.5px;
+    }
+
+    /* ============ LIFE ============ */
+    .life {
+      padding: 100px 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .life-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .life-copy p {
+      color: var(--text-secondary);
+      font-size: 16px;
+      margin-top: 16px;
+    }
+
+    .life-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .life-tag {
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-family: var(--font-mono);
+      background: #fff;
+      border: 1px solid var(--border-strong);
+      color: var(--navy);
+    }
+
+    .life-collage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .life-tile {
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 1/1;
+      border: 1px solid var(--border);
+    }
+
+    .life-tile:nth-child(1) {
+      aspect-ratio: 1/1.25;
+      grid-row: span 2;
+    }
+
+    .life-tile-label {
+      position: absolute;
+      left: 14px;
+      bottom: 12px;
+      z-index: 2;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: #fff;
+      letter-spacing: 0.02em;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      background: rgba(11, 37, 69, 0.7);
+    }
+
+    .life-tile::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 45%, rgba(11, 37, 69, 0.55));
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      margin-top: 72px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .stat-card {
+      padding: 32px 24px;
+      text-align: center;
+      background: #fff;
+    }
+
+    .stat-card .num {
+      font-family: var(--font-display);
+      font-size: 34px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .stat-card .label {
+      margin-top: 8px;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    @media(max-width:900px) {
+      .culture-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .life-split {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media(max-width:560px) {
+      .culture-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ============ PROCESS ============ */
+    .process {
+      padding: 100px 0;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      position: relative;
+      margin-top: 16px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 23px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: var(--border-strong);
+    }
+
+    .step {
+      position: relative;
+      padding: 0 14px;
+      text-align: center;
+    }
+
+    .step-num {
+      width: 46px;
+      height: 46px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border: 2px solid var(--primary);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--primary);
+      position: relative;
+      z-index: 2;
+    }
+
+    .step h4 {
+      font-size: 15px;
+      margin-bottom: 8px;
+      color: var(--navy);
+    }
+
+    .step p {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+    }
+
+    @media(max-width:900px) {
+      .timeline {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .timeline::before {
+        display: none;
+      }
+    }
+
+    /* ============ JOBS ============ */
+    .jobs {
+      padding: 100px 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .job-filters {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
+      gap: 12px;
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      margin-bottom: 32px;
+    }
+
+    .filter-field {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .filter-field svg {
+      position: absolute;
+      left: 14px;
+      width: 16px;
+      height: 16px;
+      stroke: var(--text-secondary);
+      pointer-events: none;
+    }
+
+    .filter-field input,
+    .filter-field select {
+      width: 100%;
+      padding: 11px 14px 11px 38px;
+      border-radius: var(--radius-sm);
+      background: #fff;
+      border: 1px solid var(--border-strong);
+      color: var(--text);
+      font-size: 13.5px;
+      appearance: none;
+      transition: border-color .2s;
+    }
+
+    .filter-field select {
+      padding-left: 14px;
+    }
+
+    .filter-field input:focus,
+    .filter-field select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .filter-field input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .jobs-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .jobs-count {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .jobs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .job-card {
+      padding: 24px 26px;
+      border-radius: var(--radius-lg);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: start;
+      transition: box-shadow .25s var(--ease), border-color .25s var(--ease);
+    }
+
+    .job-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-strong);
+    }
+
+    .job-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .job-title-wrap h3 {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .job-sub {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+
+    .job-sub span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .job-sub svg {
+      width: 13px;
+      height: 13px;
+      stroke: var(--primary);
+    }
+
+    .job-salary {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      color: var(--navy);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .job-desc {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-top: 12px;
+      max-width: 620px;
+    }
+
+    .job-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tag {
+      padding: 6px 11px;
+      border-radius: var(--radius-sm);
+      font-size: 11.5px;
+      font-family: var(--font-mono);
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      color: var(--navy);
+    }
+
+    .job-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 18px;
+    }
+
+    .job-posted {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+
+    .job-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 150px;
+      align-items: stretch;
+    }
+
+    .save-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: #fff;
+      color: var(--text-secondary);
+      font-size: 13px;
+      transition: .2s;
+    }
+
+    .save-btn svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      transition: .2s;
+    }
+
+    .save-btn.saved {
+      color: var(--warning);
+      border-color: var(--warning);
+      background: #FDF3E8;
+    }
+
+    .save-btn.saved svg {
+      fill: var(--warning);
+    }
+
+    .jobs-empty {
+      text-align: center;
+      padding: 64px 20px;
+      color: var(--text-secondary);
+    }
+
+    .load-more-wrap {
+      text-align: center;
+      margin-top: 32px;
+    }
+
+    @media(max-width:1000px) {
+      .job-filters {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media(max-width:640px) {
+      .job-filters {
+        grid-template-columns: 1fr;
+      }
+
+      .job-card {
+        grid-template-columns: 1fr;
+      }
+
+      .job-actions {
+        flex-direction: row;
+      }
+    }
+
+
+
+    /* ============ TESTIMONIALS ============ */
+    .testimonials {
+      padding: 100px 0;
+      overflow: hidden;
+    }
+
+    .t-carousel {
+      position: relative;
+    }
+
+    .t-track {
+      display: flex;
+      gap: 20px;
+      transition: transform .5s var(--ease);
+    }
+
+    .t-card {
+      min-width: calc(33.333% - 14px);
+      padding: 28px 26px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .t-stars {
+      display: flex;
+      gap: 4px;
+    }
+
+    .t-stars svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--warning);
+      stroke: none;
+    }
+
+    .t-quote {
+      font-size: 14.5px;
+      color: var(--text-secondary);
+      flex: 1;
+    }
+
+    .t-person {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 6px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .t-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 13.5px;
+      color: #fff;
+      background: var(--navy);
+    }
+
+    .t-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .t-role {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .t-controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .t-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border-strong);
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: .2s;
+    }
+
+    .t-arrow:hover {
+      border-color: var(--navy);
+    }
+
+    .t-arrow svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--navy);
+    }
+
+    @media(max-width:1000px) {
+      .t-card {
+        min-width: calc(50% - 10px);
+      }
+    }
+
+    @media(max-width:640px) {
+      .t-card {
+        min-width: 100%;
+      }
+    }
+
+    /* ============ FAQ ============ */
+    .faq {
+      padding: 100px 0;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .faq-q {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      background: none;
+      border: none;
+      color: var(--navy);
+      font-size: 15px;
+      font-weight: 600;
+      text-align: left;
+      font-family: var(--font-display);
+    }
+
+    .faq-q .plus {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .faq-q .plus::before,
+    .faq-q .plus::after {
+      content: '';
+      position: absolute;
+      background: var(--primary);
+      border-radius: 1px;
+      transition: transform .25s var(--ease);
+    }
+
+    .faq-q .plus::before {
+      width: 12px;
+      height: 2px;
+      top: 9px;
+      left: 4px;
+    }
+
+    .faq-q .plus::after {
+      width: 2px;
+      height: 12px;
+      top: 4px;
+      left: 9px;
+    }
+
+    .faq-item.open .plus::after {
+      transform: rotate(90deg);
+      opacity: 0;
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s var(--ease);
+    }
+
+    .faq-a-inner {
+      padding: 0 24px 22px;
+      color: var(--text-secondary);
+      font-size: 14.5px;
+    }
+
+    /* ============ CTA ============ */
+    .cta {
+      padding: 100px 0;
+      text-align: center;
+      position: relative;
+      margin: 0 32px;
+      border-radius: var(--radius-lg);
+      background: var(--navy);
+    }
+
+    .cta .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta .eyebrow {
+      color: #7CA6FF;
+    }
+
+    .cta .eyebrow::before {
+      background: #7CA6FF;
+    }
+
+    .cta h2 {
+      font-size: clamp(28px, 4vw, 42px);
+      max-width: 640px;
+      margin: 14px auto 0;
+      color: #fff;
+    }
+
+    .cta p {
+      color: var(--text-on-navy);
+      max-width: 520px;
+      margin: 16px auto 36px;
+      font-size: 16px;
+    }
+
+    .cta-ctas {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta .btn-ghost {
+      background: transparent;
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .cta .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: #fff;
+    }
+
+    /* ============ FOOTER ============ */
+    footer {
+      padding: 72px 0 28px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      margin-top: 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand p {
+      color: var(--text-secondary);
+      font-size: 13.5px;
+      margin-top: 14px;
+      max-width: 280px;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: .2s;
+    }
+
+    .social-icon:hover {
+      border-color: var(--navy);
+    }
+
+    .social-icon svg {
+      width: 15px;
+      height: 15px;
+      stroke: var(--text-secondary);
+    }
+
+    .footer-col h5 {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .footer-col a,
+    .footer-col .contact-line {
+      display: block;
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 11px;
+      transition: color .2s;
+    }
+
+    .footer-col a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media(max-width:900px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media(max-width:560px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ============ FLOATING ELEMENTS ============ */
+    .back-to-top {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 60;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: opacity .3s var(--ease), transform .3s var(--ease);
+      box-shadow: var(--shadow-md);
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .back-to-top svg {
+      width: 17px;
+      height: 17px;
+      stroke: #fff;
+    }
+
+    .mobile-fab {
+      display: none;
+    }
+
+    @media(max-width:720px) {
+      .mobile-fab {
+        display: flex;
+        position: fixed;
+        bottom: 22px;
+        left: 20px;
+        right: 20px;
+        z-index: 60;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 15px;
+        border-radius: var(--radius-sm);
+        background: var(--primary);
+        color: #fff;
+        font-weight: 600;
+        font-size: 14.5px;
+        box-shadow: var(--shadow-lg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============ NAV ============ -->
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
+      <img src="logo.png" alt="VOLGA Infosys logo" />
+    </a>
+
+    <ul class="nav-links">
+      <li class="nav-item" data-menu="solutions">
+        <button class="nav-link">Solutions <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="industries">
+        <button class="nav-link">Industries <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="services">
+        <button class="nav-link">Services <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="work">
+        <button class="nav-link">Work <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="technologies">
+        <a class="nav-link" href="technologies (2).html">Technologies</a>
+      </li>
+      <li class="nav-item" data-menu="insights">
+        <a class="nav-link" href="insights-overview.html">Insights </a>
+      </li>
+      <li class="nav-item" data-menu="company">
+        <button class="nav-link">Company <span class="nav-arrow"></span></button>
+      </li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Contact Us</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose" aria-label="Close mobile menu">X</button>
+    <ul>
+      <li><a href="index.html" class="mm-link">Home</a></li>
+      <li><a href="solutions.html" class="mm-link">Solutions</a></li>
+      <li><a href="industries.html" class="mm-link">Industries</a></li>
+      <li><a href="services.html" class="mm-link">Services</a></li>
+      <li><a href="portfolio.html" class="mm-link">Work</a></li>
+      <li><a href="technologies.html" class="mm-link">Technologies</a></li>
+      <li><a href="blog.html" class="mm-link">Insights</a></li>
+      <li><a href="company.html" class="mm-link">Company</a></li>
+      <li><a href="contact.html" class="mm-link">Contact</a></li>
+    </ul>
+  </div>
+
+
+  <!-- MEGA MENUS -->
+  <div class="mega-menu" id="menu-solutions">
+    <div class="mega-inner">
+      <div class="mega-label">Solutions</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="solutions.html#ar"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                  </svg></span>AR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html#vr"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg></span>VR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html#xr"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg></span>MR / XR Applications</a></li>
+            <li><a class="mega-item" href="solutions.html#twin"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                  </svg></span>Digital Twin</a></li>
+            <li><a class="mega-item" href="solutions.html#ai"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20h9" />
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                  </svg></span>AI Integration</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="solutions.html#cfg"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                    <line x1="9" y1="9" x2="9.01" y2="9" />
+                    <line x1="15" y1="9" x2="15.01" y2="9" />
+                  </svg></span>3D Configurators</a></li>
+            <li><a class="mega-item" href="solutions.html#vs"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg></span>Virtual Showrooms</a></li>
+            <li><a class="mega-item" href="solutions.html#sim"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg></span>Simulation Systems</a></li>
+            <li><a class="mega-item" href="solutions.html#trn"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg></span>Interactive Training</a></li>
+            <li><a class="mega-item" href="solutions.html#meta"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                  </svg></span>Metaverse Solutions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">New: AI-Powered XR</div>
+        <div class="mega-highlight-sub">Combining spatial computing with generative AI for next-gen enterprise
+          experiences.</div>
+        <a href="#" class="mega-highlight-btn">Explore <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-industries">
+    <div class="mega-inner">
+      <div class="mega-label">Industries</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="industries.html#healthcare"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                  </svg></span>Healthcare</a></li>
+            <li><a class="mega-item" href="industries.html#manufacturing"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path
+                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                    <line x1="12" y1="22.08" x2="12" y2="12" />
+                  </svg></span>Manufacturing</a></li>
+            <li><a class="mega-item" href="industries.html#realestate"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg></span>Real Estate</a></li>
+            <li><a class="mega-item" href="industries.html#education"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                  </svg></span>Education</a></li>
+            <li><a class="mega-item" href="industries.html#automotive"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                    <line x1="9" y1="9" x2="9.01" y2="9" />
+                    <line x1="15" y1="9" x2="15.01" y2="9" />
+                  </svg></span>Automotive</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="industries.html#retail"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1" />
+                    <circle cx="20" cy="21" r="1" />
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                  </svg></span>Retail</a></li>
+            <li><a class="mega-item" href="industries.html#architecture"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                    <polyline points="2 17 12 22 22 17" />
+                    <polyline points="2 12 12 17 22 12" />
+                  </svg></span>Architecture</a></li>
+            <li><a class="mega-item" href="industries.html#defense"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg></span>Defense</a></li>
+            <li><a class="mega-item" href="industries.html#tourism"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg></span>Tourism</a></li>
+            <li><a class="mega-item" href="industries.html#energy"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg></span>Energy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Industry Solutions</div>
+        <div class="mega-highlight-sub">Tailored immersive experiences built for your sector's unique challenges.</div>
+        <a href="industries.html" class="mega-highlight-btn">View All <svg width="12" height="12" viewBox="0 0 12 12"
+            fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-services">
+    <div class="mega-inner">
+      <div class="mega-label">Services</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="services.html#custom-ar"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                    <line x1="12" y1="18" x2="12.01" y2="18" />
+                  </svg></span>Custom AR App Development</a></li>
+            <li><a class="mega-item" href="services.html#vr-training"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg></span>VR Training Platforms</a></li>
+            <li><a class="mega-item" href="services.html#unity-dev"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                    <polyline points="2 17 12 22 22 17" />
+                    <polyline points="2 12 12 17 22 12" />
+                  </svg></span>Unity Development</a></li>
+            <li><a class="mega-item" href="services.html#webgl"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                    <line x1="9" y1="9" x2="9.01" y2="9" />
+                    <line x1="15" y1="9" x2="15.01" y2="9" />
+                  </svg></span>WebGL Experiences</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="services.html#3d-modeling"><span class="mega-item-icon"><svg
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg></span>3D Modeling & Animation</a></li>
+            <li><a class="mega-item" href="services.html#uiux"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 17l10-10 4 4 6-6" />
+                  </svg></span>UI/UX Design</a></li>
+            <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
+                    <path
+                      d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
+                  </svg></span>Cloud Deployment</a></li>
+            <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z" />
+                  </svg></span>Maintenance & Support</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Full-Cycle Delivery</div>
+        <div class="mega-highlight-sub">From concept to deployment — we handle every stage of your XR project.</div>
+        <a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-work">
+    <div class="mega-inner">
+      <div class="mega-label">Work</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="portfolio2.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10 9 9 9 8 9" />
+                  </svg></span>Case Studies</a></li>
+            <li><a class="mega-item" href="portfolio.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg></span>Portfolio</a></li>
+            <li><a class="mega-item" href="client-stories.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg></span>Client Stories</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polygon points="10 8 16 12 10 16 10 8" />
+                  </svg></span>Product Demos</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Featured Project</div>
+        <div class="mega-highlight-sub">See how we transformed a global manufacturer's training program with immersive
+          VR.</div>
+        <a href="#" class="mega-highlight-btn">View Case Study <svg width="12" height="12" viewBox="0 0 12 12"
+            fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-company">
+    <div class="mega-inner">
+      <div class="mega-label">Company</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="about.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg></span>About Us</a></li>
+            <li><a class="mega-item" href="careers-page (1).html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                  </svg></span>Careers</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg></span>Partnerships</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">We're Hiring</div>
+        <div class="mega-highlight-sub">Join a team building the future of spatial computing and enterprise immersive
+          tech.</div>
+        <a href="#" class="mega-highlight-btn">See Openings <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div id="backdrop" aria-hidden="true"></div>
+
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose" aria-label="Close menu">✕</button>
+    <a href="#culture">Culture</a>
+    <a href="#life">Life Here</a>
+    <a href="#process">Process</a>
+    <a href="#jobs">Open Roles</a>
+    <a href="#benefits">Benefits</a>
+    <a href="#faq">FAQ</a>
+    <a href="#jobs" class="btn btn-primary" style="margin-top:12px;">View Open Positions</a>
+  </div>
+
+  <div id="top"></div>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-copy">
+        <div class="badge"><span class="dot"></span> We're Hiring — 24 Open Roles</div>
+        <h1>Build the Future of <span class="grad">Extended Reality</span></h1>
+        <p class="lead">Nexoria designs the spatial computing layer for the physical world — XR, AR, VR, AI, and digital
+          twins used by manufacturers, hospitals, and studios on six continents. Come build the interface layer for
+          reality itself.</p>
+        <div class="hero-ctas">
+          <a href="#jobs" class="btn btn-primary">View Open Positions</a>
+          <a href="#life" class="btn btn-ghost">Learn About Our Culture</a>
+        </div>
+        <div class="hero-meta">
+          <div><span class="num" data-count="50">0</span><span class="label">TEAM MEMBERS</span></div>
+          <div><span class="num" data-count="15">0</span><span class="label">COUNTRIES SERVED</span></div>
+          <div><span class="num" data-count="100">0</span><span class="label">PROJECTS SHIPPED</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-image">
+          <div class="hero-image-badge"><span class="dot"></span> Live · 3 headsets in QA</div>
+          <div class="hero-image-caption">
+            <h4>Digital Twin, Line 4</h4>
+            <p>Real-time sync across 212 IoT sensors</p>
+          </div>
+        </div>
+        <div class="hero-float-card">
+          <div class="hero-float-stat"><span class="num">98.2%</span><span class="label">TRACKING ACCURACY</span></div>
+          <div class="hero-float-divider"></div>
+          <div class="hero-float-stat"><span class="num">12ms</span><span class="label">SYNC LATENCY</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CULTURE ============ -->
+  <section class="culture container" id="culture">
+    <div class="section-head reveal">
+      <span class="eyebrow">Why Join Us</span>
+      <h2>A studio built for people who'd rather ship the future than read about it</h2>
+      <p>We hire builders who are comfortable in the space between hardware and imagination — and we give them the
+        tools, autonomy, and trust to do their best work.</p>
+    </div>
+    <div class="culture-grid" id="cultureGrid"></div>
+  </section>
+
+  <!-- ============ LIFE AT NEXORIA ============ -->
+  <section class="life container" id="life">
+    <div class="life-split">
+      <div class="life-copy reveal">
+        <span class="eyebrow">Life at Nexoria</span>
+        <h2 style="font-size:clamp(26px,3.6vw,38px); margin-top:14px;">Hackathons, headset queues, and the occasional
+          whiteboard argument about hand-tracking latency</h2>
+        <p>Our studios run hybrid — in-person for prototyping and headset testing, remote-friendly for deep work. Expect
+          quarterly hackathons, weekly VR playtests, and a Slack channel that never runs out of demo GIFs.</p>
+        <div class="life-tags">
+          <span class="life-tag">Hackathons</span>
+          <span class="life-tag">Workshops</span>
+          <span class="life-tag">VR Testing Sessions</span>
+          <span class="life-tag">Product Brainstorms</span>
+          <span class="life-tag">Remote-Friendly</span>
+        </div>
+      </div>
+      <div class="life-collage reveal">
+        <div class="life-tile" style="background:linear-gradient(155deg,#0B2545,#1B3FB0);">
+          <div class="life-tile-label">Team Collaboration</div>
+        </div>
+        <div class="life-tile" style="background:linear-gradient(155deg,#0B2545,#2452D9);">
+          <div class="life-tile-label">Quarterly Hackathon</div>
+        </div>
+        <div class="life-tile" style="background:linear-gradient(155deg,#0B2545,#127A3C);">
+          <div class="life-tile-label">VR Playtest Friday</div>
+        </div>
+      </div>
+    </div>
+    <div class="stats-row" id="statsRow"></div>
+  </section>
+
+  <!-- ============ HIRING PROCESS ============ -->
+  <section class="process container" id="process">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <span class="eyebrow">Hiring Process</span>
+      <h2>Five steps, no black box</h2>
+      <p>We keep the process fast and transparent — most candidates hear back within two weeks.</p>
+    </div>
+    <div class="timeline" id="timelineRow"></div>
+  </section>
+
+  <!-- ============ OPEN POSITIONS ============ -->
+  <section class="jobs container" id="jobs">
+    <div class="section-head reveal">
+      <span class="eyebrow">Open Positions</span>
+      <h2>Find your next role</h2>
+      <p>24 roles across engineering, design, and research — remote-friendly, worldwide.</p>
+    </div>
+
+    <div class="job-filters glass reveal">
+      <div class="filter-field">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m21 21-4.3-4.3" />
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search job titles or keywords...">
+      </div>
+      <div class="filter-field"><select id="deptFilter">
+          <option value="">All Departments</option>
+        </select></div>
+      <div class="filter-field"><select id="locFilter">
+          <option value="">All Locations</option>
+        </select></div>
+      <div class="filter-field"><select id="typeFilter">
+          <option value="">Employment Type</option>
+        </select></div>
+      <div class="filter-field"><select id="levelFilter">
+          <option value="">Experience Level</option>
+        </select></div>
+    </div>
+
+    <div class="jobs-meta-row">
+      <span class="jobs-count" id="jobsCount">24 roles</span>
+      <span class="jobs-count" id="jobsResetWrap" style="display:none;"><a href="#" id="jobsReset"
+          style="color:var(--primary); text-decoration:underline;">Clear filters</a></span>
+    </div>
+
+    <div class="jobs-list" id="jobsList"></div>
+    <div class="jobs-empty" id="jobsEmpty" style="display:none;">No roles match your filters right now — try clearing a
+      filter or check back soon.</div>
+    <div class="load-more-wrap" id="loadMoreWrap">
+      <button class="btn btn-ghost" id="loadMoreBtn">Load More Positions</button>
+    </div>
+  </section>
+
+  <!-- ============ BENEFITS ============ -->
+
+
+  <!-- ============ TECHNOLOGIES ============ -->
+  <section class="tech-section" id="tech-showcase">
+
+    <div class="tech-header">
+      <div>
+        <div class="tech-kicker">Technologies</div>
+        <h2 class="tech-title">Technology Stack Credibility</h2>
+        <p class="tech-desc">We leverage cutting-edge technologies to build immersive, scalable, and high-performance
+          solutions for enterprise.</p>
+      </div>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="card-default">
+          <i class=""><img src="unity.png"></i>
+          <h3>Unity Engine</h3>
+        </div>
+      </div>
+      <div class="tech-card">
+        <div class="card-default">
+          <i class=""><img src="unreal.png"></i>
+          <h3>Unreal Engine</h3>
+        </div>
+      </div>
+      <div class="tech-card">
+        <div class="card-default">
+          <i class=""><img src="three.png"></i>
+          <h3>Three.js</h3>
+        </div>
+      </div>
+      <div class="tech-card">
+        <div class="card-default">
+          <i class=""><img src="webgl.png"></i>
+          <h3>WebGL</h3>
+        </div>
+      </div>
+      <div class="tech-card">
+        <div class="card-default">
+          <i class=""><img src="ai.png"></i>
+          <h3>AI / ML</h3>
+        </div>
+      </div>
+      <div class="tech-card">
+        <div class="card-default">
+          <i class=""><img src="webxr.png"></i>
+          <h3>Open XR</h3>
+        </div>
+      </div>
+      <div class="tech-card">
+        <div class="card-default">
+          <i class=""><img src="arkit.png"></i>
+          <h3>AR Kit</h3>
+        </div>
+      </div>
+      <div class="tech-card">
+        <div class="card-default">
+          <i class=""><img src="arcore.png"></i>
+          <h3>AR Core</h3>
+        </div>
+      </div>
+
+  </section> <!--============TESTIMONIALS============-->
+  <section class="testimonials container">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <span class="eyebrow">Employee Testimonials</span>
+      <h2>Straight from the team</h2>
+    </div>
+    <div class="t-carousel reveal">
+      <div class="t-track" id="tTrack"></div>
+      <div class="t-controls">
+        <button class="t-arrow" id="tPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"
+            stroke-linecap="round">
+            <path d="m15 18-6-6 6-6" />
+          </svg></button>
+        <button class="t-arrow" id="tNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"
+            stroke-linecap="round">
+            <path d="m9 18 6-6-6-6" />
+          </svg></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="faq container" id="faq">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <span class="eyebrow">FAQ</span>
+      <h2>Questions, answered</h2>
+    </div>
+    <div id="faqList"></div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="cta">
+    <div class="container">
+      <span class="eyebrow">Join Nexoria</span>
+      <h2 style="margin-top:16px;">Ready to Build the Future With Us?</h2>
+      <p>Whether you're deep in shader code or sketching the next spatial interface, there's a seat for you here.
+        Explore open roles or reach out directly — we read every application.</p>
+      <div class="cta-ctas">
+        <a href="#jobs" class="btn btn-primary">View Open Positions</a>
+        <a href="#footer" class="btn btn-ghost">Contact Recruitment</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer-mount"></div>
+<script src="footer-include.js"></script>
+  <script src="volga.js"></script>
+</body>
+
+</html>

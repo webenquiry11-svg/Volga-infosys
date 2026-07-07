@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Volga Infosys — Industry Solutions</title>
   <link rel="stylesheet" href="volga.css" />
+  <link rel="stylesheet" href="dock-premium.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -124,96 +125,143 @@
       .hero-stat{min-width:50%}
     }
     
-    .industry-nav-section {
-      background: var(--surface);
-      padding: 1.5rem 5%;
-    }
-    .industry-nav-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 0.75rem;
-      max-width: 1440px;
-      margin: 0 auto;
-    }
-    .industry-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.75rem 1rem;
-      /* Raised hardware key */
-      background: linear-gradient(145deg, #1e3448 0%, #162a3d 60%, #112035 100%);
-      border: none;
-      border-radius: 0.75rem;
-      color: rgba(180,210,230,0.75);
-      font-family: var(--font-ui);
-      font-size: 0.9rem;
-      cursor: pointer;
-      text-align: left;
-      position: relative;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, color 0.18s ease;
-      box-shadow:
-        -1px -1px 0 rgba(255,255,255,0.1),
-        inset 0 1px 0 rgba(255,255,255,0.08),
-        3px 4px 0 rgba(0,0,0,0.42),
-        4px 6px 10px rgba(0,0,0,0.5),
-        0 0 0 1px rgba(0,0,0,0.35);
-    }
+    /* ── Desktop industry tab bar — PREMIUM ── */
+    .industry-nav-section { display: none; }
 
-    /* Specular sheen on key top */
-    .industry-btn::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 40%;
-      background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 100%);
-      border-radius: 0.75rem 0.75rem 0 0;
-      pointer-events: none;
-    }
+    @media (min-width: 901px) {
+      .industry-nav-section {
+        display: block;
+        display: block;
+        position: sticky;
+        top: var(--navbar-height, 110px);
+        z-index: 100;
+        background:
+          repeating-linear-gradient(
+            180deg,
+            transparent, transparent 2px,
+            rgba(255,255,255,0.016) 2px,
+            rgba(255,255,255,0.016) 3px
+          ),
+          linear-gradient(180deg, #1c2f44 0%, #142436 55%, #0f1d2e 100%);
+        border-bottom: 1px solid rgba(0,0,0,0.55);
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.07),
+          0 6px 32px rgba(0,0,0,0.4);
+      }
 
-    .industry-btn:hover {
-      transform: translateY(-3px) translateX(-1px);
-      color: #d6e4f0;
-      box-shadow:
-        -1px -1px 0 rgba(255,255,255,0.12),
-        inset 0 1px 0 rgba(255,255,255,0.1),
-        5px 6px 0 rgba(0,0,0,0.45),
-        6px 9px 14px rgba(0,0,0,0.55),
-        0 0 0 1px rgba(0,0,0,0.35),
-        0 0 14px rgba(232,147,10,0.15);
-    }
+      .industry-nav-grid {
+        display: flex;
+        align-items: stretch;
+        max-width: 1440px;
+        margin: 0 auto;
+        overflow-x: auto;
+        scrollbar-width: none;
+        gap: 0;
+      }
+      .industry-nav-grid::-webkit-scrollbar { display: none; }
+      .industry-btn:first-child { border-left: 1px solid rgba(255,255,255,0.05); padding-left: calc(4vw + 20px); }
+      .industry-btn:last-child { padding-right: calc(4vw + 20px); }
 
-    /* Active — key pressed + LED amber lit */
-    .industry-btn.active {
-      transform: translateY(2px) translateX(1px);
-      color: #e8930a;
-      text-shadow: 0 0 8px rgba(232,147,10,0.5);
-      background: linear-gradient(145deg, #1e3a52 0%, #163248 60%, #122a40 100%);
-      border: none;
-      box-shadow:
-        inset 2px 2px 6px rgba(0,0,0,0.65),
-        inset -1px -1px 2px rgba(255,255,255,0.05),
-        1px 1px 3px rgba(0,0,0,0.3),
-        0 0 0 1px rgba(0,0,0,0.4),
-        0 0 12px rgba(232,147,10,0.25);
-    }
+      .industry-btn {
+        all: unset;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 0 20px;
+        height: 58px;
+        position: relative;
+        color: rgba(180,210,230,0.45);
+        font-family: var(--font-ui, 'Inter', sans-serif);
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        cursor: pointer;
+        white-space: nowrap;
+        flex-shrink: 0;
+        border-right: 1px solid rgba(255,255,255,0.05);
+        transition: color 0.2s ease, background 0.2s ease;
+      }
+      .industry-btn:first-child { border-left: 1px solid rgba(255,255,255,0.05); }
 
-    .industry-btn.active::before { opacity: 0.3; }
+      .industry-btn::before { display: none; }
+      .industry-btn::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%; right: 50%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #E8930A 40%, #E8930A 60%, transparent);
+        border-radius: 2px 2px 0 0;
+        opacity: 0;
+        transition: left 0.28s ease, right 0.28s ease, opacity 0.28s ease;
+      }
+
+      .industry-btn-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 17px;
+        height: 17px;
+        border-radius: 4px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.09);
+        font-size: 0.58rem;
+        font-weight: 700;
+        color: rgba(180,210,230,0.3);
+        flex-shrink: 0;
+        transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+      }
+
+      .industry-btn:hover {
+        color: rgba(210,235,250,0.85);
+        background: rgba(255,255,255,0.04);
+      }
+      .industry-btn:hover .industry-btn-num {
+        background: rgba(255,255,255,0.1);
+        color: rgba(210,235,250,0.65);
+      }
+
+      .industry-btn.active {
+        color: #E8930A;
+        background: rgba(232,147,10,0.06);
+        text-shadow: 0 0 14px rgba(232,147,10,0.45);
+      }
+      .industry-btn.active::after {
+        left: 10%; right: 10%;
+        opacity: 1;
+        box-shadow: 0 0 10px rgba(232,147,10,0.7);
+      }
+      .industry-btn.active .industry-btn-num {
+        background: rgba(232,147,10,0.18);
+        border-color: rgba(232,147,10,0.45);
+        color: #E8930A;
+        box-shadow: 0 0 8px rgba(232,147,10,0.35);
+      }
+
+      .industry-btn-icon { display: none; }
+      .industry-btn-label { display: inline; }
+    }
 
     .home-suite-section {
       background: var(--bg-alt);
       padding: 80px 5%;
     }
+    /* global fallback for icon (mobile dock uses it) */
     .industry-btn-icon {
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      color: currentColor;
     }
     .industry-btn-icon svg {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       stroke: currentColor;
+      fill: none;
+      flex-shrink: 0;
     }
     
     .industry-content-section {
@@ -635,102 +683,6 @@
         border-bottom: 1px solid rgba(255,255,255,0.08);
         box-shadow: inset 0 -1px 0 rgba(255,255,255,0.04);
       }
-      .industry-nav-section {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: auto;
-        max-width: 100vw;
-        box-sizing: border-box;
-        overflow: hidden;
-        padding: 0.75rem 0.6rem calc(1rem + env(safe-area-inset-bottom, 0));
-        background: #12141d;
-        border-top: 1px solid rgba(255,255,255,0.08);
-        z-index: 1200;
-        box-shadow: 0 -16px 30px rgba(0, 0, 0, 0.38);
-        backdrop-filter: none;
-      }
-      .industry-nav-section .scroll-hint {
-        display: none;
-      }
-      .industry-nav-grid {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 0.65rem;
-        overflow-x: auto;
-        padding: 0 0.25rem 0.2rem;
-        scroll-padding: 1rem;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-      }
-      .industry-nav-grid::-webkit-scrollbar {
-        display: none;
-      }
-      .industry-btn {
-        position: relative;
-        min-width: 58px;
-        width: 58px;
-        height: 58px;
-        flex: 0 0 auto;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 18px;
-        color: rgba(255,255,255,0.9);
-        font-size: 0.72rem;
-        text-align: center;
-        white-space: nowrap;
-        scroll-snap-align: center;
-        transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-      }
-      .industry-btn:hover {
-        background: rgba(255,255,255,0.12);
-      }
-      .industry-btn .industry-btn-icon {
-        width: 28px;
-        height: 28px;
-        min-width: 28px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        background: transparent;
-        color: rgba(255,255,255,0.92);
-        transition: transform 0.25s ease, color 0.25s ease;
-      }
-      .industry-btn svg {
-        width: 20px;
-        height: 20px;
-      }
-      .industry-btn-label {
-        display: none;
-      }
-      .industry-btn.active {
-        transform: translateY(-2px);
-        background: #fff;
-        border-color: transparent;
-        color: #12141d;
-        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
-      }
-      .industry-btn.active .industry-btn-icon {
-        color: #12141d;
-      }
-      .industry-btn.active::before {
-        content: '';
-        position: absolute;
-        bottom: -6px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 36px;
-        height: 7px;
-        border-radius: 999px;
-        background: rgba(255,255,255,0.12);
-      }
       .industry-content-section {
         padding-bottom: calc(13rem + env(safe-area-inset-bottom, 0));
       }
@@ -963,15 +915,16 @@
 
   <!-- Industry Navigation -->
   <section class="industry-nav-section">
-    
-      
-      <i class="scroll-arrow"></i>
-    </div>
     <div class="industry-nav-grid" id="industryNav"></div>
   </section>
 
   <!-- Industry Content -->
   <section class="industry-content-section" id="industryContent"></section>
+
+  <!-- Mobile industry dock (mobile-only) -->
+  <section class="industry-dock-section" id="industryDock" aria-hidden="false">
+    <div class="industry-dock-grid" id="industryDockGrid"></div>
+  </section>
 
   <!-- Divider -->
   <div class="industry-divider"></div>
@@ -1348,7 +1301,10 @@
         const btn = document.createElement('button');
         btn.className = `industry-btn ${idx === 0 ? 'active' : ''}`;
         btn.dataset.id = ind.id;
-        btn.innerHTML = `<span class="industry-btn-icon">${ind.icon}</span><span class="industry-btn-label">${ind.label}</span>`;
+        // Strip hardcoded width/height from SVG so CSS controls size
+        const cleanIcon = ind.icon.replace(/\s(width|height)="\d+"/g, '');
+        btn.innerHTML = `<span class="industry-btn-num">${String(idx + 1).padStart(2,'0')}</span><span class="industry-btn-label">${ind.label}</span><span class="industry-btn-icon" style="display:none">${cleanIcon}</span>`;
+
         btn.addEventListener('click', () => setActiveIndustry(ind.id));
         nav.appendChild(btn);
       });
@@ -1422,8 +1378,25 @@
       });
     }
 
+    function buildIndustryDock() {
+      const dockGrid = document.getElementById('industryDockGrid');
+      if (!dockGrid) return;
+      industries.forEach((ind, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `industry-dock-btn ${idx === 0 ? 'active' : ''}`;
+        btn.dataset.id = ind.id;
+        btn.innerHTML = `<span class="industry-dock-btn-icon">${ind.icon}</span><span class="industry-btn-label">${ind.label}</span>`;
+        btn.addEventListener('click', () => setActiveIndustry(ind.id));
+        dockGrid.appendChild(btn);
+      });
+    }
+
     function setActiveIndustry(id) {
       document.querySelectorAll('.industry-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.id === id);
+      });
+      document.querySelectorAll('.industry-dock-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.id === id);
       });
       document.querySelectorAll('.industry-panel').forEach(panel => {
@@ -1435,6 +1408,7 @@
     // Initialize
     buildIndustryNav();
     buildIndustryPanels();
+    buildIndustryDock();
 
     // Handle hash routing on load and when hash changes
     function handleHashChange() {
@@ -1448,262 +1422,8 @@
   </script>
 
   <!-- ═══════════════════════════════════════════ FOOTER -->
- <style>
-.footer{margin:0;padding:0;box-sizing:border-box;}
-
-.footer-wrap{
-  font-family:var(--font-ui);
-  background:#fff;
-  width:100%;
-  min-height:300px;
-  position:relative;
-  overflow:hidden;
-  border-top:1px solid #e8e8e8;
-}
-
-.footer-inner{
-  position:relative;
-  max-width:1900px;
-  margin:0 auto;
-  padding:60px 48px 36px;
-  min-height:460px;
-}
-
-.footer-logo{
-  width:150px;
-  margin-bottom:6px;
-  img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-  }
-}
-
-.footer-tagline{
-  font-family:var(--font-ui);
-  font-size:11px;
-  font-weight:400;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:#888;
-  margin-bottom:36px;
-}
-
-.footer-cols{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  position:relative;
-  z-index:2;
-  max-width:1900px;
-  gap:24px;
-}
-
-.col-left,.col-right,.col-extra-left,.col-extra-right{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  min-width:130px;
-}
-
-.col-label{
-  font-family:var(--font-display);
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  color:#1a1a1a;
-  margin-bottom:10px;
-}
-
-.col-left a,.col-right a,
-.col-extra-left a,.col-extra-right a{
-  font-family:var(--font-ui);
-  font-size:14px;
-  font-weight:400;
-  color:#1a1a1a;
-  text-decoration:none;
-  letter-spacing:0.01em;
-  line-height:1.9;
-  transition:color 0.2s;
-}
-
-.col-left a:hover,.col-right a:hover,
-.col-extra-left a:hover,.col-extra-right a:hover{color:#1a4fa0;}
-
-.col-right,.col-extra-right{text-align:right;}
-
-.col-right .divider,.col-extra-right .divider{
-  width:32px;
-  height:2px;
-  background:#1a1a1a;
-  margin:4px 0 8px auto;
-}
-
-.col-extra-left .divider{
-  width:32px;
-  height:2px;
-  background:#1a1a1a;
-  margin:4px 0 8px 0;
-}
-
-
-
-.footer-bottom{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  padding-top:32px;
-  position:relative;
-  z-index:2;
-  border-top:1px solid #e8e8e8;
-  margin-top:80px;
-}
-
-.brand-name{
-  font-family:var(--font-display);
-  font-size:38px;
-  font-weight:300;
-  letter-spacing:-0.02em;
-  color:#1a1a1a;
-  line-height:1;
-}
-
-.brand-name span{font-weight:700;}
-
-.copyright{
-  font-family:var(--font-ui);
-  font-size:11px;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  color:#888;
-}
-</style>
-
-
-<div class="footer"><div class="footer-wrap" id="volga-footer">
-  <div class="footer-inner">
-
-    <div class="footer-logo">
-      <img src="logo.png" alt="Volga Infosys®" />
-    </div>
-    <div class="footer-tagline">Crafting immersive digital realities</div>
-
-    <div class="footer-cols">
-
-      <div class="col-left" id="col-left">
-        <div class="col-label">Business</div>
-        <a href="#">Training Simulation</a>
-        <a href="#">3D Configurators</a>
-        <a href="#">Buildings &amp; Interiors</a>
-        <a href="#">E-Commerce</a>
-        <a href="#">Manufacturing</a>
-        <a href="#">Entertainment</a>
-        <a href="#">Museums &amp; Travel</a>
-      </div>
-
-      <div class="col-extra-left" id="col-extra-left">
-        <div class="col-label">Company</div>
-        <div class="divider"></div>
-        <a href="#">About Us</a>
-        <a href="#">Our Work</a>
-        <a href="#">Careers</a>
-        <a href="#">Blog</a>
-        <a href="#">Press Kit</a>
-        <a href="#">Contact</a>
-      </div>
-
-      <div class="col-extra-right" id="col-extra-right">
-        <div class="col-label" style="text-align:right;">Services</div>
-        <div class="divider"></div>
-        <a href="#">Real-Time Rendering</a>
-        <a href="#">AR / VR Solutions</a>
-        <a href="#">Motion Graphics</a>
-        <a href="#">Product Visualisation</a>
-        <a href="#">Game Development</a>
-        <a href="#">Digital Twins</a>
-      </div>
-
-      <div class="col-right" id="col-right">
-        <div class="col-label" style="text-align:right;">Social</div>
-        <div class="divider"></div>
-        <a href="#">LinkedIn</a>
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">YouTube</a>
-        <a href="#">WhatsApp</a>
-      </div>
-
-    </div>
-
-    <div class="footer-bottom" id="footer-bottom">
-      <div class="brand-name"><span>Volga</span> Infosys®</div>
-      <div class="copyright">© Volga Infosys® 2026 &nbsp;&nbsp;|&nbsp;&nbsp; Privacy &amp; Policy &nbsp;&nbsp;|&nbsp;&nbsp; Made with ♥ by Volga</div>
-    </div>
-
-  </div>
-</div>
-</div>
-
-
-<script>
-gsap.registerPlugin(ScrollTrigger);
-
-const footer       = document.getElementById('volga-footer');
-const colLeft      = document.getElementById('col-left');
-const colRight     = document.getElementById('col-right');
-const colExtraLeft  = document.getElementById('col-extra-left');
-const colExtraRight = document.getElementById('col-extra-right');
-const footerBottom = document.getElementById('footer-bottom');
-
-if (footer && colLeft && colRight && colExtraLeft && colExtraRight && footerBottom) {
-  // Set initial state
-  gsap.set(colLeft,       { x: -30, opacity: 0 });
-  gsap.set(colRight,      { x:  30, opacity: 0 });
-  gsap.set(colExtraLeft,  { x: -20, opacity: 0 });
-  gsap.set(colExtraRight, { x:  20, opacity: 0 });
-  gsap.set(footerBottom,  { y:  20, opacity: 0 });
-
-  // Helper to show everything immediately
-  const showFooter = () => {
-    gsap.to(colLeft,       { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out' });
-    gsap.to(colRight,      { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.1 });
-    gsap.to(colExtraLeft,  { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.15 });
-    gsap.to(colExtraRight, { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.2 });
-    gsap.to(footerBottom,  { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.25 });
-  };
-
-  // Check if footer is already in viewport on load
-  const footerRect = footer.getBoundingClientRect();
-  const isInViewport = footerRect.top < window.innerHeight;
-  if (isInViewport) {
-    showFooter();
-  } else {
-    // Use ScrollTrigger to animate when footer enters view
-    ScrollTrigger.create({
-      trigger: footer,
-      start: 'top 90%',
-      onEnter: showFooter,
-      once: true
-    });
-  }
-
-  // Fallback: show everything after 1 second no matter what
-  setTimeout(showFooter, 1000);
-}
-
-// Keep balloon animation if it exists
-gsap.to(balloon, {
-  y: 0, opacity: 1,
-  ease: 'power3.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 40%',
-    scrub: 5,
-  }
-});
-</script>
+ <div id="site-footer-mount"></div>
+<script src="footer-include.js"></script>
 
 
   <script src="volga.js"></script>

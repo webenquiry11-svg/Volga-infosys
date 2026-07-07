@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Solutions — Volga Infosys</title>
 <link rel="stylesheet" href="volga.css" />
+<link rel="stylesheet" href="dock-premium.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -40,7 +41,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-ui);overflow-
 
 /* ── HERO ── */
 .hero{
-  position:relative;min: height 70vh;
+  position:relative;min-height: 70vh;
   display:grid;grid-template-columns:1fr 1fr;overflow:hidden;
   
  
@@ -296,7 +297,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-ui);overflow-
 
 .stage-intro{
   font-size:.99rem;line-height:1.9;font-weight:300;
-  color:var(-text-muted);
+  color:var(--text-muted, #4A6070);
   border-left:3px solid var(--accent);
   padding:14px 20px;margin-bottom:32px;
   background:var(--surface2);border-radius:0 8px 8px 0;
@@ -593,6 +594,56 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:52px 60px
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:2px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* Responsive improvements */
+@media (max-width:1200px){
+  .hero-left{padding:64px 40px 64px}
+  .hero-h1{font-size:clamp(2.2rem,5.2vw,4.2rem)}
+  .stage-title{font-size:clamp(1.8rem,4.5vw,3.6rem)}
+  .stage-visual{height:48vh}
+}
+@media (max-width:960px){
+  .hero{grid-template-columns:1fr}
+  .hero-left{padding:40px 24px 40px}
+  .hero-sub{max-width:100%}
+  .hero-right{min-height:300px}
+  .solutions-shell{grid-template-columns:1fr;}
+  .sol-sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border);overflow-x:auto;overflow-y:hidden}
+  .sol-list{flex-direction:row;padding:10px;min-width:max-content;gap:8px}
+  .sol-btn{white-space:nowrap;flex-shrink:0}
+  .stage-visual{height:36vh}
+  .stage-body{padding:20px}
+}
+@media (max-width:800px){
+  .proof-head{padding:0 24px 32px}
+  .proof-strip{padding:0 24px 8px}
+  .proof-card{width:260px;height:360px}
+  .proof-card:first-child{width:380px}
+  .why-left{padding:40px 24px}
+  .why-right{padding:20px}
+  .why-left-h{font-size:clamp(1.4rem,4vw,2.4rem)}
+}
+@media (max-width:560px){
+  .hero-left{padding:28px 18px 28px}
+  .hero-pill{padding:6px 12px;font-size:.62rem}
+  .stage-visual{height:30vh}
+  .stage-title{font-size:clamp(1.4rem,5.5vw,2.6rem)}
+  .feats-grid{gap:10px}
+  .chips-row{grid-template-columns:1fr}
+  .ft-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:420px){
+  .proof-card{width:220px;height:320px}
+  .proof-card:first-child{width:320px}
+  footer{padding:28px 18px}
+  .cta-section{padding:60px 18px}
+  .cta-h{font-size:clamp(1.6rem,9vw,2.6rem)}
+}
+@media (max-width: 900px) {
+  /* Bottom dock separate from the sidebar to avoid full-page takeover */
+  .sol-stage{padding-bottom:calc(13rem + env(safe-area-inset-bottom, 0))}
+  /* hide top tab strip on mobile — use bottom dock only */
+  .sol-list{display:none}
+}
 </style>
 </head>
 <body>
@@ -1018,7 +1069,7 @@ const h=window.location.hash.replace('#','');
 if(h&&SOLUTIONS.find(s=>s.id===h))showSolution(h);
 </script>
 
- <style>
+<style>
 .footer{margin:0;padding:0;box-sizing:border-box;}
 
 .footer-wrap{
@@ -1030,6 +1081,10 @@ if(h&&SOLUTIONS.find(s=>s.id===h))showSolution(h);
   overflow:hidden;
   border-top:1px solid #e8e8e8;
 }
+
+/* Tech Section Breathing Background Styles — removed, handled by volga.css */
+
+
 
 .footer-inner{
   position:relative;
@@ -1059,17 +1114,83 @@ if(h&&SOLUTIONS.find(s=>s.id===h))showSolution(h);
   margin-bottom:36px;
 }
 
+/* Newsletter strip */
+.footer-newsletter{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:20px;
+  padding-bottom:32px;
+  margin-bottom:36px;
+  border-bottom:1px solid #e8e8e8;
+  position:relative;
+  z-index:2;
+}
+
+.newsletter-copy .newsletter-title{
+  font-family:var(--font-display);
+  font-size:16px;
+  font-weight:600;
+  color:#1a1a1a;
+  margin-bottom:4px;
+}
+
+.newsletter-copy .newsletter-sub{
+  font-family:var(--font-ui);
+  font-size:13px;
+  color:#888;
+}
+
+.newsletter-form{
+  display:flex;
+  gap:0;
+  border:1px solid #1a1a1a;
+  overflow:hidden;
+}
+
+.newsletter-form input{
+  font-family:var(--font-ui);
+  font-size:13px;
+  border:none;
+  outline:none;
+  padding:12px 16px;
+  width:240px;
+  background:#fff;
+  color:#1a1a1a;
+}
+
+.newsletter-form button{
+  font-family:var(--font-ui);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  border:none;
+  background:#1a1a1a;
+  color:#fff;
+  padding:0 22px;
+  cursor:pointer;
+  transition:background 0.3s ease;
+  white-space:nowrap;
+}
+
+.newsletter-form button:hover{
+  background:#1a4fa0;
+}
+
 .footer-cols{
   display:flex;
   justify-content:space-between;
-  align-items:flex-end;
+  align-items:flex-start;
   position:relative;
   z-index:2;
   max-width:1900px;
   gap:24px;
+  flex-wrap:wrap;
 }
 
-.col-left,.col-right,.col-extra-left,.col-extra-right{
+.col-left,.col-right,.col-extra-left,.col-extra-right,.col-far-left,.col-far-right{
   display:flex;
   flex-direction:column;
   gap:10px;
@@ -1087,7 +1208,8 @@ if(h&&SOLUTIONS.find(s=>s.id===h))showSolution(h);
 }
 
 .col-left a,.col-right a,
-.col-extra-left a,.col-extra-right a{
+.col-extra-left a,.col-extra-right a,
+.col-far-left a,.col-far-right a{
   font-family:var(--font-ui);
   font-size:14px;
   font-weight:400;
@@ -1095,34 +1217,74 @@ if(h&&SOLUTIONS.find(s=>s.id===h))showSolution(h);
   text-decoration:none;
   letter-spacing:0.01em;
   line-height:1.9;
-  transition:color 0.2s;
+  transition:all 0.3s ease;
+  position:relative;
+  display:inline-block;
 }
 
 .col-left a:hover,.col-right a:hover,
-.col-extra-left a:hover,.col-extra-right a:hover{color:#1a4fa0;}
+.col-extra-left a:hover,.col-extra-right a:hover,
+.col-far-left a:hover,.col-far-right a:hover{
+  color:#1a4fa0;
+  transform:translateY(-2px);
+  font-weight:500;
+}
 
-.col-right,.col-extra-right{text-align:right;}
+.col-left a::after,.col-right a::after,
+.col-extra-left a::after,.col-extra-right a::after,
+.col-far-left a::after,.col-far-right a::after{
+  content:'';
+  position:absolute;
+  bottom:-2px;
+  left:0;
+  width:0;
+  height:2px;
+  background:#1a4fa0;
+  transition:width 0.3s ease;
+}
 
-.col-right .divider,.col-extra-right .divider{
+.col-left a:hover::after,.col-right a:hover::after,
+.col-extra-left a:hover::after,.col-extra-right a:hover::after,
+.col-far-left a:hover::after,.col-far-right a:hover::after{
+  width:100%;
+}
+
+.col-right,.col-extra-right,.col-far-right{text-align:right;}
+
+.col-right .divider,.col-extra-right .divider,.col-far-right .divider{
   width:32px;
   height:2px;
   background:#1a1a1a;
   margin:4px 0 8px auto;
 }
 
-.col-extra-left .divider{
+.col-extra-left .divider,.col-far-left .divider{
   width:32px;
   height:2px;
   background:#1a1a1a;
   margin:4px 0 8px 0;
 }
 
+/* Contact block inside the Social column */
+.col-far-right .contact-block{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom:18px;
+}
 
+.col-far-right .contact-block a,
+.col-far-right .contact-block span{
+  font-size:13px;
+  color:#555;
+}
 
 .footer-bottom{
   display:flex;
   justify-content:space-between;
   align-items:flex-end;
+  flex-wrap:wrap;
+  gap:16px;
   padding-top:32px;
   position:relative;
   z-index:2;
@@ -1148,154 +1310,82 @@ if(h&&SOLUTIONS.find(s=>s.id===h))showSolution(h);
   text-transform:uppercase;
   color:#888;
 }
+
+.copyright a{
+  color:#888;
+  text-decoration:none;
+}
+
+.copyright a:hover{
+  color:#1a4fa0;
+}
 </style>
 
 
-<div class="footer"><div class="footer-wrap" id="volga-footer">
-  <div class="footer-inner">
-
-    <div class="footer-logo">
-      <img src="logo.png" alt="Volga Infosys®" />
-    </div>
-    <div class="footer-tagline">Crafting immersive digital realities</div>
-
-    <div class="footer-cols">
-
-      <div class="col-left" id="col-left">
-        <div class="col-label">Business</div>
-        <a href="#">Training Simulation</a>
-        <a href="#">3D Configurators</a>
-        <a href="#">Buildings &amp; Interiors</a>
-        <a href="#">E-Commerce</a>
-        <a href="#">Manufacturing</a>
-        <a href="#">Entertainment</a>
-        <a href="#">Museums &amp; Travel</a>
-      </div>
-
-      <div class="col-extra-left" id="col-extra-left">
-        <div class="col-label">Company</div>
-        <div class="divider"></div>
-        <a href="#">About Us</a>
-        <a href="#">Our Work</a>
-        <a href="#">Careers</a>
-        <a href="#">Blog</a>
-        <a href="#">Press Kit</a>
-        <a href="#">Contact</a>
-      </div>
-
-      <div class="col-extra-right" id="col-extra-right">
-        <div class="col-label" style="text-align:right;">Services</div>
-        <div class="divider"></div>
-        <a href="#">Real-Time Rendering</a>
-        <a href="#">AR / VR Solutions</a>
-        <a href="#">Motion Graphics</a>
-        <a href="#">Product Visualisation</a>
-        <a href="#">Game Development</a>
-        <a href="#">Digital Twins</a>
-      </div>
-
-      <div class="col-right" id="col-right">
-        <div class="col-label" style="text-align:right;">Social</div>
-        <div class="divider"></div>
-        <a href="#">LinkedIn</a>
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">YouTube</a>
-        <a href="#">WhatsApp</a>
-      </div>
-
-    </div>
-
-    <div class="footer-bottom" id="footer-bottom">
-      <div class="brand-name"><span>Volga</span> Infosys®</div>
-      <div class="copyright">© Volga Infosys® 2026 &nbsp;&nbsp;|&nbsp;&nbsp; Privacy &amp; Policy &nbsp;&nbsp;|&nbsp;&nbsp; Made with ♥ by Volga</div>
-    </div>
-
-  </div>
-</div>
-</div>
-
-<script>
-gsap.registerPlugin(ScrollTrigger);
-
-const footer       = document.getElementById('volga-footer');
-
-const colLeft      = document.getElementById('col-left');
-const colRight     = document.getElementById('col-right');
-const colExtraLeft  = document.getElementById('col-extra-left');
-const colExtraRight = document.getElementById('col-extra-right');
-const footerBottom = document.getElementById('footer-bottom');
-
-
-gsap.set(colLeft,       { x: -30, opacity: 0 });
-gsap.set(colRight,      { x:  30, opacity: 0 });
-gsap.set(colExtraLeft,  { x: -20, opacity: 0 });
-gsap.set(colExtraRight, { x:  20, opacity: 0 });
-gsap.set(footerBottom,  { y:  20, opacity: 0 });
-
-
-
-gsap.to(colLeft, {
-  x: 0, opacity: 1,
-  ease: 'power2.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 50%',
-    scrub: 3.5,
-  }
-});
-
-gsap.to(colExtraLeft, {
-  x: 0, opacity: 1,
-  ease: 'power2.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 55%',
-    scrub: 3,
-  }
-});
-
-gsap.to(colExtraRight, {
-  x: 0, opacity: 1,
-  ease: 'power2.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 55%',
-    scrub: 3,
-  }
-});
-
-gsap.to(colRight, {
-  x: 0, opacity: 1,
-  ease: 'power2.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 50%',
-    scrub: 3.5,
-  }
-});
-
-gsap.to(footerBottom, {
-  y: 0, opacity: 1,
-  ease: 'power2.out',
-  scrollTrigger: {
-    trigger: footer,
-    start: 'center bottom',
-    end:   'bottom 60%',
-    scrub: 3,
-  }
-});
-
-
-
-
-</script>
+<div id="site-footer-mount"></div>
+<script src="footer-include.js"></script>
 
 <script src="api-config.js"></script>
 <script src="volga.js"></script>
+<!-- Solutions mobile dock (cloned from sidebar for mobile) -->
+<section class="solutions-nav-section" id="solutionsNav" aria-hidden="false">
+  <div class="solutions-nav-grid" id="solutionsNavGrid"></div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const solList = document.getElementById('solList');
+  const navGrid = document.getElementById('solutionsNavGrid');
+  if(!solList || !navGrid) return;
+  const originalBtns = Array.from(solList.querySelectorAll('.sol-btn'));
+  // One SVG per solution: AR, VR, Digital Twin, XR, AI, 3D Configurator, Virtual Showroom, Simulation, Training, Metaverse
+  const dockIcons = [
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8V5a2 2 0 012-2h3M2 16v3a2 2 0 002 2h3M22 8V5a2 2 0 00-2-2h-3M22 16v3a2 2 0 01-2 2h-3"/><circle cx="12" cy="12" r="3"/><path d="M12 5v2M12 17v2M5 12H7M17 12h2"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10a2 2 0 012-2h16a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"/><circle cx="8.5" cy="12" r="1.5"/><circle cx="15.5" cy="12" r="1.5"/><path d="M11 12h2"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 19 6 19 18 12 22 5 18 5 6"/><circle cx="12" cy="12" r="3"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 014 4v1h1a3 3 0 010 6h-1v1a4 4 0 01-8 0v-1H7a3 3 0 010-6h1V6a4 4 0 014-4z"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path d="M9 22V12h6v10"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><circle cx="12" cy="12" r="3"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/><circle cx="12" cy="12" r="2"/></svg>`,
+  ];
+  originalBtns.forEach((btn, idx) => {
+    const c = btn.cloneNode(true);
+    c.classList.remove('sol-btn'); c.classList.add('solutions-btn');
+    const icon = c.querySelector('.sol-btn-icon');
+    if(icon){
+      icon.classList.remove('sol-btn-icon'); icon.classList.add('solutions-btn-icon');
+      icon.innerHTML = dockIcons[idx] || dockIcons[0];
+    }
+    c.addEventListener('click', function(e){
+      e.preventDefault();
+      btn.click();
+      document.querySelectorAll('.solutions-btn').forEach(b=>b.classList.remove('active'));
+      c.classList.add('active');
+      c.scrollIntoView({behavior:'smooth', inline:'center'});
+    });
+    navGrid.appendChild(c);
+  });
+
+  solList.addEventListener('click', function(e){
+    const target = e.target.closest('.sol-btn');
+    if(!target) return;
+    const idx = originalBtns.indexOf(target);
+    if(idx>=0){
+      const clones = Array.from(document.querySelectorAll('.solutions-btn'));
+      clones.forEach(b=>b.classList.remove('active'));
+      if(clones[idx]) clones[idx].classList.add('active');
+    }
+  });
+
+  const activeIdx = originalBtns.findIndex(b=>b.classList.contains('active'));
+  if(activeIdx>=0){
+    const clones = Array.from(document.querySelectorAll('.solutions-btn'));
+    if(clones[activeIdx]) clones[activeIdx].classList.add('active');
+  }
+});
+</script>
 </body>
 </html>

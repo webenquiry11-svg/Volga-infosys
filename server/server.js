@@ -50,9 +50,16 @@ app.get("/favicon.ico", (req, res) => {
 
 app.use(cors({
   origin: function(origin, callback) {
-    // Allow requests with no origin (mobile apps, curl, Postman)
-    // and any origin in production since frontend is on Vercel
-    callback(null, true);
+    const allowed = (process.env.ALLOWED_ORIGINS || '')
+      .split(',')
+      .map(o => o.trim())
+      .filter(Boolean);
+    // Allow requests with no origin (mobile apps, curl, server-to-server)
+    if (!origin) return callback(null, true);
+    if (allowed.length === 0 || allowed.includes(origin)) {
+      return callback(null, true);
+    }
+    callback(new Error(`CORS: origin ${origin} not allowed`));
   },
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -63,15 +70,20 @@ app.use(express.json());
 const contactLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100, message: { success: false, message: "Too many submissions, try again later." } });
 const authLimiter = rateLimit({ 
   windowMs: 15 * 60 * 1000, 
-  max: 500, // Increased limit
+  max: 20,
   message: { success: false, message: "Too many login attempts, try again later." } 
+});
+const generalAuthLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: { success: false, message: "Too many requests, try again later." }
 });
 
 // Serve uploaded files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/api/contact", contactLimiter, contactRoutes);
-app.use("/api/auth", authLimiter, authRoutes);
+app.use("/api/auth", generalAuthLimiter, authRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/client-stories", clientStoryRoutes);

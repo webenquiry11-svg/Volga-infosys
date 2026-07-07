@@ -561,7 +561,7 @@ function setupMagnetic() {
 function setupTextScramble() {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
   const selectors = [
-    '.svc-card .svc-card-label', '.svc-card h3', '.svc-card p', '.svc-card .svc-card-tags small'
+    '.svc-card .svc-card-label', '.svc-card h3', '.svc-card .svc-card-tags small'
   ];
 
   document.querySelectorAll(selectors.join(',')).forEach(el => {
@@ -1086,6 +1086,7 @@ async function fetchInsightsOverview() {
     const latestClientStories = clientStories.slice(0, 3);
     const latestIndustryNews = industryNews.slice(0, 3);
 
+    updateInsightsOverviewSidebar(blogs, caseStudies, clientStories, industryNews);
     renderInsightsOverview(latestBlogs, latestCaseStudies, latestClientStories, latestIndustryNews);
   } catch (error) {
     console.error('Failed to load insights overview:', error);
@@ -1162,6 +1163,72 @@ function renderInsightsOverview(blogs, caseStudies, clientStories, industryNews)
       </div>
     </div>
   `;
+}
+
+function updateInsightsOverviewSidebar(blogs, caseStudies, clientStories, industryNews) {
+  const getById = id => document.getElementById(id);
+  const counts = {
+    articles: blogs.length,
+    caseStudies: caseStudies.length,
+    industryReports: industryNews.length
+  };
+
+  if (getById('stat-articles-published')) getById('stat-articles-published').textContent = counts.articles;
+  if (getById('stat-case-studies')) getById('stat-case-studies').textContent = counts.caseStudies;
+  if (getById('stat-industry-reports')) getById('stat-industry-reports').textContent = counts.industryReports;
+
+  const topicCounts = {};
+  const addTopic = raw => {
+    const topic = String(raw || '').trim();
+    if (!topic) return;
+    topicCounts[topic] = (topicCounts[topic] || 0) + 1;
+  };
+
+  blogs.forEach(blog => addTopic(blog.category));
+  caseStudies.forEach(cs => addTopic(cs.industry));
+  clientStories.forEach(story => addTopic(story.industry));
+  industryNews.forEach(news => addTopic(news.topic));
+
+  const browseTopicsList = getById('browse-topics-list');
+  if (browseTopicsList) {
+    browseTopicsList.innerHTML = Object.entries(topicCounts)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 6)
+      .map(([topic, count]) => `
+        <div class="topic-row">
+          <span class="topic-name">${topic}</span>
+          <span class="topic-count">${count}</span>
+        </div>
+      `).join('') || '<div class="topic-row"><span class="topic-name">No topics available</span><span class="topic-count">0</span></div>';
+  }
+
+  const buildItem = (item, type, label, idField, dateField, urlTemplate) => ({
+    title: item[label] || 'Untitled',
+    date: item[dateField] || item.createdAt || new Date().toISOString(),
+    url: typeof urlTemplate === 'function' ? urlTemplate(item) : urlTemplate.replace('{id}', item[idField] || ''),
+    type
+  });
+
+  const allItems = [
+    ...blogs.map(item => buildItem(item, 'Blog', 'title', '_id', 'publishAt', item => `blog-detail.html?id=${item._id}`)),
+    ...caseStudies.map(item => buildItem(item, 'Case Study', 'title', '_id', 'createdAt', item => `case-study-detail.html?id=${item._id}`)),
+    ...clientStories.map(item => buildItem(item, 'Client Story', 'clientName', '_id', 'createdAt', () => 'client-stories.html')),
+    ...industryNews.map(item => buildItem(item, 'Industry News', 'title', '_id', 'publishedAt', item => `industry-news-detail.html?id=${item._id}`))
+  ];
+
+  const trendingList = getById('trending-list');
+  if (trendingList) {
+    trendingList.innerHTML = allItems
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .slice(0, 5)
+      .map((item, index) => `
+        <div class="trending-item">
+          <div class="trending-num">${String(index + 1).padStart(2, '0')}</div>
+          <div class="trending-title">${item.title}</div>
+          <div class="trending-date">${item.type} · ${new Date(item.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</div>
+        </div>
+      `).join('');
+  }
 }
 
 // ─── 12. ORBIT DOTS ANIMATION ────────

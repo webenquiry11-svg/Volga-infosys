@@ -11,11 +11,18 @@ const sessionSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  ip: { type: String },
+  userAgent: { type: String },
+  deviceName: { type: String },
+  lastActive: { type: Date, default: Date.now },
+  expiresAt: { type: Date },
   createdAt: {
     type: Date,
-    default: Date.now,
-    expires: "7d" // Auto-expire after 7 days
+    default: Date.now
   }
 });
+
+// Create an index to auto-remove sessions after the absolute expiry date (if set)
+sessionSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0, partialFilterExpression: { expiresAt: { $exists: true } } });
 
 export default mongoose.model("Session", sessionSchema);

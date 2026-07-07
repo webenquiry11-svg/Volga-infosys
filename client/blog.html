@@ -1245,7 +1245,12 @@
   </section>
 
   <!-- FOOTER -->
-   <style>
+   
+
+<!-- ═══════════════════════════════════════════ FOOTER -->
+  
+
+<style>
 .footer{margin:0;padding:0;box-sizing:border-box;}
 
 .footer-wrap{
@@ -1286,17 +1291,83 @@
   margin-bottom:36px;
 }
 
+/* Newsletter strip */
+.footer-newsletter{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:20px;
+  padding-bottom:32px;
+  margin-bottom:36px;
+  border-bottom:1px solid #e8e8e8;
+  position:relative;
+  z-index:2;
+}
+
+.newsletter-copy .newsletter-title{
+  font-family:var(--font-display);
+  font-size:16px;
+  font-weight:600;
+  color:#1a1a1a;
+  margin-bottom:4px;
+}
+
+.newsletter-copy .newsletter-sub{
+  font-family:var(--font-ui);
+  font-size:13px;
+  color:#888;
+}
+
+.newsletter-form{
+  display:flex;
+  gap:0;
+  border:1px solid #1a1a1a;
+  overflow:hidden;
+}
+
+.newsletter-form input{
+  font-family:var(--font-ui);
+  font-size:13px;
+  border:none;
+  outline:none;
+  padding:12px 16px;
+  width:240px;
+  background:#fff;
+  color:#1a1a1a;
+}
+
+.newsletter-form button{
+  font-family:var(--font-ui);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  border:none;
+  background:#1a1a1a;
+  color:#fff;
+  padding:0 22px;
+  cursor:pointer;
+  transition:background 0.3s ease;
+  white-space:nowrap;
+}
+
+.newsletter-form button:hover{
+  background:#1a4fa0;
+}
+
 .footer-cols{
   display:flex;
   justify-content:space-between;
-  align-items:flex-end;
+  align-items:flex-start;
   position:relative;
   z-index:2;
   max-width:1900px;
   gap:24px;
+  flex-wrap:wrap;
 }
 
-.col-left,.col-right,.col-extra-left,.col-extra-right{
+.col-left,.col-right,.col-extra-left,.col-extra-right,.col-far-left,.col-far-right{
   display:flex;
   flex-direction:column;
   gap:10px;
@@ -1314,7 +1385,8 @@
 }
 
 .col-left a,.col-right a,
-.col-extra-left a,.col-extra-right a{
+.col-extra-left a,.col-extra-right a,
+.col-far-left a,.col-far-right a{
   font-family:var(--font-ui);
   font-size:14px;
   font-weight:400;
@@ -1322,34 +1394,73 @@
   text-decoration:none;
   letter-spacing:0.01em;
   line-height:1.9;
-  transition:color 0.2s;
+  transition:all 0.3s ease;
+  position:relative;
+  display:inline-block;
 }
 
 .col-left a:hover,.col-right a:hover,
-.col-extra-left a:hover,.col-extra-right a:hover{color:#1a4fa0;}
+.col-extra-left a:hover,.col-extra-right a:hover,
+.col-far-left a:hover,.col-far-right a:hover{
+  color:#1a4fa0;
+  transform:translateY(-2px);
+  font-weight:500;
+}
 
-.col-right,.col-extra-right{text-align:right;}
+.col-left a::after,.col-right a::after,
+.col-extra-left a::after,.col-extra-right a::after,
+.col-far-left a::after,.col-far-right a::after{
+  content:'';
+  position:absolute;
+  bottom:-2px;
+  left:0;
+  width:0;
+  height:2px;
+  background:#1a4fa0;
+  transition:width 0.3s ease;
+}
 
-.col-right .divider,.col-extra-right .divider{
+.col-left a:hover::after,.col-right a:hover::after,
+.col-extra-left a:hover::after,.col-extra-right a:hover::after,
+.col-far-left a:hover::after,.col-far-right a:hover::after{
+  width:100%;
+}
+
+.col-right,.col-extra-right,.col-far-right{text-align:right;}
+
+.col-right .divider,.col-extra-right .divider,.col-far-right .divider{
   width:32px;
   height:2px;
   background:#1a1a1a;
   margin:4px 0 8px auto;
 }
 
-.col-extra-left .divider{
+.col-extra-left .divider,.col-far-left .divider{
   width:32px;
   height:2px;
   background:#1a1a1a;
   margin:4px 0 8px 0;
 }
 
+.col-far-right .contact-block{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom:18px;
+}
 
+.col-far-right .contact-block a,
+.col-far-right .contact-block span{
+  font-size:13px;
+  color:#555;
+}
 
 .footer-bottom{
   display:flex;
   justify-content:space-between;
   align-items:flex-end;
+  flex-wrap:wrap;
+  gap:16px;
   padding-top:32px;
   position:relative;
   z-index:2;
@@ -1375,255 +1486,19 @@
   text-transform:uppercase;
   color:#888;
 }
+
+.copyright a{
+  color:#888;
+  text-decoration:none;
+}
+
+.copyright a:hover{
+  color:#1a4fa0;
+}
 </style>
 
-
-<div class="footer"><div class="footer-wrap" id="volga-footer">
-  <div class="footer-inner">
-
-    <div class="footer-logo">
-      <img src="logo.png" alt="Volga Infosys®" />
-    </div>
-    <div class="footer-tagline">Crafting immersive digital realities</div>
-
-    <div class="footer-cols">
-
-      <div class="col-left" id="col-left">
-        <div class="col-label">Business</div>
-        <a href="#">Training Simulation</a>
-        <a href="#">3D Configurators</a>
-        <a href="#">Buildings &amp; Interiors</a>
-        <a href="#">E-Commerce</a>
-        <a href="#">Manufacturing</a>
-        <a href="#">Entertainment</a>
-        <a href="#">Museums &amp; Travel</a>
-      </div>
-
-      <div class="col-extra-left" id="col-extra-left">
-        <div class="col-label">Company</div>
-        <div class="divider"></div>
-        <a href="#">About Us</a>
-        <a href="#">Our Work</a>
-        <a href="#">Careers</a>
-        <a href="#">Blog</a>
-        <a href="#">Press Kit</a>
-        <a href="#">Contact</a>
-      </div>
-
-      <div class="col-extra-right" id="col-extra-right">
-        <div class="col-label" style="text-align:right;">Services</div>
-        <div class="divider"></div>
-        <a href="#">Real-Time Rendering</a>
-        <a href="#">AR / VR Solutions</a>
-        <a href="#">Motion Graphics</a>
-        <a href="#">Product Visualisation</a>
-        <a href="#">Game Development</a>
-        <a href="#">Digital Twins</a>
-      </div>
-
-      <div class="col-right" id="col-right">
-        <div class="col-label" style="text-align:right;">Social</div>
-        <div class="divider"></div>
-        <a href="#">LinkedIn</a>
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">YouTube</a>
-        <a href="#">WhatsApp</a>
-      </div>
-
-    </div>
-
-    <div class="footer-bottom" id="footer-bottom">
-      <div class="brand-name"><span>Volga</span> Infosys®</div>
-      <div class="copyright">© Volga Infosys® 2026 &nbsp;&nbsp;|&nbsp;&nbsp; Privacy &amp; Policy &nbsp;&nbsp;|&nbsp;&nbsp; Made with ♥ by Volga</div>
-    </div>
-
-  </div>
-</div>
-</div>
-
-<script>
-gsap.registerPlugin(ScrollTrigger);
-
-const footer = document.getElementById('volga-footer');
-
-// ── Helpers ──────────────────────────────────────────────
-const getAPI = () => window.VOLGA_API || 'http://localhost:5000/api';
-const imgUrl = (u) => window.getVolgaImageUrl ? window.getVolgaImageUrl(u) : u;
-
-function fmtDate(d) {
-  if (!d) return '';
-  return new Date(d).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
-}
-
-function cardHTML(p) {
-  const img = imgUrl(p.coverImage || p.image || '');
-  const imgTag = img
-    ? `<img src="${img}" alt="${p.title}" class="blog-card-img" loading="lazy">`
-    : `<div class="blog-card-img blog-card-img--placeholder"></div>`;
-  return `
-    <article class="blog-card" data-category="${p.category || ''}">
-      <a href="blog-detail.html?id=${p._id}" class="blog-card-link">
-        ${imgTag}
-        <div class="blog-card-body">
-          <span class="blog-tag">${p.category || 'General'}</span>
-          <h3 class="blog-card-title">${p.title}</h3>
-          <p class="blog-card-excerpt">${p.excerpt || ''}</p>
-          <div class="blog-card-meta">
-            <span>${p.author || 'Volga XR'}</span>
-            <span>${fmtDate(p.createdAt)}</span>
-            <span>${p.readTime || '5 min read'}</span>
-          </div>
-        </div>
-      </a>
-    </article>`;
-}
-
-function featuredHTML(p) {
-  const img = imgUrl(p.coverImage || p.image || '');
-  return `
-    <article class="blog-featured">
-      <a href="blog-detail.html?id=${p._id}" class="blog-featured-link">
-        ${img ? `<div class="blog-featured-img" style="background-image:url('${img}')"></div>` : ''}
-        <div class="blog-featured-body">
-          <span class="blog-featured-badge">Featured</span>
-          <span class="blog-tag">${p.category || 'General'}</span>
-          <h2 class="blog-featured-title">${p.title}</h2>
-          <p class="blog-featured-excerpt">${p.excerpt || ''}</p>
-          <div class="blog-card-meta">
-            <span>${p.author || 'Volga XR'}</span>
-            <span>${fmtDate(p.createdAt)}</span>
-            <span>${p.readTime || '5 min read'}</span>
-          </div>
-        </div>
-      </a>
-    </article>`;
-}
-
-// ── Load + render blogs ───────────────────────────────────
-let allPosts = [];
-let activeFilter = 'all';
-
-async function loadBlogs() {
-  const grid = document.getElementById('blogGrid');
-  const featuredEl = document.getElementById('blogFeatured');
-  try {
-    const res = await fetch(`${getAPI()}/blogs`);
-    if (!res.ok) throw new Error('API error');
-    const json = await res.json();
-    allPosts = json.data || json.blogs || [];
-
-    if (!allPosts.length) {
-      grid.innerHTML = '<div class="blog-empty">No posts published yet.</div>';
-      return;
-    }
-
-    renderBlogs();
-    populateSidebar(allPosts);
-  } catch (err) {
-    console.error('Blog load error:', err);
-    grid.innerHTML = '<div class="blog-empty">Could not load posts. Make sure the server is running.</div>';
-  }
-}
-
-function renderBlogs() {
-  const grid = document.getElementById('blogGrid');
-  const featuredEl = document.getElementById('blogFeatured');
-
-  const filtered = activeFilter === 'all'
-    ? allPosts
-    : allPosts.filter(p => (p.category || '').toLowerCase() === activeFilter.toLowerCase());
-
-  // Featured = first post (or first featured flag)
-  const featured = filtered.find(p => p.featured) || filtered[0];
-  const rest = filtered.filter(p => p !== featured);
-
-  if (featuredEl) {
-    featuredEl.innerHTML = featured ? featuredHTML(featured) : '';
-  }
-
-  if (!filtered.length) {
-    grid.innerHTML = '<div class="blog-empty">No posts in this category.</div>';
-    return;
-  }
-
-  grid.innerHTML = rest.map(p => cardHTML(p)).join('');
-}
-
-// ── Filter buttons ────────────────────────────────────────
-document.querySelectorAll('.blog-filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.blog-filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeFilter = btn.dataset.filter || 'all';
-    renderBlogs();
-  });
-});
-
-// ── Sidebar ───────────────────────────────────────────────
-function populateSidebar(posts) {
-  // Topics / browse
-  const topicsEl = document.getElementById('browseTopics');
-  if (topicsEl) {
-    const counts = posts.reduce((acc, p) => {
-      const cat = p.category || 'General';
-      acc[cat] = (acc[cat] || 0) + 1;
-      return acc;
-    }, {});
-    topicsEl.innerHTML = Object.entries(counts).sort().map(([t, c]) =>
-      `<li><span class="topic-name">${t}</span><span class="topic-count">${c}</span></li>`
-    ).join('') || '<li>No topics</li>';
-  }
-
-  // Trending
-  const trendingEl = document.getElementById('trendingList');
-  if (trendingEl) {
-    const trending = posts.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5);
-    trendingEl.innerHTML = trending.map((p, i) =>
-      `<li><div class="t-index">0${i + 1}</div><div><a href="blog-detail.html?id=${p._id}">${p.title}</a><div class="blog-meta" style="margin-top:4px;font-size:0.72rem;color:var(--text-muted)">${fmtDate(p.createdAt)} · ${p.readTime || '5 min'}</div></div></li>`
-    ).join('') || '<li>No trending posts</li>';
-  }
-
-  // Authors
-  const authorsEl = document.getElementById('writtenBy');
-  if (authorsEl) {
-    const authors = Array.from(new Map(posts.map(p => [p.author, p])).values()).slice(0, 6);
-    authorsEl.innerHTML = authors.map(a => {
-      const initials = (a.author || 'V').split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
-      return `<li><div class="author-avatar">${initials}</div><div><strong>${a.author || 'Volga XR'}</strong><div style="font-size:0.8rem;color:var(--text-muted)">${a.role || 'Contributor'}</div></div></li>`;
-    }).join('') || '<li>No authors</li>';
-  }
-}
-
-// Newsletter form
-const newsletterForm = document.getElementById('newsletterForm');
-if (newsletterForm) {
-  newsletterForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const btn = newsletterForm.querySelector('button');
-    btn.textContent = '✓ Subscribed!';
-    btn.disabled = true;
-    setTimeout(() => { btn.textContent = 'Subscribe →'; btn.disabled = false; newsletterForm.reset(); }, 2500);
-  });
-}
-
-// Sidebar subscribe form
-const sidebarSubscribe = document.getElementById('sidebarSubscribe');
-if (sidebarSubscribe) {
-  sidebarSubscribe.addEventListener('submit', e => {
-    e.preventDefault();
-    const btn = sidebarSubscribe.querySelector('button');
-    btn.textContent = '✓ Subscribed';
-    btn.disabled = true;
-    setTimeout(() => { btn.textContent = 'Subscribe'; btn.disabled = false; sidebarSubscribe.reset(); }, 2000);
-  });
-}
-
-// Kick off
-loadBlogs();
-</script>
-
-  <!-- ═══════════════════════════════════════════ FOOTER -->
+<div id="site-footer-mount"></div>
+<script src="footer-include.js"></script>
   
 
   <script src="volga.js"></script>

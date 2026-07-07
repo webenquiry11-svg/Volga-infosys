@@ -449,7 +449,7 @@ html.dark .login-card {
   cursor: pointer;
   white-space: nowrap;
 }
-.nav-item svg { flex-shrink: 0; opacity: 0.7; transition: opacity 0.2s; }
+.nav-item svg { flex-shrink: 0; opacity: 0.7; transition: opacity 0.2s; width: 20px; height: 20px; }
 .nav-item:hover {
   color: var(--text-primary);
   box-shadow: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff;
@@ -504,27 +504,34 @@ html.dark .login-card {
   box-shadow: var(--shadow-sm);
 }
 
-.filter-row select {
-  padding: 0.6rem 1rem;
-  background: var(--bg-main);
-  border: none;
-  border-radius: var(--radius-sm);
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.filter-row input,
+.filter-row select,
+.filter-row button {
+  height: 38px;
+  padding: 0 1rem;
   font-size: 0.82rem;
   font-family: var(--mono);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--bg-main);
   color: var(--text-primary);
   outline: none;
-  cursor: pointer;
   box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.2s;
+  cursor: pointer;
 }
-.filter-row select:focus {
-  box-shadow: var(--shadow-inset-small);
-}
+.filter-row input { min-width: 200px; }
+.filter-row button { font-weight: 700; color: var(--accent); }
 
 /* ── STAT CARDS ──────────────────────────────────────────── */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.2rem;
   margin-bottom: 2rem;
 }
@@ -782,6 +789,8 @@ html.dark .login-card {
   padding: 2.4rem;
   width: 100%;
   max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
   position: relative;
   box-shadow: 10px 10px 30px rgba(0,0,0,0.15), -10px -10px 30px rgba(255,255,255,0.8);
   animation: modalIn 0.22s cubic-bezier(0.16,1,0.3,1);

@@ -6,6 +6,7 @@
   <title>Services — Volga Infosys</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="stylesheet" href="volga.css"/>
+  <link rel="stylesheet" href="dock-premium.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
@@ -404,6 +405,11 @@
     ::-webkit-scrollbar{width:5px}
     ::-webkit-scrollbar-track{background:var(--cream)}
     ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+    @media (max-width: 900px) {
+      .services-wrap{grid-template-columns:1fr}
+      .sb-btn{display:none}
+      .main-panel{padding-bottom:calc(13rem + env(safe-area-inset-bottom,0))}
+    }
   </style>
 </head>
 <body>
@@ -447,9 +453,14 @@
   <div class="mobile-menu" id="mobileMenu">
     <ul>
       <li><a href="index.html" class="mm-link">Home</a></li>
-      <li><a href="about.html" class="mm-link">About</a></li>
-      <li><a href="services.html" class="mm-link">Services</a></li>
+      <li><a href="solutions.html" class="mm-link">Solutions</a></li>
       <li><a href="industries.html" class="mm-link">Industries</a></li>
+      <li><a href="services.html" class="mm-link">Services</a></li>
+      <li><a href="portfolio.html" class="mm-link">Work</a></li>
+      <li><a href="technologies (2).html" class="mm-link">Technologies</a></li>
+      <li><a href="insights-overview.html" class="mm-link">Insights</a></li>
+      <li><a href="blog.html" class="mm-link">Blog</a></li>
+      <li><a href="about.html" class="mm-link">Company</a></li>
       <li><a href="contact.html" class="mm-link">Contact</a></li>
     </ul>
   </div>
@@ -764,263 +775,33 @@ setActive(initId);
 })();
 </script>
 
- <style>
-.footer{margin:0;padding:0;box-sizing:border-box;}
-
-.footer-wrap{
-  font-family:var(--font-ui);
-  background:#fff;
-  width:100%;
-  min-height:300px;
-  position:relative;
-  overflow:hidden;
-  border-top:1px solid #e8e8e8;
-}
-
-.footer-inner{
-  position:relative;
-  max-width:1900px;
-  margin:0 auto;
-  padding:60px 48px 36px;
-  min-height:460px;
-}
-
-.footer-logo{
-  width:150px;
-  margin-bottom:6px;
-  img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-  }
-}
-
-.footer-tagline{
-  font-family:var(--font-ui);
-  font-size:11px;
-  font-weight:400;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:#888;
-  margin-bottom:36px;
-}
-
-.footer-cols{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  position:relative;
-  z-index:2;
-  max-width:1900px;
-  gap:24px;
-}
-
-.col-left,.col-right,.col-extra-left,.col-extra-right{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  min-width:130px;
-}
-
-.col-label{
-  font-family:var(--font-display);
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  color:#1a1a1a;
-  margin-bottom:10px;
-}
-
-.col-left a,.col-right a,
-.col-extra-left a,.col-extra-right a{
-  font-family:var(--font-ui);
-  font-size:14px;
-  font-weight:400;
-  color:#1a1a1a;
-  text-decoration:none;
-  letter-spacing:0.01em;
-  line-height:1.9;
-  transition:color 0.2s;
-}
-
-.col-left a:hover,.col-right a:hover,
-.col-extra-left a:hover,.col-extra-right a:hover{color:#1a4fa0;}
-
-.col-right,.col-extra-right{text-align:right;}
-
-.col-right .divider,.col-extra-right .divider{
-  width:32px;
-  height:2px;
-  background:#1a1a1a;
-  margin:4px 0 8px auto;
-}
-
-.col-extra-left .divider{
-  width:32px;
-  height:2px;
-  background:#1a1a1a;
-  margin:4px 0 8px 0;
-}
-
-
-
-.footer-bottom{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  padding-top:32px;
-  position:relative;
-  z-index:2;
-  border-top:1px solid #e8e8e8;
-  margin-top:80px;
-}
-
-.brand-name{
-  font-family:var(--font-display);
-  font-size:38px;
-  font-weight:300;
-  letter-spacing:-0.02em;
-  color:#1a1a1a;
-  line-height:1;
-}
-
-.brand-name span{font-weight:700;}
-
-.copyright{
-  font-family:var(--font-ui);
-  font-size:11px;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  color:#888;
-}
-</style>
-
-
-<div class="footer"><div class="footer-wrap" id="volga-footer">
-  <div class="footer-inner">
-
-    <div class="footer-logo">
-      <img src="logo.png" alt="Volga Infosys®" />
-    </div>
-    <div class="footer-tagline">Crafting immersive digital realities</div>
-
-    <div class="footer-cols">
-
-      <div class="col-left" id="col-left">
-        <div class="col-label">Business</div>
-        <a href="#">Training Simulation</a>
-        <a href="#">3D Configurators</a>
-        <a href="#">Buildings &amp; Interiors</a>
-        <a href="#">E-Commerce</a>
-        <a href="#">Manufacturing</a>
-        <a href="#">Entertainment</a>
-        <a href="#">Museums &amp; Travel</a>
-      </div>
-
-      <div class="col-extra-left" id="col-extra-left">
-        <div class="col-label">Company</div>
-        <div class="divider"></div>
-        <a href="#">About Us</a>
-        <a href="#">Our Work</a>
-        <a href="#">Careers</a>
-        <a href="#">Blog</a>
-        <a href="#">Press Kit</a>
-        <a href="#">Contact</a>
-      </div>
-
-      <div class="col-extra-right" id="col-extra-right">
-        <div class="col-label" style="text-align:right;">Services</div>
-        <div class="divider"></div>
-        <a href="#">Real-Time Rendering</a>
-        <a href="#">AR / VR Solutions</a>
-        <a href="#">Motion Graphics</a>
-        <a href="#">Product Visualisation</a>
-        <a href="#">Game Development</a>
-        <a href="#">Digital Twins</a>
-      </div>
-
-      <div class="col-right" id="col-right">
-        <div class="col-label" style="text-align:right;">Social</div>
-        <div class="divider"></div>
-        <a href="#">LinkedIn</a>
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">YouTube</a>
-        <a href="#">WhatsApp</a>
-      </div>
-
-    </div>
-
-    <div class="footer-bottom" id="footer-bottom">
-      <div class="brand-name"><span>Volga</span> Infosys®</div>
-      <div class="copyright">© Volga Infosys® 2026 &nbsp;&nbsp;|&nbsp;&nbsp; Privacy &amp; Policy &nbsp;&nbsp;|&nbsp;&nbsp; Made with ♥ by Volga</div>
-    </div>
-
-  </div>
-</div>
-</div>
+ <div id="site-footer-mount"></div>
+<script src="footer-include.js"></script>
+<script src="volga.js"></script>
+<!-- Services mobile dock (cloned from sidebar for mobile) -->
+<section class="services-nav-section" id="servicesNav" aria-hidden="false">
+  <div class="services-nav-grid" id="servicesNavGrid"></div>
+</section>
 
 <script>
-gsap.registerPlugin(ScrollTrigger);
-
-const footer       = document.getElementById('volga-footer');
-const colLeft      = document.getElementById('col-left');
-const colRight     = document.getElementById('col-right');
-const colExtraLeft  = document.getElementById('col-extra-left');
-const colExtraRight = document.getElementById('col-extra-right');
-const footerBottom = document.getElementById('footer-bottom');
-
-if (footer && colLeft && colRight && colExtraLeft && colExtraRight && footerBottom) {
-  // Set initial state
-  gsap.set(colLeft,       { x: -30, opacity: 0 });
-  gsap.set(colRight,      { x:  30, opacity: 0 });
-  gsap.set(colExtraLeft,  { x: -20, opacity: 0 });
-  gsap.set(colExtraRight, { x:  20, opacity: 0 });
-  gsap.set(footerBottom,  { y:  20, opacity: 0 });
-
-  // Helper to show everything immediately
-  const showFooter = () => {
-    gsap.to(colLeft,       { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out' });
-    gsap.to(colRight,      { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.1 });
-    gsap.to(colExtraLeft,  { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.15 });
-    gsap.to(colExtraRight, { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.2 });
-    gsap.to(footerBottom,  { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.25 });
-  };
-
-  // Check if footer is already in viewport on load
-  const footerRect = footer.getBoundingClientRect();
-  const isInViewport = footerRect.top < window.innerHeight;
-  if (isInViewport) {
-    showFooter();
-  } else {
-    // Use ScrollTrigger to animate when footer enters view
-    ScrollTrigger.create({
-      trigger: footer,
-      start: 'top 90%',
-      onEnter: showFooter,
-      once: true
-    });
-  }
-
-  // Fallback: show everything after 1 second no matter what
-  setTimeout(showFooter, 1000);
-}
-
-// Keep balloon animation if it exists
-if (typeof balloon !== 'undefined' && balloon) {
-  gsap.to(balloon, {
-    y: 0, opacity: 1,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: footer,
-      start: 'center bottom',
-      end:   'bottom 40%',
-      scrub: 5,
-    }
+document.addEventListener('DOMContentLoaded', function(){
+  const sidebar = document.getElementById('sidebar');
+  const navGrid = document.getElementById('servicesNavGrid');
+  if(!sidebar || !navGrid) return;
+  const originalBtns = Array.from(sidebar.querySelectorAll('.sb-btn'));
+  const faIcons = ['fa-solid fa-cube','fa-solid fa-chalkboard','fa-solid fa-code','fa-solid fa-cloud','fa-solid fa-tools'];
+  originalBtns.forEach((btn, idx) => {
+    const c = btn.cloneNode(true);
+    c.classList.remove('sb-btn'); c.classList.add('services-btn');
+    const icon = c.querySelector('.sb-icon');
+    if(icon){ icon.classList.remove('sb-icon'); icon.classList.add('services-btn-icon'); icon.innerHTML = `<i class="${faIcons[idx % faIcons.length]}"></i>`; }
+    c.addEventListener('click', function(e){ e.preventDefault(); btn.click(); document.querySelectorAll('.services-btn').forEach(b=>b.classList.remove('active')); c.classList.add('active'); c.scrollIntoView({behavior:'smooth', inline:'center'}); });
+    navGrid.appendChild(c);
   });
-}
+  sidebar.addEventListener('click', function(e){ const target = e.target.closest('.sb-btn'); if(!target) return; const idx = originalBtns.indexOf(target); if(idx>=0){ const clones = Array.from(document.querySelectorAll('.services-btn')); clones.forEach(b=>b.classList.remove('active')); if(clones[idx]) clones[idx].classList.add('active'); } });
+  const activeIdx = originalBtns.findIndex(b=>b.classList.contains('active'));
+  if(activeIdx>=0){ const clones = Array.from(document.querySelectorAll('.services-btn')); if(clones[activeIdx]) clones[activeIdx].classList.add('active'); }
+});
 </script>
-<script src="volga.js"></script>
 </body>
 </html>
