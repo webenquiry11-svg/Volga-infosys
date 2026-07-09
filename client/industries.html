@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -119,8 +119,36 @@
     .h-stat-num span{color:var(--gold)}
     .h-stat-label{font-size:.67rem;color:rgba(255,255,255,.36);margin-top:5px;text-transform:uppercase;letter-spacing:1.2px}
 
+    /* Custom navbar for industries page - white */
+    #navbar {
+      background: #ffffff !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+    }
+
+    #navbar .nav-links a {
+      color: #1B4F72 !important;
+    }
+
+    #navbar .nav-cta {
+      background: #1B4F72 !important;
+      color: #ffffff !important;
+    }
+
+    #navbar .nav-cta:hover {
+      background: #E8930A !important;
+    }
+
+    /* Fix mobile menu to be visible on white navbar */
+    #navbar .nav-burger {
+      color: #1B4F72 !important;
+    }
+
+    /* Fix hero overlap on mobile */
+    @media(max-width:960px){
+      .hero-industries{padding-top: 150px !important;}
+    }
     @media(max-width:640px){
-      .hero-industries{padding:72px 5vw 0}
+      .hero-industries{padding:140px 5vw 0}
       .hero-stats-bar{flex-wrap:wrap}
       .hero-stat{min-width:50%}
     }
@@ -674,15 +702,43 @@
       .nav-burger {
         display: flex;
       }
+      
+      /* Hide dock by default */
+      .industry-dock-section {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(30px);
+        transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+      }
+      
+      /* Show dock when visible */
+      .industry-dock-section.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
     }
 
     @media (max-width: 900px) {
       #navbar {
-        background: #12141d !important;
+        background: #ffffff !important;
         backdrop-filter: none !important;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-        box-shadow: inset 0 -1px 0 rgba(255,255,255,0.04);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+        box-shadow: inset 0 -1px 0 rgba(255,255,255,0.04) !important;
       }
+      
+      #navbar .nav-links a {
+        color: #1B4F72 !important;
+      }
+
+      #navbar .nav-burger {
+        color: #1B4F72 !important;
+      }
+      
+      #navbar .burger-bar {
+        background: #1B4F72 !important;
+      }
+
       .industry-content-section {
         padding-bottom: calc(13rem + env(safe-area-inset-bottom, 0));
       }
@@ -1384,7 +1440,7 @@
       industries.forEach((ind, idx) => {
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = `industry-dock-btn ${idx === 0 ? 'active' : ''}`;
+        btn.className = `industry-dock-btn ${idx === 0 ? 'active show-tooltip' : ''}`;
         btn.dataset.id = ind.id;
         btn.innerHTML = `<span class="industry-dock-btn-icon">${ind.icon}</span><span class="industry-btn-label">${ind.label}</span>`;
         btn.addEventListener('click', () => setActiveIndustry(ind.id));
@@ -1397,7 +1453,10 @@
         btn.classList.toggle('active', btn.dataset.id === id);
       });
       document.querySelectorAll('.industry-dock-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.id === id);
+        btn.classList.remove('active', 'show-tooltip');
+        if (btn.dataset.id === id) {
+          btn.classList.add('active', 'show-tooltip');
+        }
       });
       document.querySelectorAll('.industry-panel').forEach(panel => {
         panel.classList.toggle('active', panel.id === `panel-${id}`);
@@ -1419,6 +1478,25 @@
     }
     window.addEventListener('hashchange', handleHashChange);
     handleHashChange();
+    
+    // Intersection Observer for dock visibility
+    const dockSection = document.getElementById('industryDock');
+    const industryNav = document.querySelector('.industry-nav-section');
+    if (industryNav && dockSection) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            dockSection.classList.add('visible');
+          } else {
+            dockSection.classList.remove('visible');
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+      
+      observer.observe(industryNav);
+    }
   </script>
 
   <!-- ═══════════════════════════════════════════ FOOTER -->

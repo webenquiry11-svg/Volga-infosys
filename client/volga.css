@@ -133,90 +133,9 @@ ul {
 }
 
 /* ── CURSOR ─────────────────────────────────────────────── */
-.cursor,
-.cursor-follower {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: difference;
-}
 
-.cursor {
-  width: 8px;
-  height: 8px;
-  background: #e8930a;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.cursor-follower {
-  width: 40px;
-  height: 40px;
-  border: 1.5px solid rgba(232, 147, 10, 0.4);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
-}
-
-/* Cursor highlight effect on interactive elements */
-.cursor-follower.hover {
-  width: 80px;
-  height: 80px;
-  border-color: rgba(232, 147, 10, 0.8);
-  background: rgba(232, 147, 10, 0.05);
-}
 
 /* ─── BLUR & GRAIN CIRCULAR EFFECT AROUND CURSOR ─────────── */
-.text-grain-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 9998;
-  mix-blend-mode: overlay;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.text-grain-overlay.visible {
-  opacity: 1;
-}
-
-.text-grain-overlay::before {
-  content: '';
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  background-image:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.0' numOctaves='10' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  background-size: cover;
-}
-
-.text-blur-mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 9997;
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
-  transition: opacity 0.3s ease;
-}
-
-.text-blur-mask.visible {
-  backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(1px);
-  mask-image: radial-gradient(circle 200px at var(--cursor-x) var(--cursor-y), black 0%, transparent 100%);
-  -webkit-mask-image: radial-gradient(circle 200px at var(--cursor-x) var(--cursor-y), black 0%, transparent 100%);
-}
 
 /* ─── 3D CARD ENHANCEMENTS ───────────────────────────────── */
 .solutions-card {
@@ -480,6 +399,7 @@ section {
 
 .mobile-menu {
   display: none;
+  
 }
 
 /* Hamburger lines */

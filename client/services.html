@@ -409,6 +409,21 @@
       .services-wrap{grid-template-columns:1fr}
       .sb-btn{display:none}
       .main-panel{padding-bottom:calc(13rem + env(safe-area-inset-bottom,0))}
+      
+      /* Hide dock by default */
+      .services-nav-section {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(30px);
+        transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+      }
+      
+      /* Show dock when visible */
+      .services-nav-section.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -795,12 +810,37 @@ document.addEventListener('DOMContentLoaded', function(){
     c.classList.remove('sb-btn'); c.classList.add('services-btn');
     const icon = c.querySelector('.sb-icon');
     if(icon){ icon.classList.remove('sb-icon'); icon.classList.add('services-btn-icon'); icon.innerHTML = `<i class="${faIcons[idx % faIcons.length]}"></i>`; }
-    c.addEventListener('click', function(e){ e.preventDefault(); btn.click(); document.querySelectorAll('.services-btn').forEach(b=>b.classList.remove('active')); c.classList.add('active'); c.scrollIntoView({behavior:'smooth', inline:'center'}); });
+    c.addEventListener('click', function(e){ 
+      e.preventDefault(); 
+      btn.click(); 
+      document.querySelectorAll('.services-btn').forEach(b=>b.classList.remove('active', 'show-tooltip')); 
+      c.classList.add('active', 'show-tooltip'); 
+      c.scrollIntoView({behavior:'smooth', inline:'center'}); 
+    });
     navGrid.appendChild(c);
   });
-  sidebar.addEventListener('click', function(e){ const target = e.target.closest('.sb-btn'); if(!target) return; const idx = originalBtns.indexOf(target); if(idx>=0){ const clones = Array.from(document.querySelectorAll('.services-btn')); clones.forEach(b=>b.classList.remove('active')); if(clones[idx]) clones[idx].classList.add('active'); } });
+  sidebar.addEventListener('click', function(e){ const target = e.target.closest('.sb-btn'); if(!target) return; const idx = originalBtns.indexOf(target); if(idx>=0){ const clones = Array.from(document.querySelectorAll('.services-btn')); clones.forEach(b=>b.classList.remove('active', 'show-tooltip')); if(clones[idx]) clones[idx].classList.add('active', 'show-tooltip'); } });
   const activeIdx = originalBtns.findIndex(b=>b.classList.contains('active'));
-  if(activeIdx>=0){ const clones = Array.from(document.querySelectorAll('.services-btn')); if(clones[activeIdx]) clones[activeIdx].classList.add('active'); }
+  if(activeIdx>=0){ const clones = Array.from(document.querySelectorAll('.services-btn')); if(clones[activeIdx]) clones[activeIdx].classList.add('active', 'show-tooltip'); }
+  
+  // Intersection Observer for dock visibility
+  const servicesDock = document.getElementById('servicesNav');
+  const servicesWrap = document.querySelector('.services-wrap');
+  if (servicesWrap && servicesDock) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          servicesDock.classList.add('visible');
+        } else {
+          servicesDock.classList.remove('visible');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+    
+    observer.observe(servicesWrap);
+  }
 });
 </script>
 </body>
