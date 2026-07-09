@@ -6,61 +6,87 @@
 <title>Technologies — Volga Infosys</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="stylesheet" href="volga.css"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Exo+2:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Bebas+Neue&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root {
-  /* Dark Neumorphic Project Colors */
-  --bg: #101824;
-  --bg-alt: #0c141e;
-  --surface: #141e2b;
-  --surface2: #1a283a;
-  --accent: #E8930A;
-  --accent2: #1B4F72;
-  --accent3: #0D2B3E;
-  --accent-red: #E8501A;
-  --text: #dce8f5;
-  --text-muted: #8fa3ba;
-  --border: rgba(220, 232, 245, 0.12);
-  --glow: 0 10px 30px rgba(232, 147, 10, 0.25);
-  
-  /* Dark Neumorphic Shadows */
-  --neu-light: #1a283a;
-  --neu-dark: #0c141e;
-  --neu-shadow-out: 8px 8px 16px var(--neu-dark), -8px -8px 16px var(--neu-light);
-  --neu-shadow-out-sm: 4px 4px 8px var(--neu-dark), -4px -4px 8px var(--neu-light);
-  --neu-shadow-in: inset 8px 8px 16px var(--neu-dark), inset -8px -8px 16px var(--neu-light);
-  --neu-shadow-in-sm: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
-  
-  --font-display: "Orbitron", sans-serif;
-  --font-ui: "Exo 2", sans-serif;
-  --font-mono: "Space Grotesk", sans-serif;
-  
+  /* ---------- Backgrounds ---------- */
+  --bg: #F7F9FC;
+  --bg-alt: #d4e8f5;
+  --surface: #FFFFFF;
+  --surface2: #F5F8FC;
+
+  /* ---------- Brand Colors ---------- */
+  --accent: #E8930A;          /* Primary CTA */
+  --accent2: #1B4F72;         /* Primary Blue */
+  --accent3: #0D2B3E;         /* Dark Navy */
+  --accent-red: #F26A3D;      /* Softer Orange */
+
+  /* ---------- Text ---------- */
+  --text: #0D2B3E;
+  --text-muted: #5F7288;
+
+  /* ---------- Borders ---------- */
+  --border: rgba(13, 43, 62, 0.08);
+
+  /* ---------- Glow ---------- */
+  --glow: 0 12px 35px rgba(27, 79, 114, 0.15);
+
+  /* ---------- Light Neumorphism ---------- */
+  --neu-light: #FFFFFF;
+  --neu-dark: #000000;
+
+  --neu-shadow-out:
+      10px 10px 24px rgba(183,195,210,.35),
+      -10px -10px 24px rgba(255,255,255,.95);
+
+  --neu-shadow-out-sm:
+      5px 5px 12px rgba(183,195,210,.28),
+      -5px -5px 12px rgba(255,255,255,.95);
+
+  --neu-shadow-in:
+      inset 6px 6px 12px rgba(183,195,210,.30),
+      inset -6px -6px 12px rgba(255,255,255,.90);
+
+  --neu-shadow-in-sm:
+      inset 3px 3px 8px rgba(183,195,210,.28),
+      inset -3px -3px 8px rgba(255,255,255,.95);
+
+  /* ---------- Typography ---------- */
+    --font-display: "Bebas Neue", sans-serif;
+  --font-ui: "Inter", sans-serif;
+  --font-mono: "Inter", sans-serif;
+
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---------- Utility ---------- */
   --primary-dark: #1B4F72;
   --primary-light: #E8930A;
-  --white: #ffffff;
+  --white: #FFFFFF;
 
-  /* Page-specific dark theme variables */
+  /* ---------- Page Theme ---------- */
   --navy: #0D2B3E;
   --navy2: #1B4F72;
   --amber: #E8930A;
-  --amber2: #E8501A;
-  --slate: #1e2f47;
-  --muted: #8fa3ba;
-  --light: #dce8f5;
-  --card-bg: #141e2b;
-  --radius:14px;
+  --amber2: #F26A3D;
+
+  --slate: #D9E4F0;
+  --muted: #70849A;
+  --light: #FFFFFF;
+
+  --card-bg: #FFFFFF;
+
+  --radius: 14px;
 }
 html{scroll-behavior:smooth}
-body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body{font-family:"Inter", sans-serif; background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 
 /* Keep Navbar original styles from volga.css */
 #navbar, .mega-menu, .mobile-menu {
@@ -89,6 +115,7 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
   position:relative;height:100vh;min-height:700px;
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;
+   background-color: #0d1b2e;
 }
 .hero-video-bg{
   position:absolute;inset:0;width:100%;height:100%;
@@ -103,6 +130,7 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
     linear-gradient(90deg, rgba(232,150,26,.04) 1px, transparent 1px);
   background-size:80px 80px;
   animation:gridDrift 20s linear infinite;
+ 
 }
 @keyframes gridDrift{from{transform:translateY(0)}to{transform:translateY(80px)}}
 
@@ -112,7 +140,7 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
 .hero-pill{
   display:inline-flex;align-items:center;gap:.5rem;
   background:var(--bg);box-shadow: var(--neu-shadow-in-sm);
-  color:var(--accent);font-family: "Space Grotesk", sans-serif;
+  color:var(--accent);font-family: var(--font-ui);
   font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
   padding:.5rem 1.2rem;border-radius:12px;margin-bottom:2rem;
   opacity:0;transform:translateY(20px);
@@ -121,9 +149,9 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 
 .hero-title{
-  font-family:"Orbitron", sans-serif;
-  font-size:clamp(3rem,7vw,6.5rem);font-weight:700;line-height:1.02;
-  color:var(--text);margin-bottom:1.8rem;overflow:hidden;
+  font-family:var(--font-display);
+  font-size:clamp(9rem,6vw,8.5rem);font-weight:700;line-height:1.02;
+  color:var(--white);margin-bottom:1.8rem;overflow:hidden;
   
 }
 .hero-title .word{display:inline-block;overflow:hidden;margin-right:.25em}
@@ -136,11 +164,11 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
 /* Floating stat orbs */
 .hero-stats{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}
 .stat-orb{
-  background:var(--surface);box-shadow: var(--neu-shadow-out);
+  background: #141e2b;box-shadow: var(--neu-dark);
   border-radius:16px;padding:1.2rem 2rem;text-align:center;
   opacity:0;transform:scale(.85) translateY(30px);
 }
-.stat-orb .num{font-family:"Exo 2", sans-serif;;font-size:1.8rem;font-weight:700;color:var(--accent)}
+.stat-orb .num{font-family:var(--font-mono);font-size:1.8rem;font-weight:700;color:var(--accent)}
 .stat-orb .label{font-size:.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem}
 
 /* Scroll indicator */
@@ -160,7 +188,7 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
 .marquee-band{overflow:hidden;padding:1.2rem 0;background:var(--bg-alt)}
 .marquee-track{display:flex;gap:0;width:max-content;animation:marquee 30s linear infinite}
 .marquee-track:hover{animation-play-state:paused}
-.marquee-item{display:flex;align-items:center;gap:1.5rem;padding:0 2rem;font-family:"Exo 2", sans-serif;font-size:.9rem;font-weight:600;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.marquee-item{display:flex;align-items:center;gap:1.5rem;padding:0 2rem;font-family:var(--font-display);font-size:.9rem;font-weight:600;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
 .marquee-item span{display:inline-block;width:4px;height:4px;background:var(--accent);border-radius:50%}
 @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
@@ -170,8 +198,8 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
 .section-wrap{max-width:1320px;margin:0 auto;padding:0 3rem}
 .section-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
 .eyebrow-line{width:40px;height:1px;background:var(--accent)}
-.eyebrow-text{font-family:'Space Grotesk',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent)}
-.section-title{font-family:"Orbitron", sans-serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;color:var(--text);line-height:1.1;margin-bottom:1rem}
+.eyebrow-text{font-family:var(--font-ui);font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent)}
+.section-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;color:var(--text);line-height:1.1;margin-bottom:1rem}
 .section-desc{font-size:.95rem;color:var(--text-muted);line-height:1.75;max-width:560px}
 
 /* ══════════════════════════════
@@ -233,7 +261,7 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
   font-size:1.2rem;margin-bottom:1rem;
   color: var(--accent);
 }
-.tcard h3{font-family:"Orbitron", sans-serif;font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:.6rem}
+.tcard h3{font-family:var(--font-display);font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:.6rem}
 .tcard p{font-size:.82rem;color:var(--text-muted);line-height:1.65;margin-bottom:1.1rem}
 .tcard-chips{display:flex;flex-wrap:wrap;gap:.4rem}
 .chip{
@@ -279,7 +307,7 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
   min-width:200px;
 }
 .sfc-label{font-size:.67rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
-.sfc-value{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;color:var(--accent)}
+.sfc-value{font-family:var(--font-ui);font-size:1.5rem;font-weight:700;color:var(--accent)}
 .sfc-sub{font-size:.75rem;color:var(--text-muted);margin-top:.2rem}
 
 .spotlight-float-badge{
@@ -292,7 +320,7 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
 }
 @keyframes rotateBadge{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
 .sfl-inner{display:flex;align-items:center;justify-content:center;flex-direction:column;animation:rotateBadge 8s linear reverse infinite}
-.sfl-inner span:first-child{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;color:var(--accent3)}
+.sfl-inner span:first-child{font-family:var(--font-ui);font-size:1.4rem;font-weight:700;color:var(--accent3)}
 .sfl-inner span:last-child{font-size:.55rem;font-weight:700;color:var(--accent3);letter-spacing:.08em;text-transform:uppercase}
 
 /* Text side */
@@ -303,11 +331,11 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
 .fl-item{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.2rem;background:var(--surface);box-shadow: var(--neu-shadow-out);border-radius:12px;transition:all .3s}
 .fl-item:hover{background:var(--bg);box-shadow: var(--neu-shadow-in)}
 .fl-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px}
-.fl-text strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.fl-text strong{display:block;font-family:var(--font-ui);font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
 .fl-text span{font-size:.8rem;color:var(--text-muted)}
-.btn-amber{display:inline-flex;align-items:center;gap:.6rem;background:var(--accent);color:var(--accent3);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.9rem;padding:.85rem 2rem;border-radius:12px;text-decoration:none;border:none;cursor:pointer;box-shadow: var(--neu-shadow-out-sm);transition:all .3s}
+.btn-amber{display:inline-flex;align-items:center;gap:.6rem;background:var(--accent);color:var(--accent3);font-family:var(--font-ui);font-weight:700;font-size:.9rem;padding:.85rem 2rem;border-radius:12px;text-decoration:none;border:none;cursor:pointer;box-shadow: var(--neu-shadow-out-sm);transition:all .3s}
 .btn-amber:hover{background:var(--accent-red);transform:translateY(-2px);box-shadow: var(--neu-shadow-in-sm)}
-.btn-ghost{display:inline-flex;align-items:center;gap:.6rem;background:var(--surface);color:var(--text);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.9rem;padding:.85rem 2rem;border-radius:12px;text-decoration:none;cursor:pointer;box-shadow: var(--neu-shadow-out);transition:all .3s}
+.btn-ghost{display:inline-flex;align-items:center;gap:.6rem;background:var(--surface);color:var(--text);font-family:var(--font-ui);font-weight:600;font-size:.9rem;padding:.85rem 2rem;border-radius:12px;text-decoration:none;cursor:pointer;box-shadow: var(--neu-shadow-out);transition:all .3s}
 .btn-ghost:hover{border-color:rgba(232,150,26,.5);color:var(--amber)}
 .spotlight-btns{display:flex;gap:1rem;flex-wrap:wrap}
 
@@ -332,7 +360,7 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
 .apc:hover::before,.apc.active::before{transform:scaleY(1)}
 .apc:hover,.apc.active{background:var(--bg);box-shadow: var(--neu-shadow-in)}
 .apc-icon{width:44px;height:44px;border-radius:10px;background:var(--bg);box-shadow: var(--neu-shadow-out-sm);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;color: var(--accent)}
-.apc-text strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:.9rem;font-weight:600;color:var(--text)}
+.apc-text strong{display:block;font-family:var(--font-ui);font-size:.9rem;font-weight:600;color:var(--text)}
 .apc-text span{font-size:.78rem;color:var(--text-muted)}
 .apc-arrow{margin-left:auto;color:var(--accent);opacity:0;transform:translateX(-8px);transition:opacity .2s,transform .2s}
 .apc:hover .apc-arrow,.apc.active .apc-arrow{opacity:1;transform:translateX(0)}
@@ -351,7 +379,7 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
 .ai-video-card{border-radius:16px;overflow:hidden;position:relative;background:var(--surface);box-shadow: var(--neu-shadow-out);aspect-ratio:16/9}
 .ai-video-card video,.ai-video-card img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.75) saturate(1.2)}
 .ai-video-card-label{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.2rem;background:linear-gradient(180deg,transparent 40%,var(--surface) 100%)}
-.ai-video-card-label h4{font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:700;color:var(--text)}
+.ai-video-card-label h4{font-family:var(--font-ui);font-size:.95rem;font-weight:700;color:var(--text)}
 .ai-video-card-label p{font-size:.75rem;color:var(--text-muted);margin-top:.2rem}
 
 .ai-cards-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
@@ -359,9 +387,9 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
 .ai-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,147,10,.04) 0%,transparent 60%);opacity:0;transition:opacity .3s}
 .ai-card:hover{transform:translateY(-6px);box-shadow: var(--neu-shadow-in)}
 .ai-card:hover::after{opacity:1}
-.ai-card-num{font-family:'Space Grotesk',sans-serif;font-size:3rem;font-weight:700;color:rgba(232,147,10,.15);line-height:1;margin-bottom:.8rem}
-.ai-card h3{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:600;color:var(--text);margin-bottom:.5rem}
-.ai-card p{font-size:.82rem;color:var(--text-muted);line-height:1.65}
+.ai-card-num{font-family:var(--font-ui);font-size:3rem;font-weight:700;color:rgba(232,147,10,.15);line-height:1;margin-bottom:.8rem}
+.ai-card h3{font-family:var(--font-ui);font-size:1rem;font-weight:600;color:var(--text);margin-bottom:.5rem}
+.ai-card p{font-family:var(--font-ui);font-size:.82rem;color:var(--text-muted);line-height:1.65}
 
 /* ══════════════════════════════
    WHY — HORIZONTAL SCROLL CARDS
@@ -378,9 +406,9 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
   transition:all .3s;
 }
 .wc:hover{transform:translateY(-5px);box-shadow: var(--neu-shadow-in)}
-.wc-num{font-family:'Space Grotesk',sans-serif;font-size:4rem;font-weight:700;line-height:1;margin-bottom:.8rem;background:linear-gradient(135deg,rgba(232,147,10,.15),rgba(232,80,26,.1));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.wc h3{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:.5rem}
-.wc p{font-size:.82rem;color:var(--text-muted);line-height:1.65}
+.wc-num{font-family:var(--font-ui);font-size:4rem;font-weight:700;line-height:1;margin-bottom:.8rem;background:linear-gradient(135deg,rgba(232,147,10,.15),rgba(232,80,26,.1));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.wc h3{font-family:var(--font-ui);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:.5rem}
+.wc p{font-family:var(--font-ui);font-size:.82rem;color:var(--text-muted);line-height:1.65}
 .wc-glow{position:absolute;bottom:-30px;right:-30px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(232,147,10,.15) 0%,transparent 70%);transition:transform .3s,opacity .3s;opacity:0}
 .wc:hover .wc-glow{opacity:1;transform:scale(1.5)}
 
@@ -394,9 +422,9 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
 .cta-finale-bg{position:absolute;inset:0}
 .cta-finale-bg video{width:100%;height:100%;object-fit:cover;opacity:.05;filter:saturate(1.2)}
 .cta-inner{max-width:800px;margin:0 auto;text-align:center;padding:0 3rem;position:relative;z-index:1}
-.cta-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:700;color:var(--text);line-height:1.1;margin-bottom:1.5rem}
+.cta-title{font-family:var(--font-ui);font-size:clamp(2.2rem,5vw,4rem);font-weight:700;color:var(--text);line-height:1.1;margin-bottom:1.5rem}
 .cta-title em{font-style:normal;color:var(--accent)}
-.cta-desc{font-size:1rem;color:var(--text-muted);line-height:1.75;margin-bottom:2.5rem}
+.cta-desc{font-family:var(--font-ui);font-size:1rem;color:var(--text-muted);line-height:1.75;margin-bottom:2.5rem}
 .cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 
 
@@ -443,7 +471,7 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
   max-width:1320px;margin:0 auto;padding:0 3rem 60px;
 }
 .section-rule-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(232,147,10,.3),transparent)}
-.section-rule-label{font-family:'Space Grotesk',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);padding:.4rem 1rem;border-radius:12px;background:var(--bg);box-shadow: var(--neu-shadow-in-sm);white-space:nowrap}
+.section-rule-label{font-family:var(--font-ui);font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);padding:.4rem 1rem;border-radius:12px;background:var(--bg);box-shadow: var(--neu-shadow-in-sm);white-space:nowrap}
 
 /* ── TCARD animation states ── */
 .tcard{opacity:0;transform:translateY(50px)}
@@ -536,6 +564,7 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
 .cards-loop-track .tcard:hover{
   transform:translateY(-8px) scale(1.02) !important;
 }
+
 </style>
 </head>
 <body>
@@ -1452,7 +1481,7 @@ body{font-family:"Exo 2", sans-serif; background:var(--bg);color:var(--text);min
       <div class="eyebrow-text">Start a Project</div>
       <div class="eyebrow-line"></div>
     </div>
-    <h2 class="cta-title reveal">Ready to build something <em>extraordinary?</em></h2>
+    <h2 class="cta-title reveal" style="font-family:var(--font-display); font-size:90px; min-width: 800px;">Ready to build something <em>extraordinary?</em></h2>
     <p class="cta-desc reveal">Tell us about your challenge. We'll tell you exactly how Unity, Unreal, ARKit, or our cloud stack can solve it — and give you a clear path to production.</p>
     <div class="cta-actions reveal">
       <a href="contact.html" class="btn-amber">Start a Conversation <i class="fas fa-arrow-right"></i></a>
