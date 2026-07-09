@@ -1,17 +1,7 @@
 /**
  * cube-mission.js
  * ─────────────────────────────────────────────────────────────────
- * Self-contained cube section.  Zero globals written, zero conflict
- * with GSAP / ScrollTrigger used elsewhere on the page.
- *
- * Strategy:
- *  • The cube lives inside .cube-mission-viewport (position:relative,
- *    height:100vh, overflow:hidden).
- *  • .cube-mission-scroll is the scrollable div INSIDE that viewport.
- *    It scrolls independently of window — GSAP never sees it.
- *  • The cube itself (#cm-cube) is position:absolute, centered via CSS,
- *    and updated by reading the inner scroller's scrollTop.
- * ─────────────────────────────────────────────────────────────────
+ * Self-contained cube section with smooth scrolling!
  */
 (function cubeMissionInit() {
   "use strict";
@@ -142,19 +132,6 @@
     });
   }
 
-  /* ── Mouse Tilt Effect ───────────────────────────────────────── */
-  // Disabled for performance
-  let mouseX = 0, mouseY = 0;
-  let targetMouseX = 0, targetMouseY = 0;
-  
-  // function onMouseMove(e) {
-  //   const rect = viewport.getBoundingClientRect();
-  //   targetMouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 15; // Max tilt degrees
-  //   targetMouseY = ((e.clientY - rect.top) / rect.height - 0.5) * -10;
-  // }
-  // 
-  // viewport.addEventListener('mousemove', onMouseMove);
-
   /* ── Ease helpers ────────────────────────────────────────────── */
   const easeIO = t => t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
   const easeInOutCubic = t => t < 0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
@@ -169,8 +146,6 @@
     const a = STOPS[i], b = STOPS[i + 1];
     let rx = a.rx + (b.rx - a.rx) * f;
     let ry = a.ry + (b.ry - a.ry) * f;
-    
-    // Simplified for performance - no mouse tilt, no floating animation
     cube.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
   }
 
@@ -191,114 +166,171 @@
       dots.forEach((d, i) => d.classList.toggle("active", i === idx));
       if (cards[idx]) cards[idx].classList.add("cm-in");
       if (cards[idx]) {
-  cards[idx].classList.add("cm-in");
-  // force all children visible immediately, no wait
-  cards[idx].querySelectorAll(
-    ".cm-tag, h1, h2, .cm-body, .cm-stat-row, .cm-cta, .cm-cta-back, .cm-h-line"
-  ).forEach(el => {
-    el.style.opacity = "1";
-    el.style.translate = "0 0";
-    el.style.scale = "1 1";
-  });
-}
+        cards[idx].classList.add("cm-in");
+        cards[idx].querySelectorAll(
+          ".cm-tag, h1, h2, .cm-body, .cm-stat-row, .cm-cta, .cm-cta-back, .cm-h-line"
+        ).forEach(el => {
+          el.style.opacity = "1";
+          el.style.translate = "0 0";
+          el.style.scale = "1 1";
+        });
+      }
     }
   }
 
   /* ── Card reveal via IntersectionObserver on inner scroller ─── */
- // WITH this:
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add("cm-in");
-      io.unobserve(e.target);
-    }
-  });
-}, { root: scroller, threshold: 0.05, rootMargin: "0px 0px -10% 0px" });
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add("cm-in");
+        io.unobserve(e.target);
+      }
+    });
+  }, { root: scroller, threshold: 0.05, rootMargin: "0px 0px -10% 0px" });
 
-cards.forEach(c => io.observe(c));
+  cards.forEach(c => io.observe(c));
 
-  /* ── Animation Loop ──────────────────────────────────────────── */
-  let scrollProgress = 0;
+  /* ── Smooth Scrolling State Variables ────────────────────────── */
+  let tgt = 0;
+  let smooth = 0;
+  let velocity = 0;
+  const easeFactor = 0.12;
+  const dynamicFriction = (v) => (Math.abs(v) > 200 ? 0.75 : 0.88);
   let lastTime = performance.now();
   let animationFrameId = null;
   let isSectionVisible = false;
+  let maxScroll = 1;
+  let lastScrollHeight = 0;
+  let lastClientHeight = 0;
 
-  // Check if section is visible
+  /* ── Resize handling ─────────────────────────────────────────── */
+  function resize() {
+    const h = scroller.scrollHeight;
+    const vh = scroller.clientHeight;
+    if (h === lastScrollHeight && vh === lastClientHeight) return;
+    lastScrollHeight = h;
+    lastClientHeight = vh;
+    maxScroll = Math.max(1, h - vh);
+  }
+  resize();
+
+  /* ── Check if section is visible ─────────────────────────────── */
   function checkVisibility() {
     const rect = wrap.getBoundingClientRect();
     isSectionVisible = rect.top < window.innerHeight && rect.bottom > 0;
     if (isSectionVisible && !animationFrameId) {
-      animate(performance.now());
+      lastTime = performance.now();
+      animate(lastTime);
     }
   }
-
   window.addEventListener("scroll", checkVisibility, { passive: true });
-  window.addEventListener("resize", checkVisibility, { passive: true });
-  checkVisibility(); // Initial check
+  window.addEventListener("resize", () => { resize(); checkVisibility(); }, { passive: true });
+  checkVisibility();
 
+  /* ── Wheel listener for custom smooth scrolling ──────────────── */
+  wrap.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    const linePx = 16;
+    const pagePx = scroller.clientHeight * 0.9;
+    const delta = e.deltaMode === 1 ? e.deltaY * linePx : 
+                  e.deltaMode === 2 ? e.deltaY * pagePx : e.deltaY;
+    if (Math.abs(delta) < 5) return;
+    velocity += delta;
+    velocity = Math.max(-600, Math.min(600, velocity));
+  }, { passive: false });
+
+  /* ── Regular scroll listener to update target ────────────────── */
+  scroller.addEventListener("scroll", () => {
+    if (Math.abs(velocity) > 0.2) return; // If we're in custom scroll, ignore
+    tgt = maxScroll > 0 ? scroller.scrollTop / maxScroll : 0;
+    tgt = Math.max(0, Math.min(1, tgt));
+  }, { passive: true });
+
+  /* ── Animation Loop with Smooth Scrolling ───────────────────── */
   function animate(time) {
     if (!isSectionVisible) {
       animationFrameId = null;
       return;
     }
-    
-    // Smooth mouse tilt
-    mouseX = lerp(mouseX, targetMouseX, 0.08);
-    mouseY = lerp(mouseY, targetMouseY, 0.08);
-    
-    // Get scroll progress
-    const max = scroller.scrollHeight - scroller.clientHeight;
-    scrollProgress = max > 0 ? Math.max(0, Math.min(1, scroller.scrollTop / max)) : 0;
-    
-    // Update everything
-    setCubeTransform(scrollProgress, time);
-    updateHUD(scrollProgress);
-    updateParticles(time, scrollProgress);
-    
+
+    const dt = Math.min((time - lastTime) / 1000, 0.05);
+    lastTime = time;
+
+    velocity *= Math.pow(dynamicFriction(velocity), dt * 60);
+    if (Math.abs(velocity) < 0.01) velocity = 0;
+
+    if (Math.abs(velocity) > 0.2) {
+      const next = Math.max(0, Math.min(scroller.scrollTop + velocity * easeFactor, maxScroll));
+      scroller.scrollTop = next;
+      tgt = next / maxScroll;
+    }
+
+    smooth += (tgt - smooth) * (1 - Math.exp(-dt * 8));
+    smooth = Math.max(0, Math.min(1, smooth));
+
+    updateHUD(smooth);
+    setCubeTransform(smooth, time);
+    updateParticles(time, smooth);
+
     animationFrameId = requestAnimationFrame(animate);
   }
 
   /* ── Dot click → scroll inner scroller ──────────────────────── */
+  let anchorAnim = null;
+  let isAnchorScrolling = false;
+
+  function stopAnchorAnim() {
+    if (anchorAnim) {
+      cancelAnimationFrame(anchorAnim);
+      anchorAnim = null;
+    }
+    isAnchorScrolling = false;
+  }
+
+  function smoothScrollToY(targetY, duration = 900) {
+    stopAnchorAnim();
+    velocity = 0;
+    isAnchorScrolling = true;
+    const startY = scroller.scrollTop;
+    const diff = targetY - startY;
+    const start = performance.now();
+    const tick = (now) => {
+      const p = Math.min(1, (now - start) / duration);
+      const y = startY + diff * easeInOutCubic(p);
+      scroller.scrollTop = y;
+      tgt = y / maxScroll;
+      smooth = tgt;
+      if (p < 1) {
+        anchorAnim = requestAnimationFrame(tick);
+      } else {
+        anchorAnim = null;
+        isAnchorScrolling = false;
+      }
+    };
+    anchorAnim = requestAnimationFrame(tick);
+  }
+
   dots.forEach((dot, i) => {
     dot.addEventListener("click", () => {
       const slides = [...scroller.querySelectorAll(".cm-slide")];
       const target = slides[i];
       if (!target) return;
       const targetY = target.offsetTop;
-      const startY  = scroller.scrollTop;
-      const diff    = targetY - startY;
-      const dur     = 800;
-      const t0      = performance.now();
-      const tick = now => {
-        const p  = Math.min(1, (now - t0) / dur);
-        scroller.scrollTop = startY + diff * easeInOutCubic(p);
-        if (p < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
+      smoothScrollToY(targetY);
     });
   });
 
   /* ── Inner anchor clicks (data-cm-slide="N") ─────────────────── */
-  /* Prevents these clicks from bubbling to window / GSAP anchors  */
   wrap.addEventListener("click", e => {
     const link = e.target.closest("[data-cm-slide]");
     if (!link) return;
     e.preventDefault();
-    e.stopPropagation();           // ← stops GSAP anchor listener
-    const idx    = parseInt(link.dataset.cmSlide, 10);
+    e.stopPropagation();
+    const idx = parseInt(link.dataset.cmSlide, 10);
     const slides = [...scroller.querySelectorAll(".cm-slide")];
     const target = slides[idx];
     if (!target) return;
-    const startY = scroller.scrollTop;
-    const diff   = target.offsetTop - startY;
-    const dur    = 800;
-    const t0     = performance.now();
-    const tick   = now => {
-      const p = Math.min(1, (now - t0) / dur);
-      scroller.scrollTop = startY + diff * easeInOutCubic(p);
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
+    smoothScrollToY(target.offsetTop);
   });
 
   /* ── Navbar hide/show for cube section ──────────────────────── */
@@ -323,6 +355,8 @@ cards.forEach(c => io.observe(c));
 
   /* ── Init ────────────────────────────────────────────────────── */
   createParticles();
+  tgt = 0;
+  smooth = 0;
   setCubeTransform(0);
   updateHUD(0);
 

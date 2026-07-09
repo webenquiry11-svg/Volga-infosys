@@ -29,9 +29,11 @@
   --border:rgba(27,79,114,0.12);
   --glow:0 10px 30px rgba(232,147,10,0.18);
 
-  --font-display:"Orbitron",sans-serif;
-  --font-ui:"Exo 2",sans-serif;
-  --font-mono:"Space Grotesk",sans-serif;
+   --font-display: "Bebas Neue", sans-serif;
+ 
+  --font-ui: 'Inter', sans-serif;
+
+  --font-mono: 'Inter', sans-serif;
   --ease-out-expo:cubic-bezier(0.16,1,0.3,1);
 }
 html{scroll-behavior:smooth}
@@ -57,39 +59,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-ui);overflow-
 
 
 /* MOVING GRID */
-.hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
 
-  background-size:50px 50px;
-  animation:gridMove 12s linear infinite;
-
-  pointer-events:none;
-  z-index:1;
-}
-
-
-/* animation */
-@keyframes gridMove{
-
-  from{
-    background-position:0 0;
-  }
-
-  to{
-    background-position:50px 50px;
-  }
-
-}
 
 .hero-left{
   display:flex;flex-direction:column;justify-content:center;
   padding:80px 60px 80px;
-  background:#1B4F72;position:relative;z-index:2;
+  background:#ffffff;position:relative;
 }
 .hero-eyebrow{
   font-family:var(--font-mono);font-size:.62rem;letter-spacing:3px;
@@ -98,10 +73,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-ui);overflow-
 }
 .hero-eyebrow::before{content:'';width:28px;height:2px;background:var(--accent);border-radius:1px}
 .hero-h1{
-  font-family:var(--font-display);font-weight:900;
-  font-size:clamp(2.4rem,4.5vw,5rem);
-  letter-spacing:-1px;line-height:.95;
-  color:white;margin-bottom:24px;
+  font-family:var(--font-display);font-weight:600;
+  font-size:clamp(8.7rem,8.8vw,9rem);
+  letter-spacing:7px;line-height:.95;
+  color:rgb(27, 79, 114);margin-bottom:24px;
 }
 .hero-h1 .outline{
   color:#E8930A;
@@ -109,7 +84,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-ui);overflow-
 }
 .hero-sub{
   font-size:.95rem;font-weight:300;line-height:1.9;
-  color:white;max-width:900px;margin-bottom:40px;
+  color:rgb(27, 79, 114);max-width:900px;margin-bottom:40px;
 }
 .hero-pills{display:flex;gap:8px;flex-wrap:wrap}
 .hero-pill{
@@ -132,12 +107,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-ui);overflow-
   position:absolute;inset:0; 
   background-image:url('https://images.unsplash.com/photo-1700673483543-a4a38e4e96df?w=1400&q=80&fit=crop');
   background-size:cover; background-position:center;
-  filter:brightness(0.55) saturate(0.7);
+  filter:brightness(1.08) contrast(.95) saturate(.95);
 }
 .hero-img-overlay{
   position:absolute;inset:0;
-  background:linear-gradient(90deg,#0D2B3E 0%,transparent 18%),
-             linear-gradient(180deg,rgba(13,43,62,0.2) 0%,transparent 40%);
+  background:linear-gradient(90deg,#ffffff 0%,transparent 10%),
+             linear-gradient(180deg,rgba(255, 255, 255, 0.2) 0%,transparent 100%);
 }
 
 /* Stats bar */
@@ -700,7 +675,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:52px 60px
   <div class="hero-left">
     <div class="hero-eyebrow">Volga Infosys · Solutions</div>
     <h1 class="hero-h1">
-      Immersive<span class="outline">Solutions</span>
+      Immersive<span class="outline"><br>Solutions</span>
     </h1>
     <p class="hero-sub">We build AR, VR, XR, AI, and Digital Twin solutions that transform how organisations train, sell, design, and operate — delivering measurable results from day one.</p>
     <div class="hero-pills">
