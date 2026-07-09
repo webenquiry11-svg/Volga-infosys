@@ -677,11 +677,68 @@ let currentBlogIndex = 0;
 let touchStartX = 0;
 let touchEndX = 0;
 
+function renderBlogSkeletons(container) {
+  const blogFeatured = document.getElementById('blogFeatured');
+  
+  if (blogFeatured) {
+    // Render skeleton for featured blog
+    blogFeatured.innerHTML = `
+      <div class="blog-featured skeleton-card">
+        <div class="skeleton skeleton-img" style="width: 100%; height: 400px; border-radius: 24px; margin: 0;"></div>
+        <div class="blog-featured-body" style="padding: 30px;">
+          <div class="skeleton skeleton-tag" style="width: 60px; height: 12px;"></div>
+          <div class="skeleton" style="width: 100%; height: 32px; margin-top: 12px; border-radius: 8px;"></div>
+          <div class="skeleton" style="width: 90%; height: 16px; margin-top: 16px; border-radius: 6px;"></div>
+          <div class="skeleton" style="width: 40%; height: 16px; margin-top: 10px; border-radius: 6px;"></div>
+        </div>
+      </div>
+    `;
+    
+    // Render skeletons for grid
+    let skeletonHtml = '';
+    for (let i = 0; i < 6; i++) {
+      skeletonHtml += `
+        <div class="blog-card skeleton-card">
+          <div class="skeleton skeleton-img" style="width: calc(100% - 24px); height: 160px; margin: 12px; border-radius: 40px;"></div>
+          <div class="blog-card-body">
+            <div class="skeleton" style="width: 60px; height: 12px; margin-top: 10px;"></div>
+            <div class="skeleton" style="width: 100%; height: 24px; margin-top: 10px; border-radius: 8px;"></div>
+            <div class="skeleton" style="width: 90%; height: 16px; margin-top: 16px; border-radius: 6px;"></div>
+            <div class="skeleton-footer" style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="skeleton" style="width: 36px; height: 36px; border-radius: 50%;"></div>
+                <div class="skeleton" style="width: 100px; height: 12px;"></div>
+              </div>
+              <div class="skeleton" style="width: 60px; height: 60px; border-radius: 50%;"></div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    container.innerHTML = skeletonHtml;
+  } else {
+    // Original skeleton style for other pages
+    let skeletonHtml = '';
+    for (let i = 0; i < 3; i++) {
+      skeletonHtml += `
+        <div class="blog-card skeleton-card">
+          <div class="skeleton skeleton-tag"></div>
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-excerpt"></div>
+          <div class="skeleton-footer"></div>
+        </div>
+      `;
+    }
+    container.innerHTML = skeletonHtml;
+  }
+}
+
 async function fetchLatestBlogs() {
   const blogGrid = document.getElementById('blogGrid');
   if (!blogGrid) return;
 
   const API = window.VOLGA_API;
+  renderBlogSkeletons(blogGrid);
 
   try {
     const res = await fetch(`${API}/blogs`);
@@ -706,40 +763,100 @@ async function fetchLatestBlogs() {
 }
 
 function renderBlogCards(blogGrid) {
-  const cardsToShow = allBlogs.slice(currentBlogIndex, currentBlogIndex + 3);
-
-  if (cardsToShow.length === 0) {
-    currentBlogIndex = 0;
-    return renderBlogCards(blogGrid);
-  }
-
-  blogGrid.innerHTML = cardsToShow.map((blog, i) => `
-    <a href="blog-detail.html?id=${blog._id}" class="holo-card reveal-fade blog-card" data-blog-id="${blog._id}" style="--delay: ${i * 0.1}s">
-      <div class="holo-img-wrap">
-        <img src="${window.getVolgaImageUrl(blog.coverImage || blog.image) || 'blog-hero.jpg'}" alt="${blog.title}" onerror="this.src='blog-hero.jpg'">
-        <div class="holo-badge">${blog.category || 'Tech'}</div>
-      </div>
-      <div class="holo-content">
-        <h3 class="holo-title">${blog.title}</h3>
-        <p class="holo-excerpt">${blog.excerpt || (blog.content ? blog.content.substring(0, 120) + '...' : '')}</p>
-        <div class="holo-footer">
-          <span>${new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-          <div class="holo-readmore">Read <i class="fas fa-arrow-right"></i></div>
+  // If we're on blog.html (has blogFeatured div), handle featured blog
+  const blogFeatured = document.getElementById('blogFeatured');
+  
+  if (blogFeatured && allBlogs.length > 0) {
+    const featuredBlog = allBlogs[0];
+    blogFeatured.innerHTML = `
+      <a href="blog-detail.html?id=${featuredBlog._id}" class="blog-featured">
+        <div class="blog-featured-img">
+          <img src="${window.getVolgaImageUrl(featuredBlog.coverImage || featuredBlog.image) || 'blog-hero.jpg'}" alt="${featuredBlog.title}" onerror="this.src='blog-hero.jpg'">
+          <div class="blog-featured-badge">${featuredBlog.category || 'Tech'}</div>
         </div>
-      </div>
-    </a>
-  `).join('');
+        <div class="blog-featured-body">
+          <div class="blog-cat">${featuredBlog.category || 'Tech'}</div>
+          <h3 class="blog-featured-title">${featuredBlog.title}</h3>
+          <p class="blog-featured-excerpt">${featuredBlog.excerpt || (featuredBlog.content ? featuredBlog.content.substring(0, 200) + '...' : '')}</p>
+          <div class="blog-meta">
+            <span>${new Date(featuredBlog.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+          </div>
+          <a href="blog-detail.html?id=${featuredBlog._id}" class="blog-read-link">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </a>
+    `;
+    
+    // For the grid, use all blogs except the first one
+    const remainingBlogs = allBlogs.slice(1);
+    const cardsToShow = remainingBlogs.slice(currentBlogIndex, currentBlogIndex + 6); // Show 6 cards in grid
+    
+    if (cardsToShow.length === 0 && remainingBlogs.length > 0) {
+      currentBlogIndex = 0;
+      return renderBlogCards(blogGrid);
+    }
+    
+    blogGrid.innerHTML = cardsToShow.map((blog, i) => `
+      <a href="blog-detail.html?id=${blog._id}" class="blog-card" data-blog-id="${blog._id}" style="animation-delay: ${(i % 3) * 0.1}s">
+        <img class="blog-card-img" src="${window.getVolgaImageUrl(blog.coverImage || blog.image) || 'blog-hero.jpg'}" alt="${blog.title}" onerror="this.src='blog-hero.jpg'">
+        <div class="blog-card-body">
+          <div class="blog-tag">${blog.category || 'Tech'}</div>
+          <h3 class="blog-card-title">${blog.title}</h3>
+          <p class="blog-card-excerpt">${blog.excerpt || (blog.content ? blog.content.substring(0, 120) + '...' : '')}</p>
+          <div class="blog-card-footer">
+            <div class="blog-meta">
+              <div class="author-avatar">VI</div>
+              <span class="blog-meta-text">${new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
+            </div>
+            <div class="read-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </a>
+    `).join('');
+    
+    // Since blog.html has a grid of 6, adjust navigation
+    addBlogNavigation(blogGrid, 6);
+    
+  } else {
+    // Original holo-card style for other pages
+    const cardsToShow = allBlogs.slice(currentBlogIndex, currentBlogIndex + 3);
 
-  addBlogNavigation(blogGrid);
+    if (cardsToShow.length === 0) {
+      currentBlogIndex = 0;
+      return renderBlogCards(blogGrid);
+    }
+
+    blogGrid.innerHTML = cardsToShow.map((blog, i) => `
+      <a href="blog-detail.html?id=${blog._id}" class="holo-card reveal-fade blog-card" data-blog-id="${blog._id}" style="--delay: ${i * 0.1}s">
+        <div class="holo-img-wrap">
+          <img src="${window.getVolgaImageUrl(blog.coverImage || blog.image) || 'blog-hero.jpg'}" alt="${blog.title}" onerror="this.src='blog-hero.jpg'">
+          <div class="holo-badge">${blog.category || 'Tech'}</div>
+        </div>
+        <div class="holo-content">
+          <h3 class="holo-title">${blog.title}</h3>
+          <p class="holo-excerpt">${blog.excerpt || (blog.content ? blog.content.substring(0, 120) + '...' : '')}</p>
+          <div class="holo-footer">
+            <span>${new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+            <div class="holo-readmore">Read <i class="fas fa-arrow-right"></i></div>
+          </div>
+        </div>
+      </a>
+    `).join('');
+
+    addBlogNavigation(blogGrid);
+  }
 
   setTimeout(() => {
     ScrollTrigger.refresh();
-    gsap.utils.toArray('.holo-card.reveal-fade').forEach((el) => {
+    gsap.utils.toArray('.blog-card, .holo-card.reveal-fade').forEach((el) => {
       gsap.to(el, {
         opacity: 1, y: 0,
         duration: 0.9,
         ease: 'power3.out',
-        delay: parseFloat(el.style.getPropertyValue('--delay') || 0),
+        delay: parseFloat(el.style.getPropertyValue('--delay') || el.style.animationDelay || 0),
         scrollTrigger: {
           trigger: el,
           start: 'top 88%',
@@ -783,17 +900,18 @@ function setupBlogSwipe(blogGrid) {
 }
 
 function handleBlogSwipe(blogGrid) {
+  const cardsPerPage = document.getElementById('blogFeatured') ? 6 : 3;
   const swipeThreshold = 50;
   const diff = touchStartX - touchEndX;
 
   if (Math.abs(diff) > swipeThreshold) {
     if (diff > 0) {
-      currentBlogIndex = Math.min(currentBlogIndex + 3, allBlogs.length - 1);
-      if (currentBlogIndex + 3 > allBlogs.length) {
-        currentBlogIndex = Math.max(0, allBlogs.length - 3);
+      currentBlogIndex = Math.min(currentBlogIndex + cardsPerPage, allBlogs.length - 1);
+      if (currentBlogIndex + cardsPerPage > allBlogs.length) {
+        currentBlogIndex = Math.max(0, allBlogs.length - cardsPerPage);
       }
     } else {
-      currentBlogIndex = Math.max(currentBlogIndex - 3, 0);
+      currentBlogIndex = Math.max(currentBlogIndex - cardsPerPage, 0);
     }
 
     gsap.to(blogGrid, {
@@ -807,28 +925,33 @@ function handleBlogSwipe(blogGrid) {
   }
 }
 
-function addBlogNavigation(blogGrid) {
+function addBlogNavigation(blogGrid, cardsPerPage = 3) {
   const parent = blogGrid.parentElement;
+  const blogFeatured = document.getElementById('blogFeatured');
+  const totalBlogsForNav = blogFeatured ? allBlogs.slice(1).length : allBlogs.length;
+  const pageCount = Math.ceil(totalBlogsForNav / cardsPerPage);
 
   const existingNav = parent.querySelector('.blog-nav-controls');
   if (existingNav) existingNav.remove();
+
+  if (pageCount <= 1) return; // Don't show nav if only one page
 
   const navControls = document.createElement('div');
   navControls.className = 'blog-nav-controls';
   navControls.innerHTML = `
     <button class="blog-nav-btn blog-nav-prev" ${currentBlogIndex === 0 ? 'disabled' : ''}><i class="fas fa-chevron-left"></i></button>
     <div class="blog-dots">
-      ${Array.from({ length: Math.ceil(allBlogs.length / 3) }).map((_, i) =>
-    `<div class="blog-dot ${i === Math.floor(currentBlogIndex / 3) ? 'active' : ''}"></div>`
+      ${Array.from({ length: pageCount }).map((_, i) =>
+    `<div class="blog-dot ${i === Math.floor(currentBlogIndex / cardsPerPage) ? 'active' : ''}"></div>`
   ).join('')}
     </div>
-    <button class="blog-nav-btn blog-nav-next" ${currentBlogIndex + 3 >= allBlogs.length ? 'disabled' : ''}><i class="fas fa-chevron-right"></i></button>
+    <button class="blog-nav-btn blog-nav-next" ${currentBlogIndex + cardsPerPage >= totalBlogsForNav ? 'disabled' : ''}><i class="fas fa-chevron-right"></i></button>
   `;
 
   parent.appendChild(navControls);
 
   navControls.querySelector('.blog-nav-prev').addEventListener('click', () => {
-    currentBlogIndex = Math.max(currentBlogIndex - 3, 0);
+    currentBlogIndex = Math.max(currentBlogIndex - cardsPerPage, 0);
     gsap.to(blogGrid, {
       opacity: 0.5,
       duration: 0.2,
@@ -840,7 +963,7 @@ function addBlogNavigation(blogGrid) {
   });
 
   navControls.querySelector('.blog-nav-next').addEventListener('click', () => {
-    currentBlogIndex = Math.min(currentBlogIndex + 3, allBlogs.length - 3);
+    currentBlogIndex = Math.min(currentBlogIndex + cardsPerPage, totalBlogsForNav - cardsPerPage);
     gsap.to(blogGrid, {
       opacity: 0.5,
       duration: 0.2,
@@ -883,11 +1006,48 @@ function setupBlogRealtimeUpdates() {
 }
 
 // ─── FETCH CASE STUDIES DYNAMICALLY ──────
+function renderCaseStudiesSkeletons(container) {
+  let skeletonHtml = `<div class="blog-grid">`;
+  for (let i = 0; i < 3; i++) {
+    skeletonHtml += `
+      <div class="cs-card skeleton-card">
+        <div class="skeleton skeleton-img"></div>
+        <div class="cs-body">
+          <div class="skeleton skeleton-industry"></div>
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-desc"></div>
+          <div class="skeleton-stats">
+            <div class="skeleton-stat">
+              <div class="skeleton skeleton-stat-num"></div>
+              <div class="skeleton skeleton-stat-label"></div>
+            </div>
+            <div class="skeleton-stat">
+              <div class="skeleton skeleton-stat-num"></div>
+              <div class="skeleton skeleton-stat-label"></div>
+            </div>
+            <div class="skeleton-stat">
+              <div class="skeleton skeleton-stat-num"></div>
+              <div class="skeleton skeleton-stat-label"></div>
+            </div>
+          </div>
+          <div class="skeleton-footer">
+            <div class="skeleton skeleton-meta"></div>
+            <div class="skeleton skeleton-arrow"></div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  skeletonHtml += `</div>`;
+  container.innerHTML = skeletonHtml;
+}
+
 async function fetchCaseStudies() {
   const caseStudiesContainer = document.getElementById('caseStudiesContainer');
   if (!caseStudiesContainer) return;
 
   const API = window.VOLGA_API;
+  renderCaseStudiesSkeletons(caseStudiesContainer);
 
   try {
     const res = await fetch(`${API}/case-studies`);
@@ -996,12 +1156,48 @@ function renderClientStories(container) {
   `).join('');
 }
 
+function renderIndustryNewsSkeletons(container) {
+  let skeletonHtml = '';
+  // Create a dummy date group for skeletons
+  const dateLabel = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  skeletonHtml += `
+    <div class="date-group">
+      <div class="date-label">${dateLabel}</div>
+      <div class="blog-grid">
+  `;
+  for (let i = 0; i < 3; i++) {
+    skeletonHtml += `
+      <div class="blog-card skeleton-card">
+        <div class="skeleton skeleton-img"></div>
+        <div class="blog-card-body">
+          <div class="skeleton skeleton-tag"></div>
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-excerpt"></div>
+          <div class="skeleton-footer">
+            <div class="skeleton-meta">
+              <div class="skeleton skeleton-avatar"></div>
+              <div class="skeleton skeleton-meta-text"></div>
+            </div>
+            <div class="skeleton skeleton-arrow"></div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  skeletonHtml += `
+      </div>
+    </div>
+  `;
+  container.innerHTML = skeletonHtml;
+}
+
 // ─── FETCH INDUSTRY NEWS DYNAMICALLY ──────
 async function fetchIndustryNews() {
   const newsContainer = document.getElementById('newsContainer');
   if (!newsContainer) return;
 
   const API = window.VOLGA_API;
+  renderIndustryNewsSkeletons(newsContainer);
 
   try {
     const res = await fetch(`${API}/industry-news`);
@@ -1565,7 +1761,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupMagnetic();
   setupMissionCardFlip();
 
-  if (document.getElementById('blogGrid') && !document.getElementById('blogFeatured')) {
+  if (document.getElementById('blogGrid')) {
     fetchLatestBlogs();
     setupBlogRealtimeUpdates();
   }
