@@ -666,6 +666,8 @@ if (document.getElementById("logoutBtn")) {
         if (item.dataset.view === "emaillogs") loadEmailLogs();
         if (item.dataset.view === "settings") loadCurrentUser();
         if (item.dataset.view === "analytics") loadAnalytics();
+        if (item.dataset.view === "jobs") loadJobs();
+        if (item.dataset.view === "jobapplications") loadJobApplications();
       });
     });
 
@@ -1123,120 +1125,345 @@ if (document.getElementById("logoutBtn")) {
   });
 
   // ── CLIENT STORIES ───────────────────────────────────
-  let editingStoryId = null;
+ // ── CLIENT STORIES ───────────────────────────────────
+let editingStoryId = null;
 
-  async function loadClientStories() {
-    const stories = await apiFetch("/client-stories");
-    const grid = document.getElementById("storiesGrid");
-    if (!stories || !stories.length) {
-      if (grid) grid.innerHTML = `<p class="empty" style="padding:2rem">No client stories yet. Click + Add Story to get started.</p>`;
-      return;
+async function loadClientStories() {
+  const stories = await apiFetch("/client-stories");
+  const grid = document.getElementById("storiesGrid");
+
+  if (!stories || !stories.length) {
+    if (grid) {
+      grid.innerHTML = `
+        <p class="empty" style="padding:2rem">
+          No client stories yet. Click + Add Story to get started.
+        </p>`;
     }
-    if (!grid) return;
-    grid.innerHTML = stories.map(s => `
-      <div class="proj-card content-card" data-id="${esc(s._id)}">
-        <div class="proj-card-img" style="background-image:url('${esc(s.image || '')}')"></div>
-        <div class="proj-card-body">
-          <span class="proj-tag">${esc(s.industry)}</span>
-          <div class="proj-title">${esc(s.clientName)}</div>
-          <div class="proj-place">${esc(s.clientRole)}</div>
-          <p class="proj-desc">${esc(s.testimonial)}</p>
-          <div class="card-actions">
-            <a class="btn-view" href="client-story-edit.html?id=${esc(s._id)}">Edit</a>
-            <button class="btn-action btn-duplicate" data-id="${esc(s._id)}" data-type="client-stories" title="Duplicate">⎘ Clone</button>
-            <button class="btn-action btn-delete-item" data-id="${esc(s._id)}" data-type="client-stories" data-name="${esc(s.clientName.replace(/"/g,''))}" title="Delete">✕</button>
-          </div>
+    return;
+  }
+
+  if (!grid) return;
+
+  grid.innerHTML = stories.map(s => `
+    <div class="proj-card content-card" data-id="${esc(s._id)}">
+      <div class="proj-card-img" style="background-image:url('${esc(s.image || "")}')"></div>
+
+      <div class="proj-card-body">
+        <span class="proj-tag">${esc(s.industry)}</span>
+
+        <div class="proj-title">${esc(s.clientName)}</div>
+
+        <div class="proj-place">${esc(s.clientRole)}</div>
+
+        <p class="proj-desc">${esc(s.testimonial)}</p>
+
+        <div class="card-actions">
+          <a class="btn-view"
+             href="client-story-edit.html?id=${esc(s._id)}">
+             Edit
+          </a>
+
+          <button
+            class="btn-action btn-duplicate"
+            data-id="${esc(s._id)}"
+            data-type="client-stories"
+            title="Duplicate">
+            ⎘ Clone
+          </button>
+
+          <button
+            class="btn-action btn-delete-item"
+            data-id="${esc(s._id)}"
+            data-type="client-stories"
+            data-name="${esc(s.clientName)}"
+            title="Delete">
+            ✕
+          </button>
         </div>
-      </div>`).join("");
+      </div>
+    </div>
+  `).join("");
 
-    grid.querySelectorAll('.btn-duplicate').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        try {
-          await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}/duplicate`, { method: 'POST' });
-          showToast('Cloned', 'Copy created', 'success');
-          loadClientStories();
-        } catch(e) { showToast('Error', e.message, 'error'); }
-      });
+  // Duplicate
+  grid.querySelectorAll(".btn-duplicate").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      try {
+        await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}/duplicate`, {
+          method: "POST"
+        });
+
+        showToast("Cloned", "Copy created successfully", "success");
+
+        loadClientStories();
+
+      } catch (e) {
+
+        Swal.fire({
+          icon: "error",
+          title: "Clone Failed",
+          text: e.message
+        });
+
+      }
     });
-    grid.querySelectorAll('.btn-delete-item').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        if (!confirm(`Delete "${btn.dataset.name}"?`)) return;
-        try {
-          await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}`, { method: 'DELETE' });
-          showToast('Deleted', 'Item removed', 'success');
-          loadClientStories();
-        } catch(e) { showToast('Error', e.message, 'error'); }
-      });
-    });
-  }
-
-  function openStoryModal(story = null) {
-    editingStoryId = story?._id || null;
-    document.getElementById("storyModalTitle").textContent = story ? "Edit Story" : "Add Story";
-    document.getElementById("st-industry").value = story?.industry || "";
-    document.getElementById("st-clientname").value = story?.clientName || "";
-    document.getElementById("st-clientrole").value = story?.clientRole || "";
-    if (editors.stTestimonial) {
-      editors.stTestimonial.setData(story?.testimonial || "");
-    }
-    document.getElementById("st-image").value = story?.image || "";
-    document.getElementById("st-avatar").value = story?.avatar || "";
-    document.getElementById("st-impact").value = story?.impact?.join(", ") || "";
-    document.getElementById("st-order").value = story?.order ?? 0;
-    document.getElementById("storyFormError").textContent = "";
-    document.getElementById("storyDeleteBtn").style.display = story ? "" : "none";
-    document.getElementById("storyModalOverlay").classList.add("open");
-  }
-
-  document.getElementById("addStoryBtn")?.addEventListener("click", () => openStoryModal());
-  document.getElementById("storyModalClose")?.addEventListener("click", () =>
-    document.getElementById("storyModalOverlay").classList.remove("open")
-  );
-  document.getElementById("storyModalOverlay")?.addEventListener("click", e => {
-    if (e.target === e.currentTarget) document.getElementById("storyModalOverlay").classList.remove("open");
   });
 
-  document.getElementById("storySaveBtn")?.addEventListener("click", async () => {
-    const impact = document.getElementById("st-impact").value.trim().split(",").map(s => s.trim()).filter(s => s);
+  // Delete from card
+  grid.querySelectorAll(".btn-delete-item").forEach(btn => {
+    btn.addEventListener("click", async () => {
+
+      const result = await Swal.fire({
+        title: `Delete "${btn.dataset.name}"?`,
+        text: "This action cannot be undone.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#dc2626",
+        cancelButtonColor: "#6b7280",
+        reverseButtons: true
+      });
+
+      if (!result.isConfirmed) return;
+
+      try {
+
+        await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}`, {
+          method: "DELETE"
+        });
+
+        await Swal.fire({
+          icon: "success",
+          title: "Deleted!",
+          text: "Client story deleted successfully.",
+          timer: 1500,
+          showConfirmButton: false
+        });
+
+        loadClientStories();
+
+      } catch (e) {
+
+        Swal.fire({
+          icon: "error",
+          title: "Delete Failed",
+          text: e.message
+        });
+
+      }
+
+    });
+  });
+}
+
+function openStoryModal(story = null) {
+
+  editingStoryId = story?._id || null;
+
+  document.getElementById("storyModalTitle").textContent =
+    story ? "Edit Story" : "Add Story";
+
+  document.getElementById("st-industry").value = story?.industry || "";
+  document.getElementById("st-clientname").value = story?.clientName || "";
+  document.getElementById("st-clientrole").value = story?.clientRole || "";
+
+  if (editors.stTestimonial) {
+    editors.stTestimonial.setData(story?.testimonial || "");
+  }
+
+  document.getElementById("st-image").value = story?.image || "";
+  document.getElementById("st-avatar").value = story?.avatar || "";
+  document.getElementById("st-impact").value =
+    story?.impact?.join(", ") || "";
+  document.getElementById("st-order").value =
+    story?.order ?? 0;
+
+  document.getElementById("storyFormError").textContent = "";
+
+  document.getElementById("storyDeleteBtn").style.display =
+    story ? "" : "none";
+
+  document.getElementById("storyModalOverlay").classList.add("open");
+}
+
+document.getElementById("addStoryBtn")
+  ?.addEventListener("click", () => openStoryModal());
+
+document.getElementById("storyModalClose")
+  ?.addEventListener("click", () => {
+    document.getElementById("storyModalOverlay")
+      .classList.remove("open");
+  });
+
+document.getElementById("storyModalOverlay")
+  ?.addEventListener("click", e => {
+    if (e.target === e.currentTarget) {
+      document.getElementById("storyModalOverlay")
+        .classList.remove("open");
+    }
+  });
+
+document.getElementById("storySaveBtn")
+  ?.addEventListener("click", async () => {
+
+    const impact =
+      document.getElementById("st-impact").value
+        .trim()
+        .split(",")
+        .map(s => s.trim())
+        .filter(Boolean);
+
     const body = {
-      industry:    document.getElementById("st-industry").value.trim(),
-      clientName:  document.getElementById("st-clientname").value.trim(),
-      clientRole:  document.getElementById("st-clientrole").value.trim(),
-      testimonial: editors.stTestimonial ? editors.stTestimonial.getData() : document.getElementById("st-testimonial").value.trim(),
-      image:       document.getElementById("st-image").value.trim(),
-      avatar:      document.getElementById("st-avatar").value.trim(),
-      impact:      impact,
-      order:       Number(document.getElementById("st-order").value) || 0,
+      industry: document.getElementById("st-industry").value.trim(),
+      clientName: document.getElementById("st-clientname").value.trim(),
+      clientRole: document.getElementById("st-clientrole").value.trim(),
+      testimonial: editors.stTestimonial
+        ? editors.stTestimonial.getData()
+        : document.getElementById("st-testimonial").value.trim(),
+      image: document.getElementById("st-image").value.trim(),
+      avatar: document.getElementById("st-avatar").value.trim(),
+      impact,
+      order: Number(document.getElementById("st-order").value) || 0
     };
-    if (!body.industry || !body.clientName || !body.clientRole || !body.testimonial || !body.image || !body.avatar) {
-      document.getElementById("storyFormError").textContent = "Please fill in all required fields.";
+
+    if (
+      !body.industry ||
+      !body.clientName ||
+      !body.clientRole ||
+      !body.testimonial ||
+      !body.image ||
+      !body.avatar
+    ) {
+      document.getElementById("storyFormError").textContent =
+        "Please fill in all required fields.";
       return;
     }
-    const errEl = document.getElementById("storyFormError");
+
     const saveBtn = document.getElementById("storySaveBtn");
-    saveBtn.textContent = "Saving…";
+    const errEl = document.getElementById("storyFormError");
+
     saveBtn.disabled = true;
+    saveBtn.textContent = "Saving...";
+
+    Swal.fire({
+      title: "Saving...",
+      allowOutsideClick: false,
+      didOpen: () => Swal.showLoading()
+    });
+
     try {
+
       if (editingStoryId) {
-        await apiFetch(`/client-stories/${editingStoryId}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+
+        await apiFetch(`/client-stories/${editingStoryId}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(body)
+        });
+
       } else {
-        await apiFetch("/client-stories", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+
+        await apiFetch("/client-stories", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(body)
+        });
+
       }
-      document.getElementById("storyModalOverlay").classList.remove("open");
+
+      Swal.close();
+
+      document.getElementById("storyModalOverlay")
+        .classList.remove("open");
+
+      await Swal.fire({
+        icon: "success",
+        title: editingStoryId
+          ? "Story Updated"
+          : "Story Created",
+        timer: 1500,
+        showConfirmButton: false
+      });
+
       loadClientStories();
+
     } catch (e) {
-      errEl.textContent = e.message || "Save failed. Are you still logged in?";
+
+      Swal.close();
+
+      errEl.textContent =
+        e.message || "Save failed.";
+
+      Swal.fire({
+        icon: "error",
+        title: "Save Failed",
+        text: e.message || "Something went wrong."
+      });
+
     } finally {
-      saveBtn.textContent = "Save Story";
+
       saveBtn.disabled = false;
+      saveBtn.textContent = "Save Story";
+
     }
+
   });
 
-  document.getElementById("storyDeleteBtn")?.addEventListener("click", async () => {
-    if (!editingStoryId || !confirm("Delete this story?")) return;
-    await apiFetch(`/client-stories/${editingStoryId}`, { method: "DELETE" });
-    document.getElementById("storyModalOverlay").classList.remove("open");
-    loadClientStories();
+document.getElementById("storyDeleteBtn")
+  ?.addEventListener("click", async () => {
+
+    if (!editingStoryId) return;
+
+    const storyName =
+      document.getElementById("st-clientname").value;
+
+    const result = await Swal.fire({
+      title: `Delete "${storyName}"?`,
+      text: "This action cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#dc2626",
+      cancelButtonColor: "#6b7280",
+      reverseButtons: true
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+
+      await apiFetch(`/client-stories/${editingStoryId}`, {
+        method: "DELETE"
+      });
+
+      document.getElementById("storyModalOverlay")
+        .classList.remove("open");
+
+      await Swal.fire({
+        icon: "success",
+        title: "Deleted!",
+        text: "Client story deleted successfully.",
+        timer: 1500,
+        showConfirmButton: false
+      });
+
+      loadClientStories();
+
+    } catch (e) {
+
+      Swal.fire({
+        icon: "error",
+        title: "Delete Failed",
+        text: e.message
+      });
+
+    }
+
   });
 
   // ── BLOG ───────────────────────────────────────────────────
@@ -2188,6 +2415,224 @@ if (document.getElementById("logoutBtn")) {
     
     loadPermissions();
     loadCurrentUser();
+
+    // ── JOBS MANAGEMENT ──────────────────────────────────────────────
+    let editingJobId = null;
+
+    async function loadJobs() {
+      const response = await apiFetch('/jobs/admin/all');
+    const jobs = response?.data || response;
+      const tbody = document.querySelector('#jobsTable tbody');
+      if (!jobs?.length) {
+        tbody.innerHTML = '<tr><td colspan="9" class="empty">No jobs yet. Click + Add Job to get started.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = jobs.map(j => `
+        <tr>
+          <td>${esc(j.title)}</td>
+          <td>${esc(j.department)}</td>
+          <td>${esc(j.location)}</td>
+          <td>${esc(j.type)}</td>
+          <td>${esc(j.salary || '—')}</td>
+          <td><span class="badge badge-${esc(j.status)}">${esc(j.status)}</span></td>
+          <td>${j.featured ? '<span class="badge badge-success">Yes</span>' : 'No'}</td>
+          <td>${fmtDate(j.createdAt)}</td>
+          <td>
+            <button class="btn-view edit-job-btn" data-id="${esc(j._id)}">Edit</button>
+            <button class="btn-delete delete-job-btn" data-id="${esc(j._id)}">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+
+      tbody.querySelectorAll('.edit-job-btn').forEach(btn => {
+        btn.addEventListener('click', () => openJobModal(jobs.find(j => j._id === btn.dataset.id)));
+      });
+      tbody.querySelectorAll('.delete-job-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (!confirm('Delete this job?')) return;
+          try {
+            await apiFetch(`/jobs/${btn.dataset.id}`, { method: 'DELETE' });
+            showToast('Job Deleted', 'The job has been removed', 'success');
+            loadJobs();
+          } catch (e) {
+            showToast('Delete Failed', e.message || 'Could not delete job', 'error');
+          }
+        });
+      });
+    }
+
+    function openJobModal(job = null) {
+      editingJobId = job?._id || null;
+      document.getElementById('jobModalTitle').textContent = job ? 'Edit Job' : 'Add Job';
+      document.getElementById('jb-title').value = job?.title || '';
+      document.getElementById('jb-location').value = job?.location || '';
+      document.getElementById('jb-type').value = job?.type || 'full-time';
+      document.getElementById('jb-salary').value = job?.salary || '';
+      document.getElementById('jb-department').value = job?.department || '';
+      document.getElementById('jb-description').value = job?.description || '';
+      document.getElementById('jb-requirements').value = job?.requirements?.join('\n') || '';
+      document.getElementById('jb-responsibilities').value = job?.responsibilities?.join('\n') || '';
+      document.getElementById('jb-status').value = job?.status || 'draft';
+      document.getElementById('jb-featured').checked = job?.featured || false;
+      document.getElementById('jb-order').value = job?.order ?? 0;
+      document.getElementById('jb-applylink').value = job?.applyLink || '';
+      document.getElementById('jobFormError').textContent = '';
+      document.getElementById('jobDeleteBtn').style.display = job ? 'inline-block' : 'none';
+      document.getElementById('jobModalOverlay').classList.add('open');
+    }
+
+    document.getElementById('addJobBtn')?.addEventListener('click', () => openJobModal());
+    document.getElementById('jobModalClose')?.addEventListener('click', () =>
+      document.getElementById('jobModalOverlay').classList.remove('open')
+    );
+    document.getElementById('jobModalOverlay')?.addEventListener('click', e => {
+      if (e.target === e.currentTarget) document.getElementById('jobModalOverlay').classList.remove('open');
+    });
+
+    document.getElementById('jobSaveBtn')?.addEventListener('click', async () => {
+      const requirements = document.getElementById('jb-requirements').value.trim().split('\n').map(s => s.trim()).filter(s => s);
+      const responsibilities = document.getElementById('jb-responsibilities').value.trim().split('\n').map(s => s.trim()).filter(s => s);
+      const body = {
+        title: document.getElementById('jb-title').value.trim(),
+        location: document.getElementById('jb-location').value.trim(),
+        type: document.getElementById('jb-type').value,
+        salary: document.getElementById('jb-salary').value.trim(),
+        department: document.getElementById('jb-department').value.trim(),
+        description: document.getElementById('jb-description').value.trim(),
+        requirements,
+        responsibilities,
+        status: document.getElementById('jb-status').value,
+        featured: document.getElementById('jb-featured').checked,
+        order: Number(document.getElementById('jb-order').value) || 0,
+        applyLink: document.getElementById('jb-applylink').value.trim()
+      };
+      if (!body.title || !body.location || !body.department || !body.description) {
+        document.getElementById('jobFormError').textContent = 'Please fill in all required fields';
+        return;
+      }
+      const btn = document.getElementById('jobSaveBtn');
+      btn.textContent = 'Saving...';
+      btn.disabled = true;
+      try {
+        if (editingJobId) {
+          await apiFetch(`/jobs/${editingJobId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+          showToast('Job Updated', 'The job has been updated successfully', 'success');
+        } else {
+          await apiFetch('/jobs', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+          showToast('Job Added', 'The job has been added successfully', 'success');
+        }
+        document.getElementById('jobModalOverlay').classList.remove('open');
+        loadJobs();
+      } catch (e) {
+        document.getElementById('jobFormError').textContent = e.message || 'Save failed';
+        showToast('Save Failed', e.message || 'Could not save job', 'error');
+      } finally {
+        btn.textContent = 'Save Job';
+        btn.disabled = false;
+      }
+    });
+
+    document.getElementById('jobDeleteBtn')?.addEventListener('click', async () => {
+      if (!editingJobId || !confirm('Delete this job?')) return;
+      try {
+        await apiFetch(`/jobs/${editingJobId}`, { method: 'DELETE' });
+        showToast('Job Deleted', 'The job has been removed', 'success');
+        document.getElementById('jobModalOverlay').classList.remove('open');
+        loadJobs();
+      } catch (e) {
+        showToast('Delete Failed', e.message || 'Could not delete job', 'error');
+      }
+    });
+
+    // ── JOB APPLICATIONS MANAGEMENT ──────────────────────────────────────────────
+    let viewingApplicationId = null;
+
+    async function loadJobApplications() {
+      const response = await apiFetch('/job-applications');
+      const applications = response?.data || response;
+      const tbody = document.querySelector('#jobApplicationsTable tbody');
+      if (!applications?.length) {
+        tbody.innerHTML = '<tr><td colspan="9" class="empty">No job applications yet.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = applications.map(a => `
+        <tr>
+          <td>${esc(a.applicantName)}</td>
+          <td>${esc(a.applicantEmail)}</td>
+          <td>${esc(a.applicantPhone || '—')}</td>
+          <td>${esc(a.jobId?.title || 'Unknown Job')}</td>
+          <td><span class="badge badge-${esc(a.status)}">${esc(a.status)}</span></td>
+          <td>${fmtDate(a.createdAt)}</td>
+          <td>
+            <button class="btn-view view-app-btn" data-id="${esc(a._id)}">View</button>
+            ${a.status !== 'hired' && a.status !== 'rejected' ? `<button class="btn-delete delete-app-btn" data-id="${esc(a._id)}">Delete</button>` : ''}
+          </td>
+        </tr>
+      `).join('');
+
+      tbody.querySelectorAll('.view-app-btn').forEach(btn => {
+        btn.addEventListener('click', () => openJobApplicationModal(applications.find(a => a._id === btn.dataset.id)));
+      });
+      tbody.querySelectorAll('.delete-app-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (!confirm('Delete this application?')) return;
+          try {
+            await apiFetch(`/job-applications/${btn.dataset.id}`, { method: 'DELETE' });
+            showToast('Application Deleted', 'The application has been removed', 'success');
+            loadJobApplications();
+          } catch (e) {
+            showToast('Delete Failed', e.message || 'Could not delete application', 'error');
+          }
+        });
+      });
+    }
+
+    function openJobApplicationModal(application) {
+      viewingApplicationId = application?._id || null;
+      document.getElementById('jobApplicationModalTitle').textContent = 'Job Application Details';
+      document.getElementById('jobApplicationModalGrid').innerHTML = `
+        <div><span>Applicant Name</span><strong>${esc(application.applicantName)}</strong></div>
+        <div><span>Email</span><strong>${esc(application.applicantEmail)}</strong></div>
+        <div><span>Phone</span><strong>${esc(application.applicantPhone || '—')}</strong></div>
+        <div><span>Job</span><strong>${esc(application.jobId?.title || 'Unknown Job')}</strong></div>
+        <div><span>Resume</span><strong>${application.resumeUrl ? `<a href="${esc(application.resumeUrl)}" target="_blank" style="color: #3b82f6;">View</a>` : '—'}</strong></div>
+        <div><span>Portfolio</span><strong>${application.portfolioUrl ? `<a href="${esc(application.portfolioUrl)}" target="_blank" style="color: #3b82f6;">View</a>` : '—'}</strong></div>
+        <div><span>LinkedIn</span><strong>${application.linkedinUrl ? `<a href="${esc(application.linkedinUrl)}" target="_blank" style="color: #3b82f6;">View</a>` : '—'}</strong></div>
+        <div><span>Applied Date</span><strong>${fmtDate(application.createdAt)}</strong></div>
+        ${application.coverLetter ? `<div style="grid-column: 1 / -1;"><span>Cover Letter</span><div style="margin-top: 0.5rem; padding: 0.75rem; background: rgba(0,0,0,0.05); border-radius: 8px;">${esc(application.coverLetter)}</div></div>` : ''}
+      `;
+      document.getElementById('jobAppStatus').value = application.status;
+      document.getElementById('jobAppNotes').value = application.notes || '';
+      document.getElementById('jobApplicationModalOverlay').classList.add('open');
+    }
+
+    document.getElementById('jobApplicationModalClose')?.addEventListener('click', () =>
+      document.getElementById('jobApplicationModalOverlay').classList.remove('open')
+    );
+    document.getElementById('jobApplicationModalOverlay')?.addEventListener('click', e => {
+      if (e.target === e.currentTarget) document.getElementById('jobApplicationModalOverlay').classList.remove('open');
+    });
+
+    document.getElementById('jobApplicationSaveBtn')?.addEventListener('click', async () => {
+      const body = {
+        status: document.getElementById('jobAppStatus').value,
+        notes: document.getElementById('jobAppNotes').value.trim()
+      };
+      const btn = document.getElementById('jobApplicationSaveBtn');
+      btn.textContent = 'Saving...';
+      btn.disabled = true;
+      try {
+        await apiFetch(`/job-applications/${viewingApplicationId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        showToast('Application Updated', 'The application has been updated successfully', 'success');
+        document.getElementById('jobApplicationModalOverlay').classList.remove('open');
+        loadJobApplications();
+      } catch (e) {
+        showToast('Save Failed', e.message || 'Could not update application', 'error');
+      } finally {
+        btn.textContent = 'Save Changes';
+        btn.disabled = false;
+      }
+    });
 
 }
 

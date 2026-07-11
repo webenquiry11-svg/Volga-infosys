@@ -28,6 +28,8 @@ import clientStoryRoutes from "./routes/clientStoryRoutes.js";
 import caseStudyRoutes from "./routes/caseStudyRoutes.js";
 import industryNewsRoutes from "./routes/industryNewsRoutes.js";
 import mediaRoutes from "./routes/mediaRoutes.js";
+import jobRoutes from "./routes/jobRoutes.js";
+import jobApplicationRoutes from "./routes/jobApplicationRoutes.js";
 import { getPublicStats } from "./controllers/dashboardController.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -92,6 +94,8 @@ app.use("/api/case-studies", caseStudyRoutes);
 app.use("/api/industry-news", industryNewsRoutes);
 app.use("/api/auto-responses", autoResponseRoutes);
 app.use("/api/media", mediaRoutes);
+app.use("/api/jobs", jobRoutes);
+app.use("/api/job-applications", jobApplicationRoutes);
 app.get("/api/stats", getPublicStats);
 
 // Serve admin panel — only accessible at /admin

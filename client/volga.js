@@ -1098,38 +1098,6 @@ function renderCaseStudies(container) {
   `).join('')}</div>`;
 }
 
-// ─── FETCH CLIENT STORIES DYNAMICALLY ──────
-async function fetchClientStories() {
-  const storiesGrid = document.getElementById('storiesGrid');
-  if (!storiesGrid) return;
-
-  const API = window.VOLGA_API;
-
-  try {
-    const res = await fetch(`${API}/client-stories`);
-    if (!res.ok) throw new Error('API request failed');
-    const stories = await res.json();
-
-    if (stories.length === 0) {
-      storiesGrid.innerHTML = '<p style="color: var(--gray); text-align: center; width: 100%; padding: 40px;">More client stories coming soon.</p>';
-      return;
-    }
-
-    allClientStories = stories;
-    renderClientStories(storiesGrid);
-
-  } catch (err) {
-    console.error("Failed to load client stories, using fallback data:", err);
-    allClientStories = [
-      { industry: 'Manufacturing', testimonial: 'Volga XR turned our training into a measurable competitive advantage. Our field teams onboarded 50% faster.', clientName: 'Sarah Chen', clientRole: 'Head of Training, Tesla', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80', impact: ['VR Training', 'Safety', 'Efficiency'] },
-      { industry: 'Healthcare', testimonial: 'The VR simulations made training safer, faster, and more engaging. Staff practiced critical procedures risk-free.', clientName: 'Dr. Emily Rodriguez', clientRole: 'Medical Director, Mayo Clinic', image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&q=80', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80', impact: ['Healthcare', 'Simulation', 'Education'] },
-      { industry: 'Real Estate', testimonial: 'Remote buyers now feel like they are walking through the home in person. Virtual tours increased qualified leads by 30%.', clientName: 'Michael Torres', clientRole: 'CEO, Luxury Homes Inc.', image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80', impact: ['Virtual Tours', 'Lead Generation', 'AR/VR'] },
-      { industry: 'Retail', testimonial: 'The AR product configurator became a customer favorite overnight. Shoppers visualized products in their space.', clientName: 'Jessica Williams', clientRole: 'CMO, Fashion Forward', image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80', avatar: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100&q=80', impact: ['AR Configurator', 'E-Commerce', 'Customer Experience'] }
-    ];
-    renderClientStories(storiesGrid);
-  }
-}
-
 function renderClientStories(container) {
   container.innerHTML = allClientStories.map((story, i) => `
     <div class="story-card">
@@ -1154,6 +1122,64 @@ function renderClientStories(container) {
       </div>
     </div>
   `).join('');
+}
+
+function renderClientStoriesSkeletons(container) {
+  let skeletonHtml = '';
+  for (let i = 0; i < 4; i++) {
+    skeletonHtml += `
+      <div class="skeleton-card">
+        <div class="sc-img-wrap">
+          <div class="skeleton skeleton-img"></div>
+          <div class="skeleton skeleton-industry"></div>
+        </div>
+        <div class="skeleton-body">
+          <div class="skeleton skeleton-quote"></div>
+          <div class="skeleton-author">
+            <div class="skeleton skeleton-avatar"></div>
+            <div class="skeleton-author-info">
+              <div class="skeleton skeleton-name"></div>
+              <div class="skeleton skeleton-role"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  container.innerHTML = skeletonHtml;
+}
+
+// ─── FETCH CLIENT STORIES DYNAMICALLY ──────
+async function fetchClientStories() {
+  const storiesGrid = document.getElementById('storiesGrid');
+  if (!storiesGrid) return;
+
+  const API = window.VOLGA_API;
+  renderClientStoriesSkeletons(storiesGrid);
+
+  try {
+    const res = await fetch(`${API}/client-stories`);
+    if (!res.ok) throw new Error('API request failed');
+    const stories = await res.json();
+
+    if (stories.length === 0) {
+      storiesGrid.innerHTML = '<p style="color: var(--gray); text-align: center; width: 100%; padding: 40px;">More client stories coming soon.</p>';
+      return;
+    }
+
+    allClientStories = stories;
+    renderClientStories(storiesGrid);
+
+  } catch (err) {
+    console.error("Failed to load client stories, using fallback data:", err);
+    allClientStories = [
+      { industry: 'Manufacturing', testimonial: 'Volga XR turned our training into a measurable competitive advantage. Our field teams onboarded 50% faster.', clientName: 'Sarah Chen', clientRole: 'Head of Training, Tesla', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80', impact: ['VR Training', 'Safety', 'Efficiency'] },
+      { industry: 'Healthcare', testimonial: 'The VR simulations made training safer, faster, and more engaging. Staff practiced critical procedures risk-free.', clientName: 'Dr. Emily Rodriguez', clientRole: 'Medical Director, Mayo Clinic', image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&q=80', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80', impact: ['Healthcare', 'Simulation', 'Education'] },
+      { industry: 'Real Estate', testimonial: 'Remote buyers now feel like they are walking through the home in person. Virtual tours increased qualified leads by 30%.', clientName: 'Michael Torres', clientRole: 'CEO, Luxury Homes Inc.', image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80', impact: ['Virtual Tours', 'Lead Generation', 'AR/VR'] },
+      { industry: 'Retail', testimonial: 'The AR product configurator became a customer favorite overnight. Shoppers visualized products in their space.', clientName: 'Jessica Williams', clientRole: 'CMO, Fashion Forward', image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80', avatar: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100&q=80', impact: ['AR Configurator', 'E-Commerce', 'Customer Experience'] }
+    ];
+    renderClientStories(storiesGrid);
+  }
 }
 
 function renderIndustryNewsSkeletons(container) {

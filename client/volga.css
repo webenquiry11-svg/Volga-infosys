@@ -1311,6 +1311,14 @@ section {
   pointer-events: none;
 }
 
+/* ── 3D Canvas ── */
+.Hero-3d-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: auto;
+}
+
 /* ── Ambient glow orbs ── */
 .Hero-orb {
   position: absolute;

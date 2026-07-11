@@ -110,14 +110,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-ui);overflow-
 }
 .hero-img{
   position:absolute;inset:0; 
-  background-image:url('https://images.unsplash.com/photo-1700673483543-a4a38e4e96df?w=1400&q=80&fit=crop');
-  background-size:cover; background-position:center;
+  background-image:url('sol-hero.png');
+  background-size:cover; 
+  background-position:50% 30%;
+  background-repeat:no-repeat;
   filter:brightness(1.08) contrast(.95) saturate(.95);
 }
 .hero-img-overlay{
   position:absolute;inset:0;
-  background:linear-gradient(90deg,#ffffff 0%,transparent 10%),
-             linear-gradient(180deg,rgba(255, 255, 255, 0.2) 0%,transparent 100%);
+  background:linear-gradient(90deg,#ffffff 0%,transparent 60%),
+             linear-gradient(180deg,rgba(12, 10, 10, 0.2) 0%,transparent 100%);
 }
 
 /* Stats bar */
@@ -239,7 +241,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-ui);overflow-
 .stage-img.fading{opacity:0}
 .stage-grad{
   position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(13,43,62,0.5) 0%,transparent 35%,rgb(212, 232, 245) 100%);
+  background:linear-gradient(90deg,rgba(212, 232, 245) 12%,transparent 35%,rgb(13, 43, 62, 0.1) 100%);
   z-index:1;
 }
 .stage-badge{
@@ -258,14 +260,15 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-ui);overflow-
 .stage-title{
   font-family:var(--font-display);font-weight:900;
   font-size:clamp(2rem,4.5vw,4.8rem);
-  line-height:.9;letter-spacing:-1px;color:#0D2B3E;
-  text-shadow:0 4px 20px rgba(13,27,46,0.5);
+  line-height:.9;letter-spacing:2px;color:#0D2B3E;
+  text-shadow:0 4px 20px rgba(0, 0, 0, 0.5);
+
 }
 .stage-subtitle{
   display:block;
   font-family:var(--font-ui);font-weight:300;
   font-size:clamp(.85rem,1.4vw,1.05rem);
-  color:#1B4F72;letter-spacing:.3px;margin-top:8px;
+  color:#000000;letter-spacing:.3px;margin-top:8px;
 }
 
 /* Stage body */
@@ -707,7 +710,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:52px 60px
     </div>
   </div>
   <div class="hero-right">
-    <div class="hero-img" id="heroBg"><img src="https://www.kiksarvr.com/assets/media/Digital-Twin.webp" alt="Hero Background"></div>
+    <div class="hero-img" id="heroBg"></div>
     <div class="hero-img-overlay"></div>
     <div class="hero-stats">
       <div class="hstat">
@@ -886,7 +889,7 @@ const FI={
 
 const SOLUTIONS=[
   {id:"ar",icon:IC.ar,name:"AR Solutions",tag:"Augmented Reality",
-   img:"https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1400&q=80&fit=crop",
+   img:"ar-solutions.png",
    title:"AR Solutions",subtitle:"Overlay intelligence on the real world",
    intro:"Augmented Reality (AR) is revolutionizing the way businesses interact with customers, employees, and products. By seamlessly blending digital content with the physical world, AR creates immersive experiences that enhance engagement, improve understanding, and drive better decision-making.<br> At our company, we develop custom AR solutions that help businesses showcase products, simplify complex information, and create interactive customer experiences. Whether you're in retail, manufacturing, education, healthcare, or real estate, our AR technology helps bridge the gap between imagination and reality.",
    whyNeed:"Modern customers expect interactive and personalized experiences. AR enables businesses to create engaging experiences that allow users to visualize products, interact with digital models, and access real-time information directly through smartphones, tablets, or AR devices.<br>AR technology improves customer confidence, reduces uncertainty, and increases conversion rates by helping users make informed decisions before purchasing.",whyItems:null,
@@ -895,7 +898,7 @@ const SOLUTIONS=[
    industries:["Retail","Real Estate","Manufacturing","Healthcare","Education","Automotive","Tourism"],
    ctaH:"Ready to build an AR experience?",ctaP:"Our experts will map out a custom AR strategy for your business."},
   {id:"vr",icon:IC.vr,name:"VR Solutions",tag:"Virtual Reality",
-   img:"https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=1400&q=80&fit=crop",
+   img:"vr.png",
    title:"VR Solutions",subtitle:"Transport people anywhere, instantly",
    intro:"Virtual Reality creates fully immersive digital environments where users can explore, learn, train, and interact without physical limitations. Our VR solutions create realistic, engaging virtual environments tailored to your business goals.",
    whyNeed:"Traditional training and product showcasing carry significant cost and logistical barriers. VR eliminates them by creating realistic virtual experiences accessible from anywhere.",whyItems:null,
@@ -904,7 +907,7 @@ const SOLUTIONS=[
    industries:["Education","Manufacturing","Healthcare","Real Estate","Aviation","Defense"],
    ctaH:"Let's build your virtual future.",ctaP:"Empower your business with immersive VR experiences that engage, educate, and inspire."},
   {id:"twin",icon:IC.twin,name:"Digital Twin",tag:"Real-Time Simulation",
-   img:"https://images.unsplash.com/photo-1655720406770-12dc5a1dc4f7?w=1400&q=80&fit=crop",
+   img:"digital-twin.png",
    title:"Digital Twin",subtitle:"Mirror your physical world in real time",
    intro:"A Digital Twin is a live virtual replica of a physical asset, system, or process. It continuously receives sensor data to monitor performance, predict issues, and optimize operations — the cornerstone of Industry 4.0.",
    whyNeed:"Digital Twins connect physical assets with virtual models through IoT sensors and cloud analytics, giving organizations real operational intelligence and predictive power.",whyItems:null,
