@@ -45,40 +45,47 @@ try {
   ];
 
   let pct = 0;
-  const interval = setInterval(() => {
-    pct += Math.random() * 18 + 4;
-    if (pct > 100) pct = 100;
-    fill.style.width = pct + '%';
+  let dismissed = false;
 
+  function dismissLoader() {
+    if (dismissed) return;
+    dismissed = true;
+    clearInterval(interval);
+    fill.style.width = '100%';
+    loaderTx.textContent = 'Welcome to VOLGA';
+    setTimeout(() => {
+      gsap.to(loader, {
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.inOut',
+        onComplete: () => {
+          loader.style.display = 'none';
+          initHeroAnimation();
+          setupEnhancedServices();
+          setupTextScramble();
+          if (typeof setupScrollReveals === 'function') setupScrollReveals();
+          if (typeof setupParallax === 'function') setupParallax();
+          if (typeof setupMagnetic === 'function') setupMagnetic();
+          if (typeof setupGlobalTextScrollAnimation === 'function') setupGlobalTextScrollAnimation();
+        }
+      });
+    }, 300);
+  }
+
+  // Expose so hero-3d.js can call it when the first frame renders
+  window.heroReady = dismissLoader;
+
+  // Safety fallback — dismiss after 8s no matter what
+  const safetyTimer = setTimeout(dismissLoader, 8000);
+
+  // Fake progress — runs up to 85% then holds, waiting for heroReady()
+  const interval = setInterval(() => {
+    if (pct >= 85) return; // hold here until hero signals ready
+    pct += Math.random() * 18 + 4;
+    if (pct > 85) pct = 85;
+    fill.style.width = pct + '%';
     const msgIdx = Math.floor((pct / 100) * (messages.length - 1));
     loaderTx.textContent = messages[msgIdx];
-
-    if (pct >= 100) {
-      clearInterval(interval);
-      setTimeout(() => {
-        gsap.to(loader, {
-          opacity: 0,
-          duration: 0.8,
-          ease: 'power2.inOut',
-          onComplete: () => {
-            loader.style.display = 'none';
-            initHeroAnimation();
-            // Initialize only lightweight features after loader is done
-            // initCustomCursor(); // Disabled for performance
-            setupEnhancedServices();
-            // setupCinematicTransitions(); // Disabled for performance
-            // setupHeroParallax(); // Disabled for performance
-            setupTextScramble();
-            
-            // Initialize other existing functions
-            if (typeof setupScrollReveals === 'function') setupScrollReveals();
-            if (typeof setupParallax === 'function') setupParallax();
-            if (typeof setupMagnetic === 'function') setupMagnetic();
-            if (typeof setupGlobalTextScrollAnimation === 'function') setupGlobalTextScrollAnimation();
-          }
-        });
-      }, 400);
-    }
   }, 60);
 })();
 

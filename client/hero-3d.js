@@ -206,6 +206,7 @@ window.addEventListener('load', () => {
   window.addEventListener('scroll', updateScrollProgress, { passive: true });
 
   // ── Animation loop ──────────────────────────────────────────────────
+  let heroSignalled = false;
   function animate() {
     requestAnimationFrame(animate);
 
@@ -278,6 +279,12 @@ window.addEventListener('load', () => {
     camera.lookAt(0, 0, 0);
 
     renderer.render(scene, camera);
+
+    // Signal the loader after first rendered frame
+    if (!heroSignalled) {
+      heroSignalled = true;
+      if (typeof window.heroReady === 'function') window.heroReady();
+    }
   }
   animate();
   console.log('✅ Animation loop started');
