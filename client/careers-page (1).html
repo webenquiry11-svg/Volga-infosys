@@ -1356,7 +1356,7 @@
   <!-- ============ NAV ============ -->
   <nav id="navbar">
     <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
-      <img src="logo.png" alt="VOLGA Infosys logo" />
+      <img src="favicon.png" alt="VOLGA Infosys logo" />
     </a>
 
     <ul class="nav-links">
@@ -2216,7 +2216,7 @@
           <div class="apply-file-drop" id="applyFileDrop">
             <input type="file" id="applyResume" name="resume" accept=".pdf,.doc,.docx" required>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            <span id="applyFileName">PDF, DOC, DOCX — drag & drop or click</span>
+            <span id="applyFileName">PDF, DOC, DOCX — max 10 MB</span>
           </div>
         </div>
         <div class="apply-form-group">
@@ -2321,6 +2321,7 @@
     if (!name) { errorEl.textContent = 'Full name is required.'; return; }
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errorEl.textContent = 'A valid email is required.'; return; }
     if (!resumeFile) { errorEl.textContent = 'Please attach your resume.'; return; }
+    if (resumeFile.size > 10 * 1024 * 1024) { errorEl.textContent = 'File too large. Maximum size is 10 MB.'; return; }
 
     submitBtn.classList.add('loading');
     submitBtn.disabled = true;

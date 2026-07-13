@@ -970,6 +970,7 @@
       if (!name) { errorEl.textContent = 'Full name is required.'; return; }
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errorEl.textContent = 'A valid email is required.'; return; }
       if (!resumeFile) { errorEl.textContent = 'Please attach your resume.'; return; }
+      if (resumeFile.size > 10 * 1024 * 1024) { errorEl.textContent = 'File too large. Maximum size is 10 MB.'; return; }
 
       submitBtn.classList.add('loading');
       submitBtn.disabled = true;
