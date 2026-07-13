@@ -18,13 +18,21 @@ const storage = multer.diskStorage({
 
 // File filter
 const fileFilter = (req, file, cb) => {
-  // Allow only images
-  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
+  // Allow images and resume documents
+  const allowedMimeTypes = [
+    // Images
+    'image/jpeg', 'image/png', 'image/webp',
+    // Documents
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'text/plain'
+  ];
   
   if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Only JPG, PNG, WEBP files are allowed!'), false);
+    cb(new Error('Only JPG, PNG, WEBP, PDF, DOC, DOCX, and TXT files are allowed!'), false);
   }
 };
 
@@ -32,7 +40,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage,
   limits: {
-    fileSize: 5 * 1024 * 1024 // 5MB max
+    fileSize: 10 * 1024 * 1024 // 10MB max for resumes
   },
   fileFilter
 });

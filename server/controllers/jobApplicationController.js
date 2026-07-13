@@ -1,6 +1,10 @@
 import JobApplication from '../models/JobApplication.js';
 import Job from '../models/Job.js';
 import { logActivity } from './dashboardController.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // @desc    Submit job application (public)
 // @route   POST /api/job-applications
@@ -13,6 +17,11 @@ export const submitApplication = async (req, res) => {
     const job = await Job.findById(jobId);
     if (!job || job.status !== 'open') {
       return res.status(404).json({ success: false, message: 'Job not available' });
+    }
+    
+    // If resume was uploaded, add the path to applicationData
+    if (req.file) {
+      applicationData.resumeUrl = `/uploads/${req.file.filename}`;
     }
     
     const application = await JobApplication.create({ jobId, ...applicationData });

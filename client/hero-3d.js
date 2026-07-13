@@ -17,9 +17,9 @@ window.addEventListener('load', () => {
   scene.background = null;
   scene.fog = new THREE.FogExp2(0x0d1b26, 0.06); // Add fog for depth! Matches hero background color
 
-  // Get container size
+  // Get container size — works for both .hero (about) and .Hero (homepage)
   function getContainerSize() {
-    const container = document.querySelector('.hero');
+    const container = document.querySelector('.hero') || document.querySelector('.Hero');
     if (container) {
       return { width: container.clientWidth, height: container.clientHeight };
     }
@@ -144,33 +144,137 @@ window.addEventListener('load', () => {
   scene.add(particles);
   console.log('✅ Particles added');
 
-  // Mouse interaction
+  // ── Mouse interaction ──────────────────────────────────────────────
   const mouse = new THREE.Vector2(0, 0);
+  let isHovered = false;
+
+  canvas.addEventListener('mouseenter', () => { isHovered = true; });
+  canvas.addEventListener('mouseleave', () => { isHovered = false; });
+
   document.addEventListener('mousemove', (event) => {
     const rect = canvas.getBoundingClientRect();
     mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
   });
 
-  // Animation loop
+  // ── Gyroscope (mobile tilt) ─────────────────────────────────────────
+  const gyro = { x: 0, y: 0 };
+  let gyroEnabled = false;
+
+  if (window.DeviceOrientationEvent) {
+    window.addEventListener('deviceorientation', (e) => {
+      if (e.gamma === null || e.beta === null) return;
+      gyroEnabled = true;
+      // gamma = left/right tilt (-90 to 90), beta = front/back tilt (-180 to 180)
+      gyro.x = (e.gamma / 90) * 1.2;   // map to roughly ±1.2
+      gyro.y = ((e.beta - 45) / 90) * 0.8; // offset 45° for natural phone hold
+    });
+  }
+
+  // ── Click burst / shockwave ─────────────────────────────────────────
+  // Store original positions for burst & restore
+  const originalPositions = positions.slice(); // copy
+  let burstActive = false;
+  let burstProgress = 0; // 0 → 1 → 0
+
+  canvas.addEventListener('click', () => {
+    if (burstActive) return;
+    burstActive = true;
+    burstProgress = 0;
+  });
+
+  // Touch tap support for mobile
+  canvas.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    if (burstActive) return;
+    burstActive = true;
+    burstProgress = 0;
+  }, { passive: false });
+
+  // ── Scroll-linked animation ─────────────────────────────────────────
+  let scrollProgress = 0; // 0 at top, 1 when hero scrolled out
+  const hero = document.querySelector('.hero') || document.querySelector('.Hero');
+
+  function updateScrollProgress() {
+    if (!hero) return;
+    const rect = hero.getBoundingClientRect();
+    const heroH = hero.offsetHeight;
+    // How far we've scrolled past the top of the hero
+    const scrolled = Math.max(0, -rect.top);
+    scrollProgress = Math.min(1, scrolled / (heroH * 0.6));
+  }
+  window.addEventListener('scroll', updateScrollProgress, { passive: true });
+
+  // ── Animation loop ──────────────────────────────────────────────────
   function animate() {
     requestAnimationFrame(animate);
 
-    if (mainObject) {
-      mainObject.rotation.y += 0.005;
-      mainObject.rotation.x += 0.002;
-    }
-
-    particles.rotation.y += 0.0008;
+    updateScrollProgress();
 
     const time = Date.now() * 0.001;
+
+    // Auto-rotate pauses on hover
+    if (mainObject) {
+      if (!isHovered) {
+        mainObject.rotation.y += 0.005;
+        mainObject.rotation.x += 0.002;
+      }
+      // Scroll: scale model up slightly and push it back
+      const targetScale = 9 + scrollProgress * 4;
+      mainObject.scale.setScalar(targetScale);
+      mainObject.position.z = 3 - scrollProgress * 2;
+    }
+
+    // Particles rotate and spread on scroll
+    particles.rotation.y += 0.0008;
+    const particleSpread = 1 + scrollProgress * 0.6; // spread up to 1.6×
+    particles.scale.setScalar(particleSpread);
+
+    // ── Burst effect ──
+    if (burstActive) {
+      burstProgress += 0.03;
+      const posArr = particleGeometry.attributes.position.array;
+      const burstEase = burstProgress < 0.5
+        ? burstProgress * 2             // 0→1 expand
+        : 2 - burstProgress * 2;        // 1→0 contract back
+
+      for (let i = 0; i < particleCount; i++) {
+        const i3 = i * 3;
+        const ox = originalPositions[i3];
+        const oy = originalPositions[i3 + 1];
+        const oz = originalPositions[i3 + 2];
+        // Explode outward from origin
+        posArr[i3]     = ox + ox * burstEase * 0.8;
+        posArr[i3 + 1] = oy + oy * burstEase * 0.8;
+        posArr[i3 + 2] = oz + oz * burstEase * 0.5;
+      }
+      particleGeometry.attributes.position.needsUpdate = true;
+
+      if (burstProgress >= 1) {
+        // Restore original positions
+        for (let i = 0; i < particleCount * 3; i++) {
+          particleGeometry.attributes.position.array[i] = originalPositions[i];
+        }
+        particleGeometry.attributes.position.needsUpdate = true;
+        burstActive = false;
+        burstProgress = 0;
+      }
+    }
+
+    // Orbiting lights
     pointLight1.position.x = Math.sin(time) * 4;
     pointLight1.position.z = Math.cos(time) * 4;
     pointLight2.position.x = Math.cos(time) * 4;
     pointLight2.position.z = Math.sin(time) * 4;
 
-    camera.position.x += (mouse.x * 0.8 - camera.position.x) * 0.05;
-    camera.position.y += (mouse.y * 0.6 - camera.position.y) * 0.05;
+    // Camera: gyro on mobile, mouse on desktop
+    if (gyroEnabled) {
+      camera.position.x += (gyro.x - camera.position.x) * 0.05;
+      camera.position.y += (-gyro.y - camera.position.y) * 0.05;
+    } else {
+      camera.position.x += (mouse.x * 0.8 - camera.position.x) * 0.05;
+      camera.position.y += (mouse.y * 0.6 - camera.position.y) * 0.05;
+    }
     camera.lookAt(0, 0, 0);
 
     renderer.render(scene, camera);

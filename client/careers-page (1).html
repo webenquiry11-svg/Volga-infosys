@@ -1992,6 +1992,7 @@
 
   <div id="site-footer-mount"></div>
 <script src="footer-include.js"></script>
+  <script src="api-config.js"></script>
   <script src="volga.js"></script>
   <script>
     let allJobs = [];
@@ -2091,7 +2092,8 @@
                 </svg>
                 Save
               </button>
-              <button class="btn btn-primary" onclick="applyForJob('${job._id}', '${job.title}')">Apply Now</button>
+              <button class="btn btn-ghost btn-sm" onclick="window.location.href='job-detail.html?id=${job._id}'">See Details</button>
+              <button class="btn btn-primary btn-sm" onclick="openApplyModal('${job._id}', '${job.title}', '${job.department}')">Apply Now</button>
             </div>
           </div>
         </div>
@@ -2119,9 +2121,23 @@
       }, 50);
     }
     
-    function applyForJob(jobId, jobTitle) {
-      // TODO: Add application modal
-      alert(`Applying for ${jobTitle}!`);
+    function openApplyModal(jobId, jobTitle, department) {
+      document.getElementById('applyJobId').value = jobId;
+      document.getElementById('applyModalTitle').textContent = jobTitle;
+      document.getElementById('applyModalDept').textContent = department;
+      document.getElementById('applyForm').reset();
+      document.getElementById('applyFileName').textContent = 'PDF, DOC, DOCX — drag & drop or click';
+      document.getElementById('applyFileDrop').classList.remove('has-file');
+      document.getElementById('applyError').textContent = '';
+      document.getElementById('applyFormWrap').style.display = 'block';
+      document.getElementById('applySuccess').style.display = 'none';
+      document.getElementById('applyModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeApplyModal() {
+      document.getElementById('applyModal').classList.remove('open');
+      document.body.style.overflow = '';
     }
     
     function filterJobs() {
@@ -2160,6 +2176,188 @@
       }
     });
   </script>
-</body>
+<!-- ═══════════════════ APPLY MODAL ═══════════════════ -->
+<div class="apply-modal-overlay" id="applyModal" role="dialog" aria-modal="true" aria-labelledby="applyModalTitle">
+  <div class="apply-modal">
+    <button class="apply-modal-close" id="applyModalClose" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div id="applyFormWrap">
+      <p class="apply-modal-dept" id="applyModalDept"></p>
+      <h2 class="apply-modal-title" id="applyModalTitle"></h2>
+      <form class="apply-form" id="applyForm" novalidate>
+        <input type="hidden" id="applyJobId" name="jobId">
+        <div class="apply-form-row">
+          <div class="apply-form-group">
+            <label for="applyName">Full name <span class="apply-req">*</span></label>
+            <input type="text" id="applyName" name="applicantName" placeholder="Jane Smith" required>
+          </div>
+          <div class="apply-form-group">
+            <label for="applyEmail">Email <span class="apply-req">*</span></label>
+            <input type="email" id="applyEmail" name="applicantEmail" placeholder="jane@company.com" required>
+          </div>
+        </div>
+        <div class="apply-form-row">
+          <div class="apply-form-group">
+            <label for="applyPhone">Phone</label>
+            <input type="tel" id="applyPhone" name="applicantPhone" placeholder="+1 555 000 0000">
+          </div>
+          <div class="apply-form-group">
+            <label for="applyLinkedin">LinkedIn URL</label>
+            <input type="url" id="applyLinkedin" name="linkedinUrl" placeholder="https://linkedin.com/in/…">
+          </div>
+        </div>
+        <div class="apply-form-group">
+          <label for="applyPortfolio">Portfolio / Website</label>
+          <input type="url" id="applyPortfolio" name="portfolioUrl" placeholder="https://yoursite.com">
+        </div>
+        <div class="apply-form-group">
+          <label>Resume / CV <span class="apply-req">*</span></label>
+          <div class="apply-file-drop" id="applyFileDrop">
+            <input type="file" id="applyResume" name="resume" accept=".pdf,.doc,.docx" required>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span id="applyFileName">PDF, DOC, DOCX — drag & drop or click</span>
+          </div>
+        </div>
+        <div class="apply-form-group">
+          <label for="applyCover">Cover letter</label>
+          <textarea id="applyCover" name="coverLetter" rows="4" placeholder="Tell us why you're a great fit…"></textarea>
+        </div>
+        <div class="apply-error" id="applyError"></div>
+        <button type="submit" class="apply-submit" id="applySubmit">
+          <span id="applySubmitLabel">Submit Application</span>
+          <div class="apply-btn-spinner" id="applyBtnSpinner"></div>
+        </button>
+      </form>
+    </div>
+    <div class="apply-success" id="applySuccess" style="display:none;">
+      <div class="apply-success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h3>Application received!</h3>
+      <p>We'll review your application and get back to you within a few business days. Thanks for your interest in Volga Infosys.</p>
+      <button class="apply-submit" onclick="closeApplyModal()">Close</button>
+    </div>
+  </div>
+</div>
 
+<style>
+.apply-modal-overlay{position:fixed;inset:0;z-index:2000;background:rgba(11,37,69,0.75);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s;}
+.apply-modal-overlay.open{opacity:1;pointer-events:all;}
+.apply-modal{background:#fff;border-radius:16px;width:100%;max-width:700px;max-height:90vh;overflow-y:auto;padding:40px;position:relative;transform:translateY(24px);transition:transform .35s cubic-bezier(.22,1,.36,1);}
+.apply-modal-overlay.open .apply-modal{transform:translateY(0);}
+.apply-modal-close{position:absolute;top:16px;right:16px;background:var(--surface-alt);border:none;border-radius:8px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s;}
+.apply-modal-close:hover{background:var(--border-strong);}
+.apply-modal-close svg{width:16px;height:16px;stroke:var(--navy);}
+.apply-modal-dept{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin-bottom:4px;}
+.apply-modal-title{font-size:1.5rem;color:var(--navy);margin-bottom:28px;}
+.apply-form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.apply-form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.apply-form-group label{font-size:12.5px;font-weight:600;color:var(--text-secondary);font-family:var(--font-mono);letter-spacing:.04em;}
+.apply-req{color:var(--primary);}
+.apply-form-group input,.apply-form-group textarea{padding:11px 14px;background:var(--surface);border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:14px;font-family:inherit;transition:border-color .2s;}
+.apply-form-group input::placeholder,.apply-form-group textarea::placeholder{color:var(--text-secondary);}
+.apply-form-group input:focus,.apply-form-group textarea:focus{outline:none;border-color:var(--primary);}
+.apply-form-group textarea{resize:vertical;min-height:100px;}
+.apply-file-drop{position:relative;border:2px dashed var(--border-strong);border-radius:8px;padding:24px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;}
+.apply-file-drop:hover,.apply-file-drop.drag{border-color:var(--primary);background:rgba(36,82,217,.04);}
+.apply-file-drop input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.apply-file-drop svg{width:28px;height:28px;stroke:var(--text-secondary);margin:0 auto 8px;display:block;}
+.apply-file-drop span{font-size:13px;color:var(--text-secondary);}
+.apply-file-drop.has-file{border-color:var(--primary);background:rgba(36,82,217,.04);}
+.apply-file-drop.has-file span{color:var(--primary);font-weight:600;}
+.apply-error{color:#dc2626;font-size:13px;margin-bottom:12px;min-height:18px;}
+.apply-submit{width:100%;padding:14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .2s,transform .15s;display:flex;align-items:center;justify-content:center;gap:10px;}
+.apply-submit:hover:not(:disabled){background:var(--primary-dark);transform:translateY(-1px);}
+.apply-submit:disabled{opacity:.6;cursor:not-allowed;}
+.apply-btn-spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:apply-spin .7s linear infinite;display:none;}
+@keyframes apply-spin{to{transform:rotate(360deg);}}
+.apply-submit.loading .apply-btn-spinner{display:block;}
+.apply-submit.loading #applySubmitLabel{display:none;}
+.apply-success{text-align:center;padding:20px 0;}
+.apply-success-icon{width:64px;height:64px;background:rgba(16,185,129,.12);border:2px solid rgba(16,185,129,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+.apply-success-icon svg{width:28px;height:28px;stroke:#10b981;}
+.apply-success h3{color:var(--navy);font-size:1.4rem;margin-bottom:10px;}
+.apply-success p{color:var(--text-secondary);font-size:14.5px;line-height:1.7;margin-bottom:24px;}
+@media(max-width:560px){.apply-form-row{grid-template-columns:1fr;}.apply-modal{padding:24px;}}
+</style>
+
+<script>
+(function() {
+  document.getElementById('applyModalClose').addEventListener('click', closeApplyModal);
+  document.getElementById('applyModal').addEventListener('click', function(e) {
+    if (e.target === this) closeApplyModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeApplyModal();
+  });
+
+  // File drop label
+  const fileInput = document.getElementById('applyResume');
+  const fileDrop = document.getElementById('applyFileDrop');
+  const fileName = document.getElementById('applyFileName');
+  fileInput.addEventListener('change', function() {
+    if (this.files[0]) {
+      fileName.textContent = this.files[0].name;
+      fileDrop.classList.add('has-file');
+    }
+  });
+  fileDrop.addEventListener('dragover', e => { e.preventDefault(); fileDrop.classList.add('drag'); });
+  fileDrop.addEventListener('dragleave', () => fileDrop.classList.remove('drag'));
+  fileDrop.addEventListener('drop', e => { e.preventDefault(); fileDrop.classList.remove('drag'); });
+
+  // Form submit
+  document.getElementById('applyForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const errorEl = document.getElementById('applyError');
+    const submitBtn = document.getElementById('applySubmit');
+    errorEl.textContent = '';
+
+    const name = document.getElementById('applyName').value.trim();
+    const email = document.getElementById('applyEmail').value.trim();
+    const jobId = document.getElementById('applyJobId').value;
+    const resumeFile = document.getElementById('applyResume').files[0];
+
+    if (!name) { errorEl.textContent = 'Full name is required.'; return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errorEl.textContent = 'A valid email is required.'; return; }
+    if (!resumeFile) { errorEl.textContent = 'Please attach your resume.'; return; }
+
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
+
+    try {
+      const formData = new FormData();
+      formData.append('jobId', jobId);
+      formData.append('applicantName', name);
+      formData.append('applicantEmail', email);
+      const phone = document.getElementById('applyPhone').value.trim();
+      const linkedin = document.getElementById('applyLinkedin').value.trim();
+      const portfolio = document.getElementById('applyPortfolio').value.trim();
+      const cover = document.getElementById('applyCover').value.trim();
+      if (phone) formData.append('applicantPhone', phone);
+      if (linkedin) formData.append('linkedinUrl', linkedin);
+      if (portfolio) formData.append('portfolioUrl', portfolio);
+      if (cover) formData.append('coverLetter', cover);
+      formData.append('resume', resumeFile);
+
+      const res = await fetch(`${window.VOLGA_API}/job-applications`, {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Submission failed');
+
+      document.getElementById('applyFormWrap').style.display = 'none';
+      document.getElementById('applySuccess').style.display = 'block';
+    } catch (err) {
+      errorEl.textContent = err.message || 'Something went wrong. Please try again.';
+    } finally {
+      submitBtn.classList.remove('loading');
+      submitBtn.disabled = false;
+    }
+  });
+})();
+</script>
+
+</body>
 </html>

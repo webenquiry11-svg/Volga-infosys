@@ -2419,6 +2419,13 @@ document.getElementById("storyDeleteBtn")
     // ── JOBS MANAGEMENT ──────────────────────────────────────────────
     let editingJobId = null;
 
+    // Close all dropdowns when clicking outside - add once
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.actions-dropdown')) {
+        document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.remove('show'));
+      }
+    });
+
     async function loadJobs() {
       const response = await apiFetch('/jobs/admin/all');
     const jobs = response?.data || response;
@@ -2438,27 +2445,111 @@ document.getElementById("storyDeleteBtn")
           <td>${j.featured ? '<span class="badge badge-success">Yes</span>' : 'No'}</td>
           <td>${fmtDate(j.createdAt)}</td>
           <td>
-            <button class="btn-view edit-job-btn" data-id="${esc(j._id)}">Edit</button>
-            <button class="btn-delete delete-job-btn" data-id="${esc(j._id)}">Delete</button>
+            <div class="actions-dropdown" data-id="${esc(j._id)}">
+              <button class="dropdown-toggle">⋮</button>
+              <div class="dropdown-menu">
+                <button class="dropdown-item" data-action="edit">Edit</button>
+                <button class="dropdown-item" data-action="duplicate">Duplicate</button>
+                <button class="dropdown-item" data-action="close">Close Job</button>
+                <button class="dropdown-item" data-action="archive">Archive</button>
+                <button class="dropdown-item danger" data-action="delete">Delete</button>
+              </div>
+            </div>
           </td>
         </tr>
       `).join('');
 
-      tbody.querySelectorAll('.edit-job-btn').forEach(btn => {
-        btn.addEventListener('click', () => openJobModal(jobs.find(j => j._id === btn.dataset.id)));
+      // Handle dropdown toggles
+      tbody.querySelectorAll('.dropdown-toggle').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const menu = btn.nextElementSibling;
+          document.querySelectorAll('.dropdown-menu').forEach(m => {
+            if (m !== menu) m.classList.remove('show');
+          });
+          menu.classList.toggle('show');
+        });
       });
-      tbody.querySelectorAll('.delete-job-btn').forEach(btn => {
-        btn.addEventListener('click', async () => {
-          if (!confirm('Delete this job?')) return;
-          try {
-            await apiFetch(`/jobs/${btn.dataset.id}`, { method: 'DELETE' });
-            showToast('Job Deleted', 'The job has been removed', 'success');
-            loadJobs();
-          } catch (e) {
-            showToast('Delete Failed', e.message || 'Could not delete job', 'error');
+
+      // Handle dropdown item clicks
+      tbody.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const dropdown = item.closest('.actions-dropdown');
+          const jobId = dropdown.dataset.id;
+          const job = jobs.find(j => j._id === jobId);
+          const action = item.dataset.action;
+          
+          // Close the menu
+          dropdown.querySelector('.dropdown-menu').classList.remove('show');
+
+          switch (action) {
+            case 'edit':
+              openJobModal(job);
+              break;
+            case 'duplicate':
+              await duplicateJob(job);
+              break;
+            case 'close':
+              await updateJobStatus(jobId, 'closed');
+              break;
+            case 'archive':
+              await updateJobStatus(jobId, 'archived');
+              break;
+            case 'delete':
+              if (confirm('Delete this job?')) {
+                try {
+                  await apiFetch(`/jobs/${jobId}`, { method: 'DELETE' });
+                  showToast('Job Deleted', 'The job has been removed', 'success');
+                  loadJobs();
+                } catch (e) {
+                  showToast('Delete Failed', e.message || 'Could not delete job', 'error');
+                }
+              }
+              break;
           }
         });
       });
+    }
+
+    async function duplicateJob(job) {
+      try {
+        const duplicateData = {
+          title: job.title + ' (Copy)',
+          department: job.department,
+          location: job.location,
+          type: job.type,
+          salary: job.salary,
+          description: job.description,
+          requirements: job.requirements,
+          responsibilities: job.responsibilities,
+          status: 'draft',
+          featured: false
+        };
+        await apiFetch('/jobs', { 
+          method: 'POST', 
+          headers: { 'Content-Type': 'application/json' }, 
+          body: JSON.stringify(duplicateData) 
+        });
+        showToast('Job Duplicated', 'A copy of the job has been created', 'success');
+        loadJobs();
+      } catch (e) {
+        showToast('Duplicate Failed', e.message || 'Could not duplicate job', 'error');
+      }
+    }
+
+    async function updateJobStatus(jobId, status) {
+      try {
+        await apiFetch(`/jobs/${jobId}`, { 
+          method: 'PUT', 
+          headers: { 'Content-Type': 'application/json' }, 
+          body: JSON.stringify({ status }) 
+        });
+        showToast('Job Updated', `Job status changed to ${status}`, 'success');
+        loadJobs();
+      } catch (e) {
+        showToast('Update Failed', e.message || 'Could not update job status', 'error');
+      }
     }
 
     function openJobModal(job = null) {

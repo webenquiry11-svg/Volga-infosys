@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Detail · Volga — Build the Future of Extended Reality</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="volga.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script crossorigin="anonymous"
+    src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --surface: #F6F8FA;
+      --surface-alt: #EEF2F6;
+      --card: #FFFFFF;
+      --navy: #0B2545;
+      --navy-deep: #081B33;
+      --primary: #2452D9;
+      --primary-dark: #1B3FB0;
+      --success: #127A3C;
+      --warning: #B5590A;
+      --text: #101828;
+      --text-secondary: #5B6779;
+      --text-on-navy: #D7E0EE;
+      --border: #E3E8EF;
+      --border-strong: #CBD3DF;
+      --radius-sm: 6px;
+      --radius: 10px;
+      --radius-lg: 14px;
+      --font-display: 'Inter', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+      --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
+      --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
+      --shadow-lg: 0 16px 40px rgba(16, 24, 40, 0.10);
+      --ease: cubic-bezier(.22, 1, .36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    input,
+    select,
+    textarea {
+      font-family: inherit;
+    }
+
+    ::selection {
+      background: rgba(36, 82, 217, 0.14);
+      color: var(--navy);
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    section {
+      position: relative;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 16px;
+      height: 2px;
+      background: var(--primary);
+    }
+
+    .section-head {
+      max-width: 620px;
+      margin: 0 0 52px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(26px, 3.6vw, 38px);
+      margin-top: 14px;
+      color: var(--navy);
+    }
+
+    .section-head p {
+      margin-top: 14px;
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+
+    .section-head.center {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 24px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 14.5px;
+      border: 1px solid transparent;
+      transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+      white-space: nowrap;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-ghost {
+      background: #fff;
+      color: var(--navy);
+      border-color: var(--border-strong);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--navy);
+      background: var(--surface);
+    }
+
+    .btn-sm {
+      padding: 9px 16px;
+      font-size: 13px;
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    .glass {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ── Job Detail Redesign ── */
+    .jd-hero {
+      padding: 140px 0 60px;
+      background: linear-gradient(150deg, #0B2545 0%, #143564 60%, #1D4590 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .jd-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 20%, transparent 90%);
+    }
+    .jd-hero .container { position: relative; z-index: 2; }
+    .jd-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.55); font-family: var(--font-mono);
+      font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+      margin-bottom: 32px; transition: color .2s;
+    }
+    .jd-back:hover { color: #fff; }
+    .jd-back svg { width: 16px; height: 16px; stroke: currentColor; }
+    .jd-status {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 999px;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      font-family: var(--font-mono); font-size: 11.5px; color: #fff;
+      margin-bottom: 20px;
+    }
+    .jd-status .dot { width: 7px; height: 7px; border-radius: 50%; background: #3CE07A; flex-shrink: 0; animation: jd-pulse 2s ease-in-out infinite; }
+    @keyframes jd-pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .jd-hero h1 { font-size: clamp(30px, 4vw, 52px); color: #fff; line-height: 1.1; margin-bottom: 24px; }
+    .jd-meta {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px;
+    }
+    .jd-pill {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 14px; border-radius: 999px;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+      font-family: var(--font-mono); font-size: 12.5px; color: rgba(255,255,255,0.9);
+    }
+    .jd-pill svg { width: 13px; height: 13px; stroke: #7CA6FF; flex-shrink: 0; }
+    .jd-pill.salary { background: rgba(36,82,217,0.3); border-color: rgba(36,82,217,0.5); color: #A8C4FF; font-weight: 700; }
+    .jd-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+    .jd-btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; background: var(--primary); color: #fff;
+      border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700;
+      font-family: inherit; cursor: pointer; transition: background .2s, transform .15s;
+    }
+    .jd-btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .jd-btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; background: transparent; color: #fff;
+      border: 1px solid rgba(255,255,255,0.3); border-radius: var(--radius-sm);
+      font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer;
+      text-decoration: none; transition: background .2s, border-color .2s;
+    }
+    .jd-btn-outline:hover { background: rgba(255,255,255,0.08); border-color: #fff; }
+
+    /* ── Two-col layout ── */
+    .jd-body { padding: 64px 0 100px; }
+    .jd-layout { display: grid; grid-template-columns: 1fr 400px; gap: 48px; align-items: start; }
+    
+    /* ── Main content ── */
+    .jd-main {}
+    .jd-section { margin-bottom: 44px; }
+    .jd-section-label {
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--primary); margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .jd-section-label::before { content:''; width:20px; height:2px; background:var(--primary); }
+    .jd-section h2 { font-size: 22px; color: var(--navy); margin-bottom: 14px; }
+    .jd-section p { color: var(--text-secondary); font-size: 15.5px; line-height: 1.8; }
+    .jd-list { margin-top: 14px; display: flex; flex-direction: column; gap: 10px; }
+    .jd-list-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 16px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); font-size: 14.5px; color: var(--text-secondary);
+      transition: border-color .2s, background .2s;
+    }
+    .jd-list-item:hover { border-color: var(--primary); background: #fff; }
+    .jd-list-item::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--primary); flex-shrink:0; margin-top:8px; }
+
+    /* ── Sticky Sidebar ── */
+    .jd-sidebar { position: sticky; top: 110px; }
+    .jd-form-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: var(--radius-lg); box-shadow: var(--shadow-md); overflow: hidden;
+    }
+    .jd-form-header {
+      background: linear-gradient(135deg, var(--navy) 0%, #1D4590 100%);
+      padding: 24px 28px;
+    }
+    .jd-form-header h3 { color: #fff; font-size: 18px; margin-bottom: 4px; }
+    .jd-form-header p { color: var(--text-on-navy); font-size: 13.5px; }
+    .jd-form-body { padding: 28px; }
+    .jd-fg { margin-bottom: 18px; }
+    .jd-fg label {
+      display: block; font-size: 12px; font-weight: 600; margin-bottom: 7px;
+      color: var(--text-secondary); font-family: var(--font-mono); letter-spacing:.04em; text-transform:uppercase;
+    }
+    .jd-fg .req { color: var(--primary); }
+    .jd-fg input, .jd-fg textarea {
+      width: 100%; padding: 11px 14px; background: var(--surface);
+      border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
+      color: var(--text); font-size: 14px; font-family: inherit;
+      transition: border-color .2s, background .2s;
+    }
+    .jd-fg input:focus, .jd-fg textarea:focus { outline: none; border-color: var(--primary); background: #fff; }
+    .jd-fg input::placeholder, .jd-fg textarea::placeholder { color: var(--text-secondary); }
+    .jd-fg textarea { resize: vertical; min-height: 90px; }
+    .jd-file-drop {
+      position: relative; border: 2px dashed var(--border-strong); border-radius: var(--radius-sm);
+      padding: 20px; text-align: center; cursor: pointer; transition: border-color .2s, background .2s;
+    }
+    .jd-file-drop:hover { border-color: var(--primary); background: rgba(36,82,217,.03); }
+    .jd-file-drop.has-file { border-color: var(--primary); background: rgba(36,82,217,.04); }
+    .jd-file-drop input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+    .jd-file-drop svg { width: 24px; height: 24px; stroke: var(--text-secondary); margin: 0 auto 8px; display: block; }
+    .jd-file-drop span { font-size: 12.5px; color: var(--text-secondary); }
+    .jd-file-drop.has-file span { color: var(--primary); font-weight: 600; }
+    .jd-form-error { color: #dc2626; font-size: 12.5px; margin-bottom: 12px; min-height: 16px; }
+    .jd-submit {
+      width: 100%; padding: 14px; background: var(--primary); color: #fff;
+      border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700;
+      font-family: inherit; cursor: pointer; transition: background .2s, transform .15s;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .jd-submit:hover:not(:disabled) { background: var(--primary-dark); transform: translateY(-1px); }
+    .jd-submit:disabled { opacity: .6; cursor: not-allowed; }
+    .jd-submit-spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: jd-spin .7s linear infinite; display: none; }
+    .jd-submit.loading .jd-submit-spinner { display: block; }
+    .jd-submit.loading .jd-submit-label { display: none; }
+    @keyframes jd-spin { to { transform: rotate(360deg); } }
+    .jd-success {
+      text-align: center; padding: 32px 28px;
+    }
+    .jd-success-icon { width: 60px; height: 60px; background: rgba(16,185,129,.12); border: 2px solid rgba(16,185,129,.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+    .jd-success-icon svg { width: 26px; height: 26px; stroke: #10b981; }
+    .jd-success h3 { color: var(--navy); font-size: 1.2rem; margin-bottom: 8px; }
+    .jd-success p { color: var(--text-secondary); font-size: 14px; line-height: 1.7; }
+    /* Loading skeleton */
+    .jd-skeleton { animation: jd-shimmer 1.4s ease-in-out infinite; background: linear-gradient(90deg, var(--surface) 25%, var(--surface-alt) 50%, var(--surface) 75%); background-size: 400% 100%; border-radius: 6px; }
+    @keyframes jd-shimmer { 0%{background-position:100% 50%} 100%{background-position:-100% 50%} }
+
+    @media (max-width: 1000px) {
+      .jd-layout { grid-template-columns: 1fr; }
+      .jd-sidebar { position: static; }
+    }
+    @media (max-width: 640px) {
+      .jd-hero { padding: 120px 0 48px; }
+    }
+  </style>
+  <script src="api-config.js"></script>
+</head>
+
+<body>
+
+  <!-- ============ NAV ============ -->
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
+      <img src="logo.png" alt="VOLGA Infosys logo" />
+    </a>
+
+    <ul class="nav-links">
+      <li class="nav-item" data-menu="solutions">
+        <button class="nav-link">Solutions <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="industries">
+        <button class="nav-link">Industries <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="services">
+        <button class="nav-link">Services <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="work">
+        <button class="nav-link">Work <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="technologies">
+        <a class="nav-link" href="technologies (2).html">Technologies</a>
+      </li>
+      <li class="nav-item" data-menu="insights">
+        <a class="nav-link" href="insights-overview.html">Insights </a>
+      </li>
+      <li class="nav-item" data-menu="company">
+        <button class="nav-link">Company <span class="nav-arrow"></span></button>
+      </li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Contact Us</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose" aria-label="Close menu">✕</button>
+    <a href="#culture">Culture</a>
+    <a href="#life">Life Here</a>
+    <a href="#process">Process</a>
+    <a href="#jobs">Open Roles</a>
+    <a href="#benefits">Benefits</a>
+    <a href="#faq">FAQ</a>
+    <a href="#jobs" class="btn btn-primary" style="margin-top:12px;">View Open Positions</a>
+  </div>
+
+  <!-- MEGA MENUS -->
+  <div class="mega-menu" id="menu-solutions">
+    <div class="mega-inner">
+      <div class="mega-label">Solutions</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="solutions.html#ar"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                  <path d="M2 17l10 5 10-5" />
+                  <path d="M2 12l10 5 10-5" />
+                </svg></span>AR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html#vr"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg></span>VR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html#xr"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg></span>MR / XR Applications</a></li>
+            <li><a class="mega-item" href="solutions.html#twin"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="7" height="7" />
+                  <rect x="14" y="3" width="7" height="7" />
+                  <rect x="14" y="14" width="7" height="7" />
+                  <rect x="3" y="14" width="7" height="7" />
+                </svg></span>Digital Twin</a></li>
+            <li><a class="mega-item" href="solutions.html#ai"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20h9" />
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                </svg></span>AI Integration</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="solutions.html#cfg"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                  <line x1="9" y1="9" x2="9.01" y2="9" />
+                  <line x1="15" y1="9" x2="15.01" y2="9" />
+                </svg></span>3D Configurators</a></li>
+            <li><a class="mega-item" href="solutions.html#vs"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
+                </svg></span>Virtual Showrooms</a></li>
+            <li><a class="mega-item" href="solutions.html#sim"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg></span>Simulation Systems</a></li>
+            <li><a class="mega-item" href="solutions.html#trn"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg></span>Interactive Training</a></li>
+            <li><a class="mega-item" href="solutions.html#meta"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                </svg></span>Metaverse Solutions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">New: AI-Powered XR</div>
+        <div class="mega-highlight-sub">Combining spatial computing with generative AI for next-gen enterprise
+          experiences.</div>
+        <a href="#" class="mega-highlight-btn">Explore <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-industries">
+    <div class="mega-inner">
+      <div class="mega-label">Industries</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="industries.html#healthcare"><span class="mega-item-icon"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                </svg></span>Healthcare</a></li>
+            <li><a class="mega-item" href="industries.html#manufacturing"><span class="mega-item-icon"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path
+                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                  <line x1="12" y1="22.08" x2="12" y2="12" />
+                </svg></span>Manufacturing</a></li>
+            <li><a class="mega-item" href="industries.html#realestate"><span class="mega-item-icon"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
+                </svg></span>Real Estate</a></li>
+            <li><a class="mega-item" href="industries.html#education"><span class="mega-item-icon"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                  <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                </svg></span>Education</a></li>
+            <li><a class="mega-item" href="industries.html#automotive"><span class="mega-item-icon"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                  <line x1="9" y1="9" x2="9.01" y2="9" />
+                  <line x1="15" y1="9" x2="15.01" y2="9" />
+                </svg></span>Automotive</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="industries.html#retail"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="9" cy="21" r="1" />
+                  <circle cx="20" cy="21" r="1" />
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                </svg></span>Retail</a></li>
+            <li><a class="mega-item" href="industries.html#architecture"><span class="mega-item-icon"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                  <polyline points="2 17 12 22 22 17" />
+                  <polyline points="2 12 12 17 22 12" />
+                </svg></span>Architecture</a></li>
+            <li><a class="mega-item" href="industries.html#defense"><span class="mega-item-icon"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg></span>Defense</a></li>
+            <li><a class="mega-item" href="industries.html#tourism"><span class="mega-item-icon"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg></span>Tourism</a></li>
+            <li><a class="mega-item" href="industries.html#energy"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg></span>Energy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Industry Solutions</div>
+        <div class="mega-highlight-sub">Tailored immersive experiences built for your sector's unique challenges.</div>
+        <a href="industries.html" class="mega-highlight-btn">View All <svg width="12" height="12" viewBox="0 0 12 12"
+            fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-services">
+    <div class="mega-inner">
+      <div class="mega-label">Services</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="services.html#custom-ar"><span class="mega-item-icon"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                  <line x1="12" y1="18" x2="12.01" y2="18" />
+                </svg></span>Custom AR App Development</a></li>
+            <li><a class="mega-item" href="services.html#vr-training"><span class="mega-item-icon"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg></span>VR Training Platforms</a></li>
+            <li><a class="mega-item" href="services.html#unity-dev"><span class="mega-item-icon"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                  <polyline points="2 17 12 22 22 17" />
+                  <polyline points="2 12 12 17 22 12" />
+                </svg></span>Unity Development</a></li>
+            <li><a class="mega-item" href="services.html#webgl"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                  <line x1="9" y1="9" x2="9.01" y2="9" />
+                  <line x1="15" y1="9" x2="15.01" y2="9" />
+                </svg></span>WebGL Experiences</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="services.html#3d-modeling"><span class="mega-item-icon"><svg
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg></span>3D Modeling & Animation</a></li>
+            <li><a class="mega-item" href="services.html#uiux"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 17l10-10 4 4 6-6" />
+                </svg></span>UI/UX Design</a></li>
+            <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
+                  <path
+                    d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
+                </svg></span>Cloud Deployment</a></li>
+            <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.121 2.121 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z" />
+                </svg></span>Maintenance & Support</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Full-Cycle Delivery</div>
+        <div class="mega-highlight-sub">From concept to deployment — we handle every stage of your XR project.</div>
+        <a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-work">
+    <div class="mega-inner">
+      <div class="mega-label">Work</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="portfolio2.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <polyline points="10 9 9 9 8 9" />
+                </svg></span>Case Studies</a></li>
+            <li><a class="mega-item" href="portfolio.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg></span>Portfolio</a></li>
+            <li><a class="mega-item" href="client-stories.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg></span>Client Stories</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <polygon points="10 8 16 12 10 16 10 8" />
+                </svg></span>Product Demos</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Featured Project</div>
+        <div class="mega-highlight-sub">See how we transformed a global manufacturer's training program with immersive
+          VR.</div>
+        <a href="#" class="mega-highlight-btn">View Case Study <svg width="12" height="12" viewBox="0 0 12 12"
+            fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-company">
+    <div class="mega-inner">
+      <div class="mega-label">Company</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="about.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg></span>About Us</a></li>
+            <li><a class="mega-item" href="careers-page (1).html"><span class="mega-item-icon"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg></span>Careers</a></li>
+            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg></span>Partnerships</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">We're Hiring</div>
+        <div class="mega-highlight-sub">Join a team building the future of spatial computing and enterprise immersive
+          tech.</div>
+        <a href="#" class="mega-highlight-btn">See Openings <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div id="backdrop" aria-hidden="true"></div>
+
+  <!-- ══════════ HERO ══════════ -->
+  <section class="jd-hero">
+    <div class="container">
+      <a href="careers-page (1).html" class="jd-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m15 18-6-6 6-6"/></svg>
+        Back to all positions
+      </a>
+
+      <!-- Loading state -->
+      <div id="job-loading">
+        <div class="jd-skeleton" style="width:120px;height:28px;margin-bottom:20px;"></div>
+        <div class="jd-skeleton" style="width:60%;height:48px;margin-bottom:16px;"></div>
+        <div style="display:flex;gap:10px;margin-bottom:28px;">
+          <div class="jd-skeleton" style="width:110px;height:32px;border-radius:999px;"></div>
+          <div class="jd-skeleton" style="width:110px;height:32px;border-radius:999px;"></div>
+          <div class="jd-skeleton" style="width:90px;height:32px;border-radius:999px;"></div>
+        </div>
+      </div>
+
+      <!-- Loaded state -->
+      <div id="job-content" style="display:none;">
+        <div class="jd-status"><span class="dot"></span> Open Position</div>
+        <h1 id="job-title"></h1>
+        <div class="jd-meta" id="job-meta"></div>
+        <div class="jd-hero-ctas">
+          <button class="jd-btn-primary" onclick="document.getElementById('jd-apply-form').scrollIntoView({behavior:'smooth'})">
+            Apply Now
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <a href="careers-page (1).html" class="jd-btn-outline">View all roles</a>
+        </div>
+      </div>
+
+      <div id="job-error" style="display:none;">
+        <h1 style="color:#fff;">Job not found</h1>
+        <p style="color:rgba(255,255,255,0.6);margin-top:12px;">This position may be closed or the link is invalid.</p>
+        <a href="careers-page (1).html" class="jd-btn-primary" style="margin-top:24px;display:inline-flex;">View open positions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ BODY ══════════ -->
+  <section class="jd-body">
+    <div class="container">
+      <div class="jd-layout">
+
+        <!-- Left — job detail -->
+        <div class="jd-main" id="job-details">
+          <!-- Skeleton -->
+          <div id="jd-main-skeleton">
+            <div class="jd-skeleton" style="width:100%;height:18px;margin-bottom:12px;"></div>
+            <div class="jd-skeleton" style="width:90%;height:18px;margin-bottom:12px;"></div>
+            <div class="jd-skeleton" style="width:80%;height:18px;margin-bottom:32px;"></div>
+            <div class="jd-skeleton" style="width:140px;height:14px;margin-bottom:16px;"></div>
+            <div class="jd-skeleton" style="width:100%;height:52px;margin-bottom:10px;border-radius:10px;"></div>
+            <div class="jd-skeleton" style="width:100%;height:52px;margin-bottom:10px;border-radius:10px;"></div>
+            <div class="jd-skeleton" style="width:100%;height:52px;margin-bottom:10px;border-radius:10px;"></div>
+          </div>
+        </div>
+
+        <!-- Right — sticky apply form -->
+        <div class="jd-sidebar">
+          <div class="jd-form-card" id="jd-apply-form">
+            <div class="jd-form-header">
+              <h3>Apply for this role</h3>
+              <p>Takes ~3 minutes. We read every application.</p>
+            </div>
+            <div class="jd-form-body">
+              <!-- Success state -->
+              <div class="jd-success" id="jd-success" style="display:none;">
+                <div class="jd-success-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                </div>
+                <h3>Application received!</h3>
+                <p>We'll review your details and reach out within a few business days. Thanks for your interest.</p>
+              </div>
+              <!-- Form -->
+              <form id="application-form" novalidate>
+                <div class="jd-fg">
+                  <label for="applicantName">Full name <span class="req">*</span></label>
+                  <input type="text" id="applicantName" name="applicantName" placeholder="Jane Smith" required>
+                </div>
+                <div class="jd-fg">
+                  <label for="applicantEmail">Email <span class="req">*</span></label>
+                  <input type="email" id="applicantEmail" name="applicantEmail" placeholder="jane@company.com" required>
+                </div>
+                <div class="jd-fg">
+                  <label for="applicantPhone">Phone</label>
+                  <input type="tel" id="applicantPhone" name="applicantPhone" placeholder="+1 555 000 0000">
+                </div>
+                <div class="jd-fg">
+                  <label for="resume">Resume / CV <span class="req">*</span></label>
+                  <div class="jd-file-drop" id="jd-file-drop">
+                    <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <span id="jd-file-name">PDF, DOC, DOCX — click or drag</span>
+                  </div>
+                </div>
+                <div class="jd-fg">
+                  <label for="linkedinUrl">LinkedIn</label>
+                  <input type="url" id="linkedinUrl" name="linkedinUrl" placeholder="https://linkedin.com/in/…">
+                </div>
+                <div class="jd-fg">
+                  <label for="portfolioUrl">Portfolio</label>
+                  <input type="url" id="portfolioUrl" name="portfolioUrl" placeholder="https://yoursite.com">
+                </div>
+                <div class="jd-fg">
+                  <label for="coverLetter">Cover letter</label>
+                  <textarea id="coverLetter" name="coverLetter" placeholder="Why are you a great fit?"></textarea>
+                </div>
+                <div class="jd-form-error" id="jd-form-error"></div>
+                <button type="submit" class="jd-submit" id="jd-submit">
+                  <span class="jd-submit-label">Submit Application</span>
+                  <div class="jd-submit-spinner"></div>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div id="site-footer-mount"></div>
+  <script src="footer-include.js"></script>
+  <script src="volga.js"></script>
+
+  <script>
+    let currentJob = null;
+
+    function esc(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    function getJobIdFromUrl() {
+      return new URLSearchParams(window.location.search).get('id');
+    }
+
+    async function fetchJob(jobId) {
+      try {
+        const res = await fetch(`${window.VOLGA_API}/jobs/${jobId}`);
+        if (!res.ok) throw new Error('Not found');
+        const result = await res.json();
+        currentJob = result.data || result;
+        renderJob(currentJob);
+      } catch (err) {
+        document.getElementById('job-loading').style.display = 'none';
+        document.getElementById('job-error').style.display = 'block';
+      }
+    }
+
+    function renderJob(job) {
+      document.title = `${job.title} · Volga Careers`;
+      document.getElementById('job-loading').style.display = 'none';
+      document.getElementById('job-content').style.display = 'block';
+      document.getElementById('job-title').textContent = job.title;
+
+      document.getElementById('job-meta').innerHTML = `
+        <div class="jd-pill"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${esc(job.location)}</div>
+        <div class="jd-pill"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${esc(job.type)}</div>
+        <div class="jd-pill"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>${esc(job.department)}</div>
+        <div class="jd-pill salary"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>${esc(job.salary)}</div>
+      `;
+
+      document.getElementById('jd-main-skeleton').style.display = 'none';
+
+      const reqs = job.requirements && job.requirements.length
+        ? `<div class="jd-section">
+            <div class="jd-section-label">Requirements</div>
+            <div class="jd-list">${job.requirements.map(r=>`<div class="jd-list-item">${esc(r)}</div>`).join('')}</div>
+           </div>` : '';
+
+      const resps = job.responsibilities && job.responsibilities.length
+        ? `<div class="jd-section">
+            <div class="jd-section-label">Responsibilities</div>
+            <div class="jd-list">${job.responsibilities.map(r=>`<div class="jd-list-item">${esc(r)}</div>`).join('')}</div>
+           </div>` : '';
+
+      const detail = document.getElementById('job-details');
+      detail.insertAdjacentHTML('beforeend', `
+        <div class="jd-section">
+          <div class="jd-section-label">About the role</div>
+          <p>${esc(job.description)}</p>
+        </div>
+        ${reqs}${resps}
+      `);
+    }
+
+    // File input
+    const resumeInput = document.getElementById('resume');
+    const fileDrop = document.getElementById('jd-file-drop');
+    const fileNameEl = document.getElementById('jd-file-name');
+    resumeInput.addEventListener('change', () => {
+      if (resumeInput.files[0]) {
+        fileNameEl.textContent = resumeInput.files[0].name;
+        fileDrop.classList.add('has-file');
+      }
+    });
+    fileDrop.addEventListener('dragover', e => { e.preventDefault(); fileDrop.classList.add('has-file'); });
+    fileDrop.addEventListener('dragleave', () => { if (!resumeInput.files[0]) fileDrop.classList.remove('has-file'); });
+
+    // Form submit
+    document.getElementById('application-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      if (!currentJob) return;
+      const errorEl = document.getElementById('jd-form-error');
+      const submitBtn = document.getElementById('jd-submit');
+      errorEl.textContent = '';
+
+      const name = document.getElementById('applicantName').value.trim();
+      const email = document.getElementById('applicantEmail').value.trim();
+      const resumeFile = resumeInput.files[0];
+
+      if (!name) { errorEl.textContent = 'Full name is required.'; return; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errorEl.textContent = 'A valid email is required.'; return; }
+      if (!resumeFile) { errorEl.textContent = 'Please attach your resume.'; return; }
+
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      try {
+        const fd = new FormData();
+        fd.append('jobId', currentJob._id);
+        fd.append('applicantName', name);
+        fd.append('applicantEmail', email);
+        const phone = document.getElementById('applicantPhone').value.trim();
+        const linkedin = document.getElementById('linkedinUrl').value.trim();
+        const portfolio = document.getElementById('portfolioUrl').value.trim();
+        const cover = document.getElementById('coverLetter').value.trim();
+        if (phone) fd.append('applicantPhone', phone);
+        if (linkedin) fd.append('linkedinUrl', linkedin);
+        if (portfolio) fd.append('portfolioUrl', portfolio);
+        if (cover) fd.append('coverLetter', cover);
+        fd.append('resume', resumeFile);
+
+        const res = await fetch(`${window.VOLGA_API}/job-applications`, { method: 'POST', body: fd });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Submission failed');
+
+        document.getElementById('application-form').style.display = 'none';
+        document.getElementById('jd-success').style.display = 'block';
+      } catch (err) {
+        errorEl.textContent = err.message || 'Something went wrong. Please try again.';
+      } finally {
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const jobId = getJobIdFromUrl();
+      if (jobId) fetchJob(jobId);
+      else {
+        document.getElementById('job-loading').style.display = 'none';
+        document.getElementById('job-error').style.display = 'block';
+      }
+    });
+  </script>
+
+</body>
+</html>

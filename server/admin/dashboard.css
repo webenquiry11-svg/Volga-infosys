@@ -463,6 +463,59 @@ html.dark .login-card {
 }
 .nav-item.active svg { opacity: 1; }
 
+.nav-group {
+  display: flex;
+  flex-direction: column;
+}
+.nav-group-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.nav-group-toggle:hover {
+  color: var(--text-primary);
+  box-shadow: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff;
+}
+.dark .nav-group-toggle:hover {
+  box-shadow: inset 3px 3px 6px #131720, inset -3px -3px 6px #1d2530;
+}
+.nav-group-toggle svg:not(.chevron) {
+  flex-shrink: 0; opacity: 0.7; transition: opacity 0.2s; width: 20px; height: 20px;
+}
+.nav-group-toggle .chevron {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+  width: 16px;
+  height: 16px;
+}
+.nav-group.expanded .chevron {
+  transform: rotate(90deg);
+}
+.nav-group-items {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, margin 0.3s ease;
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.nav-group.expanded .nav-group-items {
+  max-height: 500px;
+  margin-top: 0.5rem;
+}
+
 .sidebar-footer {
   padding: 1.2rem 1.2rem;
 }
@@ -648,8 +701,17 @@ html.dark .login-card {
 .table-wrap {
   background: linear-gradient(145deg, #e6ebf2, #d6dbe2);
   border-radius: var(--radius-md);
-  overflow: hidden;
+  overflow: visible;
   box-shadow: var(--shadow-sm);
+  position: relative;
+  z-index: 1;
+}
+
+/* Also make sure the table and table cells allow overflow */
+.leads-table,
+.leads-table td,
+.leads-table tr {
+  overflow: visible;
 }
 .leads-table { width: 100%; border-collapse: collapse; }
 .leads-table thead { background: linear-gradient(180deg, #dce1e8, #d0d5dc); }
@@ -1795,5 +1857,87 @@ html.dark .card-status-badge.status-published { background: rgba(16,185,129,0.2)
 html.dark .card-status-badge.status-draft     { background: rgba(245,158,11,0.2); color: #fbbf24; }
 html.dark .card-status-badge.status-archived  { background: rgba(100,116,139,0.2); color: #94a3b8; }
 html.dark .card-badge.badge-featured          { background: #3b82f6; }
-html.dark .btn-action                         { color: var(--text-secondary); }
+html.dark .btn-action                         { color: var(--text-secondary); } 
 html.dark .bulk-toolbar                       { background: var(--bg-surface); }
+
+/* Actions Dropdown */
+.actions-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.dropdown-toggle:hover {
+  background: var(--accent);
+  color: white;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  min-width: 180px;
+  z-index: 9999;
+  overflow: visible;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all 0.2s ease;
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(4px);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 18px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  font-family: var(--mono);
+  transition: background 0.15s ease;
+}
+
+.dropdown-item:hover {
+  background: var(--bg-main);
+}
+
+.dropdown-item.danger {
+  color: #dc3545;
+}
+
+.dropdown-item.danger:hover {
+  background: #fff3f3;
+}
+
+html.dark .dropdown-menu {
+  background: var(--bg-surface);
+}
+html.dark .dropdown-item {
+  color: var(--text-primary);
+}
+html.dark .dropdown-item:hover {
+  background: var(--bg-main);
+}
