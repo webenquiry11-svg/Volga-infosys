@@ -229,10 +229,19 @@
 
   /* ── Wheel listener for custom smooth scrolling ──────────────── */
   wrap.addEventListener("wheel", (e) => {
+    const atTop    = scroller.scrollTop <= 0;
+    const atBottom = scroller.scrollTop >= maxScroll - 1;
+
+    // If scrolling up while at the top, or down while at the bottom,
+    // let the page scroll naturally — don't trap the user.
+    if ((e.deltaY < 0 && atTop) || (e.deltaY > 0 && atBottom)) {
+      return; // don't preventDefault — page scrolls through
+    }
+
     e.preventDefault();
     const linePx = 16;
     const pagePx = scroller.clientHeight * 0.9;
-    const delta = e.deltaMode === 1 ? e.deltaY * linePx : 
+    const delta = e.deltaMode === 1 ? e.deltaY * linePx :
                   e.deltaMode === 2 ? e.deltaY * pagePx : e.deltaY;
     if (Math.abs(delta) < 5) return;
     velocity += delta;
