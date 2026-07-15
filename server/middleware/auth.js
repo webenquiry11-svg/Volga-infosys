@@ -62,9 +62,9 @@ export const protect = async (req, res, next) => {
 export const authorize = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return res.status(403).json({ 
-        success: false, 
-        message: "User not authorized to perform this action" 
+      return res.status(403).json({
+        success: false,
+        message: "User not authorized to perform this action"
       });
     }
     next();
@@ -80,9 +80,9 @@ export const hasPermission = (permission) => {
     }
     // Check if user has the specific permission
     if (!req.user.permissions.includes(permission)) {
-      return res.status(403).json({ 
-        success: false, 
-        message: "User not authorized to perform this action" 
+      return res.status(403).json({
+        success: false,
+        message: "User not authorized to perform this action"
       });
     }
     next();

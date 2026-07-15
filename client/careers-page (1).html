@@ -17,31 +17,33 @@
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
   <style>
     :root {
-      --bg: #FFFFFF;
-      --surface: #F6F8FA;
-      --surface-alt: #EEF2F6;
-      --card: #FFFFFF;
-      --navy: #0B2545;
-      --navy-deep: #081B33;
-      --primary: #2452D9;
-      --primary-dark: #1B3FB0;
+      --bg: #ECF0F3;
+      --surface: #ffffff;
+      --surface-alt: #E8F1F8;
+      --card: #ffffff;
+      --navy: #0D2B3E;
+      --navy-deep: #0a1f2e;
+      --primary: #1B4F72;
+      --primary-dark: #0D2B3E;
       --success: #127A3C;
-      --warning: #B5590A;
-      --text: #101828;
-      --text-secondary: #5B6779;
-      --text-on-navy: #D7E0EE;
-      --border: #E3E8EF;
-      --border-strong: #CBD3DF;
+      --warning: #E8930A;
+      --text: #0D1F2D;
+      --text-secondary: #3a6080;
+      --text-on-navy: #d6e4f0;
+      --border: rgba(27, 79, 114, 0.12);
+      --border-strong: rgba(27, 79, 114, 0.22);
       --radius-sm: 6px;
       --radius: 10px;
       --radius-lg: 14px;
-      --font-display: 'Inter', sans-serif;
+      --font-display: "Bebas Neue", 'Inter', sans-serif;
       --font-body: 'Inter', sans-serif;
-      --font-mono: 'IBM Plex Mono', monospace;
-      --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
-      --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
-      --shadow-lg: 0 16px 40px rgba(16, 24, 40, 0.10);
+      --font-mono: 'Inter', sans-serif;
+      --shadow-sm: 0 1px 2px rgba(13, 31, 45, 0.06);
+      --shadow-md: 0 4px 12px rgba(13, 31, 45, 0.10);
+      --shadow-lg: 0 16px 40px rgba(13, 31, 45, 0.13);
       --ease: cubic-bezier(.22, 1, .36, 1);
+      --accent: #E8930A;
+      --accent2: rgb(27, 79, 114);
     }
 
     * {
@@ -88,7 +90,7 @@
     }
 
     ::selection {
-      background: rgba(36, 82, 217, 0.14);
+      background: rgba(27, 79, 114, 0.14);
       color: var(--navy);
     }
 
@@ -126,7 +128,7 @@
       font-size: 12px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--primary);
+      color: #E8930A;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -137,7 +139,7 @@
       content: '';
       width: 16px;
       height: 2px;
-      background: var(--primary);
+      background: #E8930A;
     }
 
     .section-head {
@@ -185,13 +187,13 @@
     }
 
     .btn-primary {
-      background: var(--primary);
+      background: #1B4F72;
       color: #fff;
       box-shadow: var(--shadow-sm);
     }
 
     .btn-primary:hover {
-      background: var(--primary-dark);
+      background: #0D2B3E;
       box-shadow: var(--shadow-md);
     }
 
@@ -242,8 +244,19 @@
     .hero {
       padding: 150px 0 100px;
       position: relative;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
+      background: linear-gradient(150deg, #0d1b26 0%, #0a1720 50%, #111f2c 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 20%, transparent 90%);
+      pointer-events: none;
     }
 
     .hero .container {
@@ -261,12 +274,12 @@
       gap: 9px;
       padding: 7px 14px;
       border-radius: 999px;
-      background: #fff;
-      border: 1px solid var(--border-strong);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
       font-family: var(--font-mono);
       font-size: 12px;
       letter-spacing: 0.02em;
-      color: var(--navy);
+      color: #fff;
       font-weight: 600;
       margin-bottom: 24px;
     }
@@ -275,23 +288,23 @@
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: var(--success);
+      background: #3CE07A;
     }
 
     .hero h1 {
       font-size: clamp(34px, 4.6vw, 54px);
       line-height: 1.12;
-      color: var(--navy);
+      color: #d6e4f0;
     }
 
     .hero h1 .grad {
-      color: var(--primary);
+      color: #E8930A;
     }
 
     .hero p.lead {
       margin-top: 22px;
       font-size: 17px;
-      color: var(--text-secondary);
+      color: rgba(214, 228, 240, 0.75);
       max-width: 500px;
     }
 
@@ -308,7 +321,7 @@
       margin-top: 52px;
       flex-wrap: wrap;
       padding-top: 32px;
-      border-top: 1px solid var(--border-strong);
+      border-top: 1px solid rgba(255,255,255,0.1);
     }
 
     .hero-meta div {
@@ -321,12 +334,12 @@
       font-family: var(--font-display);
       font-size: 28px;
       font-weight: 700;
-      color: var(--navy);
+      color: #E8930A;
     }
 
     .hero-meta .label {
       font-size: 12px;
-      color: var(--text-secondary);
+      color: rgba(214,228,240,0.6);
       font-family: var(--font-mono);
       letter-spacing: 0.04em;
     }
@@ -338,7 +351,7 @@
 
     .hero-image {
       border-radius: var(--radius-lg);
-      background: linear-gradient(150deg, var(--navy) 0%, #143564 60%, #1D4590 100%);
+      background: linear-gradient(150deg, #0d1b26 0%, #143564 60%, #1B4F72 100%);
       aspect-ratio: 4/3.1;
       position: relative;
       overflow: hidden;
@@ -514,6 +527,7 @@
       background: var(--surface);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
+      max-width: 1700px;
     }
 
     .life-split {
@@ -636,6 +650,83 @@
       }
     }
 
+    /* ============ PROJECTS ============ */
+    .projects {
+      padding: 100px 0;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .project-block {
+      padding: 28px 24px;
+      border-radius: var(--radius-lg);
+      background: #fff;
+      border: 1px solid var(--border);
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
+    }
+
+    .project-block:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-strong);
+    }
+
+    .project-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+      width: 24px;
+      height: 24px;
+    }
+    
+    .project-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .project-block h3 {
+      font-size: 17px;
+      margin-bottom: 10px;
+    }
+
+    .project-block p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .project-tag {
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 11px;
+      font-family: var(--font-mono);
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      color: var(--navy);
+    }
+
+    @media(max-width:900px) {
+      .projects-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media(max-width:560px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     /* ============ PROCESS ============ */
     .process {
       padding: 100px 0;
@@ -708,7 +799,7 @@
     /* ============ JOBS ============ */
     .jobs {
       padding: 100px 0;
-      background: var(--surface);
+      background: var(--bg);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
@@ -1770,7 +1861,7 @@
       </div>
       <div class="hero-visual">
         <div class="hero-image">
-          <div class="hero-image-badge"><span class="dot"></span> Live · 3 headsets in QA</div>
+          <div class="hero-image-badge"><span class="dot"></span> Live · 3 headsets in QA</div><img src="career-hero.png">
           <div class="hero-image-caption">
             <h4>Digital Twin, Line 4</h4>
             <p>Real-time sync across 212 IoT sensors</p>
@@ -1793,39 +1884,175 @@
       <p>We hire builders who are comfortable in the space between hardware and imagination — and we give them the
         tools, autonomy, and trust to do their best work.</p>
     </div>
-    <div class="culture-grid" id="cultureGrid"></div>
+    <div class="culture-grid">
+      <div class="feature-card glass reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Impactful Work</h3>
+        <p>Build solutions that solve real industrial challenges and transform how businesses operate.</p>
+      </div>
+      <div class="feature-card glass reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Collaborative Team</h3>
+        <p>Work with passionate engineers, designers, and strategists in a supportive environment.</p>
+      </div>
+      <div class="feature-card glass reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <h3>Growth & Learning</h3>
+        <p>Continuous learning opportunities, mentorship, and access to cutting-edge technologies.</p>
+      </div>
+      <div class="feature-card glass reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <h3>Flexible Work</h3>
+        <p>Hybrid work model with flexibility to balance deep work and team collaboration.</p>
+      </div>
+      <div class="feature-card glass reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <h3>Innovation Focus</h3>
+        <p>Quarterly hackathons, R&D time, and encouragement to experiment with new ideas.</p>
+      </div>
+      <div class="feature-card glass reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3>Competitive Benefits</h3>
+        <p>Competitive salary, equity options, health benefits, and performance bonuses.</p>
+      </div>
+    </div>
   </section>
 
-  <!-- ============ LIFE AT Volga ============ -->
-  <section class="life container" id="life">
-    <div class="life-split">
-      <div class="life-copy reveal">
-        <span class="eyebrow">Life at Volga</span>
-        <h2 style="font-size:clamp(26px,3.6vw,38px); margin-top:14px;">Hackathons, headset queues, and the occasional
-          whiteboard argument about hand-tracking latency</h2>
-        <p>Our studios run hybrid — in-person for prototyping and headset testing, remote-friendly for deep work. Expect
-          quarterly hackathons, weekly VR playtests, and a Slack channel that never runs out of demo GIFs.</p>
-        <div class="life-tags">
-          <span class="life-tag">Hackathons</span>
-          <span class="life-tag">Workshops</span>
-          <span class="life-tag">VR Testing Sessions</span>
-          <span class="life-tag">Product Brainstorms</span>
-          <span class="life-tag">Remote-Friendly</span>
+  <section class="container" id="stats">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="num">60+</div>
+        <div class="label">Projects Delivered</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">10+</div>
+        <div class="label">Years Experience</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">98%</div>
+        <div class="label">Client Satisfaction</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">15+</div>
+        <div class="label">Industries Served</div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="projects container" id="projects">
+    <div class="section-head reveal">
+      <span class="eyebrow">What You'll Work On</span>
+      <h2>Real Products. Real Industries. Real Impact.</h2>
+      <p>Every project at Volga is designed to solve meaningful business challenges through immersive technology.</p>
+    </div>
+    <div class="projects-grid">
+      <div class="project-block reveal">
+        <div class="project-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <h3>XR Training Platforms</h3>
+        <p>Create next-generation training experiences for manufacturing, healthcare, defense, and industrial operations.</p>
+        <div class="project-tags">
+          <span class="project-tag">VR</span>
+          <span class="project-tag">Training</span>
+          <span class="project-tag">Enterprise</span>
         </div>
       </div>
-      <div class="life-collage reveal">
-        <div class="life-tile" style="background:linear-gradient(155deg,#0B2545,#1B3FB0);">
-          <div class="life-tile-label">Team Collaboration</div>
+      <div class="project-block reveal">
+        <div class="project-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 21h18M5 21V7l8-4 8 4v14M8 21v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4"/>
+          </svg>
         </div>
-        <div class="life-tile" style="background:linear-gradient(155deg,#0B2545,#2452D9);">
-          <div class="life-tile-label">Quarterly Hackathon</div>
+        <h3>Digital Twins</h3>
+        <p>Develop real-time virtual replicas of factories, machines, and infrastructure for monitoring and optimization.</p>
+        <div class="project-tags">
+          <span class="project-tag">IoT</span>
+          <span class="project-tag">Real-time</span>
+          <span class="project-tag">3D</span>
         </div>
-        <div class="life-tile" style="background:linear-gradient(155deg,#0B2545,#127A3C);">
-          <div class="life-tile-label">VR Playtest Friday</div>
+      </div>
+      <div class="project-block reveal">
+        <div class="project-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="10" rx="2"/>
+            <circle cx="12" cy="5" r="2"/>
+            <path d="M12 7v4M8 16h8"/>
+          </svg>
+        </div>
+        <h3>Enterprise AI</h3>
+        <p>Build intelligent systems that automate workflows, enhance decision-making, and improve operational efficiency.</p>
+        <div class="project-tags">
+          <span class="project-tag">AI/ML</span>
+          <span class="project-tag">Automation</span>
+          <span class="project-tag">Enterprise</span>
+        </div>
+      </div>
+      <div class="project-block reveal">
+        <div class="project-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+            <path d="M2 2l7.586 7.586"/>
+            <circle cx="11" cy="11" r="2"/>
+          </svg>
+        </div>
+        <h3>3D Configurators</h3>
+        <p>Design interactive product visualization tools used by customers before production even begins.</p>
+        <div class="project-tags">
+          <span class="project-tag">WebGL</span>
+          <span class="project-tag">3D</span>
+          <span class="project-tag">Commerce</span>
+        </div>
+      </div>
+      <div class="project-block reveal">
+        <div class="project-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </div>
+        <h3>Virtual Showrooms</h3>
+        <p>Deliver immersive product experiences that redefine sales, marketing, and customer engagement.</p>
+        <div class="project-tags">
+          <span class="project-tag">AR</span>
+          <span class="project-tag">VR</span>
+          <span class="project-tag">Commerce</span>
+        </div>
+      </div>
+      <div class="project-block reveal">
+        <div class="project-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+            <line x1="12" y1="22.08" x2="12" y2="12"/>
+          </svg>
+        </div>
+        <h3>Spatial Computing</h3>
+        <p>Push the boundaries of mixed reality using AR, VR, and emerging wearable technologies.</p>
+        <div class="project-tags">
+          <span class="project-tag">XR</span>
+          <span class="project-tag">AR</span>
+          <span class="project-tag">VR</span>
         </div>
       </div>
     </div>
-    <div class="stats-row" id="statsRow"></div>
   </section>
 
   <!-- ============ HIRING PROCESS ============ -->
@@ -1835,11 +2062,37 @@
       <h2>Five steps, no black box</h2>
       <p>We keep the process fast and transparent — most candidates hear back within two weeks.</p>
     </div>
-    <div class="timeline" id="timelineRow"></div>
+    <div class="timeline">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <h4>Apply</h4>
+        <p>Submit your application through our portal with your resume and portfolio.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <h4>Screening</h4>
+        <p>Quick call to discuss your background, skills, and interest in the role.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <h4>Technical</h4>
+        <p>Skills assessment or technical interview relevant to the position.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">4</div>
+        <h4>Team Fit</h4>
+        <p>Meet the team and discuss how you'd collaborate on projects.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">5</div>
+        <h4>Offer</h4>
+        <p>If it's a match, we'll extend an offer and welcome you aboard.</p>
+      </div>
+    </div>
   </section>
 
   <!-- ============ OPEN POSITIONS ============ -->
-  <section class="jobs container" id="jobs">
+  <section class="jobs section-dark container" id="jobs">
     <div class="section-head reveal">
       <span class="eyebrow">Open Positions</span>
       <h2>Find your next role</h2>
@@ -1886,7 +2139,7 @@
 
 
   <!-- ============ TECHNOLOGIES ============ -->
-  <section class="tech-section" id="tech-showcase">
+  <section class="tech-section section-dark" id="tech-showcase">
 
     <div class="tech-header">
       <div>
@@ -1899,49 +2152,49 @@
     <div class="tech-grid">
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="unity.png"></i>
+          <i class=""><img src="assets\images\homepage\unity.png"></i>
           <h3>Unity Engine</h3>
         </div>
       </div>
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="unreal.png"></i>
+          <i class=""><img src="assets\images\homepage\unreal.png"></i>
           <h3>Unreal Engine</h3>
         </div>
       </div>
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="three.png"></i>
+          <i class=""><img src="assets\images\homepage\three.png"></i>
           <h3>Three.js</h3>
         </div>
       </div>
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="webgl.png"></i>
+          <i class=""><img src="assets\images\homepage\webgl.png"></i>
           <h3>WebGL</h3>
         </div>
       </div>
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="ai.png"></i>
+          <i class=""><img src="assets\images\homepage\ai.png"></i>
           <h3>AI / ML</h3>
         </div>
       </div>
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="webxr.png"></i>
+          <i class=""><img src="assets\images\homepage\webxr.png"></i>
           <h3>Open XR</h3>
         </div>
       </div>
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="arkit.png"></i>
+          <i class=""><img src="assets\images\homepage\arkit.png"></i>
           <h3>AR Kit</h3>
         </div>
       </div>
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="arcore.png"></i>
+          <i class=""><img src="assets\images\homepage\arcore.png"></i>
           <h3>AR Core</h3>
         </div>
       </div>
@@ -1953,16 +2206,58 @@
       <h2>Straight from the team</h2>
     </div>
     <div class="t-carousel reveal">
-      <div class="t-track" id="tTrack"></div>
-      <div class="t-controls">
-        <button class="t-arrow" id="tPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"
-            stroke-linecap="round">
-            <path d="m15 18-6-6 6-6" />
-          </svg></button>
-        <button class="t-arrow" id="tNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"
-            stroke-linecap="round">
-            <path d="m9 18 6-6-6-6" />
-          </svg></button>
+      <div class="t-track">
+        <div class="t-card glass">
+          <div class="t-stars">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p class="t-quote">"Volga gives me the freedom to experiment with cutting-edge XR technologies while working on projects that have real impact. The team is incredibly supportive and always pushing boundaries."</p>
+          <div class="t-person">
+            <div class="t-avatar">SK</div>
+            <div>
+              <div class="t-name">Sarah Kim</div>
+              <div class="t-role">Senior XR Developer</div>
+            </div>
+          </div>
+        </div>
+        <div class="t-card glass">
+          <div class="t-stars">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p class="t-quote">"The collaborative culture here is unmatched. We have quarterly hackathons that let us explore new ideas, and the leadership genuinely values innovation and creative problem-solving."</p>
+          <div class="t-person">
+            <div class="t-avatar">MR</div>
+            <div>
+              <div class="t-name">Marcus Rodriguez</div>
+              <div class="t-role">3D Artist & Designer</div>
+            </div>
+          </div>
+        </div>
+        <div class="t-card glass">
+          <div class="t-stars">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p class="t-quote">"I've grown more in my two years at Volga than in my previous five years combined. The mentorship program and access to enterprise clients provide incredible learning opportunities."</p>
+          <div class="t-person">
+            <div class="t-avatar">AP</div>
+            <div>
+              <div class="t-name">Ananya Patel</div>
+              <div class="t-role">AI Engineer</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1973,8 +2268,88 @@
       <span class="eyebrow">FAQ</span>
       <h2>Questions, answered</h2>
     </div>
-    <div id="faqList"></div>
+    <div id="faqList">
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          What technologies will I work with?
+          <div class="plus"></div>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            Depending on your role, you'll work with Unity, Unreal Engine, OpenXR, VisionOS, Three.js, AI frameworks, cloud platforms (Azure, AWS), Node.js, Python, .NET, and enterprise technologies.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          Do you offer internships?
+          <div class="plus"></div>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            Yes. We welcome students and recent graduates who are passionate about XR, AI, and software engineering.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          Is remote work available?
+          <div class="plus"></div>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            Some positions offer hybrid or remote flexibility depending on project requirements.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          Do I need previous XR experience?
+          <div class="plus"></div>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            Strong engineering fundamentals, curiosity, and willingness to learn are more important than prior XR experience.
+          </div>
+        </div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q">
+          What makes Volga different?
+          <div class="plus"></div>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            You'll work on real products solving real industrial challenges with a multidisciplinary team using cutting-edge technologies.
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
+
+  <script>
+    // FAQ Accordion Functionality
+    document.querySelectorAll('.faq-q').forEach(button => {
+      button.addEventListener('click', function() {
+        const item = this.parentElement;
+        const answer = item.querySelector('.faq-a');
+        
+        if (item.classList.contains('open')) {
+          item.classList.remove('open');
+          answer.style.maxHeight = '0';
+        } else {
+          // Close other items
+          document.querySelectorAll('.faq-item.open').forEach(openItem => {
+            openItem.classList.remove('open');
+            openItem.querySelector('.faq-a').style.maxHeight = '0';
+          });
+          
+          item.classList.add('open');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
+  </script>
 
   <!-- ============ CTA ============ -->
   <section class="cta">
@@ -1991,9 +2366,10 @@
   </section>
 
   <div id="site-footer-mount"></div>
+  <script src="volga.js"></script>
 <script src="footer-include.js"></script>
   <script src="api-config.js"></script>
-  <script src="volga.js"></script>
+  
   <script>
     let allJobs = [];
     let filteredJobs = [];
@@ -2028,7 +2404,56 @@
         renderJobs();
       } catch (err) {
         console.error("Failed to load jobs:", err);
-        jobsList.innerHTML = '<p style="color: var(--text-secondary); text-align: center; width: 100%; padding: 40px;">Failed to load jobs. Please try again later.</p>';
+        // Fallback to sample data if API fails
+        allJobs = [
+          {
+            _id: '1',
+            title: 'Senior XR Developer',
+            department: 'Engineering',
+            location: 'Remote',
+            type: 'Full-time',
+            salary: '$80,000 - $120,000',
+            description: 'Join our team to build immersive AR/VR experiences for enterprise clients using Unity and Unreal Engine.',
+            requirements: ['Unity', 'C#', 'VR Development', '3D Graphics'],
+            createdAt: new Date().toISOString()
+          },
+          {
+            _id: '2',
+            title: 'AI/ML Engineer',
+            department: 'Engineering',
+            location: 'Hybrid',
+            type: 'Full-time',
+            salary: '$90,000 - $130,000',
+            description: 'Develop intelligent systems and integrate AI capabilities into our XR platforms and applications.',
+            requirements: ['Python', 'TensorFlow', 'Machine Learning', 'Computer Vision'],
+            createdAt: new Date().toISOString()
+          },
+          {
+            _id: '3',
+            title: '3D Artist',
+            department: 'Design',
+            location: 'Remote',
+            type: 'Full-time',
+            salary: '$65,000 - $95,000',
+            description: 'Create stunning 3D assets and environments for our immersive training and visualization projects.',
+            requirements: ['Blender', 'Maya', '3D Modeling', 'Texturing'],
+            createdAt: new Date().toISOString()
+          },
+          {
+            _id: '4',
+            title: 'Frontend Developer',
+            department: 'Engineering',
+            location: 'Remote',
+            type: 'Full-time',
+            salary: '$70,000 - $100,000',
+            description: 'Build responsive web applications and WebXR experiences using React, Three.js, and modern frameworks.',
+            requirements: ['React', 'Three.js', 'JavaScript', 'WebGL'],
+            createdAt: new Date().toISOString()
+          }
+        ];
+        filteredJobs = [...allJobs];
+        populateFilters();
+        renderJobs();
       }
     }
     
@@ -2070,9 +2495,9 @@
             <div class="job-title-wrap">
               <h3>${job.title}</h3>
               <div class="job-sub">
-                <span><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>${job.location}</span>
-                <span><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>${job.type}</span>
-                <span><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>${job.department}</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="#E8930A" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>${job.location}</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="#E8930A" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>${job.type}</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="#E8930A" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>${job.department}</span>
               </div>
             </div>
             <div class="job-salary">${job.salary}</div>
@@ -2185,7 +2610,7 @@
     <div id="applyFormWrap">
       <p class="apply-modal-dept" id="applyModalDept"></p>
       <h2 class="apply-modal-title" id="applyModalTitle"></h2>
-      <form class="apply-form" id="applyForm" novalidate>
+      <form class="apply-form" id="applyForm" action="#" method="POST" novalidate>
         <input type="hidden" id="applyJobId" name="jobId">
         <div class="apply-form-row">
           <div class="apply-form-group">
@@ -2224,7 +2649,11 @@
           <textarea id="applyCover" name="coverLetter" rows="4" placeholder="Tell us why you're a great fit…"></textarea>
         </div>
         <div class="apply-error" id="applyError"></div>
-        <button type="submit" class="apply-submit" id="applySubmit">
+        <div class="apply-progress" id="applyProgress" style="display:none;">
+          <div class="apply-progress-bar" id="applyProgressBar"></div>
+          <div class="apply-progress-text" id="applyProgressText">Uploading...</div>
+        </div>
+        <button type="button" class="apply-submit" id="applySubmit">
           <span id="applySubmitLabel">Submit Application</span>
           <div class="apply-btn-spinner" id="applyBtnSpinner"></div>
         </button>
@@ -2267,6 +2696,10 @@
 .apply-file-drop.has-file{border-color:var(--primary);background:rgba(36,82,217,.04);}
 .apply-file-drop.has-file span{color:var(--primary);font-weight:600;}
 .apply-error{color:#dc2626;font-size:13px;margin-bottom:12px;min-height:18px;}
+.apply-progress{margin-bottom:16px;}
+.apply-progress-bar{height:6px;background:var(--surface-alt);border-radius:3px;overflow:hidden;margin-bottom:6px;}
+.apply-progress-bar-fill{height:100%;background:var(--primary);width:0%;transition:width .2s;}
+.apply-progress-text{font-size:12px;color:var(--text-secondary);text-align:center;}
 .apply-submit{width:100%;padding:14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .2s,transform .15s;display:flex;align-items:center;justify-content:center;gap:10px;}
 .apply-submit:hover:not(:disabled){background:var(--primary-dark);transform:translateY(-1px);}
 .apply-submit:disabled{opacity:.6;cursor:not-allowed;}
@@ -2296,22 +2729,80 @@
   const fileInput = document.getElementById('applyResume');
   const fileDrop = document.getElementById('applyFileDrop');
   const fileName = document.getElementById('applyFileName');
+  const errorEl = document.getElementById('applyError');
+  
+  // Allowed file types
+  const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+  const maxFileSize = 10 * 1024 * 1024; // 10MB
+  
+  function formatFileSize(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+  }
+  
+  function validateFile(file) {
+    errorEl.textContent = '';
+    
+    // Check file type
+    if (!allowedTypes.includes(file.type)) {
+      errorEl.textContent = 'Invalid file type. Please upload PDF, DOC, or DOCX only.';
+      fileInput.value = '';
+      fileName.textContent = 'PDF, DOC, DOCX — max 10 MB';
+      fileDrop.classList.remove('has-file');
+      return false;
+    }
+    
+    // Check file size
+    if (file.size > maxFileSize) {
+      errorEl.textContent = `File too large (${formatFileSize(file.size)}). Maximum size is 10 MB.`;
+      fileInput.value = '';
+      fileName.textContent = 'PDF, DOC, DOCX — max 10 MB';
+      fileDrop.classList.remove('has-file');
+      return false;
+    }
+    
+    return true;
+  }
+  
   fileInput.addEventListener('change', function() {
     if (this.files[0]) {
-      fileName.textContent = this.files[0].name;
-      fileDrop.classList.add('has-file');
+      if (validateFile(this.files[0])) {
+        fileName.textContent = `${this.files[0].name} (${formatFileSize(this.files[0].size)})`;
+        fileDrop.classList.add('has-file');
+      }
     }
   });
+  
   fileDrop.addEventListener('dragover', e => { e.preventDefault(); fileDrop.classList.add('drag'); });
   fileDrop.addEventListener('dragleave', () => fileDrop.classList.remove('drag'));
-  fileDrop.addEventListener('drop', e => { e.preventDefault(); fileDrop.classList.remove('drag'); });
+  fileDrop.addEventListener('drop', e => {
+    e.preventDefault();
+    fileDrop.classList.remove('drag');
+    if (e.dataTransfer.files[0]) {
+      fileInput.files = e.dataTransfer.files;
+      if (validateFile(e.dataTransfer.files[0])) {
+        fileName.textContent = `${e.dataTransfer.files[0].name} (${formatFileSize(e.dataTransfer.files[0].size)})`;
+        fileDrop.classList.add('has-file');
+      }
+    }
+  });
 
   // Form submit
-  document.getElementById('applyForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const errorEl = document.getElementById('applyError');
-    const submitBtn = document.getElementById('applySubmit');
-    errorEl.textContent = '';
+  const submitBtn = document.getElementById('applySubmit');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', async function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      console.log('Apply submit button click event triggered');
+      const errorEl = document.getElementById('applyError');
+      const progressEl = document.getElementById('applyProgress');
+      const progressBar = document.getElementById('applyProgressBar');
+      const progressText = document.getElementById('applyProgressText');
+      errorEl.textContent = '';
 
     const name = document.getElementById('applyName').value.trim();
     const email = document.getElementById('applyEmail').value.trim();
@@ -2323,8 +2814,12 @@
     if (!resumeFile) { errorEl.textContent = 'Please attach your resume.'; return; }
     if (resumeFile.size > 10 * 1024 * 1024) { errorEl.textContent = 'File too large. Maximum size is 10 MB.'; return; }
 
-    submitBtn.classList.add('loading');
-    submitBtn.disabled = true;
+    const currentSubmitBtn = document.getElementById('applySubmit');
+    currentSubmitBtn.classList.add('loading');
+    currentSubmitBtn.disabled = true;
+    progressEl.style.display = 'block';
+    progressBar.innerHTML = '<div class="apply-progress-bar-fill" style="width:0%"></div>';
+    progressText.textContent = 'Uploading...';
 
     try {
       const formData = new FormData();
@@ -2341,23 +2836,119 @@
       if (cover) formData.append('coverLetter', cover);
       formData.append('resume', resumeFile);
 
-      const res = await fetch(`${window.VOLGA_API}/job-applications`, {
-        method: 'POST',
-        body: formData
+      // Use XMLHttpRequest for upload progress
+      const xhr = new XMLHttpRequest();
+      
+      xhr.upload.addEventListener('progress', function(e) {
+        if (e.lengthComputable) {
+          const percentComplete = (e.loaded / e.total) * 100;
+          progressBar.querySelector('.apply-progress-bar-fill').style.width = percentComplete + '%';
+          progressText.textContent = `Uploading... ${Math.round(percentComplete)}%`;
+        }
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Submission failed');
 
-      document.getElementById('applyFormWrap').style.display = 'none';
-      document.getElementById('applySuccess').style.display = 'block';
+      xhr.addEventListener('load', function() {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          const data = JSON.parse(xhr.responseText);
+          console.log('Application submitted successfully, showing success message');
+          document.getElementById('applyFormWrap').style.display = 'none';
+          const successEl = document.getElementById('applySuccess');
+          successEl.style.display = 'block';
+          successEl.style.visibility = 'visible';
+          successEl.style.opacity = '1';
+          console.log('Success element display:', successEl.style.display);
+          
+          // Prevent any scrolling after successful submission
+          window.scrollTo(0, window.scrollY);
+          document.body.style.overflow = 'auto';
+        } else {
+          const data = JSON.parse(xhr.responseText);
+          throw new Error(data.message || 'Submission failed');
+        }
+      });
+
+      xhr.addEventListener('error', function() {
+        throw new Error('Network error. Please try again.');
+      });
+
+      xhr.open('POST', `${window.VOLGA_API}/job-applications`);
+      xhr.send(formData);
+
     } catch (err) {
       errorEl.textContent = err.message || 'Something went wrong. Please try again.';
     } finally {
-      submitBtn.classList.remove('loading');
-      submitBtn.disabled = false;
+      currentSubmitBtn.classList.remove('loading');
+      currentSubmitBtn.disabled = false;
+      progressEl.style.display = 'none';
     }
-  });
+    });
+  }
 })();
+const faqData = [
+  {
+    question: "What technologies will I work with?",
+    answer:
+      "Depending on your role, you'll work with Unity, Unreal Engine, OpenXR, VisionOS, Three.js, AI frameworks, cloud platforms (Azure, AWS), Node.js, Python, .NET, and enterprise technologies."
+  },
+  {
+    question: "Do you offer internships?",
+    answer:
+      "Yes. We welcome students and recent graduates who are passionate about XR, AI, and software engineering."
+  },
+  {
+    question: "Is remote work available?",
+    answer:
+      "Some positions offer hybrid or remote flexibility depending on project requirements."
+  },
+  {
+    question: "Do I need previous XR experience?",
+    answer:
+      "Strong engineering fundamentals, curiosity, and willingness to learn are more important than prior XR experience."
+  },
+  {
+    question: "What makes Volga different?",
+    answer:
+      "You'll work on real products solving real industrial challenges with a multidisciplinary team using cutting-edge technologies."
+  }
+];
+
+function renderFAQ() {
+  const faqList = document.getElementById("faqList");
+
+  faqList.innerHTML = faqData.map((item, index) => `
+    <div class="faq-item reveal" style="animation-delay:${index * 30}ms">
+      <button class="faq-q">
+        ${item.question}
+        <div class="plus"></div>
+      </button>
+
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          ${item.answer}
+        </div>
+      </div>
+    </div>
+  `).join("");
+
+  document.querySelectorAll(".faq-q").forEach(button => {
+    button.addEventListener("click", function () {
+
+      const item = this.parentElement;
+      const answer = item.querySelector(".faq-a");
+
+      if (item.classList.contains("open")) {
+        item.classList.remove("open");
+        answer.style.maxHeight = "0";
+      } else {
+        item.classList.add("open");
+        answer.style.maxHeight =
+          answer.querySelector(".faq-a-inner").scrollHeight + "px";
+      }
+    });
+  });
+}
+
+renderFAQ();
 </script>
 
 </body>

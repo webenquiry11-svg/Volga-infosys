@@ -14,23 +14,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 /* ── Footer visual animation styles ── */
-.hero-visual {
-  position: absolute;
-  right: 0;
-  top: 80px;
-  width: 55%;
-  min-height: 700px;
-  z-index: 2;
-}
-.hero-visual img {
-  width: 100%;
-  max-width: 800px;
-  height: auto;
-  object-fit: cover;
 
-  float: right;
-  z-index: 2;
-}
 
 /* ── About page variables (prefixed to avoid overriding volga.css tokens) ── */
 :root {
@@ -105,6 +89,46 @@
   position: relative;
   overflow: hidden;
 }
+.hero-layout{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:60px;
+}
+
+.hero-copy{
+    flex:1;
+    max-width:600px;
+}
+
+.hero-right{
+    flex:1;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+}
+
+.hero-right img{
+    width:850px;
+    max-width:none;
+    height:auto;
+    display:flex;
+    z-index: 2;
+    right: 200px;
+}
+
+/* Mobile */
+@media (max-width:992px){
+    .hero-layout{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .hero-right{
+        justify-content:center;
+        margin-top:40px;
+    }
+}
 
 .hero h1, .hero .lede { color: #d6e4f0;}
 .hero .wrap { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; min-height:calc(85vh - 280px); position: relative; z-index: 1; }
@@ -113,6 +137,7 @@
 .hero-actions { display:flex; gap:14px; flex-wrap:wrap; }
 .hero-visual .frame { height:340px; }
 .hero-visual .frame svg { width:30px; height:30px; }
+
 
 /* ── Sections ── */
 .section { padding:88px 0; }
@@ -340,6 +365,8 @@
 @media (prefers-reduced-motion:reduce) {
   .frame-sweep::after { animation:none; }
   .reveal { transition:none; opacity:1; transform:none; }
+ 
+
 }
 </style>
 </head>
@@ -349,8 +376,6 @@
 <div class="scroll-progress-container">
   <div class="scroll-progress-bar" id="scrollProgressBar"></div>
 </div>
-<div class="cursor" id="cursor"></div>
-<div class="cursor-follower" id="cursorFollower"></div>
 
 <!-- NAV -->
 <nav id="navbar">
@@ -507,7 +532,7 @@
         <div class="mega-col">
           <ul class="mega-items">
             <li><a class="mega-item" href="about.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>About Us</a></li>
-            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>Careers</a></li>
+            <li><a class="mega-item" href="careers-page (1).html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>Careers</a></li>
             <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Partnerships</a></li>
           </ul>
         </div>
@@ -521,29 +546,44 @@
   </div>
   <div id="backdrop" aria-hidden="true"></div>
 
-<section class="hero">
-  <!-- 3D Canvas as Background -->
-  <canvas id="three-hero-canvas" class="hero-3d-canvas"></canvas>
-  
-  <div class="hero-noise"></div>
-  
+<section class="hero" aria-label="About Volga Infosys hero">
+  <!-- Background layers (no JS required) -->
+  <div class="hero-noise" aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
   <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
   <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
   <div class="hero-orb hero-orb-3" aria-hidden="true"></div>
-  
-  <div class="hero-grid" aria-hidden="true"></div>
-  
-  <div class="wrap">
-    <div class="hero-copy reveal">
-      <p class="eyebrow">Company — About us</p>
-      <h1 class="h1">Building the future of enterprise experiences</h1>
-      <p class="lede">We help organizations transform ideas into immersive digital solutions through AR, VR, XR, AI, Digital Twins, and advanced software engineering.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="contact.html">Contact our team</a>
-        <a class="btn btn-ghost" href="services.html">Explore services</a>
-      </div>
+
+ <div class="wrap">
+    <div class="hero-layout">
+
+        <!-- Left Side -->
+        <div class="hero-copy reveal">
+            <p class="eyebrow">Company — About us</p>
+
+            <h1 class="h1">
+                Building the future of
+                <span class="hero-accent">enterprise experiences</span>
+            </h1>
+
+            <p class="lede">
+                We turn strategy into immersive outcomes—AR, VR, XR, AI, Digital Twins,
+                and advanced software engineering—built for real-world business goals.
+            </p>
+
+            <div class="hero-actions">
+                <a class="btn btn-primary" href="contact.html">Contact our team</a>
+                <a class="btn btn-ghost" href="services.html">Explore services</a>
+            </div>
+        </div>
+
+        <!-- Right Side -->
+        <div class="hero-right reveal">
+            <img src="footer1-visual.png" alt="Hero Image">
+        </div>
+
     </div>
-  </div>
+</div>
 </section>
 
 <section class="section section--dark on-dark">
@@ -625,216 +665,7 @@
   </div>
 </section>
 
-<style>
-  /* ── About Hero Redesign ──── */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 80px 6vw 40px;
-    overflow: hidden;
-    background: linear-gradient(160deg, #0d1b26 0%, #0a1720 50%, #111f2c 100%);
-  }
 
-  .hero-3d-canvas {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    width: 100% !important;
-    height: 100% !important;
-    display: block;
-  }
-
-  .hero-noise {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
-    opacity: 0.25;
-    pointer-events: none;
-  }
-
-  .hero-orb {
-    position: absolute;
-    border-radius: 999px;
-    filter: blur(60px);
-    opacity: 0.4;
-    z-index: 1;
-    animation: float 8s ease-in-out infinite;
-  }
-
-  .hero-orb-1 {
-    width: 400px; height: 400px;
-    top: -100px; right: -100px;
-    background: radial-gradient(circle, rgba(232,147,10,0.35) 0%, transparent 60%);
-    animation-delay: 0s;
-  }
-
-  .hero-orb-2 {
-    width: 300px; height: 300px;
-    bottom: 50px; left: -80px;
-    background: radial-gradient(circle, rgba(26,79,114,0.35) 0%, transparent 60%);
-    animation-delay: -2s;
-  }
-
-  .hero-orb-3 {
-    width: 250px; height: 250px;
-    top: 40%; left: 50%;
-    background: radial-gradient(circle, rgba(180,210,230,0.25) 0%, transparent 60%);
-    animation-delay: -4s;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-20px) scale(1.05); }
-  }
-
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background-image:
-      linear-gradient(rgba(27, 79, 114, 0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(27, 79, 114, 0.08) 1px, transparent 1px);
-    background-size: 80px 80px;
-    mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black 30%, transparent 100%);
-    pointer-events: none;
-  }
-
-  .hero .wrap {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-  }
-
-  .hero-copy {
-    color: #d6e4f0;
-  }
-
-  .hero-copy .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: #e8930a;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-
-  .hero-copy .h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2.6rem, 5vw, 4.5rem);
-    line-height: 1;
-    color: #d6e4f0;
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.02em;
-  }
-
-  .hero-copy .lede {
-    color: rgba(214,228,240,0.75);
-    max-width: 560px;
-    line-height: 1.7;
-    font-size: 1.02rem;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 16px;
-    margin-top: 2rem;
-  }
-
-  /* ── Leadership overrides (novabrew portrait cards) ──── */
-  #leadership .wrap {
-    display: grid;
-    grid-template-columns: 0.95fr 1.05fr;
-    gap: 56px;
-    align-items: center;
-  }
-  .leader-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-  .l-card {
-    aspect-ratio: 3 / 4;
-    border-radius: 18px;
-    overflow: hidden;
-    position: relative;
-    background: linear-gradient(145deg, #1e3448 0%, #162a3d 60%, #112035 100%);
-    box-shadow:
-      -1px -1px 0 rgba(255,255,255,0.1),
-      inset 0 1px 0 rgba(255,255,255,0.08),
-      4px 6px 0 rgba(0,0,0,0.5),
-      6px 10px 20px rgba(0,0,0,0.6),
-      0 0 0 1px rgba(0,0,0,0.35);
-    cursor: pointer;
-    transition: transform 0.5s cubic-bezier(0.6,0,0.2,1), box-shadow 0.5s;
-    opacity: 0;
-    transform: translateY(60px);
-  }
-  .l-card::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 40%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.065) 0%, transparent 100%);
-    pointer-events: none;
-    border-radius: 18px 18px 0 0;
-    z-index: 2;
-  }
-  .l-card:hover {
-    transform: translateY(-8px) translateX(-2px);
-    box-shadow:
-      -1px -1px 0 rgba(255,255,255,0.12),
-      inset 0 1px 0 rgba(255,255,255,0.1),
-      6px 9px 0 rgba(0,0,0,0.52),
-      8px 14px 28px rgba(0,0,0,0.65),
-      0 0 0 1px rgba(0,0,0,0.35),
-      0 0 24px rgba(232,147,10,0.12);
-  }
-  .l-card img {
-    width: 100%; height: 100%;
-    object-fit: cover; object-position: center top;
-    display: block;
-  }
-  .l-meta {
-    position: absolute;
-    left: 12px; right: 12px; bottom: 12px;
-    background: rgba(15,8,4,0.72);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: #faf8f4;
-    padding: 10px 14px;
-    border-radius: 12px;
-    z-index: 3;
-    transform: translateY(8px);
-    opacity: 0;
-    transition: opacity 0.4s, transform 0.4s cubic-bezier(0.6,0,0.2,1);
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  .l-card:hover .l-meta { transform: translateY(0); opacity: 1; }
-  .l-nm { font-weight: 700; font-size: 13px; }
-  .l-rl { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; letter-spacing: 0.03em; }
-
-  @media (max-width: 1100px) {
-    .hero .wrap { grid-template-columns: 1fr; }
-    .hero { padding-top: 120px; }
-  }
-
-  @media (max-width: 900px) {
-    .leadership .wrap { grid-template-columns: 1fr; }
-    .leader-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 560px) {
-    .leader-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  }
-</style>
 
 <!-- ========== NOVABREW TEAM SECTION ========== -->
 <section class="nb-team-section">

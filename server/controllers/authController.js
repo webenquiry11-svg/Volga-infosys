@@ -62,15 +62,15 @@ export const login = async (req, res) => {
       expiresAt
     });
 
-    res.json({ 
-      token, 
-      user: { 
-        id: admin._id, 
+    res.json({
+      token,
+      user: {
+        id: admin._id,
         name: admin.name || "Admin User",
-        email: admin.email, 
+        email: admin.email,
         role: admin.role,
         permissions: admin.permissions
-      } 
+      }
     });
   } catch (error) {
     console.error("Login error:", error);
@@ -170,7 +170,7 @@ export const extendSession = async (req, res) => {
 // Get all permissions (admin only)
 export const getPermissions = async (req, res) => {
   try {
-    res.json({ 
+    res.json({
       permissions: PERMISSIONS,
       rolePermissions: ROLE_PERMISSIONS
     });
@@ -186,14 +186,14 @@ export const forgotPassword = async (req, res) => {
   try {
     const user = await Admin.findOne({ email: req.body.email });
     if (!user) return res.json(genericResponse);
-    
+
     const resetToken = crypto.randomBytes(20).toString("hex");
     user.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
     user.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
     await user.save();
-    
+
     const resetUrl = `${req.protocol}://${req.get("host")}/admin/index.html?reset=${resetToken}`;
-    
+
     try {
       await sendEmail({
         to: user.email,
@@ -203,7 +203,7 @@ export const forgotPassword = async (req, res) => {
     } catch (emailError) {
       console.error("Error sending reset email:", emailError);
     }
-    
+
     res.json(genericResponse);
   } catch (error) {
     console.error("Forgot password error:", error);
@@ -218,21 +218,21 @@ export const resetPassword = async (req, res) => {
       .createHash("sha256")
       .update(req.params.token)
       .digest("hex");
-    
+
     const user = await Admin.findOne({
       resetPasswordToken,
       resetPasswordExpire: { $gt: Date.now() }
     });
-    
+
     if (!user) {
       return res.status(400).json({ message: "Invalid or expired token" });
     }
-    
+
     user.password = req.body.password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
     await user.save();
-    
+
     res.json({ token: signToken(user._id) });
   } catch (error) {
     console.error("Reset password error:", error);
@@ -285,17 +285,17 @@ export const createUser = async (req, res) => {
   try {
     // Generate a temporary password
     const tempPassword = crypto.randomBytes(8).toString("hex");
-    
+
     // Set default permissions based on role
     const permissions = req.body.permissions || ROLE_PERMISSIONS[req.body.role] || [];
-    
+
     // Create user with temp password and permissions
     const admin = await Admin.create({
       ...req.body,
       password: tempPassword,
       permissions
     });
-    
+
     // Send email with credentials
     const htmlContent = `
       <!DOCTYPE html>
@@ -315,7 +315,7 @@ export const createUser = async (req, res) => {
       </body>
       </html>
     `;
-    
+
     try {
       await sendEmail({
         to: admin.email,
@@ -326,7 +326,7 @@ export const createUser = async (req, res) => {
     } catch (emailError) {
       console.error("Email send failed:", emailError);
     }
-    
+
     res.status(201).json({ user: { id: admin._id, name: admin.name, email: admin.email, role: admin.role, permissions: admin.permissions } });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -373,16 +373,16 @@ export const reviewRoleApplication = async (req, res) => {
   try {
     const { status } = req.body;
     const application = await RoleApplication.findById(req.params.id);
-    
+
     if (!application) {
       return res.status(404).json({ message: "Application not found" });
     }
-    
+
     application.status = status;
     application.reviewedBy = req.user.id;
     application.reviewedAt = new Date();
     await application.save();
-    
+
     // If approved, create/update user
     if (status === "approved") {
       let user = await Admin.findOne({ email: application.applicantEmail });
@@ -396,7 +396,7 @@ export const reviewRoleApplication = async (req, res) => {
           role: application.requestedRole,
           permissions: ROLE_PERMISSIONS[application.requestedRole]
         });
-        
+
         // Send email with temp password
         const htmlContent = `
           <!DOCTYPE html>
@@ -416,7 +416,7 @@ export const reviewRoleApplication = async (req, res) => {
           </body>
           </html>
         `;
-        
+
         try {
           await sendEmail({
             to: user.email,
@@ -431,10 +431,10 @@ export const reviewRoleApplication = async (req, res) => {
         user.role = application.requestedRole;
         user.permissions = ROLE_PERMISSIONS[application.requestedRole];
         await user.save();
-        
+
         // Log user out of all devices
         await Session.deleteMany({ userId: user._id });
-        
+
         // Send email to existing user about role update
         const htmlContent = `
           <!DOCTYPE html>
@@ -449,7 +449,7 @@ export const reviewRoleApplication = async (req, res) => {
           </body>
           </html>
         `;
-        
+
         try {
           await sendEmail({
             to: user.email,
@@ -462,7 +462,7 @@ export const reviewRoleApplication = async (req, res) => {
         }
       }
     }
-    
+
     res.json({ application });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -591,7 +591,7 @@ export const reviewPasswordChangeRequest = async (req, res) => {
           </body>
           </html>
         `;
-        
+
         try {
           await sendEmail({
             to: user.email,
@@ -618,7 +618,7 @@ export const reviewPasswordChangeRequest = async (req, res) => {
         </body>
         </html>
       `;
-      
+
       try {
         await sendEmail({
           to: request.userEmail,

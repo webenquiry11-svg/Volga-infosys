@@ -110,7 +110,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-ui);overflow-
 }
 .hero-img{
   position:absolute;inset:0; 
-  background-image:url('sol-hero.png');
+  background-image:url('assets/images/solution/sol-hero.png');
   background-size:cover; 
   background-position:50% 30%;
   background-repeat:no-repeat;
@@ -654,7 +654,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:52px 60px
 
   <nav id="navbar">
     <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
-      <img src="logo.png" alt="VOLGA Infosys logo" />
+      <img src="favicon.png" alt="VOLGA Infosys logo" />
     </a>
     <ul class="nav-links">
       <li class="nav-item" data-menu="solutions"><button class="nav-link">Solutions <span class="nav-arrow"></span></button></li>
@@ -712,21 +712,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:52px 60px
   <div class="hero-right">
     <div class="hero-img" id="heroBg"></div>
     <div class="hero-img-overlay"></div>
-    <div class="hero-stats">
-      <div class="hstat">
-        <div class="hstat-n"><span class="count-up" data-target="10">0</span><em>+</em></div>
-        <div class="hstat-l">Solution Types</div>
-      </div>
-      <div class="hstat">
-        <div class="hstat-n"><span class="count-up" data-target="15">0</span><em>+</em></div>
-        <div class="hstat-l">Industries</div>
-      </div>
-      <div class="hstat">
-        <div class="hstat-n"><span class="count-up" data-target="200">0</span><em>+</em></div>
-        <div class="hstat-l">Projects</div>
-      </div>
-    </div>
-  </div>
+   
 </section>
 
 <!-- SOLUTIONS -->
@@ -889,7 +875,7 @@ const FI={
 
 const SOLUTIONS=[
   {id:"ar",icon:IC.ar,name:"AR Solutions",tag:"Augmented Reality",
-   img:"ar-solutions.png",
+   img:"assets/images/solution/ar-solutions.png",
    title:"AR Solutions",subtitle:"Overlay intelligence on the real world",
    intro:"Augmented Reality (AR) is revolutionizing the way businesses interact with customers, employees, and products. By seamlessly blending digital content with the physical world, AR creates immersive experiences that enhance engagement, improve understanding, and drive better decision-making.<br> At our company, we develop custom AR solutions that help businesses showcase products, simplify complex information, and create interactive customer experiences. Whether you're in retail, manufacturing, education, healthcare, or real estate, our AR technology helps bridge the gap between imagination and reality.",
    whyNeed:"Modern customers expect interactive and personalized experiences. AR enables businesses to create engaging experiences that allow users to visualize products, interact with digital models, and access real-time information directly through smartphones, tablets, or AR devices.<br>AR technology improves customer confidence, reduces uncertainty, and increases conversion rates by helping users make informed decisions before purchasing.",whyItems:null,
@@ -898,7 +884,7 @@ const SOLUTIONS=[
    industries:["Retail","Real Estate","Manufacturing","Healthcare","Education","Automotive","Tourism"],
    ctaH:"Ready to build an AR experience?",ctaP:"Our experts will map out a custom AR strategy for your business."},
   {id:"vr",icon:IC.vr,name:"VR Solutions",tag:"Virtual Reality",
-   img:"vr.png",
+   img:"assets/images/solution/vr.png",
    title:"VR Solutions",subtitle:"Transport people anywhere, instantly",
    intro:"Virtual Reality creates fully immersive digital environments where users can explore, learn, train, and interact without physical limitations. Our VR solutions create realistic, engaging virtual environments tailored to your business goals.",
    whyNeed:"Traditional training and product showcasing carry significant cost and logistical barriers. VR eliminates them by creating realistic virtual experiences accessible from anywhere.",whyItems:null,
@@ -907,7 +893,7 @@ const SOLUTIONS=[
    industries:["Education","Manufacturing","Healthcare","Real Estate","Aviation","Defense"],
    ctaH:"Let's build your virtual future.",ctaP:"Empower your business with immersive VR experiences that engage, educate, and inspire."},
   {id:"twin",icon:IC.twin,name:"Digital Twin",tag:"Real-Time Simulation",
-   img:"digital-twin.png",
+   img:"assets/images/solution/digital-twin.png",
    title:"Digital Twin",subtitle:"Mirror your physical world in real time",
    intro:"A Digital Twin is a live virtual replica of a physical asset, system, or process. It continuously receives sensor data to monitor performance, predict issues, and optimize operations — the cornerstone of Industry 4.0.",
    whyNeed:"Digital Twins connect physical assets with virtual models through IoT sensors and cloud analytics, giving organizations real operational intelligence and predictive power.",whyItems:null,
@@ -916,7 +902,7 @@ const SOLUTIONS=[
    industries:["Manufacturing","Smart Cities","Energy","Utilities","Construction","Transportation"],
    ctaH:"Build smarter operations today.",ctaP:"Leverage Digital Twin technology for complete visibility and control over your assets."},
   {id:"xr",icon:IC.xr,name:"XR Applications",tag:"Extended Reality",
-   img:"xr-application.png",
+   img:"assets/images/solution/xr-application.png",
    title:"XR Applications",subtitle:"The full spectrum of immersive reality",
    intro:"Extended Reality (XR) unifies AR, VR, and Mixed Reality into one ecosystem. At Volga Infosys, we build custom XR applications that unlock new possibilities across training, visualization, collaboration, and industrial operations.",
    whyNeed:"Unlike traditional apps, XR creates interactive environments where users engage with digital content in a far more natural way.",whyItems:["Interact with 3D objects","Visualize products in real space","Access contextual info","Collaborate in immersive spaces","Simulate real-world scenarios"],
@@ -925,7 +911,7 @@ const SOLUTIONS=[
    industries:["Manufacturing","Healthcare","Education","Retail","Real Estate","Automotive"],
    ctaH:"Build your XR application.",ctaP:"Improve productivity, create immersive journeys, or build next-generation enterprise apps."},
   {id:"ai",icon:IC.ai,name:"AI Integration",tag:"Artificial Intelligence",
-   img:"ai-integration.png",
+   img:"assets/images/solution/ai-integration.png",
    title:"AI Integration",subtitle:"Intelligence woven into every workflow",
    intro:"AI has become a business necessity. We provide end-to-end AI Integration Services that seamlessly connect intelligent technologies with your existing systems, applications, and workflows — adding intelligence without replacing what works.",
    whyNeed:"AI Integration embeds capabilities into existing platforms, enhancing them with automation, prediction, and decision-making.",whyItems:["Enterprise Applications","CRM & ERP Systems","Customer Service","E-commerce Platforms","Mobile & Web Apps","Manufacturing Systems"],
@@ -934,7 +920,7 @@ const SOLUTIONS=[
    industries:["Healthcare","Retail","Manufacturing","Finance","Education","Logistics"],
    ctaH:"Transform your business with AI.",ctaP:"Advanced machine learning combined with practical business expertise."},
   {id:"cfg",icon:IC.cfg,name:"3D Configurators",tag:"Interactive Commerce",
-   img:"https://images.unsplash.com/photo-1581092160607-ee67df832dc2?w=1400&q=80&fit=crop",
+   img:"assets/images/solution/3d.jpg",
    title:"3D Configurators",subtitle:"Let customers build exactly what they want",
    intro:"3D Configurators empower customers to customize, visualize, and interact with products in real time — creating a more engaging and confident buying journey. Every selection updates instantly with photorealistic 3D rendering.",
    whyNeed:"A 3D Configurator lets users personalize products — modifying colors, materials, sizes, and features — while seeing instant visual results.",whyItems:["Customize instantly","See real-time changes","Compare variations","Explore features","Generate quotes"],
@@ -943,7 +929,7 @@ const SOLUTIONS=[
    industries:["Furniture","Automotive","Fashion","Consumer Goods","Home Decor","Industrial Equipment"],
    ctaH:"Build interactive product experiences.",ctaP:"Turn customization into a competitive advantage."},
   {id:"vs",icon:IC.vs,name:"Virtual Showrooms",tag:"Immersive Commerce",
-   img:"https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=1400&q=80&fit=crop",
+   img:"assets/images/solution/virtual-showroom.jpg",
    title:"Virtual Showrooms",subtitle:"Your showroom, open everywhere",
    intro:"Virtual Showrooms provide immersive digital environments where customers can explore products and engage with your brand from anywhere in the world — no travel, no appointment, no limits.",
    whyNeed:"A Virtual Showroom replicates a physical showroom online. Visitors navigate spaces, view products, and interact with digital content in real time.",whyItems:null,
@@ -952,7 +938,7 @@ const SOLUTIONS=[
    industries:["Automotive","Real Estate","Retail","Manufacturing","Luxury","Home Furnishings"],
    ctaH:"Showcase without physical limits.",ctaP:"Create digital experiences that reach customers everywhere."},
   {id:"sim",icon:IC.sim,name:"Simulation Systems",tag:"Engineering & Training",
-   img:"simulation.jpg",
+   img:"assets/images/solution/simulation.jpg",
    title:"Simulation Systems",subtitle:"Practice the impossible, safely",
    intro:"Simulation systems recreate real-world environments, processes, and scenarios in a safe digital space. Volga Infosys builds high-fidelity simulations for training, engineering, manufacturing, healthcare, and defense.",
    whyNeed:null,whyItems:null,
@@ -961,7 +947,7 @@ const SOLUTIONS=[
    industries:["Manufacturing","Healthcare","Aviation","Defense","Transportation","Energy"],
    ctaH:"Build smarter, safer operations.",ctaP:"Simulation technology that improves outcomes while cutting risk."},
   {id:"trn",icon:IC.trn,name:"Interactive Training",tag:"Learning & Development",
-   img:"Interactive-Training.png",
+   img:"assets/images/solution/Interactive-Training.png",
    title:"Interactive Training",subtitle:"Learning that actually sticks",
    intro:"Interactive Training replaces passive slideshows with immersive scenarios, real-time feedback, and hands-on simulations — dramatically improving retention and workforce readiness.",
    whyNeed:null,whyItems:null,
@@ -970,7 +956,7 @@ const SOLUTIONS=[
    industries:["Manufacturing","Healthcare","Education","Logistics","Retail","Construction"],
    ctaH:"Future-ready learning starts here.",ctaP:"Empower your workforce with training built for modern challenges."},
   {id:"meta",icon:IC.meta,name:"Metaverse Solutions",tag:"Spatial Computing",
-   img:"metaverse.png",
+   img:"assets/images/solution/metaverse.png",
    title:"Metaverse Solutions",subtitle:"Where digital and physical worlds converge",
    intro:"The Metaverse is the next evolution of digital interaction — persistent virtual environments where users socialize, collaborate, learn, shop, and do business. Volga Infosys builds scalable Metaverse Solutions for organizations ready to lead.",
    whyNeed:null,whyItems:null,
@@ -980,13 +966,6 @@ const SOLUTIONS=[
    ctaH:"Shape the future with Metaverse.",ctaP:"Build digital ecosystems that redefine how you connect, collaborate, and grow."},
 ];
 
-const PROOF=[
-  {img:"https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=900&q=80",tag:"Augmented Reality",name:"AR Product Overlay",desc:"Real-time product placement in customer environments"},
-  {img:"https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=900&q=80",tag:"Virtual Reality",name:"VR Training Platform",desc:"High-fidelity simulation for industrial training"},
-  {img:"https://images.unsplash.com/photo-1655720406770-12dc5a1dc4f7?w=900&q=80",tag:"Digital Twin",name:"Factory Digital Twin",desc:"Live monitoring of manufacturing assets"},
-  {img:"https://images.unsplash.com/photo-1696936218573-6b80e3c8ddab?w=900&q=80",tag:"Extended Reality",name:"XR Enterprise Suite",desc:"Unified immersive workspace for remote teams"},
-  {img:"https://images.unsplash.com/photo-1712002641088-9d76f9089355?w=900&q=80",tag:"AI Integration",name:"AI-Powered Analytics",desc:"Predictive intelligence embedded in business workflows"},
-];
 
 /* Build sidebar */
 const solList=document.getElementById('solList');

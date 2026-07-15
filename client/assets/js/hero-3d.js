@@ -67,7 +67,7 @@ window.addEventListener('load', () => {
   // Load VR Model
   const loader = new THREE.GLTFLoader();
   loader.load(
-    'oculus_quest_vr_headset.glb',
+    'assets/3d-model/oculus_quest_vr_headset.glb',
     (gltf) => {
       mainObject = gltf.scene;
       mainObject.scale.set(9, 9, 9); // Made model bigger!

@@ -2392,9 +2392,10 @@ section {
 
 
 .cta-bg {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  background: url('fixed.jpg') center/cover no-repeat fixed;
+  background: url('assets/images/homepage/fixed.jpg') center/cover no-repeat fixed;
+  
 }
 
 .cta-bg::after {

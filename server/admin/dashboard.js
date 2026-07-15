@@ -2686,7 +2686,7 @@ document.getElementById("storyDeleteBtn")
         <div><span>Email</span><strong>${esc(application.applicantEmail)}</strong></div>
         <div><span>Phone</span><strong>${esc(application.applicantPhone || '—')}</strong></div>
         <div><span>Job</span><strong>${esc(application.jobId?.title || 'Unknown Job')}</strong></div>
-        <div><span>Resume</span><strong>${application.resumeUrl ? `<a href="${esc(application.resumeUrl)}" target="_blank" style="color: #3b82f6;">View</a>` : '—'}</strong></div>
+        <div><span>Resume</span><strong>${application.resumeUrl ? `<a href="${esc(application.resumeUrl)}" target="_blank" style="color: #3b82f6;" onclick="handleResumeClick(event, '${esc(application.resumeUrl)}')">View</a>` : '—'}</strong></div>
         <div><span>Portfolio</span><strong>${application.portfolioUrl ? `<a href="${esc(application.portfolioUrl)}" target="_blank" style="color: #3b82f6;">View</a>` : '—'}</strong></div>
         <div><span>LinkedIn</span><strong>${application.linkedinUrl ? `<a href="${esc(application.linkedinUrl)}" target="_blank" style="color: #3b82f6;">View</a>` : '—'}</strong></div>
         <div><span>Applied Date</span><strong>${fmtDate(application.createdAt)}</strong></div>
@@ -2695,6 +2695,18 @@ document.getElementById("storyDeleteBtn")
       document.getElementById('jobAppStatus').value = application.status;
       document.getElementById('jobAppNotes').value = application.notes || '';
       document.getElementById('jobApplicationModalOverlay').classList.add('open');
+    }
+
+    function handleResumeClick(event, resumeUrl) {
+      // Check if we're on Railway (ephemeral storage warning)
+      if (window.location.hostname.includes('railway') || window.location.hostname.includes('onrailway')) {
+        const confirmView = confirm('⚠️ Railway Warning: Uploaded files may be lost due to ephemeral storage. Consider using cloud storage (AWS S3, Cloudinary) for production.\n\nContinue to view resume?');
+        if (!confirmView) {
+          event.preventDefault();
+          return false;
+        }
+      }
+      return true;
     }
 
     document.getElementById('jobApplicationModalClose')?.addEventListener('click', () =>

@@ -280,7 +280,9 @@
     .jd-layout { display: grid; grid-template-columns: 1fr 400px; gap: 48px; align-items: start; }
     
     /* ── Main content ── */
-    .jd-main {}
+    .jd-main {
+      min-width: 0; /* Prevents flex/grid overflow issues */
+    }
     .jd-section { margin-bottom: 44px; }
     .jd-section-label {
       font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em;
@@ -829,7 +831,7 @@
                 <p>We'll review your details and reach out within a few business days. Thanks for your interest.</p>
               </div>
               <!-- Form -->
-              <form id="application-form" novalidate>
+              <form id="application-form" action="#" method="POST" novalidate>
                 <div class="jd-fg">
                   <label for="applicantName">Full name <span class="req">*</span></label>
                   <input type="text" id="applicantName" name="applicantName" placeholder="Jane Smith" required>
@@ -863,7 +865,7 @@
                   <textarea id="coverLetter" name="coverLetter" placeholder="Why are you a great fit?"></textarea>
                 </div>
                 <div class="jd-form-error" id="jd-form-error"></div>
-                <button type="submit" class="jd-submit" id="jd-submit">
+                <button type="button" class="jd-submit" id="jd-submit">
                   <span class="jd-submit-label">Submit Application</span>
                   <div class="jd-submit-spinner"></div>
                 </button>
@@ -956,12 +958,16 @@
     fileDrop.addEventListener('dragleave', () => { if (!resumeInput.files[0]) fileDrop.classList.remove('has-file'); });
 
     // Form submit
-    document.getElementById('application-form').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      if (!currentJob) return;
-      const errorEl = document.getElementById('jd-form-error');
-      const submitBtn = document.getElementById('jd-submit');
-      errorEl.textContent = '';
+    const submitBtn = document.getElementById('jd-submit');
+    if (submitBtn) {
+      submitBtn.addEventListener('click', async function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        console.log('Submit button click event triggered');
+        if (!currentJob) return;
+        const errorEl = document.getElementById('jd-form-error');
+        errorEl.textContent = '';
 
       const name = document.getElementById('applicantName').value.trim();
       const email = document.getElementById('applicantEmail').value.trim();
@@ -972,8 +978,9 @@
       if (!resumeFile) { errorEl.textContent = 'Please attach your resume.'; return; }
       if (resumeFile.size > 10 * 1024 * 1024) { errorEl.textContent = 'File too large. Maximum size is 10 MB.'; return; }
 
-      submitBtn.classList.add('loading');
-      submitBtn.disabled = true;
+      const currentSubmitBtn = document.getElementById('jd-submit');
+      currentSubmitBtn.classList.add('loading');
+      currentSubmitBtn.disabled = true;
 
       try {
         const fd = new FormData();
@@ -994,15 +1001,25 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.message || 'Submission failed');
 
+        console.log('Application submitted successfully, showing success message');
         document.getElementById('application-form').style.display = 'none';
-        document.getElementById('jd-success').style.display = 'block';
+        const successEl = document.getElementById('jd-success');
+        successEl.style.display = 'block';
+        successEl.style.visibility = 'visible';
+        successEl.style.opacity = '1';
+        console.log('Success element display:', successEl.style.display);
+        
+        // Prevent any scrolling after successful submission
+        window.scrollTo(0, window.scrollY);
+        document.body.style.overflow = 'auto';
       } catch (err) {
         errorEl.textContent = err.message || 'Something went wrong. Please try again.';
       } finally {
-        submitBtn.classList.remove('loading');
-        submitBtn.disabled = false;
+        currentSubmitBtn.classList.remove('loading');
+        currentSubmitBtn.disabled = false;
       }
-    });
+      });
+    }
 
     document.addEventListener('DOMContentLoaded', () => {
       const jobId = getJobIdFromUrl();

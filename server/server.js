@@ -51,7 +51,7 @@ app.get("/favicon.ico", (req, res) => {
 });
 
 app.use(cors({
-  origin: function(origin, callback) {
+  origin: function (origin, callback) {
     const allowed = (process.env.ALLOWED_ORIGINS || '')
       .split(',')
       .map(o => o.trim())
@@ -70,10 +70,10 @@ app.use(cors({
 app.use(express.json());
 
 const contactLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100, message: { success: false, message: "Too many submissions, try again later." } });
-const authLimiter = rateLimit({ 
-  windowMs: 15 * 60 * 1000, 
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
   max: 20,
-  message: { success: false, message: "Too many login attempts, try again later." } 
+  message: { success: false, message: "Too many login attempts, try again later." }
 });
 const generalAuthLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -81,8 +81,44 @@ const generalAuthLimiter = rateLimit({
   message: { success: false, message: "Too many requests, try again later." }
 });
 
-// Serve uploaded files
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// Serve uploaded files (with proper headers for Railway)
+app.use("/uploads", (req, res, next) => {
+  console.log(`📁 Upload request: ${req.method} ${req.url}`);
+  next();
+}, express.static(path.join(__dirname, "uploads"), {
+  setHeaders: (res, filePath) => {
+    // Set proper headers for PDF files
+    if (filePath.endsWith('.pdf')) {
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'inline');
+    }
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  },
+  fallthrough: false // Return 404 if file doesn't exist
+}));
+
+// Add dedicated route for serving files with better error handling
+app.get("/uploads/:filename", async (req, res) => {
+  const filePath = path.join(__dirname, "uploads", req.params.filename);
+  const fs = await import('fs');
+  
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      console.error(`❌ File not found: ${filePath}`);
+      return res.status(404).json({ 
+        success: false, 
+        message: 'File not found. It may have been lost due to Railway ephemeral storage.' 
+      });
+    }
+    
+    res.sendFile(filePath, (err) => {
+      if (err) {
+        console.error(`❌ Error sending file: ${err}`);
+        res.status(500).json({ success: false, message: 'Error serving file' });
+      }
+    });
+  });
+});
 
 app.use("/api/contact", contactLimiter, contactRoutes);
 app.use("/api/auth", generalAuthLimiter, authRoutes);

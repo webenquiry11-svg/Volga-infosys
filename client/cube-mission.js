@@ -8,12 +8,12 @@
 
   /* ── Image / face data — swap with your real images ─────────── */
   const IMAGES = [
-    { src: "face1.png",  label: "INTRO"   },
-    { src: "face 2.png",     label: "DEFINE"  },
-    { src: "face3.png",   label: "SHAPE"     },
-    { src: "face4.png",      label: "BUILD"    },
-    { src: "face5.png",    label: "LIVE"     },
-    { src: "face6.png",     label: "EVOLVE"    },
+    { src: "assets/images/homepage/face1.png",  label: "INTRO"   },
+    { src: "assets/images/homepage/face 2.png",     label: "DEFINE"  },
+    { src: "assets/images/homepage/face3.png",   label: "SHAPE"     },
+    { src: "assets/images/homepage/face4.png",      label: "BUILD"    },
+    { src: "assets/images/homepage/face5.png",    label: "LIVE"     },
+    { src: "assets/images/homepage/face6.png",     label: "EVOLVE"    },
   ];
   const N = IMAGES.length;
 
