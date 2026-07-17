@@ -87,38 +87,14 @@ app.use("/uploads", (req, res, next) => {
   next();
 }, express.static(path.join(__dirname, "uploads"), {
   setHeaders: (res, filePath) => {
-    // Set proper headers for PDF files
+    // Set proper headers for PDF files to open in browser
     if (filePath.endsWith('.pdf')) {
       res.setHeader('Content-Type', 'application/pdf');
       res.setHeader('Content-Disposition', 'inline');
     }
     res.setHeader('Access-Control-Allow-Origin', '*');
-  },
-  fallthrough: false // Return 404 if file doesn't exist
+  }
 }));
-
-// Add dedicated route for serving files with better error handling
-app.get("/uploads/:filename", async (req, res) => {
-  const filePath = path.join(__dirname, "uploads", req.params.filename);
-  const fs = await import('fs');
-  
-  fs.access(filePath, fs.constants.F_OK, (err) => {
-    if (err) {
-      console.error(`❌ File not found: ${filePath}`);
-      return res.status(404).json({ 
-        success: false, 
-        message: 'File not found. It may have been lost due to Railway ephemeral storage.' 
-      });
-    }
-    
-    res.sendFile(filePath, (err) => {
-      if (err) {
-        console.error(`❌ Error sending file: ${err}`);
-        res.status(500).json({ success: false, message: 'Error serving file' });
-      }
-    });
-  });
-});
 
 app.use("/api/contact", contactLimiter, contactRoutes);
 app.use("/api/auth", generalAuthLimiter, authRoutes);
@@ -155,13 +131,8 @@ app.use(
 );
 app.get("/admin", (req, res) => res.sendFile(path.join(__dirname, "admin", "index.html")));
 
-// Serve frontend static files
-app.use(express.static(path.join(__dirname, "../client")));
-
-// Fallback — serve index.html for any unmatched route
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, "../client", "index.html"));
-});
+// Note: Frontend is hosted separately on Vercel, so we don't serve static files here
+// Backend only serves API endpoints, uploads, and admin panel
 
 
 const PORT = process.env.PORT || 5000;
@@ -169,7 +140,12 @@ const PORT = process.env.PORT || 5000;
 // Add error handling
 app.use((err, req, res, next) => {
   console.error('❌ Server error:', err);
-  res.status(500).json({ success: false, message: 'Internal server error' });
+  console.error('❌ Error stack:', err.stack);
+  res.status(500).json({ 
+    success: false, 
+    message: err.message || 'Internal server error',
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+  });
 });
 
 app.listen(PORT, '0.0.0.0', () => {

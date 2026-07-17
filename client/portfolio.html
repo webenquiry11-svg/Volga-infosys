@@ -4,16 +4,222 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio � Volga Infosys</title>
+  <title>Portfolio | Volga Infosys</title>
   <link rel="stylesheet" href="portfolio-marquee.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    
-    rel="stylesheet">
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="volga.css" />
   <link rel="stylesheet" href="portfolio.css" />
+  <style>
+/* ============================================================
+   NEW PORTFOLIO STYLES
+============================================================ */
+:root{
+  --navy:#2F4156;
+  --navy-deep:#212f3d;
+  --panel:#28394b;
+  --steel:#567C8D;
+  --steel-lt:#8fb0bf;
+  --sky:#C8D9E6;
+  --cream:#F5EFEB;
+  --signal:#E8930A;
+  --signal-2:#ffb347;
+  --ink:#1b2733;
+  --mist:#5c6c78;
+  --border:rgba(27,39,51,0.09);
+  --border-dark:rgba(255,255,255,0.10);
+  --font-display:'Bebas Neue', sans-serif;
+  --font-ui:'Inter', sans-serif;
+  --font-mono:'Inter', sans-serif;
+  --radius:18px;
+}
+
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);margin-bottom:1.1rem;}
+.eyebrow::before{content:'';width:22px;height:1px;background:var(--signal);}
+.eyebrow .coord{color:var(--mist);font-weight:400;}
+.eyebrow.on-dark{color:var(--signal-2);}
+.eyebrow.on-dark::before{background:var(--signal-2);}
+.eyebrow.on-dark .coord{color:rgba(255,255,255,.4);}
+
+.section-title{font-family:var(--font-display);font-size:clamp(2.1rem,4.4vw,3.6rem);line-height:1.02;letter-spacing:.01em;text-transform:uppercase;color:var(--ink);}
+.section-title.on-dark{color:#fff;}
+.section-title em{font-style:normal;color:var(--signal);}
+.section-sub{font-size:1rem;color:var(--mist);max-width:540px;line-height:1.7;margin-top:1rem;}
+.wrap{max-width:1240px;margin:0 auto;padding:0 5%;}
+
+/* reveal-on-scroll */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* WHY CHOOSE US */
+.why-choose{padding:120px 0;background:var(--cream);}
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;}
+.why-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:2rem;display:flex;flex-direction:column;gap:1rem;transition:transform .3s,box-shadow .3s;}
+.why-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(33,47,61,.12);}
+.why-icon{width:56px;height:56px;border-radius:14px;background:var(--navy);display:flex;align-items:center;justify-content:center;color:var(--signal-2);font-size:1.4rem;transition:background .3s,color .3s;}
+.why-card:hover .why-icon{background:var(--signal);color:#fff;}
+.why-title{font-family:var(--font-display);font-size:1.4rem;color:var(--ink);letter-spacing:.02em;text-transform:uppercase;}
+.why-desc{font-size:.9rem;color:var(--mist);line-height:1.7;}
+@media(max-width:700px){.why-grid{grid-template-columns:1fr;}}
+
+/* STATS */
+.stats{background:var(--navy-deep);padding:0;border-top:1px solid var(--border-dark);border-bottom:1px solid var(--border-dark);}
+.stats-row{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
+.stat{padding:2.6rem 1rem;text-align:center;border-right:1px solid var(--border-dark);}
+.stat:last-child{border-right:none;}
+.stat-num{font-family:var(--font-display);font-size:2.6rem;color:#fff;letter-spacing:.02em;}
+.stat-plus{font-family:var(--font-display);font-size:1.8rem;color:var(--signal);}
+.stat-label{font-family:var(--font-mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:6px;display:block;}
+@media(max-width:700px){.stats-row{grid-template-columns:repeat(2,1fr);}.stat:nth-child(2){border-right:none;}}
+
+/* TECH MARQUEE */
+.tech-strip{background:var(--navy);padding:2.6rem 0;overflow:hidden;position:relative;border-bottom:1px solid var(--border-dark);}
+.tech-strip::before,.tech-strip::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;}
+.tech-strip::before{left:0;background:linear-gradient(90deg,var(--navy),transparent);}
+.tech-strip::after{right:0;background:linear-gradient(270deg,var(--navy),transparent);}
+.tech-label{text-align:center;font-family:var(--font-mono);font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:1.4rem;}
+.marquee{display:flex;width:max-content;animation:scroll 28s linear infinite;}
+.marquee:hover{animation-play-state:paused;}
+.marquee-set{display:flex;align-items:center;gap:3.4rem;padding-right:3.4rem;}
+.tech-chip{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:.95rem;color:rgba(255,255,255,.55);letter-spacing:.03em;white-space:nowrap;}
+.tech-chip i{color:var(--steel-lt);font-size:1.1rem;}
+@keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* GALLERY */
+.gallery{padding:120px 0;background:var(--cream);}
+.gallery-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem;margin-bottom:2.2rem;}
+.gallery-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.6rem;}
+.g-tab{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:.55rem 1.1rem;border-radius:100px;border:1px solid var(--border);background:#fff;color:var(--mist);cursor:pointer;transition:all .2s;}
+.g-tab:hover{border-color:var(--signal);color:var(--ink);}
+.g-tab.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;}
+.g-card{position:relative;border-radius:var(--radius);overflow:hidden;height:340px;cursor:pointer;border:1px solid var(--border);transition:opacity .3s,transform .3s;}
+.g-card.tall{height:520px;grid-row:span 2;}
+.g-card.hidden{display:none;}
+.g-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1);}
+.g-card:hover img{transform:scale(1.06);}
+.g-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(33,47,61,0) 40%,rgba(33,47,61,.92) 100%);}
+.g-badge{position:absolute;top:16px;left:16px;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.2);padding:.35rem .7rem;border-radius:100px;backdrop-filter:blur(4px);}
+.g-coord{position:absolute;top:16px;right:16px;font-family:var(--font-mono);font-size:.6rem;color:rgba(255,255,255,.55);opacity:0;transition:opacity .3s;}
+.g-card:hover .g-coord{opacity:1;}
+.g-body{position:absolute;left:18px;right:18px;bottom:16px;}
+.g-place{font-family:var(--font-mono);font-size:.65rem;color:var(--signal-2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+.g-title{font-family:var(--font-display);color:#fff;font-size:1.3rem;letter-spacing:.02em;text-transform:uppercase;}
+.g-tag{font-size:.72rem;color:rgba(255,255,255,.55);margin-top:3px;}
+@media(max-width:900px){.gallery-grid{grid-template-columns:repeat(2,1fr);}.g-card.tall{grid-row:span 1;height:340px;}}
+@media(max-width:600px){.gallery-grid{grid-template-columns:1fr;}}
+
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(20,28,37,.92);backdrop-filter:blur(10px);z-index:300;display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;pointer-events:none;transition:opacity .3s;}
+.lb.open{opacity:1;pointer-events:all;}
+.lb-card{background:#fff;border-radius:24px;max-width:920px;width:100%;max-height:88vh;overflow:hidden;display:grid;grid-template-columns:1.1fr 1fr;transform:scale(.95);transition:transform .3s;}
+.lb.open .lb-card{transform:scale(1);}
+.lb-img{width:100%;height:100%;min-height:320px;object-fit:cover;}
+.lb-body{padding:2.6rem;display:flex;flex-direction:column;gap:1.2rem;}
+.lb-close{align-self:flex-end;width:34px;height:34px;border-radius:50%;background:var(--cream);border:none;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.lb-close:hover{background:var(--navy);color:#fff;}
+.lb-eyebrow{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;color:var(--signal);text-transform:uppercase;}
+.lb-title{font-family:var(--font-display);font-size:2rem;text-transform:uppercase;letter-spacing:.02em;line-height:1.05;}
+.lb-desc{color:var(--mist);line-height:1.75;font-size:.92rem;}
+.lb-pill{display:inline-block;font-size:.72rem;font-weight:600;background:var(--cream);border:1px solid var(--border);padding:.3rem .8rem;border-radius:100px;color:var(--ink);width:max-content;}
+.lb-cta{display:flex;gap:.7rem;margin-top:auto;flex-wrap:wrap;}
+.lb-btn-a{background:var(--navy);color:#fff;padding:.75rem 1.4rem;border-radius:100px;font-size:.82rem;font-weight:600;}
+.lb-btn-b{border:1px solid var(--border);padding:.75rem 1.4rem;border-radius:100px;font-size:.82rem;font-weight:600;}
+@media(max-width:700px){.lb-card{grid-template-columns:1fr;}.lb-img{max-height:240px;}}
+
+/* PROCESS */
+.process{padding:120px 0;background:var(--navy-deep);position:relative;overflow:hidden;}
+.process-head{margin-bottom:3.5rem;}
+.process-rail{display:flex;justify-content:space-between;position:relative;margin-bottom:3.5rem;}
+.process-rail::before{content:'';position:absolute;top:19px;left:0;right:0;height:1px;background:var(--border-dark);}
+.p-fill{position:absolute;top:19px;left:0;height:1px;background:var(--signal);transition:width .5s ease;}
+.p-step{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.7rem;cursor:pointer;flex:1;}
+.p-step-num{width:40px;height:40px;border-radius:50%;background:var(--panel);border:1px solid var(--border-dark);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:.8rem;color:rgba(255,255,255,.45);transition:all .3s;}
+.p-step.active .p-step-num{background:var(--signal);border-color:var(--signal);color:#241705;font-weight:700;}
+.p-step.done .p-step-num{border-color:var(--signal);color:var(--signal);}
+.p-step-label{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.p-step.active .p-step-label{color:#fff;}
+.process-panel{display:grid;grid-template-columns:.9fr 1.1fr;gap:3rem;background:var(--panel);border:1px solid var(--border-dark);border-radius:20px;padding:3rem;}
+.pp-num{font-family:var(--font-display);font-size:5rem;color:var(--signal);line-height:1;opacity:.9;}
+.pp-title{font-family:var(--font-display);font-size:2.2rem;color:#fff;text-transform:uppercase;letter-spacing:.02em;margin-top:.4rem;}
+.pp-body{color:rgba(255,255,255,.6);line-height:1.8;margin-top:1rem;font-size:.95rem;}
+.pp-feats{display:flex;flex-direction:column;gap:1.3rem;justify-content:center;}
+.pp-feat{display:flex;gap:1rem;align-items:flex-start;}
+.pp-dot{width:9px;height:9px;border-radius:50%;margin-top:6px;flex-shrink:0;}
+.pp-dot.o{background:var(--signal);}
+.pp-dot.g{background:var(--steel-lt);}
+.pp-dot.b{background:var(--sky);}
+.pp-feat strong{display:block;color:#fff;font-size:.95rem;margin-bottom:2px;}
+.pp-feat span{color:rgba(255,255,255,.5);font-size:.85rem;}
+@media(max-width:900px){.process-rail{display:none;}.process-panel{grid-template-columns:1fr;padding:2rem;}}
+
+/* INDUSTRIES */
+.industries{padding:120px 0;background:var(--cream);}
+.ind-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;}
+.ind-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:2rem 1rem;display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center;transition:transform .3s,box-shadow .3s,border-color .3s;position:relative;overflow:hidden;}
+.ind-card::before{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(232,147,10,.08),transparent 60%);opacity:0;transition:opacity .3s;}
+.ind-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(33,47,61,.12);border-color:rgba(232,147,10,.35);}
+.ind-card:hover::before{opacity:1;}
+.ind-icon{width:54px;height:54px;border-radius:14px;background:var(--navy);display:flex;align-items:center;justify-content:center;position:relative;z-index:1;transition:background .3s;}
+.ind-card:hover .ind-icon{background:var(--signal);}
+.ind-icon i{color:var(--signal-2);font-size:1.25rem;transition:color .3s;}
+.ind-card:hover .ind-icon i{color:#fff;}
+.ind-name{font-family:var(--font-mono);font-size:.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);position:relative;z-index:1;}
+@media(max-width:900px){.ind-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:560px){.ind-grid{grid-template-columns:repeat(2,1fr);}}
+
+/* TESTIMONIALS */
+.testi{padding:120px 0;background:#fff;}
+.trust-strip{display:flex;align-items:center;gap:2.5rem;flex-wrap:wrap;padding:1.6rem 2rem;background:var(--cream);border-radius:16px;margin-bottom:3.5rem;border:1px solid var(--border);}
+.trust-label{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);white-space:nowrap;}
+.trust-logos{display:flex;gap:2.2rem;flex-wrap:wrap;align-items:center;}
+.trust-logos span{font-family:var(--font-display);font-size:1.1rem;letter-spacing:.03em;color:var(--ink);opacity:.55;}
+.testi-marquee-wrap{overflow:hidden;margin-top:3rem;}
+.testi-marquee{display:flex;animation:scrollTesti 40s linear infinite;}
+.testi-marquee:hover{animation-play-state:paused;}
+.testi-card{background:var(--cream);border-radius:20px;padding:2.4rem;display:flex;flex-direction:column;gap:1.2rem;border:1px solid var(--border);min-width:320px;margin-right:2rem;flex-shrink:0;}
+.testi-stars{color:var(--signal);font-size:.85rem;letter-spacing:2px;}
+.testi-text{font-size:.95rem;line-height:1.75;color:#33404a;}
+.testi-author{display:flex;align-items:center;gap:1rem;padding-top:1.2rem;border-top:1px solid var(--border);}
+.testi-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--steel),var(--navy));display:flex;align-items:center;justify-content:center;font-family:var(--font-display);color:#fff;font-size:.8rem;flex-shrink:0;}
+.testi-name{font-weight:700;font-size:.9rem;}
+.testi-role{font-size:.75rem;color:var(--mist);margin-top:2px;}
+@keyframes scrollTesti{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+@media(max-width:900px){.trust-strip{flex-direction:column;align-items:flex-start;}.testi-card{min-width:300px;}}
+
+/* CTA */
+.cta-band{position:relative;padding:130px 5%;text-align:center;overflow:hidden;background:var(--navy);}
+.cta-band::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 40%, rgba(232,147,10,.18) 0%, transparent 70%);}
+.cta-band .eyebrow{justify-content:center;}
+.cta-band .eyebrow::before{display:none;}
+.cta-heading{position:relative;font-family:var(--font-display);font-size:clamp(2.2rem,5.5vw,4.4rem);color:#fff;text-transform:uppercase;line-height:1.03;margin:.6rem auto 1.2rem;max-width:800px;}
+.cta-heading em{font-style:normal;color:var(--signal);}
+.cta-sub{position:relative;color:rgba(255,255,255,.55);max-width:520px;margin:0 auto 2.4rem;line-height:1.7;}
+.cta-row{position:relative;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.btn-signal{background:var(--signal);color:#241705;padding:1rem 2rem;border-radius:100px;font-family:var(--font-mono);font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 10px 30px rgba(232,147,10,.35);transition:transform .2s;display:inline-block;}
+.btn-signal:hover{transform:translateY(-3px);}
+.btn-outline{border:1px solid rgba(255,255,255,.25);color:#fff;padding:1rem 2rem;border-radius:100px;font-family:var(--font-mono);font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;transition:border-color .2s;display:inline-block;}
+.btn-outline:hover{border-color:var(--signal-2);}
+
+/* FOOTER */
+.footer{background:var(--navy-deep);color:rgba(255,255,255,.55);padding:80px 5% 30px;border-top:1px solid var(--border-dark);}
+.footer-top{display:flex;justify-content:space-between;gap:3rem;flex-wrap:wrap;padding-bottom:3.5rem;border-bottom:1px solid var(--border-dark);margin-bottom:2.2rem;}
+.footer-brand{max-width:320px;}
+.footer-brand .logo{font-family:var(--font-display);color:#fff;font-size:1.6rem;letter-spacing:.03em;margin-bottom:.8rem;display:flex;align-items:center;gap:8px;}
+.footer-brand p{font-size:.85rem;line-height:1.7;}
+.footer-social{display:flex;gap:.7rem;margin-top:1.4rem;}
+.footer-social a{width:36px;height:36px;border-radius:50%;border:1px solid var(--border-dark);display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.footer-social a:hover{background:var(--signal);border-color:var(--signal);color:var(--navy-deep);}
+.footer-cols{display:flex;gap:4rem;flex-wrap:wrap;}
+.footer-col h4{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#fff;margin-bottom:1.1rem;}
+.footer-col a{display:block;font-size:.85rem;padding:.35rem 0;transition:color .2s;}
+.footer-col a:hover{color:var(--signal-2);}
+.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.05em;color:rgba(255,255,255,.35);}
+.footer-bottom a{color:rgba(255,255,255,.5);}
+  </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -23,41 +229,43 @@
 <body>
 
   <!-- ------------------------------------------- NAV -->
+   <!-- ═══════════════════════════════════════════ NAV -->
   <nav id="navbar">
-  <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
-    <img src="favicon.png" alt="VOLGA Infosys logo" />
-  </a>
- 
-  <ul class="nav-links">
-    <li class="nav-item" data-menu="solutions">
-      <button class="nav-link">Solutions <span class="nav-arrow"></span></button>
-    </li>
-    <li class="nav-item" data-menu="industries">
-      <button class="nav-link">Industries <span class="nav-arrow"></span></button>
-    </li>
-    <li class="nav-item" data-menu="services">
-      <button class="nav-link">Services <span class="nav-arrow"></span></button>
-    </li>
-    <li class="nav-item" data-menu="work">
-      <button class="nav-link">Work <span class="nav-arrow"></span></button>
-    </li>
-    <li class="nav-item" data-menu="technologies">
-       <a class="nav-link" href="technologies (2).html">Technologies</a>
-    </li>
-    <li class="nav-item" data-menu="insights">
-      <a class="nav-link" href="insights-overview.html">Insights </a>
-    </li>
-    <li class="nav-item" data-menu="company">
-      <button class="nav-link">Company <span class="nav-arrow"></span></button>
-    </li>
-  </ul>
-  <a href="contact.html" class="nav-cta">Contact Us</a>
-  <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
-    <span class="burger-bar"></span>
-    <span class="burger-bar"></span>
-    <span class="burger-bar"></span>
-  </button>
-</nav>
+    <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
+      <img src="favicon.png" alt="VOLGA Infosys logo" />
+    </a>
+
+    <ul class="nav-links">
+      <li class="nav-item" data-menu="solutions">
+        <button class="nav-link">Solutions <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="industries">
+        <button class="nav-link">Industries <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="services">
+        <button class="nav-link">Services <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="work">
+        <button class="nav-link">Work <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="technologies">
+        <a class="nav-link" href="technologies (2).html">Technologies</a>
+      </li>
+      <li class="nav-item" data-menu="insights">
+        <a class="nav-link" href="insights-overview-new.html">Insights </a>
+      </li>
+      <li class="nav-item" data-menu="company">
+        <button class="nav-link">Company <span class="nav-arrow"></span></button>
+      </li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Contact Us</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+    </button>
+  </nav>
+
   <div class="mobile-menu" id="mobileMenu">
     <button class="mobile-close" id="mobileClose" aria-label="Close mobile menu">X</button>
     <ul>
@@ -66,158 +274,364 @@
       <li><a href="industries.html" class="mm-link">Industries</a></li>
       <li><a href="services.html" class="mm-link">Services</a></li>
       <li><a href="portfolio.html" class="mm-link">Work</a></li>
-      <li><a href="technologies.html" class="mm-link">Technologies</a></li>
+      <li><a href="technologies(2).html" class="mm-link">Technologies</a></li>
       <li><a href="blog.html" class="mm-link">Insights</a></li>
       <li><a href="company.html" class="mm-link">Company</a></li>
       <li><a href="contact.html" class="mm-link">Contact</a></li>
     </ul>
   </div>
+  
 
- 
-<!-- MEGA MENUS -->
-<div class="mega-menu" id="menu-solutions">
-  <div class="mega-inner">
-    <div class="mega-label">Solutions</div>
-    <div class="mega-cols">
-      <div class="mega-col">
-        <ul class="mega-items">
-          <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>AR Solutions</a></li>
-          <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z"/><circle cx="12" cy="10" r="3"/></svg></span>VR Solutions</a></li>
-          <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>MR / XR Applications</a></li>
-          <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Digital Twin</a></li>
-          <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>AI Integration</a></li>
-        </ul>
+  <!-- MEGA MENUS -->
+  <div class="mega-menu" id="menu-solutions">
+    <div class="mega-inner">
+      <div class="mega-label">Solutions</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="solutions.html#ar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality-2">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M10 21h-2a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v3.5" />
+	<path d="M17 17l-4 -2.5l4 -2.5l4 2.5v4.5l-4 2.5l0 -4.5" />
+	<path d="M13 14.5v4.5l4 2.5" />
+	<path d="M17 17l4 -2.5" />
+	<path d="M11 4h2" />
+</svg> AR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html#vr"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cardboards">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 8v8.5a2.5 2.5 0 0 0 2.5 2.5h1.06a3 3 0 0 0 2.34 -1.13l1.54 -1.92a2 2 0 0 1 3.12 0l1.54 1.92a3 3 0 0 0 2.34 1.13h1.06a2.5 2.5 0 0 0 2.5 -2.5v-8.5a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2" />
+	<path d="M7 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+	<path d="M15 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+</svg>VR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html#xr"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
+	<path d="M4 16v2a2 2 0 0 0 2 2h2" />
+	<path d="M16 4h2a2 2 0 0 1 2 2v2" />
+	<path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
+	<path d="M12 12.5l4 -2.5" />
+	<path d="M8 10l4 2.5v4.5l4 -2.5v-4.5l-4 -2.5l-4 2.5" />
+	<path d="M8 10v4.5l4 2.5" />
+</svg>MR / XR Applications</a></li>
+            <li><a class="mega-item" href="solutions.html#twin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-box-multiple">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M7 5a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2l0 -10" />
+	<path d="M17 17v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" />
+</svg>Digital Twin</a></li>
+            <li><a class="mega-item" href="solutions.html#ai"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brain">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M15.5 13a3.5 3.5 0 0 0 -3.5 3.5v1a3.5 3.5 0 0 0 7 0v-1.8" />
+	<path d="M8.5 13a3.5 3.5 0 0 1 3.5 3.5v1a3.5 3.5 0 0 1 -7 0v-1.8" />
+	<path d="M17.5 16a3.5 3.5 0 0 0 0 -7h-.5" />
+	<path d="M19 9.3v-2.8a3.5 3.5 0 0 0 -7 0" />
+	<path d="M6.5 16a3.5 3.5 0 0 1 0 -7h.5" />
+	<path d="M5 9.3v-2.8a3.5 3.5 0 0 1 7 0v10" />
+</svg>AI Integration</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="solutions.html#cfg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cube">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M21 16.008v-8.018a1.98 1.98 0 0 0 -1 -1.717l-7 -4.008a2.016 2.016 0 0 0 -2 0l-7 4.008c-.619 .355 -1 1.01 -1 1.718v8.018c0 .709 .381 1.363 1 1.717l7 4.008a2.016 2.016 0 0 0 2 0l7 -4.008c.619 -.355 1 -1.01 1 -1.718" />
+	<path d="M12 22v-10" />
+	<path d="M12 12l8.73 -5.04" />
+	<path d="M3.27 6.96l8.73 5.04" />
+</svg>3D Configurators</a></li>
+            <li><a class="mega-item" href="solutions.html#vs"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-store">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 21l18 0" />
+	<path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
+	<path d="M5 21l0 -10.15" />
+	<path d="M19 21l0 -10.15" />
+	<path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
+</svg>Virtual Showrooms</a></li>
+            <li><a class="mega-item" href="solutions.html#sim"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-atom-2">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+	<path d="M12 21l0 .01" />
+	<path d="M3 9l0 .01" />
+	<path d="M21 9l0 .01" />
+	<path d="M8 20.1a9 9 0 0 1 -5 -7.1" />
+	<path d="M16 20.1a9 9 0 0 0 5 -7.1" />
+	<path d="M6.2 5a9 9 0 0 1 11.4 0" />
+</svg>Simulation Systems</a></li>
+            <li><a class="mega-item" href="solutions.html#trn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-school">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+	<path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
+</svg>Interactive Training</a></li>
+            <li><a class="mega-item" href="solutions.html#meta"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-react-native">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M6.357 9c-2.637 .68 -4.357 1.845 -4.357 3.175c0 2.107 4.405 3.825 9.85 3.825c.74 0 1.26 -.039 1.95 -.097" />
+	<path d="M9.837 15.9c-.413 -.596 -.806 -1.133 -1.18 -1.8c-2.751 -4.9 -3.488 -9.77 -1.63 -10.873c1.15 -.697 3.047 .253 4.974 2.254" />
+	<path d="M6.429 15.387c-.702 2.688 -.56 4.716 .56 5.395c1.783 1.08 5.387 -1.958 8.043 -6.804c.36 -.67 .683 -1.329 .968 -1.978" />
+	<path d="M12 18.52c1.928 2 3.817 2.95 4.978 2.253c1.85 -1.102 1.121 -5.972 -1.633 -10.873c-.384 -.677 -.777 -1.204 -1.18 -1.8" />
+	<path d="M17.66 15c2.612 -.687 4.34 -1.85 4.34 -3.176c0 -2.11 -4.408 -3.824 -9.845 -3.824c-.747 0 -1.266 .029 -1.955 .087" />
+	<path d="M8 12c.285 -.66 .607 -1.308 .968 -1.978c2.647 -4.844 6.253 -7.89 8.046 -6.801c1.11 .679 1.262 2.706 .56 5.393" />
+	<path d="M12.26 12.015h-.01c-.01 .13 -.12 .24 -.26 .24a.263 .263 0 0 1 -.25 -.26c0 -.14 .11 -.25 .24 -.25h-.01c.13 -.01 .25 .11 .25 .24" />
+</svg>Metaverse Solutions</a></li>
+          </ul>
+        </div>
       </div>
-      <div class="mega-col">
-        <ul class="mega-items">
-          <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>3D Configurators</a></li>
-          <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Virtual Showrooms</a></li>
-          <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>Simulation Systems</a></li>
-          <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Interactive Training</a></li>
-          <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>Metaverse Solutions</a></li>
-        </ul>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">New: AI-Powered XR</div>
+        <div class="mega-highlight-sub">Combining spatial computing with generative AI for next-gen enterprise experiences.</div>
+        <a href="#" class="mega-highlight-btn">Explore <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
-    </div>
-    <div class="mega-highlight">
-      <div class="mega-highlight-title">New: AI-Powered XR</div>
-      <div class="mega-highlight-sub">Combining spatial computing with generative AI for next-gen enterprise experiences.</div>
-      <a href="#" class="mega-highlight-btn">Explore <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
   </div>
-</div>
- 
-<div class="mega-menu" id="menu-industries">
-  <div class="mega-inner">
-    <div class="mega-label">Industries</div>
-    <div class="mega-cols">
-      <div class="mega-col">
-        <ul class="mega-items">
-          <li><a class="mega-item" href="industries.html#healthcare"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>Healthcare</a></li>
-          <li><a class="mega-item" href="industries.html#manufacturing"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>Manufacturing</a></li>
-          <li><a class="mega-item" href="industries.html#realestate"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Real Estate</a></li>
-          <li><a class="mega-item" href="industries.html#education"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>Education</a></li>
-          <li><a class="mega-item" href="industries.html#automotive"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>Automotive</a></li>
-        </ul>
-      </div>
-      <div class="mega-col">
-        <ul class="mega-items">
-          <li><a class="mega-item" href="industries.html#retail"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Retail</a></li>
-          <li><a class="mega-item" href="industries.html#architecture"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>Architecture</a></li>
-          <li><a class="mega-item" href="industries.html#defense"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Defense</a></li>
-          <li><a class="mega-item" href="industries.html#tourism"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Tourism</a></li>
-          <li><a class="mega-item" href="industries.html#energy"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>Energy</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="mega-highlight">
-      <div class="mega-highlight-title">Industry Solutions</div>
-      <div class="mega-highlight-sub">Tailored immersive experiences built for your sector's unique challenges.</div>
-      <a href="industries.html" class="mega-highlight-btn">View All <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-    </div>
-  </div>
-</div>
- 
-<div class="mega-menu" id="menu-services">
-  <div class="mega-inner">
-    <div class="mega-label">Services</div>
-    <div class="mega-cols">
-      <div class="mega-col">
-        <ul class="mega-items">
-          <li><a class="mega-item" href="services.html#custom-ar"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>Custom AR App Development</a></li>
-          <li><a class="mega-item" href="services.html#vr-training"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z"/><circle cx="12" cy="10" r="3"/></svg></span>VR Training Platforms</a></li>
-          <li><a class="mega-item" href="services.html#unity-dev"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>Unity Development</a></li>
-          
-          <li><a class="mega-item" href="services.html#webgl"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>WebGL Experiences</a></li>
-        </ul>
-      </div>
-      <div class="mega-col">
-        <ul class="mega-items">
-        
-          <li><a class="mega-item" href="services.html#3d-modeling"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>3D Modeling & Animation</a></li>
-          <li><a class="mega-item" href="services.html#uiux"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 17l10-10 4 4 6-6"/></svg></span>UI/UX Design</a></li>
-         <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>Cloud Deployment</a></li>
-          <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg></span>Maintenance & Support</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="mega-highlight">
-      <div class="mega-highlight-title">Full-Cycle Delivery</div>
-      <div class="mega-highlight-sub">From concept to deployment � we handle every stage of your XR project.</div>
-      <a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-    </div>
-  </div>
-</div>
- 
-<div class="mega-menu" id="menu-work">
-  <div class="mega-inner">
-    <div class="mega-label">Work</div>
-    <div class="mega-cols">
-      <div class="mega-col">
-        <ul class="mega-items">
-         
-          <li><a class="mega-item" href="portfolio.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>Portfolio</a></li>
-          <li><a class="mega-item" href="client-stories.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Client Stories</a></li>
-          <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></span>Product Demos</a></li>
-          
-        </ul>
-      </div>
-    </div>
-    <div class="mega-highlight">
-      <div class="mega-highlight-title">Featured Project</div>
-      <div class="mega-highlight-sub">See how we transformed a global manufacturer's training program with immersive VR.</div>
-      <a href="#" class="mega-highlight-btn">View Case Study <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-    </div>
-  </div>
-</div>
- 
 
- 
- 
-
-
-<div class="mega-menu" id="menu-company">
-  <div class="mega-inner">
-    <div class="mega-label">Company</div>
-    <div class="mega-cols">
-      <div class="mega-col">
-        <ul class="mega-items">
-          <li><a class="mega-item" href="about.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>About Us</a></li>
-          <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Leadership</a></li>
-          <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>Careers</a></li>
-          <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/><polyline points="2 12 6 12 9 21 15 3 18 12 22 12"/></svg></span>Our Process</a></li>
-          <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Partnerships</a></li>
-          <li><a class="mega-item" href="contact.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>Contact</a></li>
-        </ul>
+  <div class="mega-menu" id="menu-industries">
+    <div class="mega-inner">
+      <div class="mega-label">Industries</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="industries.html#healthcare"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-activity-heartbeat">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 12h4.5l1.5 -6l4 12l2 -9l1.5 3h4.5" />
+</svg>Healthcare</a></li>
+            <li><a class="mega-item" href="industries.html#manufacturing"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-factory-2">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 21h18" />
+	<path d="M5 21v-12l5 4v-4l5 4h4" />
+	<path d="M19 21v-8l-1.436 -9.574a.5 .5 0 0 0 -.495 -.426h-1.145a.5 .5 0 0 0 -.494 .418l-1.43 8.582" />
+	<path d="M9 17h1" />
+	<path d="M14 17h1" />
+</svg>Manufacturing</a></li>
+            <li><a class="mega-item" href="industries.html#realestate"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-home">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+	<path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+	<path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>Real Estate</a></li>
+            <li><a class="mega-item" href="industries.html#education"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-school">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+	<path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
+</svg>Education</a></li>
+            <li><a class="mega-item" href="industries.html#automotive"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-car-suv">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M5 17a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+	<path d="M16 17a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+	<path d="M5 9l2 -4h7.438a2 2 0 0 1 1.94 1.515l.622 2.485h3a2 2 0 0 1 2 2v3" />
+	<path d="M10 9v-4" />
+	<path d="M2 7v4" />
+	<path d="M22.001 14.001a4.992 4.992 0 0 0 -4.001 -2.001a4.992 4.992 0 0 0 -4 2h-3a4.998 4.998 0 0 0 -8.003 .003" />
+	<path d="M5 12v-3h13" />
+</svg>Automotive</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="industries.html#retail"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M4 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+	<path d="M15 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+	<path d="M17 17h-11v-14h-2" />
+	<path d="M6 5l14 1l-1 7h-13" />
+</svg>Retail</a></li>
+            <li><a class="mega-item" href="industries.html#architecture"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-buildings">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M4 21v-15c0 -1 1 -2 2 -2h5c1 0 2 1 2 2v15" />
+	<path d="M16 8h2c1 0 2 1 2 2v11" />
+	<path d="M3 21h18" />
+	<path d="M10 12v.01" />
+	<path d="M10 16v.01" />
+	<path d="M10 8v.01" />
+	<path d="M7 12v.01" />
+	<path d="M7 16v.01" />
+	<path d="M7 8v.01" />
+	<path d="M17 12v.01" />
+	<path d="M17 16v.01" />
+</svg></span>Architecture</a></li>
+            <li><a class="mega-item" href="industries.html#defense"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-shield-chevron">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
+	<path d="M4 14l8 -3l8 3" />
+</svg>  Defense</a></li>
+            <li><a class="mega-item" href="industries.html#tourism"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+	<path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" />
+</svg>Tourism</a></li>
+            <li><a class="mega-item" href="industries.html#energy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-wind-turbine">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M10 11a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+	<path d="M10 11v-2.573c0 -.18 .013 -.358 .04 -.536l.716 -4.828c.064 -.597 .597 -1.063 1.244 -1.063s1.18 .466 1.244 1.063l.716 4.828c.027 .178 .04 .357 .04 .536v2.573" />
+	<path d="M13.01 9.28l2.235 1.276c.156 .09 .305 .19 .446 .3l3.836 2.911c.487 .352 .624 1.04 .3 1.596c-.325 .556 -1 .782 -1.548 .541l-4.555 -1.68a3.624 3.624 0 0 1 -.486 -.231l-2.235 -1.277" />
+	<path d="M13 12.716l-2.236 1.277a3.624 3.624 0 0 1 -.485 .23l-4.555 1.681c-.551 .241 -1.223 .015 -1.548 -.54c-.324 -.557 -.187 -1.245 .3 -1.597l3.836 -2.91a3.41 3.41 0 0 1 .446 -.3l2.235 -1.277" />
+	<path d="M7 21h10" />
+	<path d="M10 21l1 -7" />
+	<path d="M13 14l1 7" />
+</svg>Energy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Industry Solutions</div>
+        <div class="mega-highlight-sub">Tailored immersive experiences built for your sector's unique challenges.</div>
+        <a href="industries.html" class="mega-highlight-btn">View All <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
     </div>
-    <div class="mega-highlight">
-      <div class="mega-highlight-title">We're Hiring</div>
-      <div class="mega-highlight-sub">Join a team building the future of spatial computing and enterprise immersive tech.</div>
-      <a href="#" class="mega-highlight-btn">See Openings <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+
+  <div class="mega-menu" id="menu-services">
+    <div class="mega-inner">
+      <div class="mega-label">Services</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="services.html#custom-ar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality-2">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M10 21h-2a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v3.5" />
+	<path d="M17 17l-4 -2.5l4 -2.5l4 2.5v4.5l-4 2.5l0 -4.5" />
+	<path d="M13 14.5v4.5l4 2.5" />
+	<path d="M17 17l4 -2.5" />
+	<path d="M11 4h2" />
+</svg>Custom AR App Development</a></li>
+            <li><a class="mega-item" href="services.html#vr-training"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cardboards">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 8v8.5a2.5 2.5 0 0 0 2.5 2.5h1.06a3 3 0 0 0 2.34 -1.13l1.54 -1.92a2 2 0 0 1 3.12 0l1.54 1.92a3 3 0 0 0 2.34 1.13h1.06a2.5 2.5 0 0 0 2.5 -2.5v-8.5a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2" />
+	<path d="M7 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+	<path d="M15 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+</svg>VR Training Platforms</a></li>
+            <li><a class="mega-item" href="services.html#unity-dev"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-unity">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M14 3l6 4v7" />
+	<path d="M18 17l-6 4l-6 -4" />
+	<path d="M4 14v-7l6 -4" />
+	<path d="M4 7l8 5v9" />
+	<path d="M20 7l-8 5" />
+</svg>Unity Development</a></li>
+            <li><a class="mega-item" href="services.html#webgl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cube-3d-sphere">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M6 17.6l-2 -1.1v-2.5" />
+	<path d="M4 10v-2.5l2 -1.1" />
+	<path d="M10 4.1l2 -1.1l2 1.1" />
+	<path d="M18 6.4l2 1.1v2.5" />
+	<path d="M20 14v2.5l-2 1.12" />
+	<path d="M14 19.9l-2 1.1l-2 -1.1" />
+	<path d="M12 12l2 -1.1" />
+	<path d="M18 8.6l2 -1.1" />
+	<path d="M12 12l0 2.5" />
+	<path d="M12 18.5l0 2.5" />
+	<path d="M12 12l-2 -1.12" />
+	<path d="M6 8.6l-2 -1.1" />
+</svg>WebGL Experiences</a></li>
+          </ul>
+        </div>
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="services.html#3d-modeling"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-3d">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M14 3v4a1 1 0 0 0 1 1h4" />
+	<path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+	<path d="M12 13.5l4 -1.5" />
+	<path d="M8 11.846l4 1.654v4.5l4 -1.846v-4.308l-4 -1.846l-4 1.846" />
+	<path d="M8 12v4.2l4 1.8" />
+</svg>3D Modeling & Animation</a></li>
+            <li><a class="mega-item" href="services.html#uiux"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-layout">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M4 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -1" />
+	<path d="M4 15a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -3" />
+	<path d="M14 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -12" />
+</svg>UI/UX Design</a></li>
+            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cloud">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M6.657 18c-2.572 0 -4.657 -2.007 -4.657 -4.483c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486c0 1.927 -1.551 3.487 -3.465 3.487h-11.878" />
+</svg>Cloud Deployment</a></li>
+            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-tool">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" />
+</svg>Maintenance & Support</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Full-Cycle Delivery</div>
+        <div class="mega-highlight-sub">From concept to deployment — we handle every stage of your XR project.</div>
+        <a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
     </div>
   </div>
-</div>
-<div id="backdrop" aria-hidden="true"></div>
+
+  <div class="mega-menu" id="menu-work">
+    <div class="mega-inner">
+      <div class="mega-label">Work</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            
+            <li><a class="mega-item" href="portfolio.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9" />
+	<path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+	<path d="M12 12l0 .01" />
+	<path d="M3 13a20 20 0 0 0 18 0" />
+</svg>Portfolio</a></li>
+            <li><a class="mega-item" href="client-stories.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-users">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+	<path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+	<path d="M16 3.13a4 4 0 0 1 0 7.75" />
+	<path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
+</svg>Client Stories</a></li>
+            <li><a class="mega-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-player-play">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M7 4v16l13 -8l-13 -8" />
+</svg></span>Product Demos</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">Featured Project</div>
+        <div class="mega-highlight-sub">See how we transformed a global manufacturer's training program with immersive VR.</div>
+        <a href="#" class="mega-highlight-btn">View Case Study <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega-menu" id="menu-company">
+    <div class="mega-inner">
+      <div class="mega-label">Company</div>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <ul class="mega-items">
+            <li><a class="mega-item" href="about.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-users-group">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+	<path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
+	<path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+	<path d="M17 10h2a2 2 0 0 1 2 2v1" />
+	<path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+	<path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
+</svg>About Us</a></li>
+            <li><a class="mega-item" href="careers-page (1).html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase-2">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9" />
+	<path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+</svg>Careers</a></li>
+            <li><a class="mega-item" href=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-heart-handshake">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+	<path d="M12 6l-3.293 3.293a1 1 0 0 0 0 1.414l.543 .543c.69 .69 1.81 .69 2.5 0l1 -1a3.182 3.182 0 0 1 4.5 0l2.25 2.25" />
+	<path d="M12.5 15.5l2 2" />
+	<path d="M15 13l2 2" />
+</svg>Partnerships</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-highlight">
+        <div class="mega-highlight-title">We're Hiring</div>
+        <div class="mega-highlight-sub">Join a team building the future of spatial computing and enterprise immersive tech.</div>
+        <a href="#" class="mega-highlight-btn">See Openings <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div id="backdrop" aria-hidden="true"></div>
 
 
   <!-- SLIDER SECTION � sticky so it pins while in view -->
@@ -283,756 +697,276 @@
     </div>
   </div>
 
-  <!-- STATS -->
-  <div class="stats-strip">
-    <div class="stats-row">
-      <div class="stat"><span class="stat-num" data-val="150">0</span><span class="stat-plus">+</span><span
-          class="stat-label">Projects</span></div>
-      <div class="stat"><span class="stat-num" data-val="5">0</span><span class="stat-plus">+</span><span
-          class="stat-label">Countries</span></div>
-      <div class="stat"><span class="stat-num" data-val="8">0</span><span class="stat-plus">+</span><span
-          class="stat-label">Years XP</span></div>
-      <div class="stat"><span class="stat-num" data-val="98">0</span><span class="stat-plus">%</span><span
-          class="stat-label">Satisfaction</span></div>
+  <!-- WHY CHOOSE US -->
+ 
+  <!-- TECH MARQUEE -->
+  <section class="tech-strip" id="tech">
+    <div class="tech-label">// Engineered on an industry-grade stack</div>
+    <div class="marquee" id="marquee"></div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="wrap">
+      <div class="gallery-head">
+        <div class="reveal">
+          <div class="eyebrow">Selected Work <span class="coord">// 06 CASE STUDIES</span></div>
+          <h2 class="section-title">Recent <em>deployments</em></h2>
+        </div>
+        <p class="section-sub reveal">A cross-section of what we've shipped this year — across automotive, healthcare, real estate and industrial training. Click any project for the full case study.</p>
+      </div>
+      <div class="gallery-tabs reveal" id="galleryTabs"></div>
+      <div class="gallery-grid" id="galleryGrid"></div>
     </div>
-  </div>
+  </section>
 
- <section class="portfolio-section">
-  <div class="masonry" id="masonryGrid"></div>
-</section>
-
-
-
-<div class="lightbox" id="lightbox">
-  <div class="lb-card" id="lbCard">
-    <img class="lb-img" id="lbImg" src="" alt=""/>
-    <div class="lb-body">
-      <button class="lb-close" id="lbClose">?</button>
-      <div id="lbContent"></div>
-      <div class="lb-nav">
-        <button class="lb-prev" id="lbPrev">?</button>
-        <span class="lb-counter" id="lbCounter"></span>
-        <button class="lb-next" id="lbNext">?</button>
+  <!-- lightbox -->
+  <div class="lb" id="lb">
+    <div class="lb-card">
+      <img class="lb-img" id="lbImg" src="" alt="">
+      <div class="lb-body">
+        <button class="lb-close" id="lbClose">✕</button>
+        <div class="lb-eyebrow" id="lbTag"></div>
+        <div class="lb-title" id="lbTitle"></div>
+        <p class="lb-desc" id="lbDesc"></p>
+        <span class="lb-pill" id="lbPlace"></span>
+        <div class="lb-cta">
+          <a href="#" class="lb-btn-a">View Full Case Study</a>
+          <a href="contact.html" class="lb-btn-b">Request Similar</a>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+  <!-- PROCESS -->
+  <section class="process" id="process">
+    <div class="wrap">
+      <div class="process-head reveal">
+        <div class="eyebrow on-dark">How We Work <span class="coord">// 5-STAGE PIPELINE</span></div>
+        <h2 class="section-title on-dark">From brief to <em>launch</em></h2>
+      </div>
+      <div class="process-rail" id="processRail"></div>
+      <div class="process-panel reveal" id="processPanel"></div>
+    </div>
+  </section>
+
+  <!-- INDUSTRIES -->
+  <section class="industries" id="industries">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="eyebrow">Industries We've Worked In <span class="coord">// 10 SECTORS</span></div>
+        <h2 class="section-title">Built for every sector<br><em>that demands precision</em></h2>
+      </div>
+      <div class="ind-grid reveal" id="indGrid" style="margin-top:3rem;"></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testi" id="testimonials">
+    <div class="wrap">
+      <div class="trust-strip reveal">
+        <span class="trust-label">Trusted by teams at</span>
+        <div class="trust-logos">
+          <span>ManufactureCo</span><span>Apex Properties</span><span>EnergySystems</span><span>Nordic Oil &amp; Gas</span><span>Berlin Museumsstiftung</span>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="eyebrow">Client Feedback <span class="coord">// VERIFIED</span></div>
+        <h2 class="section-title">What our clients say</h2>
+      </div>
+    </div>
+    <div class="testi-marquee-wrap">
+      <div class="testi-marquee" id="testiMarquee"></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band" id="contact">
+    <div class="eyebrow on-dark">Ready to Build?</div>
+    <h2 class="cta-heading">Your project could be<br>our <em>next case study</em></h2>
+    <p class="cta-sub">Tell us what you're building. We'll put together an approach, timeline, and honest quote — no pressure.</p>
+    <div class="cta-row">
+      <a href="contact.html" class="btn-signal">Start a Project</a>
+      <a href="#gallery" class="btn-outline">View Case Studies</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><span class="dot" style="width:8px;height:8px;background:var(--signal);border-radius:50%;"></span>VOLGA</div>
+        <p>Crafting immersive digital realities — AR, VR, 3D and digital twin engineering for teams who ship.</p>
+        <div class="footer-social">
+          <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-github"></i></a>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Business</h4>
+          <a href="#">Training Simulation</a>
+          <a href="#">3D Configurators</a>
+          <a href="#">Buildings &amp; Interiors</a>
+          <a href="#">E-Commerce</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="about.html">About Us</a>
+          <a href="portfolio.html">Our Work</a>
+          <a href="careers-page (1).html">Careers</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <a href="#">AR / VR Solutions</a>
+          <a href="#">Product Visualisation</a>
+          <a href="#">Digital Twins</a>
+          <a href="#">3D Modeling</a>
+        </div>
+      </div>
+    </div>
+
+  <div id="site-footer-mount"></div>
+  <script src="footer-include.js"></script>
 
   <script src="api-config.js"></script>
+  <script src="volga.js"></script>
   <script src="portfolio.js"></script>
   <script>
-    const data = [
-      {
-        num: '01', title: 'Discovery',
-        body: 'We start by deeply understanding your business � who your users are, what problems you need to solve, and what success looks like. This shapes everything that follows.',
-        feats: [
-          { dot: 'o', title: 'Stakeholder interviews', desc: 'Understanding goals from every angle' },
-          { dot: 'g', title: 'Technical audit', desc: 'Assessing your current infrastructure' },
-          { dot: 'b', title: 'Scope definition', desc: 'Clear deliverables and timeline agreed' },
-        ]
-      },
-      {
-        num: '02', title: 'Strategy',
-        body: 'We translate discovery insights into a clear creative and technical roadmap � choosing the right XR technology, platform and experience architecture for your context.',
-        feats: [
-          { dot: 'o', title: 'Experience design', desc: 'UX wireframes and interaction flows' },
-          { dot: 'g', title: 'Tech selection', desc: 'Unity, Unreal, WebXR or native mobile' },
-          { dot: 'b', title: 'Proposal delivery', desc: 'Detailed proposal with cost breakdown' },
-        ]
-      },
-      {
-        num: '03', title: 'Development',
-        body: 'We build in focused sprints, sharing interactive previews at every milestone. Our XR engineers work across Unity, Unreal, WebXR and native � picking the right stack for your goals.',
-        feats: [
-          { dot: 'o', title: 'Sprint cycles', desc: '2-week builds with client demos' },
-          { dot: 'g', title: 'Asset production', desc: '3D modelling, animation and sound' },
-          { dot: 'b', title: 'Integration', desc: 'CMS, APIs and backend connections' },
-        ]
-      },
-      {
-        num: '04', title: 'Testing',
-        body: 'Every experience goes through rigorous QA on real devices. We test for performance, comfort, accessibility and edge cases � so your users get a flawless first impression.',
-        feats: [
-          { dot: 'o', title: 'Device testing', desc: 'Quest, HoloLens, iOS, Android, PC' },
-          { dot: 'g', title: 'Performance QA', desc: 'Frame rate, latency and comfort checks' },
-          { dot: 'b', title: 'User testing', desc: 'Real feedback from target audience' },
-        ]
-      },
-      {
-        num: '05', title: 'Launch',
-        body: 'We handle deployment end-to-end � app store submissions, enterprise distribution, or web publishing. Then we stay close for support, analytics and future iterations.',
-        feats: [
-          { dot: 'o', title: 'Deployment', desc: 'Store submissions or enterprise rollout' },
-          { dot: 'g', title: 'Training', desc: 'Team onboarding and documentation' },
-          { dot: 'b', title: 'Support', desc: 'Ongoing updates and optimisation' },
-        ]
-      }
-    ];
-
-    const steps = document.querySelectorAll('.step');
-    const cfill = document.getElementById('cfill');
-    const stepsWrap = document.getElementById('steps');
-
-    function renderPanel(i) {
-      const d = data[i];
-      document.getElementById('pnum').textContent = d.num;
-      document.getElementById('ptitle').textContent = d.title;
-      document.getElementById('pbody').textContent = d.body;
-      const pf = document.getElementById('pfeats');
-      pf.innerHTML = d.feats.map(f =>
-        `<div class="feat">
-      <div class="feat-dot ${f.dot}"></div>
-      <div class="feat-text"><strong>${f.title}</strong>${f.desc}</div>
-    </div>`
-      ).join('');
-      setTimeout(() => document.getElementById('pnum').classList.add('vis'), 10);
-    }
-
-    function updateLine(activeIdx) {
-      const total = steps.length - 1;
-      const connectorW = stepsWrap.offsetWidth * 0.8;
-      const segW = connectorW / total;
-      const fillW = activeIdx === 0 ? 0 : segW * activeIdx;
-      cfill.style.width = fillW + 'px';
-    }
-
-    function setActive(idx) {
-      steps.forEach((s, i) => {
-        s.classList.remove('active', 'done');
-        if (i < idx) s.classList.add('done');
-        else if (i === idx) s.classList.add('active');
-      });
-      updateLine(idx);
-      document.getElementById('pnum').classList.remove('vis');
-      setTimeout(() => renderPanel(idx), 50);
-    }
-
-    steps.forEach(s => {
-      s.addEventListener('click', () => setActive(+s.dataset.i));
-    });
-
-    setTimeout(() => { setActive(2); }, 100);
-    const API = window.VOLGA_API;
-
-async function apiFetch(endpoint, options = {}) {
-  const res = await fetch(`${API}${endpoint}`, options);
-  if (res.ok) return res;
-  throw new Error('Failed to fetch API');
-}
-
-let currentIdx = 0;
-let filteredItems = [];
-
-const grid = document.getElementById('masonryGrid');
-const lightbox = document.getElementById('lightbox');
-const lbImg = document.getElementById('lbImg');
-const lbContent = document.getElementById('lbContent');
-const lbClose = document.getElementById('lbClose');
-const lbCounter = document.getElementById('lbCounter');
-
-async function fetchProjects() {
-  try {
-    const res = await apiFetch('/projects');
-    if (!res.ok) throw new Error('Failed to load projects');
-    return await res.json();
-  } catch (e) {
-    console.error(e);
-    return [];
-  }
-}
-
-function mapProjectToCard(p) {
-  return {
-    badge: p.tag || '',
-    img: window.getVolgaImageUrl(p.image) || '',
-    title: (p.title || '') + (p.title2 ? ' ' + p.title2 : ''),
-    client: p.place || '',
-    desc: p.description || '',
-    tags: p.tag ? [p.tag] : [],
-    tall: false,
-    id: p._id,
-  };
-}
-
-function renderGrid(type = 'all') {
-  filteredItems = type === 'all' ? filteredItems : filteredItems.filter((p) => p.type === type);
-  grid.innerHTML = '';
-  filteredItems.forEach((p, i) => {
-    const el = document.createElement('div');
-    el.className = 'portfolio-item';
-    el.style.animationDelay = `${i * 0.07}s`;
-    el.innerHTML = `
-      <span class="pi-badge">${p.badge}</span>
-      <img src="${p.img}" alt="${p.title}" loading="lazy" style="height:${p.tall ? '340px' : '220px'};object-fit:cover"/>
-      <div class="pi-overlay">
-        <div class="pi-type">${p.client}</div>
-        <div class="pi-title">${p.title}</div>
-        <div class="pi-tag">${(p.tags || []).join(' � ')}</div>
-      </div>
-      <div class="pi-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>`;
-    el.addEventListener('click', () => openLightbox(i));
-    grid.appendChild(el);
+/* stat counters */
+document.querySelectorAll('.stat-count').forEach(el => {
+  const target = parseInt(el.dataset.val);
+  const observer = new IntersectionObserver(entries => {
+    if (!entries[0].isIntersecting) return;
+    observer.disconnect();
+    let n = 0; const s = target/60;
+    const iv = setInterval(() => { n += s; if (n>=target){ el.textContent=target; clearInterval(iv);} else el.textContent=Math.floor(n); }, 16);
   });
-}
-
-function openLightbox(idx) {
-  currentIdx = idx;
-  showLb();
-  lightbox.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function showLb() {
-  const p = filteredItems[currentIdx];
-  lbImg.src = p.img; lbImg.alt = p.title;
-  lbContent.innerHTML = `
-    <div class="lb-type">${p.client}</div>
-    <div class="lb-title">${p.title}</div>
-    <div class="lb-desc">${p.desc}</div>
-    <div class="lb-pills">${(p.tags || []).map(t => `<span class="lb-pill">${t}</span>`).join('')}</div>
-    <div class="lb-cta"><a href="#" class="btn-ink">View Case Study</a><a href="#" class="btn-bdr">Request Similar</a></div>`;
-  lbCounter.textContent = `${currentIdx + 1} / ${filteredItems.length}`;
-}
-
-function closeLb() { lightbox.classList.remove('open'); document.body.style.overflow = ''; }
-lbClose.addEventListener('click', closeLb);
-lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLb(); });
-document.getElementById('lbPrev').addEventListener('click', () => { currentIdx = (currentIdx - 1 + filteredItems.length) % filteredItems.length; showLb(); });
-document.getElementById('lbNext').addEventListener('click', () => { currentIdx = (currentIdx + 1) % filteredItems.length; showLb(); });
-document.addEventListener('keydown', e => {
-  if (!lightbox.classList.contains('open')) return;
-  if (e.key === 'Escape') closeLb();
-  if (e.key === 'ArrowLeft') { currentIdx = (currentIdx - 1 + filteredItems.length) % filteredItems.length; showLb(); }
-  if (e.key === 'ArrowRight') { currentIdx = (currentIdx + 1) % filteredItems.length; showLb(); }
+  observer.observe(el);
 });
 
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', async () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+/* ---------------- TECH MARQUEE ---------------- */
+const techs = [
+  ['fa-brands fa-unity','Unity'],['fa-brands fa-cuttlefish','Unreal Engine'],['fa-solid fa-vr-cardboard','WebXR'],
+  ['fa-brands fa-react','Three.js'],['fa-solid fa-cube','Blender'],['fa-brands fa-apple','ARKit'],
+  ['fa-brands fa-android','ARCore'],['fa-solid fa-glasses','OpenXR'],['fa-solid fa-cloud','AWS'],['fa-solid fa-microchip','NVIDIA Omniverse']
+];
+function techSet(){ return techs.map(t => `<div class="tech-chip"><i class="${t[0]}"></i>${t[1]}</div>`).join(''); }
+document.getElementById('marquee').innerHTML = `<div class="marquee-set">${techSet()}</div><div class="marquee-set">${techSet()}</div>`;
+
+/* ---------------- GALLERY (filterable + lightbox) ---------------- */
+const projects = [
+  {type:'training', place:'United States', title:'VR Medical Training', tag:'Virtual Reality', badge:'XR TRAINING', tall:true, img:'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=900&q=80', desc:'Full-body surgical simulation for a leading US hospital network. Reduced training costs by 60% and improved retention across 12 departments.'},
+  {type:'ar', place:'UAE — Dubai', title:'AR Furniture Configurator', tag:'Augmented Reality', badge:'AR PRODUCT', tall:false, img:'https://images.unsplash.com/photo-1617802690658-1173a812650d?w=900&q=80', desc:'Place and customise furniture in your real space before buying. Deployed across 40+ showrooms. 42% fewer returns.'},
+  {type:'twin', place:'Dubai', title:'Luxury Walkthrough', tag:'Architecture', badge:'DIGITAL TWIN', tall:false, img:'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80', desc:'Pre-sale VR tours for a Dubai real estate developer. 40% of units sold before construction broke ground.'},
+  {type:'training', place:'Scandinavia', title:'Industrial Safety VR', tag:'XR Training', badge:'SIMULATION', tall:false, img:'https://images.unsplash.com/photo-1581091870627-3b83bf0b9c73?w=900&q=80', desc:'Hazardous environment simulation for an oil & gas company. Zero workplace incidents recorded post-deployment.'},
+  {type:'3d', place:'United Kingdom', title:'Automotive 3D Configurator', tag:'3D Visualization', badge:'3D CONFIG', tall:true, img:'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=900&q=80', desc:'Real-time car customisation tool for a UK automotive brand. 35% increase in online conversions in the first quarter.'},
+  {type:'twin', place:'Germany', title:'Virtual Museum', tag:'Entertainment', badge:'DIGITAL TWIN', tall:false, img:'https://images.unsplash.com/photo-1554907984-15263bfd63bd?w=900&q=80', desc:'Digital twin of a historical museum. Over 100,000 virtual visitors in the first month of launch.'}
+];
+const tabs = [['all','All Work'],['ar','AR'],['3d','3D Config'],['twin','Digital Twin'],['training','XR Training']];
+document.getElementById('galleryTabs').innerHTML = tabs.map((t,i)=>`<button class="g-tab ${i===0?'active':''}" data-type="${t[0]}">${t[1]}</button>`).join('');
+
+function renderGallery(){
+  document.getElementById('galleryGrid').innerHTML = projects.map((p,i)=>`
+    <div class="g-card reticle ${p.tall?'tall':''}" data-type="${p.type}" data-i="${i}">
+      <img src="${p.img}" alt="${p.title}">
+      <div class="g-scrim"></div>
+      <div class="g-badge">${p.badge}</div>
+      <div class="g-coord">N ${(25+i).toFixed(4)}° / E ${(55+i).toFixed(4)}°</div>
+      <div class="g-body">
+        <div class="g-place">${p.place}</div>
+        <div class="g-title">${p.title}</div>
+        <div class="g-tag">${p.tag}</div>
+      </div>
+    </div>`).join('');
+  document.querySelectorAll('.g-card').forEach(el => el.addEventListener('click', () => openLb(+el.dataset.i)));
+}
+renderGallery();
+
+document.querySelectorAll('.g-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.g-tab').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     const type = btn.dataset.type;
-    if (type === 'all') renderGrid('all');
-    else renderGrid(type);
+    document.querySelectorAll('.g-card').forEach(card => {
+      card.classList.toggle('hidden', type!=='all' && card.dataset.type!==type);
+    });
   });
 });
 
-(async function init() {
-  const projects = await fetchProjects();
-  filteredItems = (projects || []).map(mapProjectToCard);
-  renderGrid();
-})();
+const lb = document.getElementById('lb');
+function openLb(i){
+  const p = projects[i];
+  document.getElementById('lbImg').src = p.img;
+  document.getElementById('lbTag').textContent = p.tag;
+  document.getElementById('lbTitle').textContent = p.title;
+  document.getElementById('lbDesc').textContent = p.desc;
+  document.getElementById('lbPlace').textContent = p.place;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+document.getElementById('lbClose').addEventListener('click', () => { lb.classList.remove('open'); document.body.style.overflow=''; });
+lb.addEventListener('click', e => { if (e.target===lb) { lb.classList.remove('open'); document.body.style.overflow=''; } });
+document.addEventListener('keydown', e => { if (e.key==='Escape') { lb.classList.remove('open'); document.body.style.overflow=''; } });
+
+/* ---------------- PROCESS ---------------- */
+const stages = [
+  {num:'01',title:'Discovery',label:'Discovery',body:"We start by deeply understanding your business — who your users are, what problems you need to solve, and what success looks like. This shapes everything that follows.",feats:[['o','Stakeholder interviews','Understanding goals from every angle'],['g','Technical audit','Assessing your current infrastructure'],['b','Scope definition','Clear deliverables and timeline agreed']]},
+  {num:'02',title:'Strategy',label:'Strategy',body:"We translate discovery insights into a clear creative and technical roadmap — choosing the right XR technology, platform and experience architecture for your context.",feats:[['o','Experience design','UX wireframes and interaction flows'],['g','Tech selection','Unity, Unreal, WebXR or native mobile'],['b','Proposal delivery','Detailed proposal with cost breakdown']]},
+  {num:'03',title:'Development',label:'Build',body:"We build in focused sprints, sharing interactive previews at every milestone. Our XR engineers work across Unity, Unreal, WebXR and native — picking the right stack for your goals.",feats:[['o','Sprint cycles','2-week builds with client demos'],['g','Asset production','3D modelling, animation and sound'],['b','Integration','CMS, APIs and backend connections']]},
+  {num:'04',title:'Testing',label:'QA',body:"Every experience goes through rigorous QA on real devices. We test for performance, comfort, accessibility and edge cases — so your users get a flawless first impression.",feats:[['o','Device testing','Quest, HoloLens, iOS, Android, PC'],['g','Performance QA','Frame rate, latency and comfort checks'],['b','User testing','Real feedback from target audience']]},
+  {num:'05',title:'Launch',label:'Launch',body:"We handle deployment end-to-end — app store submissions, enterprise distribution, or web publishing. Then we stay close for support, analytics and future iterations.",feats:[['o','Deployment','Store submissions or enterprise rollout'],['g','Training','Team onboarding and documentation'],['b','Support','Ongoing updates and optimisation']]}
+];
+const rail = document.getElementById('processRail');
+const panel = document.getElementById('processPanel');
+rail.innerHTML = `<div class="p-fill" id="pFill"></div>` + stages.map(s=>`<div class="p-step"><div class="p-step-num">${s.num}</div><div class="p-step-label">${s.label}</div></div>`).join('');
+
+function renderPanel(i){
+  const s = stages[i];
+  panel.innerHTML = `
+    <div><div class="pp-num">${s.num}</div><div class="pp-title">${s.title}</div><p class="pp-body">${s.body}</p></div>
+    <div class="pp-feats">${s.feats.map(f=>`<div class="pp-feat"><div class="pp-dot ${f[0]}"></div><div><strong>${f[1]}</strong><span>${f[2]}</span></div></div>`).join('')}</div>`;
+}
+function setActive(i){
+  document.querySelectorAll('.p-step').forEach((el,idx)=>{
+    el.classList.remove('active','done');
+    if(idx<i) el.classList.add('done'); else if(idx===i) el.classList.add('active');
+  });
+  document.getElementById('pFill').style.width = (i/(stages.length-1))*100+'%';
+  renderPanel(i);
+}
+document.querySelectorAll('.p-step').forEach((el,idx)=> el.addEventListener('click', ()=> setActive(idx)));
+setActive(0);
+let autoIdx=0;
+setInterval(()=>{ autoIdx=(autoIdx+1)%stages.length; setActive(autoIdx); }, 4500);
+
+/* ---------------- INDUSTRIES ---------------- */
+const industries = [
+  ['fa-solid fa-heart-pulse','Healthcare'],['fa-solid fa-industry','Manufacturing'],['fa-solid fa-house','Real Estate'],
+  ['fa-solid fa-graduation-cap','Education'],['fa-solid fa-cart-shopping','Retail'],['fa-solid fa-shield-halved','Defense'],
+  ['fa-solid fa-drafting-compass','Architecture'],['fa-solid fa-bolt','Energy'],['fa-solid fa-plane','Tourism'],['fa-solid fa-car','Automotive']
+];
+document.getElementById('indGrid').innerHTML = industries.map(([icon,name])=>`<div class="ind-card"><div class="ind-icon"><i class="${icon}"></i></div><div class="ind-name">${name}</div></div>`).join('');
+
+/* ---------------- TESTIMONIALS MARQUEE ---------------- */
+const testimonials = [
+  {stars:'★★★★★',text:'The VR training module Volga built for us cut onboarding time by 40%. The team was incredibly responsive and truly understood our operational constraints.',name:'David Mitchell',role:'Head of Operations, ManufactureCo',avatar:'DM'},
+  {stars:'★★★★★',text:'We launched an AR product visualization tool for our real estate clients. Buyer engagement went through the roof. Volga delivered exactly what they promised.',name:'Sneha Reddy',role:'Director of Digital, Apex Properties',avatar:'SR'},
+  {stars:'★★★★★',text:'From the first call to final deployment, communication was flawless. The digital twin they built for our facility is now core to how we plan maintenance cycles.',name:'Aryan Kapoor',role:'Plant Manager, EnergySystems Ltd',avatar:'AK'}
+];
+function testiCard(t){return`<div class="testi-card"><div class="testi-stars">${t.stars}</div><p class="testi-text">${t.text}</p><div class="testi-author"><div class="testi-avatar">${t.avatar}</div><div><div class="testi-name">${t.name}</div><div class="testi-role">${t.role}</div></div></div></div>`;}
+const testiSet = testimonials.map(testiCard).join('');
+document.getElementById('testiMarquee').innerHTML = testiSet + testiSet + testiSet;
+
+/* ---------------- reveal-on-scroll ---------------- */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: .15 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
 
-  
-
-  <!-- ------------------------------------------- FOOTER -->
-  <style>
-.footer{margin:0;padding:0;box-sizing:border-box;}
-
-.footer-wrap{
-  font-family:var(--font-ui);
-  background:#fff;
-  width:100%;
-  min-height:300px;
-  position:relative;
-  overflow:hidden;
-  border-top:1px solid #e8e8e8;
-}
-
-.footer-inner{
-  position:relative;
-  max-width:1900px;
-  margin:0 auto;
-  padding:60px 48px 36px;
-  min-height:460px;
-}
-
-.footer-logo{
-  width:150px;
-  margin-bottom:6px;
-  img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-  }
-}
-
-.footer-tagline{
-  font-family:var(--font-ui);
-  font-size:11px;
-  font-weight:400;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:#888;
-  margin-bottom:36px;
-}
-
-.footer-cols{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  position:relative;
-  z-index:2;
-  max-width:1900px;
-  gap:24px;
-}
-
-.col-left,.col-right,.col-extra-left,.col-extra-right{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  min-width:130px;
-}
-
-.col-label{
-  font-family:var(--font-display);
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  color:#1a1a1a;
-  margin-bottom:10px;
-}
-
-.col-left a,.col-right a,
-.col-extra-left a,.col-extra-right a{
-  font-family:var(--font-ui);
-  font-size:14px;
-  font-weight:400;
-  color:#1a1a1a;
-  text-decoration:none;
-  letter-spacing:0.01em;
-  line-height:1.9;
-  transition:color 0.2s;
-}
-
-.col-left a:hover,.col-right a:hover,
-.col-extra-left a:hover,.col-extra-right a:hover{color:#1a4fa0;}
-
-.col-right,.col-extra-right{text-align:right;}
-
-.col-right .divider,.col-extra-right .divider{
-  width:32px;
-  height:2px;
-  background:#1a1a1a;
-  margin:4px 0 8px auto;
-}
-
-.col-extra-left .divider{
-  width:32px;
-  height:2px;
-  background:#1a1a1a;
-  margin:4px 0 8px 0;
-}
-
-
-
-.footer-bottom{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  padding-top:32px;
-  position:relative;
-  z-index:2;
-  border-top:1px solid #e8e8e8;
-  margin-top:80px;
-}
-
-.brand-name{
-  font-family:var(--font-display);
-  font-size:38px;
-  font-weight:300;
-  letter-spacing:-0.02em;
-  color:#1a1a1a;
-  line-height:1;
-}
-
-.brand-name span{font-weight:700;}
-
-.copyright{
-  font-family:var(--font-ui);
-  font-size:11px;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  color:#888;
-}
-</style>
-
-
-<!-- ═══════════════════ INDUSTRIES SERVED ═══════════════════ -->
-<section class="pf-industries">
-  <div class="pf-industries-inner">
-    <div class="pf-section-label">Industries We've Worked In</div>
-    <h2 class="pf-section-title">Built for every sector<br><em>that demands precision</em></h2>
-    <div class="pf-ind-grid">
-      <div class="pf-ind-card">
-        <div class="pf-ind-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-        </div>
-        <div class="pf-ind-name">Healthcare</div>
-      </div>
-      <div class="pf-ind-card">
-        <div class="pf-ind-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-        </div>
-        <div class="pf-ind-name">Manufacturing</div>
-      </div>
-      <div class="pf-ind-card">
-        <div class="pf-ind-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        </div>
-        <div class="pf-ind-name">Real Estate</div>
-      </div>
-      <div class="pf-ind-card">
-        <div class="pf-ind-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-        </div>
-        <div class="pf-ind-name">Education</div>
-      </div>
-      <div class="pf-ind-card">
-        <div class="pf-ind-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-        </div>
-        <div class="pf-ind-name">Retail</div>
-      </div>
-      <div class="pf-ind-card">
-        <div class="pf-ind-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <div class="pf-ind-name">Defense</div>
-      </div>
-      <div class="pf-ind-card">
-        <div class="pf-ind-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-        </div>
-        <div class="pf-ind-name">Architecture</div>
-      </div>
-      <div class="pf-ind-card">
-        <div class="pf-ind-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        </div>
-        <div class="pf-ind-name">Energy</div>
-      </div>
-      <div class="pf-ind-card">
-        <div class="pf-ind-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <div class="pf-ind-name">Tourism</div>
-      </div>
-      <div class="pf-ind-card">
-        <div class="pf-ind-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-        </div>
-        <div class="pf-ind-name">Automotive</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════ TESTIMONIALS ═══════════════════ -->
-<section class="pf-testimonials">
-  <div class="pf-industries-inner">
-    <div class="pf-section-label">Client Feedback</div>
-    <h2 class="pf-section-title">What our clients say</h2>
-    <div class="pf-testi-grid">
-      <div class="pf-testi-card">
-        <div class="pf-testi-quote">"</div>
-        <p class="pf-testi-text">The VR training module Volga built for us cut onboarding time by 40%. The team was incredibly responsive and truly understood our operational constraints.</p>
-        <div class="pf-testi-author">
-          <div class="pf-testi-avatar">DM</div>
-          <div>
-            <div class="pf-testi-name">David Mitchell</div>
-            <div class="pf-testi-role">Head of Operations, ManufactureCo</div>
-          </div>
-        </div>
-      </div>
-      <div class="pf-testi-card">
-        <div class="pf-testi-quote">"</div>
-        <p class="pf-testi-text">We launched an AR product visualization tool for our real estate clients. Buyer engagement went through the roof. Volga delivered exactly what they promised.</p>
-        <div class="pf-testi-author">
-          <div class="pf-testi-avatar">SR</div>
-          <div>
-            <div class="pf-testi-name">Sneha Reddy</div>
-            <div class="pf-testi-role">Director of Digital, Apex Properties</div>
-          </div>
-        </div>
-      </div>
-      <div class="pf-testi-card">
-        <div class="pf-testi-quote">"</div>
-        <p class="pf-testi-text">From the first call to final deployment, the communication was flawless. The digital twin they built for our facility is now a core part of how we plan maintenance cycles.</p>
-        <div class="pf-testi-author">
-          <div class="pf-testi-avatar">AK</div>
-          <div>
-            <div class="pf-testi-name">Aryan Kapoor</div>
-            <div class="pf-testi-role">Plant Manager, EnergySystems Ltd</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════ CTA BAND ═══════════════════ -->
-<section class="pf-cta-band">
-  <div class="pf-cta-bg"></div>
-  <div class="pf-cta-content">
-    <div class="pf-section-label" style="color:rgba(255,255,255,0.5)">Ready to build?</div>
-    <h2 class="pf-cta-heading">Your project could be<br>our <em>next case study</em></h2>
-    <p class="pf-cta-sub">Tell us what you're building. We'll put together an approach, timeline, and honest quote — no pressure.</p>
-    <div class="pf-cta-row">
-      <a href="contact.html" class="pf-cta-btn">Start a Project</a>
-      <a href="case-studies.html" class="pf-cta-btn-ghost">View Case Studies</a>
-    </div>
-  </div>
-</section>
-
-<style>
-/* ── Portfolio extra sections ───────────────────────── */
-.pf-industries-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 5%;
-}
-.pf-section-label {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.pf-section-label::before {
-  content: '';
-  width: 24px;
-  height: 1.5px;
-  background: var(--accent);
-  display: inline-block;
-}
-.pf-section-title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.1;
-  margin-bottom: 3rem;
-}
-.pf-section-title em {
-  font-style: normal;
-  color: var(--accent);
-}
-
-/* Industries */
-.pf-industries {
-  padding: 100px 0;
-  background: var(--bg);
-}
-.pf-ind-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1rem;
-}
-.pf-ind-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding: 2rem 1rem;
-  background: var(--surface);
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  box-shadow: var(--neu-shadow-out-sm);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  cursor: default;
-}
-.pf-ind-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(27,79,114,0.12);
-}
-.pf-ind-icon {
-  width: 52px;
-  height: 52px;
-  background: var(--bg);
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--neu-shadow-out-sm);
-}
-.pf-ind-icon svg {
-  width: 24px;
-  height: 24px;
-  stroke: var(--accent2);
-}
-.pf-ind-name {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  text-align: center;
-}
-
-/* Testimonials */
-.pf-testimonials {
-  padding: 100px 0;
-  background: var(--surface2);
-}
-.pf-testi-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-.pf-testi-card {
-  background: var(--surface);
-  border-radius: 20px;
-  padding: 2.5rem;
-  border: 1px solid var(--border);
-  box-shadow: var(--neu-shadow-out-sm);
-  display: flex;
-  flex-direction: column;
-  gap: 1.4rem;
-  transition: transform 0.25s ease;
-}
-.pf-testi-card:hover { transform: translateY(-4px); }
-.pf-testi-quote {
-  font-family: var(--font-display);
-  font-size: 4rem;
-  line-height: 0.8;
-  color: var(--accent);
-  opacity: 0.4;
-}
-.pf-testi-text {
-  font-family: var(--font-ui);
-  font-size: 0.95rem;
-  line-height: 1.75;
-  color: var(--text-muted);
-  flex: 1;
-}
-.pf-testi-author {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
-}
-.pf-testi-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent2), var(--accent));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #fff;
-  flex-shrink: 0;
-}
-.pf-testi-name {
-  font-weight: 700;
-  font-size: 0.9rem;
-  color: var(--text);
-}
-.pf-testi-role {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-/* CTA Band */
-.pf-cta-band {
-  position: relative;
-  padding: 120px 5%;
-  text-align: center;
-  overflow: hidden;
-  background: var(--accent3);
-}
-.pf-cta-bg {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(232,147,10,0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-.pf-cta-content {
-  position: relative;
-  z-index: 1;
-  max-width: 700px;
-  margin: 0 auto;
-}
-.pf-cta-heading {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: 900;
-  color: #fff;
-  line-height: 1.05;
-  margin-bottom: 1.2rem;
-}
-.pf-cta-heading em { font-style: normal; color: var(--accent); }
-.pf-cta-sub {
-  font-size: 1.05rem;
-  color: rgba(255,255,255,0.6);
-  line-height: 1.7;
-  max-width: 520px;
-  margin: 0 auto 2.5rem;
-}
-.pf-cta-row {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.pf-cta-btn {
-  display: inline-flex;
-  align-items: center;
-  padding: 1rem 2.4rem;
-  background: var(--accent);
-  color: #fff;
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  border-radius: 100px;
-  text-decoration: none;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 8px 24px rgba(232,147,10,0.35);
-}
-.pf-cta-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(232,147,10,0.45); }
-.pf-cta-btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  padding: 1rem 2.4rem;
-  background: transparent;
-  color: rgba(255,255,255,0.7);
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  border-radius: 100px;
-  border: 1px solid rgba(255,255,255,0.2);
-  text-decoration: none;
-  transition: border-color 0.2s, color 0.2s;
-}
-.pf-cta-btn-ghost:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
-
-/* Responsive */
-@media (max-width: 900px) {
-  .pf-ind-grid { grid-template-columns: repeat(3, 1fr); }
-  .pf-testi-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 600px) {
-  .pf-ind-grid { grid-template-columns: repeat(2, 1fr); }
-  .pf-cta-row { flex-direction: column; align-items: center; }
-  .pf-cta-btn, .pf-cta-btn-ghost { width: 100%; justify-content: center; }
-}
-</style>
-<div id="site-footer-mount"></div>
-<script src="footer-include.js"></script>
 </body>
 </html>

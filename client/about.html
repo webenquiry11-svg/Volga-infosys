@@ -81,62 +81,255 @@
 .reveal.is-visible { opacity:1; transform:translateY(0); }
 
 /* ── Hero — pad for fixed navbar ── */
-.hero {
-  padding-top:calc(var(--navbar-height,110px) + 60px);
-  padding-bottom:160px;
-  min-height: 85vh;
-  background: linear-gradient(160deg, #0d1b26 0%, #0a1720 50%, #111f2c 100%);
+.Hero {
   position: relative;
+  min-height: 100vh;
+  padding-top: calc(var(--navbar-height, 110px) + 60px);
+  padding-bottom: 120px;
   overflow: hidden;
-}
-.hero-layout{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:60px;
+  background: linear-gradient(160deg, #0d1b26 0%, #0a1720 50%, #111f2c 100%);
 }
 
-.hero-copy{
-    flex:1;
-    max-width:600px;
+.Hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4;
+  z-index: 0;
 }
 
-.hero-right{
-    flex:1;
-    display:flex;
-    justify-content:flex-end;
-    align-items:center;
+.Hero-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.07;
+  pointer-events: none;
+  z-index: 1;
 }
 
-.hero-right img{
-    width:850px;
-    max-width:none;
-    height:auto;
-    display:flex;
-    z-index: 2;
-    right: 200px;
+.Hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 1;
 }
 
-/* Mobile */
-@media (max-width:992px){
-    .hero-layout{
-        flex-direction:column;
-        text-align:center;
-    }
-
-    .hero-right{
-        justify-content:center;
-        margin-top:40px;
-    }
+.Hero-orb-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(232, 147, 10, 0.3) 0%, transparent 70%);
+  top: 10%;
+  right: 10%;
+  animation: float 8s ease-in-out infinite;
 }
 
-.hero h1, .hero .lede { color: #d6e4f0;}
-.hero .wrap { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; min-height:calc(85vh - 280px); position: relative; z-index: 1; }
-.hero-copy { max-width:700px; }
-.hero-copy .lede { margin:22px 0 32px; color: rgba(180,210,230,0.8); font-size:1.1rem; }
-.hero-actions { display:flex; gap:14px; flex-wrap:wrap; }
-.hero-visual .frame { height:340px; }
-.hero-visual .frame svg { width:30px; height:30px; }
+.Hero-orb-2 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(86, 124, 141, 0.25) 0%, transparent 70%);
+  bottom: 20%;
+  left: 15%;
+  animation: float 10s ease-in-out infinite reverse;
+}
+
+.Hero-orb-3 {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(232, 147, 10, 0.2) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  animation: float 12s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -30px); }
+}
+
+.Hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.Hero-content {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 5%;
+  z-index: 2;
+}
+
+.Hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background: rgba(232, 147, 10, 0.1);
+  border: 1px solid rgba(232, 147, 10, 0.3);
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #e8930a;
+  margin-bottom: 2rem;
+}
+
+.Hero-badge-dot {
+  width: 8px;
+  height: 8px;
+  background: #e8930a;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+.Hero-heading {
+  font-family: var(--font-display);
+  font-size: clamp(9rem, 9vw, 9rem)!important;
+  font-weight: 700;
+  line-height: 1.05;
+  color: #fff;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.Hero-heading em {
+  font-style: normal;
+  color: #e8930a;
+}
+
+.Hero-sub {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 600px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+
+.Hero-cta-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 4rem;
+}
+
+.Hero-stats {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.stat-plus {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: #e8930a;
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-left: 8px;
+}
+
+.Hero-stat-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.Hero-scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.Hero-scroll-mouse {
+  width: 24px;
+  height: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  position: relative;
+}
+
+.Hero-scroll-wheel {
+  width: 4px;
+  height: 8px;
+  background: #e8930a;
+  border-radius: 2px;
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scroll 2s ease-in-out infinite;
+}
+
+@keyframes scroll {
+  0% { opacity: 1; top: 8px; }
+  100% { opacity: 0; top: 24px; }
+}
+
+@media (max-width: 768px) {
+  .Hero-stats {
+    gap: 1.5rem;
+  }
+  
+  .Hero-stat-divider {
+    display: none;
+  }
+  
+  .stat {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .stat-label {
+    margin-left: 0;
+  }
+}
 
 
 /* ── Sections ── */
@@ -546,44 +739,75 @@
   </div>
   <div id="backdrop" aria-hidden="true"></div>
 
-<section class="hero" aria-label="About Volga Infosys hero">
-  <!-- Background layers (no JS required) -->
-  <div class="hero-noise" aria-hidden="true"></div>
-  <div class="hero-grid" aria-hidden="true"></div>
-  <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
-  <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
-  <div class="hero-orb hero-orb-3" aria-hidden="true"></div>
+<section class="Hero" id="Hero">
+  <!-- Video Background -->
+  <video class="Hero-video" autoplay muted loop playsinline>
+    <source src="hero-video.mp4" type="video/mp4">
+  </video>
 
- <div class="wrap">
-    <div class="hero-layout">
+  <div class="Hero-noise"></div>
 
-        <!-- Left Side -->
-        <div class="hero-copy reveal">
-            <p class="eyebrow">Company — About us</p>
+  <!-- Ambient glow orbs -->
+  <div class="Hero-orb Hero-orb-1" aria-hidden="true"></div>
+  <div class="Hero-orb Hero-orb-2" aria-hidden="true"></div>
+  <div class="Hero-orb Hero-orb-3" aria-hidden="true"></div>
 
-            <h1 class="h1">
-                Building the future of
-                <span class="hero-accent">enterprise experiences</span>
-            </h1>
+  <!-- Grid overlay -->
+  <div class="Hero-grid" aria-hidden="true"></div>
 
-            <p class="lede">
-                We turn strategy into immersive outcomes—AR, VR, XR, AI, Digital Twins,
-                and advanced software engineering—built for real-world business goals.
-            </p>
+  <div class="Hero-content">
 
-            <div class="hero-actions">
-                <a class="btn btn-primary" href="contact.html">Contact our team</a>
-                <a class="btn btn-ghost" href="services.html">Explore services</a>
-            </div>
-        </div>
-
-        <!-- Right Side -->
-        <div class="hero-right reveal">
-            <img src="footer1-visual.png" alt="Hero Image">
-        </div>
-
+    <!-- Badge -->
+    <div class="Hero-badge">
+      <span class="Hero-badge-dot"></span>
+      Company — About Us
     </div>
-</div>
+
+    <!-- Headline -->
+    <h1 class="Hero-heading" aria-label="Building the future of enterprise experiences">
+      <span class="Hero-line">Building the future of</span>
+      <span class="Hero-line"><em>enterprise experiences</em></span>
+    </h1>
+
+    <p class="Hero-sub">We turn strategy into immersive outcomes—AR, VR, XR, AI, Digital Twins, and advanced software engineering—built for real-world business goals.</p>
+
+    <div class="Hero-cta-row">
+      <a href="contact.html" class="btn-primary magnetic-btn">
+        Contact Our Team
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="services.html" class="btn-ghost btn-ghost-light magnetic-btn">Explore Services</a>
+    </div>
+
+    <!-- Stat counters -->
+    <div class="Hero-stats">
+      <div class="stat">
+        <div class="stat-num" data-val="60">0</div>
+        <div class="stat-plus">+</div>
+        <div class="stat-label">Projects Delivered</div>
+      </div>
+      <div class="stat Hero-stat-divider"></div>
+      <div class="stat">
+        <div class="stat-num" data-val="10">0</div>
+        <div class="stat-plus">+</div>
+        <div class="stat-label">Industries Served</div>
+      </div>
+      <div class="stat Hero-stat-divider"></div>
+      <div class="stat">
+        <div class="stat-num" data-val="8">0</div>
+        <div class="stat-plus">+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="Hero-scroll-hint">
+    <div class="Hero-scroll-mouse">
+      <div class="Hero-scroll-wheel"></div>
+    </div>
+    <span>Scroll</span>
+  </div>
 </section>
 
 <section class="section section--dark on-dark">
@@ -628,42 +852,6 @@
   </div>
 </section>
 
-<section class="section section--light" id="leadership">
-  <div class="wrap">
-
-    <!-- Text side -->
-    <div class="reveal">
-      <p class="eyebrow">Leadership</p>
-      <h2 class="h2">Visionaries driving<br>innovation forward</h2>
-      <p class="lede" style="margin-top:18px;">Our leadership team brings together decades of experience across software development, spatial computing, enterprise consulting, product innovation, and digital transformation — tracking emerging opportunities in AR, VR, XR, AI, and Digital Twins.</p>
-      <div class="stat-row">
-        <div class="stat"><div class="num">20+</div><div class="label">Years combined</div></div>
-        <div class="stat"><div class="num">5</div><div class="label">Core disciplines</div></div>
-      </div>
-    </div>
-
-    <!-- Portrait grid (novabrew-style) -->
-    <div class="leader-grid reveal" id="leaderGrid">
-      <div class="l-card">
-        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=540&fit=crop&crop=faces&q=80" alt="CEO">
-        <div class="l-meta"><div class="l-nm">Arjun Mehta</div><div class="l-rl">Founder &amp; CEO</div></div>
-      </div>
-      <div class="l-card">
-        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=540&fit=crop&crop=faces&q=80" alt="CTO">
-        <div class="l-meta"><div class="l-nm">Priya Sharma</div><div class="l-rl">CTO</div></div>
-      </div>
-      <div class="l-card">
-        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=540&fit=crop&crop=faces&q=80" alt="Design Lead">
-        <div class="l-meta"><div class="l-nm">Marcus Webb</div><div class="l-rl">Head of Design</div></div>
-      </div>
-      <div class="l-card">
-        <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=540&fit=crop&crop=faces&q=80" alt="Strategy Lead">
-        <div class="l-meta"><div class="l-nm">Leila Nazari</div><div class="l-rl">Head of Strategy</div></div>
-      </div>
-    </div>
-
-  </div>
-</section>
 
 
 
@@ -748,57 +936,7 @@
 </section>
 
 <!-- ═══════════════════ APPLY MODAL ═══════════════════ -->
-<div class="cj-modal-overlay" id="cjModalOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cjModalTitle">
-  <div class="cj-modal">
-    <button class="cj-modal-close" id="cjModalClose" aria-label="Close">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-    </button>
-    <div class="cj-modal-job" id="cjModalJob"></div>
-    <h2 class="cj-modal-title" id="cjModalTitle">Apply for this role</h2>
-    <form class="cj-form" id="cjForm" novalidate>
-      <input type="hidden" id="cjJobId" name="jobId">
-      <div class="cj-form-row">
-        <div class="cj-form-group">
-          <label for="cjName">Full name <span class="cj-req">*</span></label>
-          <input type="text" id="cjName" name="applicantName" placeholder="Jane Smith" required>
-        </div>
-        <div class="cj-form-group">
-          <label for="cjEmail">Email <span class="cj-req">*</span></label>
-          <input type="email" id="cjEmail" name="applicantEmail" placeholder="jane@company.com" required>
-        </div>
-      </div>
-      <div class="cj-form-row">
-        <div class="cj-form-group">
-          <label for="cjPhone">Phone</label>
-          <input type="tel" id="cjPhone" name="applicantPhone" placeholder="+1 555 000 0000">
-        </div>
-        <div class="cj-form-group">
-          <label for="cjLinkedin">LinkedIn URL</label>
-          <input type="url" id="cjLinkedin" name="linkedinUrl" placeholder="https://linkedin.com/in/…">
-        </div>
-      </div>
-      <div class="cj-form-group">
-        <label for="cjPortfolio">Portfolio / Website</label>
-        <input type="url" id="cjPortfolio" name="portfolioUrl" placeholder="https://yoursite.com">
-      </div>
-      <div class="cj-form-group">
-        <label for="cjResume">Resume / CV <span class="cj-req">*</span></label>
-        <div class="cj-file-drop" id="cjFileDrop">
-          <input type="file" id="cjResume" name="resume" accept=".pdf,.doc,.docx" required>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          <span id="cjFileName">PDF, DOC, DOCX — drag & drop or click</span>
-        </div>
-      </div>
-      <div class="cj-form-group">
-        <label for="cjCover">Cover letter</label>
-        <textarea id="cjCover" name="coverLetter" rows="4" placeholder="Tell us why you're a great fit…"></textarea>
-      </div>
-      <div class="cj-form-error" id="cjFormError"></div>
-      <button type="submit" class="cj-submit" id="cjSubmit">
-        <span id="cjSubmitLabel">Submit Application</span>
-        <div class="cj-btn-spinner" id="cjBtnSpinner"></div>
-      </button>
-    </form>
+
     <!-- Success state -->
     <div class="cj-success" id="cjSuccess" style="display:none;">
       <div class="cj-success-icon">
@@ -1436,6 +1574,114 @@
 <script src="volga.js"></script>
 <script src="api-config.js"></script>
 <script src="hero-3d.js"></script>
+<script>
+  // Job listings functionality
+  let allJobs = [];
+  let filteredJobs = [];
+
+  async function fetchJobs() {
+    const API = window.VOLGA_API;
+    const cjLoading = document.getElementById('cjLoading');
+    const cjList = document.getElementById('cjList');
+    const cjCount = document.getElementById('cjCount');
+    const cjDept = document.getElementById('cjDept');
+    const cjType = document.getElementById('cjType');
+    const cjLoc = document.getElementById('cjLoc');
+
+    try {
+      const res = await fetch(`${API}/jobs`);
+      if (!res.ok) throw new Error('Jobs fetch failed');
+      const result = await res.json();
+      allJobs = result.data || result;
+      
+      if (Array.isArray(allJobs) && allJobs.length > 0) {
+        filteredJobs = [...allJobs];
+        
+        // Populate filters
+        const departments = [...new Set(allJobs.map(j => j.department).filter(Boolean))];
+        const locations = [...new Set(allJobs.map(j => j.location).filter(Boolean))];
+        const types = [...new Set(allJobs.map(j => j.type).filter(Boolean))];
+        
+        cjDept.innerHTML = '<option value="">All Departments</option>' + 
+          departments.map(d => `<option value="${d}">${d}</option>`).join('');
+        cjLoc.innerHTML = '<option value="">All Locations</option>' + 
+          locations.map(l => `<option value="${l}">${l}</option>`).join('');
+        
+        renderJobs();
+      } else {
+        cjList.innerHTML = '<div class="cj-empty">No open positions at this time. Check back soon!</div>';
+        cjCount.textContent = '0 roles';
+      }
+    } catch (err) {
+      console.warn('Unable to load jobs:', err);
+      cjList.innerHTML = '<div class="cj-empty">Unable to load positions. Please try again later.</div>';
+      cjCount.textContent = '0 roles';
+    } finally {
+      if (cjLoading) cjLoading.style.display = 'none';
+    }
+  }
+
+  function renderJobs() {
+    const cjList = document.getElementById('cjList');
+    const cjCount = document.getElementById('cjCount');
+    
+    cjCount.textContent = `${filteredJobs.length} roles`;
+    
+    if (filteredJobs.length === 0) {
+      cjList.innerHTML = '<div class="cj-empty">No positions match your criteria.</div>';
+      return;
+    }
+    
+    cjList.innerHTML = filteredJobs.map(job => `
+      <div class="cj-job">
+        <div class="cj-job-header" onclick="toggleJobDetail(this)">
+          <div class="cj-job-left">
+            <h4>${job.title}</h4>
+            <div class="cj-job-meta">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>${job.location || 'Remote'}</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>${job.type || 'Full-time'}</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>${job.department || 'General'}</span>
+            </div>
+          </div>
+          <div class="cj-job-right">
+            <div class="cj-salary">${job.salary || 'Competitive'}</div>
+            <button class="cj-apply-btn" onclick="event.stopPropagation(); window.location.href='job-detail.html?id=${job._id}'">Apply</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function filterJobs() {
+    const searchInput = document.getElementById('cjSearch').value.toLowerCase();
+    const deptFilter = document.getElementById('cjDept').value;
+    const typeFilter = document.getElementById('cjType').value;
+    const locFilter = document.getElementById('cjLoc').value;
+    
+    filteredJobs = allJobs.filter(job => {
+      const matchesSearch = !searchInput || 
+        job.title.toLowerCase().includes(searchInput) || 
+        (job.description && job.description.toLowerCase().includes(searchInput));
+      const matchesDept = !deptFilter || job.department === deptFilter;
+      const matchesType = !typeFilter || job.type === typeFilter;
+      const matchesLoc = !locFilter || job.location === locFilter;
+      
+      return matchesSearch && matchesDept && matchesType && matchesLoc;
+    });
+    
+    renderJobs();
+  }
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', () => {
+    fetchJobs();
+    
+    document.getElementById('cjSearch').addEventListener('input', filterJobs);
+    document.getElementById('cjDept').addEventListener('change', filterJobs);
+    document.getElementById('cjType').addEventListener('change', filterJobs);
+    document.getElementById('cjLoc').addEventListener('change', filterJobs);
+  });
+</script>
 
 <style>
 /* ══════════════════ CAREERS JOB LISTINGS ══════════════════ */
