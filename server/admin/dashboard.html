@@ -267,7 +267,7 @@
   <section class="view" id="view-portfolio">
     <div class="page-header">
       <h1>Portfolio Projects</h1>
-      <a class="btn-save" href="project-edit.html">+ Add Project</a>
+      <button class="btn-save" id="addProjectBtn">+ Add Project</button>
     </div>
     <div class="proj-grid" id="projGrid"></div>
   </section>
@@ -285,7 +285,7 @@
   <section class="view" id="view-blog">
     <div class="page-header">
       <h1>Blog Posts</h1>
-      <a class="btn-save" href="blog-edit.html">+ Add Post</a>
+      <button class="btn-save" id="addBlogBtn">+ Add Post</button>
     </div>
     <div class="proj-grid" id="blogGrid"></div>
   </section>
@@ -294,7 +294,7 @@
   <section class="view" id="view-casestudies">
     <div class="page-header">
       <h1>Case Studies</h1>
-      <a class="btn-save" href="case-study-edit.html">+ Add Case Study</a>
+      <button class="btn-save" id="addCaseStudyBtn">+ Add Case Study</button>
     </div>
     <div class="proj-grid" id="caseStudyGrid"></div>
   </section>
@@ -303,7 +303,7 @@
   <section class="view" id="view-industrynews">
     <div class="page-header">
       <h1>Industry News</h1>
-      <a class="btn-save" href="industry-news-edit.html">+ Add News</a>
+      <button class="btn-save" id="addIndustryNewsBtn">+ Add News</button>
     </div>
     <div class="proj-grid" id="industryNewsGrid"></div>
   </section>
@@ -560,119 +560,106 @@
 
   <!-- CASE STUDY MODAL -->
   <div class="modal-overlay" id="caseStudyModalOverlay">
-    <div class="modal" style="max-width:640px">
+    <div class="modal" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
       <button class="modal-close" id="caseStudyModalClose">×</button>
       <h2 class="modal-name" id="caseStudyModalTitle">Add Case Study</h2>
-      <div class="proj-form">
-        <div class="field"><label for="cs-title">Title *</label><input id="cs-title" placeholder="e.g. Manufacturer cuts training time by 60%" /></div>
-        <div class="proj-form-row">
-          <div class="field"><label for="cs-industry">Industry *</label><input id="cs-industry" placeholder="e.g. Manufacturing" /></div>
-          <div class="field"><label for="cs-year">Year</label><input id="cs-year" placeholder="e.g. 2026" /></div>
+      <div class="edit-form-card" style="max-width: 100%; padding: 1.5rem;">
+        <div class="edit-section" style="margin-bottom: 1.5rem;">
+          <h3 class="edit-section-title">Basic Information</h3>
+          <div class="field"><label for="cs-title">Title *</label><input id="cs-title" placeholder="e.g. Manufacturer cuts training time by 60%" /></div>
+          <div class="proj-form-row">
+            <div class="field"><label for="cs-industry">Industry *</label><input id="cs-industry" placeholder="e.g. Manufacturing" /></div>
+            <div class="field"><label for="cs-year">Year</label><input id="cs-year" placeholder="e.g. 2026" /></div>
+          </div>
         </div>
-        <div class="field"><label for="cs-description">Description *</label><textarea id="cs-description" rows="3" placeholder="Short case study summary..."></textarea></div>
-        <div class="field"><label for="cs-image">Image URL *</label><input id="cs-image" placeholder="https://..." /></div>
-        <div class="field"><label for="cs-metrics">Metrics (one per line, value | label)</label><textarea id="cs-metrics" rows="3" placeholder="60% | Faster training"></textarea></div>
-        <div class="proj-form-row">
-          <div class="field"><label for="cs-author">Author</label><input id="cs-author" placeholder="Volga Infosys" /></div>
-          <div class="field"><label for="cs-order">Order</label><input id="cs-order" type="number" placeholder="0" /></div>
+
+        <div class="edit-section" style="margin-bottom: 1.5rem;">
+          <h3 class="edit-section-title">Description</h3>
+          <div class="field"><label for="cs-description">Description *</label><div id="cs-description" placeholder="Short case study summary..."></div></div>
         </div>
+
+        <div class="edit-section" style="margin-bottom: 1.5rem;">
+          <h3 class="edit-section-title">Cover Image</h3>
+          <div class="field">
+            <label for="cs-cover">Upload Image</label>
+            <div class="file-drop-area" id="cs-cover-drop">
+              <input id="cs-cover" type="file" accept="image/*" />
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span id="cs-cover-name">Drag & drop or click to upload image</span>
+            </div>
+          </div>
+          <div id="cs-image-preview" class="img-preview-box"></div>
+        </div>
+
+        <div class="edit-section" style="margin-bottom: 1.5rem;">
+          <h3 class="edit-section-title">Metrics</h3>
+          <div class="field"><label for="cs-metrics">Metrics (one per line, value | label)</label><textarea id="cs-metrics" rows="3" placeholder="60% | Faster training"></textarea></div>
+        </div>
+
+        <div class="edit-section">
+          <h3 class="edit-section-title">Additional Settings</h3>
+          <div class="proj-form-row">
+            <div class="field"><label for="cs-author">Author</label><input id="cs-author" placeholder="Volga Infosys" /></div>
+            <div class="field"><label for="cs-order">Order</label><input id="cs-order" type="number" placeholder="0" /></div>
+          </div>
+        </div>
+
         <div id="caseStudyFormError" class="proj-form-error"></div>
-        <div class="modal-actions" style="margin-top:1rem">
-          <button class="btn-save" id="caseStudySaveBtn">Save Case Study</button>
-          <button class="btn-delete" id="caseStudyDeleteBtn" style="display:none">Delete</button>
-        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-save" id="caseStudySaveBtn">Save Case Study</button>
+        <button class="btn-delete" id="caseStudyDeleteBtn" style="display: none;">Delete</button>
       </div>
     </div>
   </div>
 
   <!-- INDUSTRY NEWS MODAL -->
   <div class="modal-overlay" id="industryNewsModalOverlay">
-    <div class="modal" style="max-width:640px">
+    <div class="modal" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
       <button class="modal-close" id="industryNewsModalClose">×</button>
       <h2 class="modal-name" id="industryNewsModalTitle">Add News</h2>
-      <div class="proj-form">
-        <div class="field"><label for="in-title">Title *</label><input id="in-title" placeholder="e.g. Enterprise XR market update" /></div>
-        <div class="proj-form-row">
-          <div class="field"><label for="in-topic">Topic *</label><input id="in-topic" placeholder="e.g. Research" /></div>
-          <div class="field"><label for="in-source">Source</label><input id="in-source" placeholder="Volga Infosys" /></div>
+      <div class="edit-form-card" style="max-width: 100%; padding: 1.5rem;">
+        <div class="edit-section" style="margin-bottom: 1.5rem;">
+          <h3 class="edit-section-title">Basic Information</h3>
+          <div class="field"><label for="in-title">Title *</label><input id="in-title" placeholder="e.g. Enterprise XR market update" /></div>
+          <div class="proj-form-row">
+            <div class="field"><label for="in-topic">Topic *</label><input id="in-topic" placeholder="e.g. Research" /></div>
+            <div class="field"><label for="in-source">Source</label><input id="in-source" placeholder="Volga Infosys" /></div>
+          </div>
         </div>
-        <div class="field"><label for="in-description">Description *</label><textarea id="in-description" rows="3" placeholder="Short news summary..."></textarea></div>
-        <div class="field"><label for="in-image">Image URL *</label><input id="in-image" placeholder="https://..." /></div>
-        <div class="proj-form-row">
-          <div class="field"><label for="in-published">Published Date</label><input id="in-published" type="date" /></div>
-          <div class="field"><label for="in-order">Order</label><input id="in-order" type="number" placeholder="0" /></div>
-        </div>
-        <div class="field"><label for="in-url">Read URL</label><input id="in-url" placeholder="https://..." /></div>
-        <div id="industryNewsFormError" class="proj-form-error"></div>
-        <div class="modal-actions" style="margin-top:1rem">
-          <button class="btn-save" id="industryNewsSaveBtn">Save News</button>
-          <button class="btn-delete" id="industryNewsDeleteBtn" style="display:none">Delete</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- BLOG MODAL -->
-  <div class="modal-overlay" id="blogModalOverlay">
-    <div class="modal" style="max-width:800px">
-      <button class="modal-close" id="blogModalClose">✕</button>
-      <h2 class="modal-name" id="blogModalTitle">Add Post</h2>
-      <div class="proj-form">
-        <div class="field"><label for="bl-title">Title *</label><input id="bl-title" placeholder="e.g. Why VR is the Future of Training" /></div>
-        <div class="proj-form-row">
-          <div class="field"><label for="bl-category">Category *</label>
-            <select id="bl-category">
-              <option value="Virtual Reality">Virtual Reality</option>
-              <option value="Augmented Reality">Augmented Reality</option>
-              <option value="Industry">Industry</option>
-              <option value="Training">Training</option>
-              <option value="Technology">Technology</option>
-            </select>
+        <div class="edit-section" style="margin-bottom: 1.5rem;">
+          <h3 class="edit-section-title">Description</h3>
+          <div class="field"><label for="in-description">Description *</label><div id="in-description" placeholder="Short news summary..."></div></div>
+        </div>
+
+        <div class="edit-section" style="margin-bottom: 1.5rem;">
+          <h3 class="edit-section-title">Cover Image</h3>
+          <div class="field">
+            <label for="inCover">Upload Image</label>
+            <div class="file-drop-area" id="in-cover-drop">
+              <input id="inCover" type="file" accept="image/*" />
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span id="in-cover-name">Drag & drop or click to upload image</span>
+            </div>
           </div>
-          <div class="field"><label for="bl-status">Status</label>
-            <select id="bl-status">
-              <option value="published">Published</option>
-              <option value="draft">Draft</option>
-              <option value="archived">Archived</option>
-            </select>
+          <div id="in-image-preview" class="img-preview-box"></div>
+        </div>
+
+        <div class="edit-section">
+          <h3 class="edit-section-title">Publication Details</h3>
+          <div class="proj-form-row">
+            <div class="field"><label for="in-published">Published Date</label><input id="in-published" type="date" /></div>
+            <div class="field"><label for="in-order">Order</label><input id="in-order" type="number" placeholder="0" /></div>
           </div>
+          <div class="field"><label for="in-url">Read URL</label><input id="in-url" placeholder="https://..." /></div>
         </div>
-        <div class="proj-form-row">
-          <div class="field"><label for="bl-readtime">Read Time</label><input id="bl-readtime" placeholder="e.g. 5 min read" /></div>
-          <div class="field"><label for="bl-author">Author</label><input id="bl-author" placeholder="Volga Infosys" /></div>
-        </div>
-        <div class="field"><label for="bl-excerpt">Excerpt * (short summary)</label><textarea id="bl-excerpt" rows="2" placeholder="Brief description shown on blog listing…"></textarea></div>
-        
-        <div class="field">
-          <label for="bl-cover">Cover Image</label>
-          <div style="display:flex; gap:10px; align-items:center;">
-            <input id="bl-cover" type="file" accept="image/*" style="flex:1;" />
-            <span style="font-size:0.8rem; color:#888;">OR</span>
-            <input id="bl-image" placeholder="https://…" style="flex:1;" />
-          </div>
-          <div id="bl-cover-preview" style="margin-top:10px;"></div>
-        </div>
-        
-        <div class="field"><label for="bl-content">Content (full article)</label><textarea id="bl-content" rows="8" placeholder="Full blog post content…"></textarea></div>
-        
-        <div class="section-title" style="margin:1.5rem 0 1rem; font-size:0.9rem; font-weight:600; border-left:3px solid var(--accent); padding-left:10px;">SEO Settings</div>
-        
-        <div class="field"><label for="bl-seotitle">SEO Title</label><input id="bl-seotitle" placeholder="SEO-optimized title" /></div>
-        <div class="field"><label for="bl-seodesc">Meta Description</label><textarea id="bl-seodesc" rows="2" placeholder="SEO meta description for search engines"></textarea></div>
-        
-        <div class="proj-form-row">
-          <div class="field"><label for="bl-order">Order</label><input id="bl-order" type="number" placeholder="0" /></div>
-          <div class="field" style="display:flex; align-items:center; gap:8px; padding-top:24px;">
-            <input type="checkbox" id="bl-featured" style="width:auto;" />
-            <label for="bl-featured" style="margin:0;">Mark as Featured Post</label>
-          </div>
-        </div>
-        
-        <div id="blogFormError" class="proj-form-error"></div>
-        <div class="modal-actions" style="margin-top:1rem">
-          <button class="btn-save" id="blogSaveBtn">Save Post</button>
-          <button class="btn-delete" id="blogDeleteBtn" style="display:none">Delete</button>
-        </div>
+
+        <div id="industryNewsFormError" class="proj-form-error"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-save" id="industryNewsSaveBtn">Save News</button>
+        <button class="btn-delete" id="industryNewsDeleteBtn" style="display: none;">Delete</button>
       </div>
     </div>
   </div>
@@ -694,26 +681,54 @@
 
   <!-- PROJECT MODAL -->
   <div class="modal-overlay" id="projectModalOverlay">
-    <div class="modal" style="max-width:600px">
+    <div class="modal" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
       <button class="modal-close" id="projectModalClose">✕</button>
       <h2 class="modal-name" id="projectModalTitle">Add Project</h2>
-      <div class="proj-form">
-        <div class="proj-form-row">
-          <div class="field"><label for="pf-place">Place / Location</label><input id="pf-place" placeholder="e.g. UAE — Dubai" /></div>
-          <div class="field"><label for="pf-tag">Tag / Category</label><input id="pf-tag" placeholder="e.g. Virtual Reality" /></div>
+      <div class="edit-form-card" style="max-width: 100%; padding: 1.5rem;">
+        <div class="edit-section" style="margin-bottom: 1.5rem;">
+          <h3 class="edit-section-title">Location & Category</h3>
+          <div class="proj-form-row">
+            <div class="field"><label for="pf-place">Place / Location</label><input id="pf-place" placeholder="e.g. UAE — Dubai" /></div>
+            <div class="field"><label for="pf-tag">Tag / Category</label><input id="pf-tag" placeholder="e.g. Virtual Reality" /></div>
+          </div>
         </div>
-        <div class="proj-form-row">
-          <div class="field"><label for="pf-title">Title Line 1</label><input id="pf-title" placeholder="e.g. AR FURNITURE" /></div>
-          <div class="field"><label for="pf-title2">Title Line 2</label><input id="pf-title2" placeholder="e.g. CONFIGURATOR" /></div>
+
+        <div class="edit-section" style="margin-bottom: 1.5rem;">
+          <h3 class="edit-section-title">Project Title</h3>
+          <div class="proj-form-row">
+            <div class="field"><label for="pf-title">Title Line 1</label><input id="pf-title" placeholder="e.g. AR FURNITURE" /></div>
+            <div class="field"><label for="pf-title2">Title Line 2</label><input id="pf-title2" placeholder="e.g. CONFIGURATOR" /></div>
+          </div>
         </div>
-        <div class="field"><label for="pf-desc">Description</label><textarea id="pf-desc" rows="3" placeholder="Short project description…"></textarea></div>
-        <div class="field"><label for="pf-image">Image URL</label><input id="pf-image" placeholder="https://…" /></div>
-        <div class="field"><label for="pf-order">Order (display position)</label><input id="pf-order" type="number" placeholder="0" /></div>
+
+        <div class="edit-section" style="margin-bottom: 1.5rem;">
+          <h3 class="edit-section-title">Description</h3>
+          <div class="field"><label for="pf-desc">Description</label><div id="pf-desc" placeholder="Short project description…"></div></div>
+        </div>
+
+        <div class="edit-section" style="margin-bottom: 1.5rem;">
+          <h3 class="edit-section-title">Cover Image</h3>
+          <div class="field">
+            <label for="pf-cover">Upload Image</label>
+            <div class="file-drop-area" id="pf-cover-drop">
+              <input id="pf-cover" type="file" accept="image/*" />
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span id="pf-cover-name">Drag & drop or click to upload image</span>
+            </div>
+          </div>
+          <div id="pf-image-preview" class="img-preview-box"></div>
+        </div>
+
+        <div class="edit-section">
+          <h3 class="edit-section-title">Settings</h3>
+          <div class="field"><label for="pf-order">Order (display position)</label><input id="pf-order" type="number" placeholder="0" /></div>
+        </div>
+
         <div id="projectFormError" class="proj-form-error"></div>
-        <div class="modal-actions" style="margin-top:1rem">
-          <button class="btn-save" id="projectSaveBtn">Save Project</button>
-          <button class="btn-delete" id="projectDeleteBtn" style="display:none">Delete</button>
-        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-save" id="projectSaveBtn">Save Project</button>
+        <button class="btn-delete" id="projectDeleteBtn" style="display: none;">Delete</button>
       </div>
     </div>
   </div>
@@ -729,10 +744,22 @@
           <div class="field"><label for="st-clientname">Client Name</label><input id="st-clientname" placeholder="e.g. Dr. Sarah Mitchell" /></div>
         </div>
         <div class="field"><label for="st-clientrole">Client Role</label><input id="st-clientrole" placeholder="e.g. Chief Medical Officer" /></div>
-        <div class="field"><label for="st-testimonial">Testimonial</label><textarea id="st-testimonial" rows="3" placeholder="Client's testimonial…"></textarea></div>
-        <div class="proj-form-row">
-          <div class="field"><label for="st-image">Story Image URL</label><input id="st-image" placeholder="https://…" /></div>
-          <div class="field"><label for="st-avatar">Avatar URL</label><input id="st-avatar" placeholder="https://…" /></div>
+        <div class="field"><label for="st-testimonial">Testimonial</label><div id="st-testimonial" placeholder="Client's testimonial…"></div></div>
+        <div class="field">
+          <label for="st-cover">Upload Story Image</label>
+          <div class="file-drop-area" id="st-cover-drop">
+            <input id="st-cover" type="file" accept="image/*" />
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span id="st-cover-name">Drag & drop or click to upload image</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="st-avatar">Upload Avatar</label>
+          <div class="file-drop-area" id="st-avatar-drop">
+            <input id="st-avatar" type="file" accept="image/*" />
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span id="st-avatar-name">Drag & drop or click to upload image</span>
+          </div>
         </div>
         <div class="field"><label for="st-impact">Impact Tags (comma-separated)</label><input id="st-impact" placeholder="e.g. 40% faster training, Improved outcomes" /></div>
         <div class="field"><label for="st-order">Order (display position)</label><input id="st-order" type="number" placeholder="0" /></div>
@@ -896,6 +923,84 @@
           <button class="btn-save" id="userSaveBtn">Save User</button>
           <button class="btn-delete" id="userDeleteBtn" style="display: none;">Delete User</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOG EDIT MODAL -->
+  <div class="modal-overlay" id="blogModalOverlay">
+    <div class="modal" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+      <button class="modal-close" id="blogModalClose">✕</button>
+      <h2 class="modal-name" id="blogModalTitle">Add Blog Post</h2>
+      <div class="edit-form-card" style="max-width: 100%; padding: 1.5rem;">
+        <div class="edit-section" style="margin-bottom: 1.5rem;">
+          <h3 class="edit-section-title">Basic Information</h3>
+          <div class="field"><label for="bl-title">Title *</label><input id="bl-title" placeholder="e.g. Why VR is the Future of Training" /></div>
+          <div class="proj-form-row">
+            <div class="field"><label for="bl-category">Category *</label>
+              <select id="bl-category">
+                <option value="Virtual Reality">Virtual Reality</option>
+                <option value="Augmented Reality">Augmented Reality</option>
+                <option value="Industry">Industry</option>
+                <option value="Training">Training</option>
+                <option value="Technology">Technology</option>
+              </select>
+            </div>
+            <div class="field"><label for="bl-status">Status</label>
+              <select id="bl-status">
+                <option value="published">Published</option>
+                <option value="draft">Draft</option>
+                <option value="archived">Archived</option>
+              </select>
+            </div>
+          </div>
+          <div class="proj-form-row">
+            <div class="field"><label for="bl-readtime">Read Time</label><input id="bl-readtime" placeholder="e.g. 5 min read" /></div>
+            <div class="field"><label for="bl-author">Author</label><input id="bl-author" placeholder="Volga Infosys" /></div>
+          </div>
+          <div class="field">
+            <label for="bl-excerpt">Excerpt * (short summary)</label>
+            <textarea id="bl-excerpt" rows="2" placeholder="Brief description shown on blog listing…"></textarea>
+            <div class="char-counter" id="bl-excerpt-counter">0/300</div>
+          </div>
+        </div>
+
+        <div class="edit-section" style="margin-bottom: 1.5rem;">
+          <h3 class="edit-section-title">Cover Image</h3>
+          <div class="field">
+            <label for="bl-cover">Upload Image</label>
+            <div class="file-drop-area" id="bl-cover-drop">
+              <input id="bl-cover" type="file" accept="image/*" />
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span id="bl-cover-name">Drag & drop or click to upload image</span>
+            </div>
+          </div>
+          <div id="bl-cover-preview" class="img-preview-box"></div>
+        </div>
+
+        <div class="edit-section" style="margin-bottom: 1.5rem;">
+          <h3 class="edit-section-title">Content</h3>
+          <div class="field"><label for="bl-content">Full Article</label><div id="bl-content" placeholder="Full blog post content…"></div></div>
+        </div>
+
+        <div class="edit-section">
+          <h3 class="edit-section-title">SEO Settings</h3>
+          <div class="field"><label for="bl-seotitle">SEO Title</label><input id="bl-seotitle" placeholder="SEO-optimized title" /></div>
+          <div class="field"><label for="bl-seodesc">Meta Description</label><textarea id="bl-seodesc" rows="2" placeholder="SEO meta description for search engines"></textarea></div>
+          <div class="proj-form-row">
+            <div class="field"><label for="bl-order">Order</label><input id="bl-order" type="number" placeholder="0" /></div>
+            <div class="field" style="display:flex; align-items:center; gap:8px; padding-top:24px;">
+              <input type="checkbox" id="bl-featured" style="width:auto;" />
+              <label for="bl-featured" style="margin:0;">Mark as Featured Post</label>
+            </div>
+          </div>
+        </div>
+
+        <div id="blogFormError" class="proj-form-error"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-save" id="blogSaveBtn">Save Blog Post</button>
+        <button class="btn-delete" id="blogDeleteBtn" style="display: none;">Delete</button>
       </div>
     </div>
   </div>

@@ -1,330 +1,660 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <title>Blog Post — Volga Admin</title>
+
   <link rel="stylesheet" href="dashboard.css" />
+
   <script src="https://cdn.ckeditor.com/ckeditor5/43.0.0/classic/ckeditor.js"></script>
+
 </head>
+
 <body class="dash-page">
 
+
+
   <aside class="sidebar">
+
     <div class="sidebar-logo">
+
       <div class="logo-dot">V</div>
+
       VOLGA<span>ADMIN</span>
+
     </div>
+
     <nav class="sidebar-nav">
+
       <div class="nav-section-label">Main</div>
+
       <a href="dashboard.html" class="nav-item">
+
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+
         Overview
+
       </a>
+
       <a href="dashboard.html#leads" class="nav-item">
+
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H4v-2a4 4 0 015-3.87m6-4.13a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+
         Leads
+
       </a>
+
       <a href="dashboard.html#portfolio" class="nav-item">
+
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 21h8M12 17v4"/></svg>
+
         Portfolio
+
       </a>
+
       <a href="dashboard.html#clientstories" class="nav-item">
+
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke-linecap="round" stroke-linejoin="round"></path><path d="M7 10l5-4 5 4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+
         Client Stories
+
       </a>
+
       <a href="dashboard.html#blog" class="nav-item active">
+
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+
         Blog
+
       </a>
+
       <a href="dashboard.html#casestudies" class="nav-item">
+
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h11.5L20 5.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-1.5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+
         Case Studies
+
       </a>
+
       <a href="dashboard.html#industrynews" class="nav-item">
+
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+
         Industry News
+
       </a>
+
       <a href="dashboard.html#medialibrary" class="nav-item">
+
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+
         Media Library
+
       </a>
+
       <a href="dashboard.html#emaillogs" class="nav-item">
+
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 8l9 6 9-6" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 8v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+
         Email Logs
+
       </a>
+
     </nav>
+
     <div class="sidebar-footer">
+
       <button class="btn-logout" id="logoutBtn">Sign Out</button>
+
     </div>
+
   </aside>
 
+
+
   <main class="dash-main">
+
     <div class="page-header">
+
       <div style="display:flex; gap:10px; align-items:center;">
+
         <a href="dashboard.html" style="text-decoration:none; color:inherit; display:flex; align-items:center;">
+
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+
         </a>
+
         <h1 id="pageTitle">Add Post</h1>
+
       </div>
+
       <div style="display:flex; gap:10px;">
+
         <button class="btn-delete" id="deleteBtn" style="display:none">Delete</button>
+
         <button class="btn-save" id="saveBtn">Save Post</button>
+
       </div>
+
     </div>
 
+
+
     <div class="proj-form" style="max-width:800px; margin-top:2rem;">
+
       <div class="field"><label for="bl-title">Title *</label><input id="bl-title" placeholder="e.g. Why VR is the Future of Training" /></div>
+
       <div class="proj-form-row">
+
         <div class="field"><label for="bl-category">Category *</label>
+
           <select id="bl-category">
+
             <option value="Virtual Reality">Virtual Reality</option>
+
             <option value="Augmented Reality">Augmented Reality</option>
+
             <option value="Industry">Industry</option>
+
             <option value="Training">Training</option>
+
             <option value="Technology">Technology</option>
+
           </select>
+
         </div>
+
         <div class="field"><label for="bl-status">Status</label>
+
           <select id="bl-status">
+
             <option value="published">Published</option>
+
             <option value="draft">Draft</option>
+
             <option value="archived">Archived</option>
+
           </select>
+
         </div>
+
       </div>
+
       <div class="proj-form-row">
+
         <div class="field"><label for="bl-readtime">Read Time</label><input id="bl-readtime" placeholder="e.g. 5 min read" /></div>
+
         <div class="field"><label for="bl-author">Author</label><input id="bl-author" placeholder="Volga Infosys" /></div>
+
       </div>
+
       <div class="field"><label for="bl-excerpt">Excerpt * (short summary)</label><textarea id="bl-excerpt" rows="2" placeholder="Brief description shown on blog listing…"></textarea></div>
 
+
+
       <div class="field">
+
         <label for="bl-cover">Cover Image</label>
+
         <div style="display:flex; gap:10px; align-items:center;">
+
           <input id="bl-cover" type="file" accept="image/*" style="flex:1;" />
+
           <span style="font-size:0.8rem; color:#888;">OR</span>
+
           <input id="bl-image" placeholder="https://…" style="flex:1;" />
+
         </div>
+
         <div id="bl-cover-preview" style="margin-top:10px;"></div>
+
       </div>
+
+
 
       <div class="field"><label for="bl-content">Content (full article)</label><textarea id="bl-content" rows="8" placeholder="Full blog post content…"></textarea></div>
 
+
+
       <div class="section-title" style="margin:1.5rem 0 1rem; font-size:0.9rem; font-weight:600; border-left:3px solid var(--accent); padding-left:10px;">SEO Settings</div>
 
+
+
       <div class="field"><label for="bl-seotitle">SEO Title</label><input id="bl-seotitle" placeholder="SEO-optimized title" /></div>
+
       <div class="field"><label for="bl-seodesc">Meta Description</label><textarea id="bl-seodesc" rows="2" placeholder="SEO meta description for search engines"></textarea></div>
 
+
+
       <div class="proj-form-row">
+
         <div class="field"><label for="bl-order">Order</label><input id="bl-order" type="number" placeholder="0" /></div>
+
         <div class="field" style="display:flex; align-items:center; gap:8px; padding-top:24px;">
+
           <input type="checkbox" id="bl-featured" style="width:auto;" />
+
           <label for="bl-featured" style="margin:0;">Mark as Featured Post</label>
+
         </div>
+
       </div>
 
+
+
       <div id="formError" class="proj-form-error"></div>
+
     </div>
+
   </main>
 
+
+
   <script src="https://cdn.ckeditor.com/ckeditor5/43.0.0/classic/ckeditor.js"></script>
+
   <div id="toastContainer" class="toast-container"></div>
+
   <script>
+
     // Toast Notification System
+
     function showToast(title, message = '', type = 'info', duration = 5000) {
+
       const container = document.getElementById('toastContainer');
+
       if (!container) return;
 
+
+
       const icons = {
+
         success: '✓',
+
         error: '✕',
+
         warning: '⚠',
+
         info: 'ℹ'
+
       };
 
+
+
       const toast = document.createElement('div');
+
       toast.className = `toast toast-${type}`;
+
       toast.innerHTML = `
+
         <span class="toast-icon">${icons[type]}</span>
+
         <div class="toast-content">
+
           <div class="toast-title">${title}</div>
+
           ${message ? `<div class="toast-message">${message}</div>` : ''}
+
         </div>
+
         <button class="toast-close" aria-label="Close toast">&times;</button>
+
       `;
+
+
 
       container.appendChild(toast);
 
+
+
       const closeBtn = toast.querySelector('.toast-close');
+
       closeBtn.addEventListener('click', () => removeToast(toast));
 
+
+
       let timer;
+
       if (duration > 0) {
+
         timer = setTimeout(() => removeToast(toast), duration);
+
       }
+
+
 
       function removeToast(el) {
+
         if (timer) clearTimeout(timer);
+
         el.classList.add('hiding');
+
         el.addEventListener('animationend', () => {
+
           if (el.parentNode) el.parentNode.removeChild(el);
+
         });
+
       }
+
     }
+
+
 
     // Custom upload adapter
+
     class MyUploadAdapter {
+
       constructor(loader) { this.loader = loader; }
+
       upload() {
+
         return this.loader.file.then(file => new Promise((resolve, reject) => {
+
           const xhr = new XMLHttpRequest();
+
           xhr.open('POST', API + '/media/upload', true);
+
           xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+
           xhr.onload = () => {
+
             if (xhr.status >= 200 && xhr.status < 300) {
+
               const data = JSON.parse(xhr.responseText);
+
               resolve({ default: data.data.url });
+
             } else {
+
               reject(JSON.parse(xhr.responseText));
+
             }
+
           };
+
           xhr.onerror = () => reject('Upload failed');
+
           const formData = new FormData();
+
           formData.append('file', file);
+
           xhr.send(formData);
+
         }));
+
       }
+
       abort() {}
+
     }
+
     function MyCustomUploadAdapterPlugin(editor) {
+
       editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new MyUploadAdapter(loader);
+
     }
+
+
 
     let editors = {};
+
     let editingId = null;
+
     let coverImage = null;
+
     const params = new URLSearchParams(window.location.search);
+
     const id = params.get('id');
 
+
+
     async function init() {
+
       editors.blContent = await ClassicEditor.create(document.getElementById('bl-content'), {
+
         extraPlugins: [MyCustomUploadAdapterPlugin],
+
         toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'imageUpload', '|', 'undo', 'redo']
+
       });
 
+
+
       if (id) {
+
         editingId = id;
+
         document.getElementById('pageTitle').textContent = 'Edit Post';
+
         document.getElementById('deleteBtn').style.display = 'inline-flex';
+
         const res = await apiFetch(`/blogs/${id}`);
+
         const blog = res.data || res;
+
         document.getElementById('bl-title').value = blog.title || '';
+
         document.getElementById('bl-category').value = blog.category || 'Virtual Reality';
+
         document.getElementById('bl-status').value = blog.status || 'published';
+
         document.getElementById('bl-readtime').value = blog.readTime || '';
+
         document.getElementById('bl-author').value = blog.author || 'Volga Infosys';
+
         document.getElementById('bl-excerpt').value = blog.excerpt || '';
+
         editors.blContent.setData(blog.content || '');
+
         document.getElementById('bl-image').value = blog.image || '';
+
         document.getElementById('bl-seotitle').value = blog.seoTitle || '';
+
         document.getElementById('bl-seodesc').value = blog.seoDescription || '';
+
         document.getElementById('bl-order').value = blog.order ?? 0;
+
         document.getElementById('bl-featured').checked = !!blog.featured;
+
         if (blog.image) {
+
           document.getElementById('bl-cover-preview').innerHTML = `<img src="${blog.image}" style="max-width:300px; border-radius:8px;">`;
+
           coverImage = blog.image;
+
         }
+
       }
+
     }
 
+
+
     document.getElementById('bl-cover').addEventListener('change', async (e) => {
+
       const file = e.target.files[0];
+
       if (!file) return;
+
       const reader = new FileReader();
+
       reader.onload = async (event) => {
+
         document.getElementById('bl-cover-preview').innerHTML = `<img src="${event.target.result}" style="max-width:300px; border-radius:8px;">`;
+
         // Upload to server
+
         const formData = new FormData();
+
         formData.append('file', file);
+
         const uploadRes = await apiFetch('/media/upload', { method: 'POST', body: formData });
+
         const uploadData = uploadRes.data || uploadRes;
+
         coverImage = uploadData.url;
+
         document.getElementById('bl-image').value = coverImage;
+
       };
+
       reader.readAsDataURL(file);
+
     });
 
+
+
     document.getElementById('saveBtn').addEventListener('click', async () => {
+
       const title = document.getElementById('bl-title').value.trim();
+
       const category = document.getElementById('bl-category').value;
+
       const excerpt = document.getElementById('bl-excerpt').value.trim();
 
+
+
       if (!title || !category || !excerpt) {
+
         document.getElementById('formError').textContent = 'Title, Category and Excerpt are required.';
+
         showToast('Validation Error', 'Title, Category and Excerpt are required', 'warning');
+
         return;
+
       }
 
+
+
       const status = document.getElementById('bl-status').value;
+
       const readTime = document.getElementById('bl-readtime').value.trim();
+
       const author = document.getElementById('bl-author').value.trim() || 'Volga Infosys';
+
       const content = editors.blContent.getData();
+
       const image = document.getElementById('bl-image').value.trim() || coverImage;
+
       const seoTitle = document.getElementById('bl-seotitle').value.trim();
+
       const seoDescription = document.getElementById('bl-seodesc').value.trim();
+
       const order = parseInt(document.getElementById('bl-order').value) || 0;
+
       const featured = document.getElementById('bl-featured').checked;
+
+
 
       const body = { title, category, status, readTime, author, excerpt, content, image, seoTitle, seoDescription, order, featured };
 
+
+
       const saveBtn = document.getElementById('saveBtn');
+
       saveBtn.textContent = 'Saving...';
+
       saveBtn.disabled = true;
+
       document.getElementById('formError').textContent = '';
+
       try {
+
         if (editingId) {
+
           await apiFetch(`/blogs/${editingId}`, { method: 'PATCH', headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+
           showToast('Blog Updated', 'The blog post has been updated successfully', 'success');
+
         } else {
+
           await apiFetch('/blogs', { method: 'POST', headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+
           showToast('Blog Created', 'The blog post has been created successfully', 'success');
+
         }
+
         setTimeout(() => { window.location.href = 'dashboard.html#blog'; }, 1000);
+
       } catch (e) {
+
         document.getElementById('formError').textContent = e.message || 'Save failed.';
+
         showToast('Save Failed', e.message || 'Could not save the blog post', 'error');
+
       } finally {
+
         saveBtn.textContent = 'Save Post';
+
         saveBtn.disabled = false;
+
       }
+
     });
+
+
 
     document.getElementById('deleteBtn').addEventListener('click', async () => {
+
       if (!editingId || !confirm('Delete this blog post?')) return;
+
       try {
+
         await apiFetch(`/blogs/${editingId}`, { method: 'DELETE' });
+
         showToast('Blog Deleted', 'The blog post has been deleted', 'success');
+
         setTimeout(() => { window.location.href = 'dashboard.html#blog'; }, 1000);
+
       } catch (e) {
+
         showToast('Delete Failed', e.message || 'Could not delete the blog post', 'error');
+
       }
+
     });
 
+
+
     // Init
+
     const API = window.location.origin + '/api';
+
     async function apiFetch(endpoint, opts = {}) {
+
       const url = API + endpoint;
+
       const headers = opts.headers || {};
+
       const token = localStorage.getItem('volgaToken');
+
       if (token) headers['Authorization'] = 'Bearer ' + token;
+
       const res = await fetch(url, { ...opts, headers, credentials: 'include' });
+
       if (res.status === 401) { localStorage.removeItem('volgaToken'); window.location.href = 'index.html'; throw new Error('Unauthorized'); }
+
       const data = await res.json();
+
       if (!res.ok) throw new Error(data.message || 'Request failed');
+
       return data;
+
     }
 
+
+
     init();
+
   </script>
+
 </body>
+
 </html>
+

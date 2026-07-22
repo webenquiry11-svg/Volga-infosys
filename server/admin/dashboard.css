@@ -839,7 +839,7 @@ html.dark .login-card {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.25);
-  z-index: 1000;
+  z-index: 10001;
   align-items: center;
   justify-content: center;
 }
@@ -854,6 +854,7 @@ html.dark .login-card {
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
+  z-index: 10002;
   box-shadow: 10px 10px 30px rgba(0,0,0,0.15), -10px -10px 30px rgba(255,255,255,0.8);
   animation: modalIn 0.22s cubic-bezier(0.16,1,0.3,1);
 }
@@ -1249,7 +1250,7 @@ html.dark .login-card {
 .proj-card {
   background: linear-gradient(145deg, #e6ebf2, #d6dbe2);
   border-radius: var(--radius-md);
-  overflow: hidden;
+  overflow: visible;
   box-shadow: var(--shadow-sm);
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -1432,16 +1433,72 @@ html.dark .login-page {
 
 /* CKEditor styles */
 .ck.ck-editor__main>.ck-editor__editable {
-  background: var(--bg-main);
-  color: var(--text-primary);
+  background: #ffffff;
+  color: #333333;
   border: none;
   box-shadow: var(--shadow-sm-inset);
   border-radius: var(--radius-sm);
+  min-height: 200px;
+}
+.ck.ck-editor__editable p {
+  color: #333333 !important;
+}
+.ck.ck-editor__editable * {
+  color: #333333 !important;
 }
 .ck.ck-toolbar {
-  background: var(--bg-main);
+  background: #ffffff;
   border: none;
   box-shadow: var(--shadow-sm);
+}
+.ck.ck-toolbar .ck-button {
+  color: #333333;
+}
+.ck.ck-toolbar .ck-button:hover {
+  background: #e0e5ec;
+}
+
+/* File drop area styles */
+.file-drop-area {
+  position: relative;
+  border: 2px dashed var(--border-strong);
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.file-drop-area:hover,
+.file-drop-area.drag {
+  border-color: var(--accent);
+  background: rgba(232, 147, 10, 0.04);
+}
+.file-drop-area input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+.file-drop-area svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--text-secondary);
+  margin: 0 auto 8px;
+  display: block;
+}
+.file-drop-area span {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.file-drop-area.has-file {
+  border-color: var(--accent);
+  background: rgba(232, 147, 10, 0.04);
+}
+.file-drop-area.has-file span {
+  color: var(--accent);
+  font-weight: 600;
 }
 
 /* Permissions panel */
@@ -1862,30 +1919,51 @@ html.dark .bulk-toolbar                       { background: var(--bg-surface); }
 
 /* Actions Dropdown */
 .actions-dropdown {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+}
+
+.proj-card {
   position: relative;
-  display: inline-block;
 }
 
 .dropdown-toggle {
-  background: transparent;
-  border: 1px solid var(--accent);
-  color: var(--accent);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: #333;
   padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
   font-size: 16px;
   transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+html.dark .dropdown-toggle {
+  background: rgba(30, 41, 59, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .dropdown-toggle:hover {
-  background: var(--accent);
-  color: white;
+  background: rgba(255, 255, 255, 1);
+  color: var(--accent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+html.dark .dropdown-toggle:hover {
+  background: rgba(30, 41, 59, 1);
+  color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .dropdown-menu {
   position: absolute;
-  right: 0;
-  top: 100%;
+  left: 0;
+  top: calc(100% + 4px);
   background: var(--bg-surface);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-soft);

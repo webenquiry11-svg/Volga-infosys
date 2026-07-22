@@ -39,7 +39,7 @@ window.addEventListener('load', () => {
     alpha: true
   });
   renderer.setSize(width, height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
   renderer.outputEncoding = THREE.sRGBEncoding; // For Three.js r128
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.5;
@@ -207,8 +207,10 @@ window.addEventListener('load', () => {
 
   // ── Animation loop ──────────────────────────────────────────────────
   let heroSignalled = false;
+  
   function animate() {
     requestAnimationFrame(animate);
+    
 
     updateScrollProgress();
 

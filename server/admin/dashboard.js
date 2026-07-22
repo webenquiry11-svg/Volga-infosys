@@ -354,10 +354,75 @@ async function initEditors() {
     });
   }
   
+  // Industry news description editor
+  if (document.getElementById('in-description')) {
+    editors.inDescription = await ClassicEditor.create(document.getElementById('in-description'), {
+      extraPlugins: [MyCustomUploadAdapterPlugin],
+      toolbar: [
+        'heading', '|', 
+        'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 
+        'blockQuote', 'insertTable', 'imageUpload', '|', 
+        'undo', 'redo'
+      ],
+      heading: {
+        options: [
+          { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+          { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+          { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+          { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' }
+        ]
+      },
+      image: {
+        toolbar: ['imageTextAlternative', 'toggleImageCaption', '|', 'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight']
+      }
+    });
+  }
+  
   // Client story testimonial editor
   if (document.getElementById('st-testimonial')) {
     editors.stTestimonial = await ClassicEditor.create(document.getElementById('st-testimonial'), {
-      toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'blockQuote', '|', 'undo', 'redo'],
+      extraPlugins: [MyCustomUploadAdapterPlugin],
+      toolbar: [
+        'heading', '|', 
+        'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 
+        'blockQuote', 'insertTable', 'imageUpload', '|', 
+        'undo', 'redo'
+      ],
+      heading: {
+        options: [
+          { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+          { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+          { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+          { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' }
+        ]
+      },
+      image: {
+        toolbar: ['imageTextAlternative', 'toggleImageCaption', '|', 'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight']
+      }
+    });
+  }
+  
+  // Project description editor
+  if (document.getElementById('pf-desc')) {
+    editors.pfDesc = await ClassicEditor.create(document.getElementById('pf-desc'), {
+      extraPlugins: [MyCustomUploadAdapterPlugin],
+      toolbar: [
+        'heading', '|', 
+        'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 
+        'blockQuote', 'insertTable', 'imageUpload', '|', 
+        'undo', 'redo'
+      ],
+      heading: {
+        options: [
+          { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+          { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+          { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+          { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' }
+        ]
+      },
+      image: {
+        toolbar: ['imageTextAlternative', 'toggleImageCaption', '|', 'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight']
+      }
     });
   }
 }
@@ -648,6 +713,13 @@ if (document.getElementById("logoutBtn")) {
     }
   }, 5000);
 
+  // Global dropdown close handler - close all dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.actions-dropdown')) {
+      document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.remove('show'));
+    }
+  });
+
   // Sidebar nav
     document.querySelectorAll(".nav-item").forEach((item) => {
       item.addEventListener("click", (e) => {
@@ -821,13 +893,24 @@ if (document.getElementById("logoutBtn")) {
   document.getElementById("emailTypeFilter")?.addEventListener("change", () => loadEmailLogs(1));
   document.getElementById("emailStatusFilter")?.addEventListener("change", () => loadEmailLogs(1));
   document.getElementById("deleteAllLogsBtn")?.addEventListener("click", async () => {
-    if (!confirm("Delete all email logs? This cannot be undone.")) return;
-    try {
-      await apiFetch("/dashboard/emails", { method: "DELETE" });
-      showToast('Email Logs Deleted', 'All email logs have been cleared', 'success');
-      loadEmailLogs(1);
-    } catch (e) {
-      showToast('Delete Failed', e.message || 'Could not delete email logs', 'error');
+    const result = await Swal.fire({
+      title: 'Delete all email logs?',
+      text: "This cannot be undone.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc2626',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    });
+    if (result.isConfirmed) {
+      try {
+        await apiFetch("/dashboard/emails", { method: "DELETE" });
+        showToast('Email Logs Deleted', 'All email logs have been cleared', 'success');
+        loadEmailLogs(1);
+      } catch (e) {
+        showToast('Delete Failed', e.message || 'Could not delete email logs', 'error');
+      }
     }
   });
 
@@ -893,9 +976,20 @@ if (document.getElementById("logoutBtn")) {
     });
     tbody.querySelectorAll('.btn-delete-log').forEach(btn => {
       btn.addEventListener('click', async () => {
-        if (!confirm('Delete this email log?')) return;
-        await apiFetch(`/dashboard/emails/${btn.dataset.id}`, { method: 'DELETE' });
-        loadEmailLogs(currentEmailPage);
+        const result = await Swal.fire({
+          title: 'Delete this email log?',
+          text: "This action cannot be undone.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#dc2626',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Delete',
+          cancelButtonText: 'Cancel'
+        });
+        if (result.isConfirmed) {
+          await apiFetch(`/dashboard/emails/${btn.dataset.id}`, { method: 'DELETE' });
+          loadEmailLogs(currentEmailPage);
+        }
       });
     });
     // pagination
@@ -932,13 +1026,24 @@ if (document.getElementById("logoutBtn")) {
     `).join('');
     notesList.querySelectorAll('.btn-delete').forEach(btn => {
       btn.addEventListener('click', async () => {
-        if (!confirm('Delete this note?')) return;
-        try {
-          await apiFetch(`/dashboard/contacts/${activeContact._id}/notes/${btn.dataset.noteId}`, { method: 'DELETE' });
-          showToast('Note Deleted', 'The note has been removed', 'success');
-          loadNotes(activeContact._id);
-        } catch (e) {
-          showToast('Delete Failed', e.message || 'Could not delete note', 'error');
+        const result = await Swal.fire({
+          title: 'Delete this note?',
+          text: "This action cannot be undone.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#dc2626',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Delete',
+          cancelButtonText: 'Cancel'
+        });
+        if (result.isConfirmed) {
+          try {
+            await apiFetch(`/dashboard/contacts/${activeContact._id}/notes/${btn.dataset.noteId}`, { method: 'DELETE' });
+            showToast('Note Deleted', 'The note has been removed', 'success');
+            loadNotes(activeContact._id);
+          } catch (e) {
+            showToast('Delete Failed', e.message || 'Could not delete note', 'error');
+          }
         }
       });
     });
@@ -1009,20 +1114,92 @@ if (document.getElementById("logoutBtn")) {
   });
 
   document.getElementById("modalDelete").addEventListener("click", async () => {
-    if (!activeContact || !confirm("Delete this lead?")) return;
-    try {
-      await apiFetch(`/dashboard/contacts/${activeContact._id}`, { method: "DELETE" });
-      showToast('Lead Deleted', 'The lead has been removed', 'success');
-      closeModal();
-      loadLeads(currentPage);
-      loadOverview();
-    } catch (e) {
-      showToast('Delete Failed', e.message || 'Could not delete lead', 'error');
+    if (!activeContact) return;
+    const result = await Swal.fire({
+      title: 'Delete this lead?',
+      text: "This action cannot be undone.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc2626',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    });
+    if (result.isConfirmed) {
+      try {
+        await apiFetch(`/dashboard/contacts/${activeContact._id}`, { method: "DELETE" });
+        showToast('Lead Deleted', 'The lead has been removed', 'success');
+        closeModal();
+        loadLeads(currentPage);
+        loadOverview();
+      } catch (e) {
+        showToast('Delete Failed', e.message || 'Could not delete lead', 'error');
+      }
     }
   });
 
   // Initialize rich text editors
   initEditors();
+  
+  // Initialize file drop areas
+  function initFileDropArea(dropId, inputId, nameId) {
+    const dropArea = document.getElementById(dropId);
+    const input = document.getElementById(inputId);
+    const nameSpan = document.getElementById(nameId);
+    
+    if (!dropArea || !input || !nameSpan) return;
+    
+    // Handle file selection
+    input.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        nameSpan.textContent = file.name;
+        dropArea.classList.add('has-file');
+      } else {
+        nameSpan.textContent = 'Drag & drop or click to upload image';
+        dropArea.classList.remove('has-file');
+      }
+    });
+    
+    // Handle drag events
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      dropArea.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+    });
+    
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropArea.addEventListener(eventName, () => {
+        dropArea.classList.add('drag');
+      });
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropArea.addEventListener(eventName, () => {
+        dropArea.classList.remove('drag');
+      });
+    });
+    
+    // Handle drop
+    dropArea.addEventListener('drop', (e) => {
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        input.files = files;
+        nameSpan.textContent = files[0].name;
+        dropArea.classList.add('has-file');
+      }
+    });
+  }
+  
+  // Initialize all file drop areas
+  initFileDropArea('bl-cover-drop', 'bl-cover', 'bl-cover-name');
+  initFileDropArea('cs-cover-drop', 'cs-cover', 'cs-cover-name');
+  initFileDropArea('pf-cover-drop', 'pf-cover', 'pf-cover-name');
+  initFileDropArea('st-cover-drop', 'st-cover', 'st-cover-name');
+  initFileDropArea('st-avatar-drop', 'st-avatar', 'st-avatar-name');
+  initFileDropArea('in-cover-drop', 'inCover', 'in-cover-name');
+  
   // ── INIT ───────────────────────────────────────────────
   loadOverview();
 
@@ -1038,15 +1215,85 @@ if (document.getElementById("logoutBtn")) {
     }
     grid.innerHTML = projects.map(p => `
       <div class="proj-card">
-        <div class="proj-card-img" style="background-image:url('${esc(p.image)}')"></div>
+        <div class="proj-card-img" style="background-image:url('${esc(p.image)}');position:relative;">
+          <div class="actions-dropdown" data-id="${esc(p._id)}" data-type="projects" data-name="${esc(p.title)}">
+            <button class="dropdown-toggle">⋮</button>
+            <div class="dropdown-menu">
+              <button class="dropdown-item" data-action="edit">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Edit
+              </button>
+              <button class="dropdown-item danger" data-action="delete">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
         <div class="proj-card-body">
           <span class="proj-tag">${esc(p.tag)}</span>
           <div class="proj-title">${esc(p.title)}${p.title2 ? ' ' + esc(p.title2) : ''}</div>
           <div class="proj-place">${esc(p.place)}</div>
           <p class="proj-desc">${esc(p.description)}</p>
-          <a class="btn-view" href="project-edit.html?id=${esc(p._id)}">Edit</a>
         </div>
       </div>`).join("");
+
+    // Dropdown menu handlers for project cards
+    grid.querySelectorAll('.dropdown-toggle').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const menu = btn.nextElementSibling;
+        document.querySelectorAll('.dropdown-menu').forEach(m => {
+          if (m !== menu) m.classList.remove('show');
+        });
+        menu.classList.toggle('show');
+      });
+    });
+
+    grid.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const dropdown = item.closest('.actions-dropdown');
+        const itemId = dropdown.dataset.id;
+        const itemType = dropdown.dataset.type;
+        const itemName = dropdown.dataset.name;
+        const action = item.dataset.action;
+        
+        // Close the menu
+        dropdown.querySelector('.dropdown-menu').classList.remove('show');
+
+        switch (action) {
+          case 'edit':
+            try {
+              const projectData = await apiFetch(`/projects/${itemId}`);
+              openProjectModal(projectData);
+            } catch(e) {
+              console.error('Error fetching project:', e);
+              showToast('Error', 'Failed to load project data', 'error');
+            }
+            break;
+          case 'delete':
+            const result = await Swal.fire({
+              title: `Delete "${itemName}"?`,
+              text: "This action cannot be undone.",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#dc2626',
+              cancelButtonColor: '#3085d6',
+              confirmButtonText: 'Delete',
+              cancelButtonText: 'Cancel'
+            });
+            if (result.isConfirmed) {
+              try {
+                await apiFetch(`/${itemType}/${itemId}`, { method: 'DELETE' });
+                showToast('Deleted', 'Item removed', 'success');
+                loadPortfolio();
+              } catch(e) { showToast('Error', e.message, 'error'); }
+            }
+            break;
+        }
+      });
+    });
   }
 
   function openProjectModal(project = null) {
@@ -1056,8 +1303,9 @@ if (document.getElementById("logoutBtn")) {
     document.getElementById("pf-tag").value     = project?.tag         || "";
     document.getElementById("pf-title").value   = project?.title       || "";
     document.getElementById("pf-title2").value  = project?.title2      || "";
-    document.getElementById("pf-desc").value    = project?.description || "";
-    document.getElementById("pf-image").value   = project?.image       || "";
+    if (editors.pfDesc) {
+      editors.pfDesc.setData(project?.description || "");
+    }
     document.getElementById("pf-order").value   = project?.order       ?? 0;
     document.getElementById("projectFormError").textContent = "";
     document.getElementById("projectDeleteBtn").style.display = project ? "" : "none";
@@ -1072,18 +1320,54 @@ if (document.getElementById("logoutBtn")) {
     if (e.target === e.currentTarget) document.getElementById("projectModalOverlay").classList.remove("open");
   });
 
+  document.getElementById("addProjectBtn")?.addEventListener("click", () => openProjectModal());
+
   document.getElementById("projectSaveBtn").addEventListener("click", async () => {
+    let image = '';
+    
+    // Handle image upload
+    const coverFile = document.getElementById("pf-cover").files[0];
+    if (coverFile) {
+      const formData = new FormData();
+      formData.append('file', coverFile);
+      
+      try {
+        const uploadResponse = await fetch(`${API}/media/upload`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${getToken()}` },
+          body: formData
+        });
+        
+        if (!uploadResponse.ok) {
+          const errorText = await uploadResponse.text();
+          throw new Error(`Upload failed with status ${uploadResponse.status}: ${errorText}`);
+        }
+        
+        const uploadData = await uploadResponse.json();
+        if (uploadData.url) {
+          image = uploadData.url;
+        }
+      } catch (e) {
+        document.getElementById("projectFormError").textContent = 'Image upload failed: ' + e.message;
+        return;
+      }
+    } else if (editingProjectId) {
+      // Keep existing image if editing and no new file uploaded
+      const existingProject = await apiFetch(`/projects/${editingProjectId}`);
+      image = existingProject.image || '';
+    }
+
     const body = {
       place:       document.getElementById("pf-place").value.trim(),
       tag:         document.getElementById("pf-tag").value.trim(),
       title:       document.getElementById("pf-title").value.trim(),
       title2:      document.getElementById("pf-title2").value.trim(),
-      description: document.getElementById("pf-desc").value.trim(),
-      image:       document.getElementById("pf-image").value.trim(),
+      description: editors.pfDesc ? editors.pfDesc.getData() : document.getElementById("pf-desc").value.trim(),
+      image:       image,
       order:       Number(document.getElementById("pf-order").value) || 0,
     };
-    if (!body.place || !body.title || !body.tag || !body.description || !body.image) {
-      document.getElementById("projectFormError").textContent = "Please fill in all required fields.";
+    if (!body.place || !body.title || !body.tag || !body.description) {
+      document.getElementById("projectFormError").textContent = "Place, Title, Tag, and Description are required.";
       showToast('Validation Error', 'Please fill in all required fields', 'warning');
       return;
     }
@@ -1112,15 +1396,27 @@ if (document.getElementById("logoutBtn")) {
   });
 
   document.getElementById("projectDeleteBtn").addEventListener("click", async () => {
-    if (!editingProjectId || !confirm("Delete this project?")) return;
-    try {
-      await apiFetch(`/projects/${editingProjectId}`, { method: "DELETE" });
-      showToast('Project Deleted', 'The project has been removed', 'success');
-      document.getElementById("projectModalOverlay").classList.remove("open");
-      loadPortfolio();
-      if (typeof loadClientStories === 'function') loadClientStories();
-    } catch (e) {
-      showToast('Delete Failed', e.message || 'Could not delete project', 'error');
+    if (!editingProjectId) return;
+    const result = await Swal.fire({
+      title: 'Delete this project?',
+      text: "This action cannot be undone.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc2626',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    });
+    if (result.isConfirmed) {
+      try {
+        await apiFetch(`/projects/${editingProjectId}`, { method: "DELETE" });
+        showToast('Project Deleted', 'The project has been removed', 'success');
+        document.getElementById("projectModalOverlay").classList.remove("open");
+        loadPortfolio();
+        if (typeof loadClientStories === 'function') loadClientStories();
+      } catch (e) {
+        showToast('Delete Failed', e.message || 'Could not delete project', 'error');
+      }
     }
   });
 
@@ -1146,7 +1442,25 @@ async function loadClientStories() {
 
   grid.innerHTML = stories.map(s => `
     <div class="proj-card content-card" data-id="${esc(s._id)}">
-      <div class="proj-card-img" style="background-image:url('${esc(s.image || "")}')"></div>
+      <div class="proj-card-img" style="background-image:url('${esc(s.image || "")}');position:relative;">
+        <div class="actions-dropdown" data-id="${esc(s._id)}" data-type="client-stories" data-name="${esc(s.clientName)}">
+          <button class="dropdown-toggle">⋮</button>
+          <div class="dropdown-menu">
+            <button class="dropdown-item" data-action="edit">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              Edit
+            </button>
+            <button class="dropdown-item" data-action="duplicate">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Duplicate
+            </button>
+            <button class="dropdown-item danger" data-action="delete">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
 
       <div class="proj-card-body">
         <span class="proj-tag">${esc(s.industry)}</span>
@@ -1156,102 +1470,91 @@ async function loadClientStories() {
         <div class="proj-place">${esc(s.clientRole)}</div>
 
         <p class="proj-desc">${esc(s.testimonial)}</p>
-
-        <div class="card-actions">
-          <a class="btn-view"
-             href="client-story-edit.html?id=${esc(s._id)}">
-             Edit
-          </a>
-
-          <button
-            class="btn-action btn-duplicate"
-            data-id="${esc(s._id)}"
-            data-type="client-stories"
-            title="Duplicate">
-            ⎘ Clone
-          </button>
-
-          <button
-            class="btn-action btn-delete-item"
-            data-id="${esc(s._id)}"
-            data-type="client-stories"
-            data-name="${esc(s.clientName)}"
-            title="Delete">
-            ✕
-          </button>
-        </div>
       </div>
     </div>
   `).join("");
 
-  // Duplicate
-  grid.querySelectorAll(".btn-duplicate").forEach(btn => {
-    btn.addEventListener("click", async () => {
-      try {
-        await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}/duplicate`, {
-          method: "POST"
-        });
-
-        showToast("Cloned", "Copy created successfully", "success");
-
-        loadClientStories();
-
-      } catch (e) {
-
-        Swal.fire({
-          icon: "error",
-          title: "Clone Failed",
-          text: e.message
-        });
-
-      }
+  // Dropdown menu handlers for client story cards
+  grid.querySelectorAll('.dropdown-toggle').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const menu = btn.nextElementSibling;
+      document.querySelectorAll('.dropdown-menu').forEach(m => {
+        if (m !== menu) m.classList.remove('show');
+      });
+      menu.classList.toggle('show');
     });
   });
 
-  // Delete from card
-  grid.querySelectorAll(".btn-delete-item").forEach(btn => {
-    btn.addEventListener("click", async () => {
+  grid.querySelectorAll('.dropdown-item').forEach(item => {
+    item.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const dropdown = item.closest('.actions-dropdown');
+      const itemId = dropdown.dataset.id;
+      const itemType = dropdown.dataset.type;
+      const itemName = dropdown.dataset.name;
+      const action = item.dataset.action;
+      
+      // Close the menu
+      dropdown.querySelector('.dropdown-menu').classList.remove('show');
 
-      const result = await Swal.fire({
-        title: `Delete "${btn.dataset.name}"?`,
-        text: "This action cannot be undone.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Delete",
-        cancelButtonText: "Cancel",
-        confirmButtonColor: "#dc2626",
-        cancelButtonColor: "#6b7280",
-        reverseButtons: true
-      });
+      switch (action) {
+        case 'edit':
+          const storyData = await apiFetch(`/client-stories/${itemId}`);
+          openStoryModal(storyData);
+          break;
+        case 'duplicate':
+          try {
+            await apiFetch(`/${itemType}/${itemId}/duplicate`, { method: 'POST' });
+            showToast('Cloned', 'Copy created successfully', 'success');
+            loadClientStories();
+          } catch(e) {
+            Swal.fire({
+              icon: "error",
+              title: "Clone Failed",
+              text: e.message
+            });
+          }
+          break;
+        case 'delete':
+          const result = await Swal.fire({
+            title: `Delete "${itemName}"?`,
+            text: "This action cannot be undone.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Delete",
+            cancelButtonText: "Cancel",
+            confirmButtonColor: "#dc2626",
+            cancelButtonColor: "#6b7280",
+            reverseButtons: true
+          });
 
-      if (!result.isConfirmed) return;
+          if (!result.isConfirmed) return;
 
-      try {
+          try {
+            await apiFetch(`/${itemType}/${itemId}`, {
+              method: "DELETE"
+            });
 
-        await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}`, {
-          method: "DELETE"
-        });
+            await Swal.fire({
+              icon: "success",
+              title: "Deleted!",
+              text: "Client story deleted successfully.",
+              timer: 1500,
+              showConfirmButton: false
+            });
 
-        await Swal.fire({
-          icon: "success",
-          title: "Deleted!",
-          text: "Client story deleted successfully.",
-          timer: 1500,
-          showConfirmButton: false
-        });
+            loadClientStories();
 
-        loadClientStories();
-
-      } catch (e) {
-
-        Swal.fire({
-          icon: "error",
-          title: "Delete Failed",
-          text: e.message
-        });
-
+          } catch (e) {
+            Swal.fire({
+              icon: "error",
+              title: "Delete Failed",
+              text: e.message
+            });
+          }
+          break;
       }
-
     });
   });
 }
@@ -1271,8 +1574,6 @@ function openStoryModal(story = null) {
     editors.stTestimonial.setData(story?.testimonial || "");
   }
 
-  document.getElementById("st-image").value = story?.image || "";
-  document.getElementById("st-avatar").value = story?.avatar || "";
   document.getElementById("st-impact").value =
     story?.impact?.join(", ") || "";
   document.getElementById("st-order").value =
@@ -1305,6 +1606,73 @@ document.getElementById("storyModalOverlay")
 
 document.getElementById("storySaveBtn")
   ?.addEventListener("click", async () => {
+    
+    let image = '';
+    let avatar = '';
+    
+    // Handle story image upload
+    const coverFile = document.getElementById("st-cover").files[0];
+    if (coverFile) {
+      const formData = new FormData();
+      formData.append('file', coverFile);
+      
+      try {
+        const uploadResponse = await fetch(`${API}/media/upload`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${getToken()}` },
+          body: formData
+        });
+        
+        if (!uploadResponse.ok) {
+          const errorText = await uploadResponse.text();
+          throw new Error(`Upload failed with status ${uploadResponse.status}: ${errorText}`);
+        }
+        
+        const uploadData = await uploadResponse.json();
+        if (uploadData.url) {
+          image = uploadData.url;
+        }
+      } catch (e) {
+        document.getElementById("storyFormError").textContent = 'Image upload failed: ' + e.message;
+        return;
+      }
+    } else if (editingStoryId) {
+      // Keep existing image if editing and no new file uploaded
+      const existingStory = await apiFetch(`/client-stories/${editingStoryId}`);
+      image = existingStory.image || '';
+    }
+    
+    // Handle avatar upload
+    const avatarFile = document.getElementById("st-avatar").files[0];
+    if (avatarFile) {
+      const formData = new FormData();
+      formData.append('file', avatarFile);
+      
+      try {
+        const uploadResponse = await fetch(`${API}/media/upload`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${getToken()}` },
+          body: formData
+        });
+        
+        if (!uploadResponse.ok) {
+          const errorText = await uploadResponse.text();
+          throw new Error(`Upload failed with status ${uploadResponse.status}: ${errorText}`);
+        }
+        
+        const uploadData = await uploadResponse.json();
+        if (uploadData.url) {
+          avatar = uploadData.url;
+        }
+      } catch (e) {
+        document.getElementById("storyFormError").textContent = 'Avatar upload failed: ' + e.message;
+        return;
+      }
+    } else if (editingStoryId) {
+      // Keep existing avatar if editing and no new file uploaded
+      const existingStory = await apiFetch(`/client-stories/${editingStoryId}`);
+      avatar = existingStory.avatar || '';
+    }
 
     const impact =
       document.getElementById("st-impact").value
@@ -1320,8 +1688,8 @@ document.getElementById("storySaveBtn")
       testimonial: editors.stTestimonial
         ? editors.stTestimonial.getData()
         : document.getElementById("st-testimonial").value.trim(),
-      image: document.getElementById("st-image").value.trim(),
-      avatar: document.getElementById("st-avatar").value.trim(),
+      image: image,
+      avatar: avatar,
       impact,
       order: Number(document.getElementById("st-order").value) || 0
     };
@@ -1330,12 +1698,10 @@ document.getElementById("storySaveBtn")
       !body.industry ||
       !body.clientName ||
       !body.clientRole ||
-      !body.testimonial ||
-      !body.image ||
-      !body.avatar
+      !body.testimonial
     ) {
       document.getElementById("storyFormError").textContent =
-        "Please fill in all required fields.";
+        "Industry, Client Name, Role and Testimonial are required.";
       return;
     }
 
@@ -1478,105 +1844,138 @@ document.getElementById("storyDeleteBtn")
       return;
     }
 
-    // Bulk action toolbar
-    const view = document.getElementById('view-blog');
-    let toolbar = view.querySelector('.bulk-toolbar');
-    if (!toolbar) {
-      toolbar = document.createElement('div');
-      toolbar.className = 'bulk-toolbar';
-      toolbar.innerHTML = `
-        <label class="bulk-select-all"><input type="checkbox" id="blogSelectAll"> Select all</label>
-        <button class="btn-delete bulk-delete-btn" id="blogBulkDelete" style="display:none">Delete selected</button>
-        <span class="bulk-count" id="blogBulkCount"></span>`;
-      view.querySelector('.page-header').after(toolbar);
-    }
-
     grid.innerHTML = blogs.map(b => `
       <div class="proj-card content-card" data-id="${esc(b._id)}">
-        <div class="card-select-wrap">
-          <input type="checkbox" class="card-checkbox blog-checkbox" data-id="${esc(b._id)}">
-        </div>
         <div class="proj-card-img" style="background-image:url('${esc(b.coverImage || b.image || '')}');position:relative;">
           ${b.featured ? '<span class="card-badge badge-featured">★ Featured</span>' : ''}
           <span class="card-status-badge status-${esc(b.status)}">${esc(b.status)}</span>
+          <div class="actions-dropdown" data-id="${esc(b._id)}" data-type="blogs" data-name="${esc(b.title.replace(/"/g,''))}" data-status="${esc(b.status)}">
+            <button class="dropdown-toggle">⋮</button>
+            <div class="dropdown-menu">
+              <button class="dropdown-item" data-action="edit">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Edit
+              </button>
+              <button class="dropdown-item" data-action="toggle-status">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                ${b.status === 'published' ? 'Set to Draft' : 'Publish'}
+              </button>
+              <button class="dropdown-item" data-action="duplicate">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Duplicate
+              </button>
+              <button class="dropdown-item danger" data-action="delete">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                Delete
+              </button>
+            </div>
+          </div>
         </div>
         <div class="proj-card-body">
           <span class="proj-tag">${esc(b.category)}</span>
           <div class="proj-title">${esc(b.title)}</div>
           <div class="proj-place">${esc(b.author) || '—'} · ${esc(b.readTime) || '—'}</div>
           <p class="proj-desc">${esc(b.excerpt) || ''}</p>
-          <div class="card-actions">
-            <a class="btn-view" href="blog-edit.html?id=${esc(b._id)}">Edit</a>
-            <button class="btn-action btn-toggle-status" data-id="${esc(b._id)}" data-status="${esc(b.status)}" title="${b.status === 'published' ? 'Set to draft' : 'Publish'}">
-              ${b.status === 'published' ? '⬇ Draft' : '↑ Publish'}
-            </button>
-            <button class="btn-action btn-duplicate" data-id="${esc(b._id)}" data-type="blogs" title="Duplicate">⎘ Clone</button>
-            <button class="btn-action btn-delete-item" data-id="${esc(b._id)}" data-type="blogs" data-name="${esc(b.title.replace(/"/g,''))}" title="Delete">✕</button>
-          </div>
         </div>
       </div>`).join('');
 
-    // Bulk checkbox logic
-    document.getElementById('blogSelectAll').onchange = function() {
-      document.querySelectorAll('.blog-checkbox').forEach(cb => cb.checked = this.checked);
-      updateBulkBar('blog');
-    };
-    document.querySelectorAll('.blog-checkbox').forEach(cb => {
-      cb.addEventListener('change', () => updateBulkBar('blog'));
+    // Dropdown menu handlers for blog cards
+    grid.querySelectorAll('.dropdown-toggle').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const menu = btn.nextElementSibling;
+        document.querySelectorAll('.dropdown-menu').forEach(m => {
+          if (m !== menu) m.classList.remove('show');
+        });
+        menu.classList.toggle('show');
+      });
     });
-    document.getElementById('blogBulkDelete').onclick = () => bulkDelete('blog', 'blogs', loadBlogs);
 
-    // Action buttons
-    grid.querySelectorAll('.btn-toggle-status').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const newStatus = btn.dataset.status === 'published' ? 'draft' : 'published';
-        try {
-          await apiFetch(`/blogs/${btn.dataset.id}`, { method: 'PATCH', body: JSON.stringify({ status: newStatus }) });
-          showToast('Status updated', `Post set to ${newStatus}`, 'success');
-          loadBlogs();
-        } catch(e) { showToast('Error', e.message, 'error'); }
-      });
-    });
-    grid.querySelectorAll('.btn-duplicate').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        try {
-          await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}/duplicate`, { method: 'POST' });
-          showToast('Cloned', 'Draft copy created', 'success');
-          loadBlogs();
-        } catch(e) { showToast('Error', e.message, 'error'); }
-      });
-    });
-    grid.querySelectorAll('.btn-delete-item').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        if (!confirm(`Delete "${btn.dataset.name}"?`)) return;
-        try {
-          await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}`, { method: 'DELETE' });
-          showToast('Deleted', 'Item removed', 'success');
-          loadBlogs();
-        } catch(e) { showToast('Error', e.message, 'error'); }
+    grid.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const dropdown = item.closest('.actions-dropdown');
+        const itemId = dropdown.dataset.id;
+        const itemType = dropdown.dataset.type;
+        const itemName = dropdown.dataset.name;
+        const itemStatus = dropdown.dataset.status;
+        const action = item.dataset.action;
+        
+        // Close the menu
+        dropdown.querySelector('.dropdown-menu').classList.remove('show');
+
+        switch (action) {
+          case 'edit':
+            try {
+              const blogData = await apiFetch(`/blogs/admin/${itemId}`);
+              console.log('Fetched blog data:', blogData);
+              openBlogModal(blogData);
+            } catch (e) {
+              console.error('Error fetching blog:', e);
+              showToast('Error', 'Failed to load blog data: ' + e.message, 'error');
+            }
+            break;
+          case 'toggle-status':
+            const newStatus = itemStatus === 'published' ? 'draft' : 'published';
+            try {
+              await apiFetch(`/blogs/${itemId}`, { method: 'PATCH', body: JSON.stringify({ status: newStatus }) });
+              showToast('Status updated', `Post set to ${newStatus}`, 'success');
+              loadBlogs();
+            } catch(e) { showToast('Error', e.message, 'error'); }
+            break;
+          case 'duplicate':
+            try {
+              await apiFetch(`/${itemType}/${itemId}/duplicate`, { method: 'POST' });
+              showToast('Cloned', 'Draft copy created', 'success');
+              loadBlogs();
+            } catch(e) { showToast('Error', e.message, 'error'); }
+            break;
+          case 'delete':
+            const result = await Swal.fire({
+              title: `Delete "${itemName}"?`,
+              text: "This action cannot be undone.",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#dc2626',
+              cancelButtonColor: '#3085d6',
+              confirmButtonText: 'Delete',
+              cancelButtonText: 'Cancel'
+            });
+            if (result.isConfirmed) {
+              try {
+                await apiFetch(`/${itemType}/${itemId}`, { method: 'DELETE' });
+                showToast('Deleted', 'Item removed', 'success');
+                loadBlogs();
+              } catch(e) { showToast('Error', e.message, 'error'); }
+            }
+            break;
+        }
       });
     });
   }
 
   function openBlogModal(blog = null) {
-    editingBlogId = blog?._id || null;
-    document.getElementById('blogModalTitle').textContent = blog ? 'Edit Post' : 'Add Post';
-    document.getElementById('bl-title').value    = blog?.title    || '';
-    document.getElementById('bl-category').value = blog?.category || 'Virtual Reality';
-    document.getElementById('bl-status').value = blog?.status || 'published';
-    document.getElementById('bl-readtime').value = blog?.readTime || '5 min read';
-    document.getElementById('bl-excerpt').value  = blog?.excerpt  || '';
+    console.log('openBlogModal called with:', blog);
+    const blogData = blog?.data || blog;
+    console.log('Extracted blogData:', blogData);
+    
+    editingBlogId = blogData?._id || null;
+    document.getElementById('blogModalTitle').textContent = blogData ? 'Edit Post' : 'Add Post';
+    document.getElementById('bl-title').value    = blogData?.title    || '';
+    document.getElementById('bl-category').value = blogData?.category || 'Virtual Reality';
+    document.getElementById('bl-status').value = blogData?.status || 'published';
+    document.getElementById('bl-readtime').value = blogData?.readTime || '5 min read';
+    document.getElementById('bl-excerpt').value  = blogData?.excerpt  || '';
     if (editors.blogContent) {
-      editors.blogContent.setData(blog?.content || '');
+      editors.blogContent.setData(blogData?.content || '');
     }
-    document.getElementById('bl-image').value    = blog?.coverImage || blog?.image || '';
-    document.getElementById('bl-author').value   = blog?.author   || 'Volga Infosys';
-    document.getElementById('bl-order').value    = blog?.order    ?? 0;
-    document.getElementById('bl-featured').checked = blog?.featured || false;
-    document.getElementById('bl-seotitle').value = blog?.seoTitle || '';
-    document.getElementById('bl-seodesc').value = blog?.seoDescription || '';
+    document.getElementById('bl-author').value   = blogData?.author   || 'Volga Infosys';
+    document.getElementById('bl-order').value    = blogData?.order    ?? 0;
+    document.getElementById('bl-featured').checked = blogData?.featured || false;
+    document.getElementById('bl-seotitle').value = blogData?.seoTitle || '';
+    document.getElementById('bl-seodesc').value = blogData?.seoDescription || '';
     document.getElementById('blogFormError').textContent = '';
-    document.getElementById('blogDeleteBtn').style.display = blog ? '' : 'none';
+    document.getElementById('blogDeleteBtn').style.display = blogData ? '' : 'none';
     document.getElementById('blogModalOverlay').classList.add('open');
   }
 
@@ -1587,24 +1986,41 @@ document.getElementById("storyDeleteBtn")
     if (e.target === e.currentTarget) document.getElementById('blogModalOverlay').classList.remove('open');
   });
 
-  document.getElementById('blogSaveBtn').addEventListener('click', async () => {
-    let coverImage = document.getElementById('bl-image').value.trim();
-    const coverFileInput = document.getElementById('bl-cover');
+  document.getElementById('addBlogBtn')?.addEventListener('click', () => openBlogModal());
 
-    if (coverFileInput.files && coverFileInput.files[0]) {
+  document.getElementById('blogSaveBtn').addEventListener('click', async () => {
+    let coverImage = '';
+    
+    // Handle image upload
+    const coverFile = document.getElementById('bl-cover').files[0];
+    if (coverFile) {
       const formData = new FormData();
-      formData.append('file', coverFileInput.files[0]);
-      const uploadRes = await fetch(API + '/media/upload', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${getToken()}`,
-        },
-        body: formData,
-      });
-      const uploadData = await uploadRes.json();
-      if (uploadData.success && uploadData.data) {
-        coverImage = uploadData.data.url;
+      formData.append('file', coverFile);
+      
+      try {
+        const uploadResponse = await fetch(`${API}/media/upload`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${getToken()}` },
+          body: formData
+        });
+        
+        if (!uploadResponse.ok) {
+          const errorText = await uploadResponse.text();
+          throw new Error(`Upload failed with status ${uploadResponse.status}: ${errorText}`);
+        }
+        
+        const uploadData = await uploadResponse.json();
+        if (uploadData.url) {
+          coverImage = uploadData.url;
+        }
+      } catch (e) {
+        document.getElementById('blogFormError').textContent = 'Image upload failed: ' + e.message;
+        return;
       }
+    } else if (editingBlogId) {
+      // Keep existing image if editing and no new file uploaded
+      const existingBlog = await apiFetch(`/blogs/${editingBlogId}`);
+      coverImage = existingBlog.coverImage || existingBlog.image || '';
     }
 
     const body = {
@@ -1621,8 +2037,8 @@ document.getElementById("storyDeleteBtn")
       seoTitle: document.getElementById('bl-seotitle').value.trim(),
       seoDescription: document.getElementById('bl-seodesc').value.trim(),
     };
-    if (!body.title || !body.excerpt || !body.coverImage) {
-      document.getElementById('blogFormError').textContent = 'Title, Excerpt and Cover Image are required.';
+    if (!body.title || !body.excerpt) {
+      document.getElementById('blogFormError').textContent = 'Title and Excerpt are required.';
       return;
     }
     const saveBtn = document.getElementById('blogSaveBtn');
@@ -1644,11 +2060,23 @@ document.getElementById("storyDeleteBtn")
   });
 
   document.getElementById('blogDeleteBtn').addEventListener('click', async () => {
-    if (!editingBlogId || !confirm('Delete this post?')) return;
-    await apiFetch(`/blogs/${editingBlogId}`, { method: 'DELETE' });
-    document.getElementById('blogModalOverlay').classList.remove('open');
-    loadBlogs();
-    loadOverview();
+    if (!editingBlogId) return;
+    const result = await Swal.fire({
+      title: 'Delete this post?',
+      text: "This action cannot be undone.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc2626',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    });
+    if (result.isConfirmed) {
+      await apiFetch(`/blogs/${editingBlogId}`, { method: 'DELETE' });
+      document.getElementById('blogModalOverlay').classList.remove('open');
+      loadBlogs();
+      loadOverview();
+    }
   });
 
   // CASE STUDIES
@@ -1664,37 +2092,94 @@ document.getElementById("storyDeleteBtn")
     }
     grid.innerHTML = caseStudies.map(c => `
       <div class="proj-card content-card" data-id="${esc(c._id)}">
-        <div class="proj-card-img" style="background-image:url('${esc(c.image || '')}')"></div>
+        <div class="proj-card-img" style="background-image:url('${esc(c.image || '')}');position:relative;">
+          <div class="actions-dropdown" data-id="${esc(c._id)}" data-type="case-studies" data-name="${esc(c.title.replace(/"/g,''))}">
+            <button class="dropdown-toggle">⋮</button>
+            <div class="dropdown-menu">
+              <button class="dropdown-item" data-action="edit">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Edit
+              </button>
+              <button class="dropdown-item" data-action="duplicate">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Duplicate
+              </button>
+              <button class="dropdown-item danger" data-action="delete">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
         <div class="proj-card-body">
           <span class="proj-tag">${esc(c.industry)}</span>
           <div class="proj-title">${esc(c.title)}</div>
           <div class="proj-place">${esc(c.year) || 'Case Study'} · ${(c.metrics || []).length} metrics</div>
           <p class="proj-desc">${esc(c.description)}</p>
-          <div class="card-actions">
-            <a class="btn-view" href="case-study-edit.html?id=${esc(c._id)}">Edit</a>
-            <button class="btn-action btn-duplicate" data-id="${esc(c._id)}" data-type="case-studies" title="Duplicate">⎘ Clone</button>
-            <button class="btn-action btn-delete-item" data-id="${esc(c._id)}" data-type="case-studies" data-name="${esc(c.title.replace(/"/g,''))}" title="Delete">✕</button>
-          </div>
         </div>
       </div>`).join('');
 
-    grid.querySelectorAll('.btn-duplicate').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        try {
-          await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}/duplicate`, { method: 'POST' });
-          showToast('Cloned', 'Draft copy created', 'success');
-          loadCaseStudies();
-        } catch(e) { showToast('Error', e.message, 'error'); }
+    // Dropdown menu handlers for case study cards
+    grid.querySelectorAll('.dropdown-toggle').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const menu = btn.nextElementSibling;
+        document.querySelectorAll('.dropdown-menu').forEach(m => {
+          if (m !== menu) m.classList.remove('show');
+        });
+        menu.classList.toggle('show');
       });
     });
-    grid.querySelectorAll('.btn-delete-item').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        if (!confirm(`Delete "${btn.dataset.name}"?`)) return;
-        try {
-          await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}`, { method: 'DELETE' });
-          showToast('Deleted', 'Item removed', 'success');
-          loadCaseStudies();
-        } catch(e) { showToast('Error', e.message, 'error'); }
+
+    grid.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const dropdown = item.closest('.actions-dropdown');
+        const itemId = dropdown.dataset.id;
+        const itemType = dropdown.dataset.type;
+        const itemName = dropdown.dataset.name;
+        const action = item.dataset.action;
+        
+        // Close the menu
+        dropdown.querySelector('.dropdown-menu').classList.remove('show');
+
+        switch (action) {
+          case 'edit':
+            try {
+              const caseStudyData = await apiFetch(`/case-studies/${itemId}`);
+              openCaseStudyModal(caseStudyData);
+            } catch(e) {
+              console.error('Error fetching case study:', e);
+              showToast('Error', 'Failed to load case study data', 'error');
+            }
+            break;
+          case 'duplicate':
+            try {
+              await apiFetch(`/${itemType}/${itemId}/duplicate`, { method: 'POST' });
+              showToast('Cloned', 'Draft copy created', 'success');
+              loadCaseStudies();
+            } catch(e) { showToast('Error', e.message, 'error'); }
+            break;
+          case 'delete':
+            const result = await Swal.fire({
+              title: `Delete "${itemName}"?`,
+              text: "This action cannot be undone.",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#dc2626',
+              cancelButtonColor: '#3085d6',
+              confirmButtonText: 'Delete',
+              cancelButtonText: 'Cancel'
+            });
+            if (result.isConfirmed) {
+              try {
+                await apiFetch(`/${itemType}/${itemId}`, { method: 'DELETE' });
+                showToast('Deleted', 'Item removed', 'success');
+                loadCaseStudies();
+              } catch(e) { showToast('Error', e.message, 'error'); }
+            }
+            break;
+        }
       });
     });
   }
@@ -1719,7 +2204,6 @@ document.getElementById("storyDeleteBtn")
     if (editors.csDescription) {
       editors.csDescription.setData(caseStudy?.description || '');
     }
-    document.getElementById('cs-image').value = caseStudy?.image || '';
     document.getElementById('cs-metrics').value = formatMetrics(caseStudy?.metrics || []);
     document.getElementById('cs-author').value = caseStudy?.author || 'Volga Infosys';
     document.getElementById('cs-order').value = caseStudy?.order ?? 0;
@@ -1737,18 +2221,52 @@ document.getElementById("storyDeleteBtn")
   });
 
   document.getElementById('caseStudySaveBtn')?.addEventListener('click', async () => {
+    let image = '';
+    
+    // Handle image upload
+    const coverFile = document.getElementById('cs-cover').files[0];
+    if (coverFile) {
+      const formData = new FormData();
+      formData.append('file', coverFile);
+      
+      try {
+        const uploadResponse = await fetch(`${API}/media/upload`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${getToken()}` },
+          body: formData
+        });
+        
+        if (!uploadResponse.ok) {
+          const errorText = await uploadResponse.text();
+          throw new Error(`Upload failed with status ${uploadResponse.status}: ${errorText}`);
+        }
+        
+        const uploadData = await uploadResponse.json();
+        if (uploadData.url) {
+          image = uploadData.url;
+        }
+      } catch (e) {
+        document.getElementById('caseStudyFormError').textContent = 'Image upload failed: ' + e.message;
+        return;
+      }
+    } else if (editingCaseStudyId) {
+      // Keep existing image if editing and no new file uploaded
+      const existingCaseStudy = await apiFetch(`/case-studies/${editingCaseStudyId}`);
+      image = existingCaseStudy.image || '';
+    }
+
     const body = {
       title: document.getElementById('cs-title').value.trim(),
       industry: document.getElementById('cs-industry').value.trim(),
       year: document.getElementById('cs-year').value.trim(),
       description: editors.csDescription ? editors.csDescription.getData() : document.getElementById('cs-description').value.trim(),
-      image: document.getElementById('cs-image').value.trim(),
+      image: image,
       metrics: parseMetrics(document.getElementById('cs-metrics').value),
       author: document.getElementById('cs-author').value.trim() || 'Volga Infosys',
       order: Number(document.getElementById('cs-order').value) || 0,
     };
-    if (!body.title || !body.industry || !body.description || !body.image) {
-      document.getElementById('caseStudyFormError').textContent = 'Title, Industry, Description and Image URL are required.';
+    if (!body.title || !body.industry || !body.description) {
+      document.getElementById('caseStudyFormError').textContent = 'Title, Industry, and Description are required.';
       return;
     }
     const saveBtn = document.getElementById('caseStudySaveBtn');
@@ -1770,11 +2288,23 @@ document.getElementById("storyDeleteBtn")
   });
 
   document.getElementById('caseStudyDeleteBtn')?.addEventListener('click', async () => {
-    if (!editingCaseStudyId || !confirm('Delete this case study?')) return;
-    await apiFetch(`/case-studies/${editingCaseStudyId}`, { method: 'DELETE' });
-    document.getElementById('caseStudyModalOverlay').classList.remove('open');
-    loadCaseStudies();
-    loadOverview();
+    if (!editingCaseStudyId) return;
+    const result = await Swal.fire({
+      title: 'Delete this case study?',
+      text: "This action cannot be undone.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc2626',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    });
+    if (result.isConfirmed) {
+      await apiFetch(`/case-studies/${editingCaseStudyId}`, { method: 'DELETE' });
+      document.getElementById('caseStudyModalOverlay').classList.remove('open');
+      loadCaseStudies();
+      loadOverview();
+    }
   });
 
   // INDUSTRY NEWS
@@ -1790,37 +2320,89 @@ document.getElementById("storyDeleteBtn")
     }
     grid.innerHTML = news.map(n => `
       <div class="proj-card content-card" data-id="${esc(n._id)}">
-        <div class="proj-card-img" style="background-image:url('${esc(n.image || '')}')"></div>
+        <div class="proj-card-img" style="background-image:url('${esc(n.image || '')}');position:relative;">
+          <div class="actions-dropdown" data-id="${esc(n._id)}" data-type="industry-news" data-name="${esc(n.title.replace(/"/g,''))}">
+            <button class="dropdown-toggle">⋮</button>
+            <div class="dropdown-menu">
+              <button class="dropdown-item" data-action="edit">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Edit
+              </button>
+              <button class="dropdown-item" data-action="duplicate">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Duplicate
+              </button>
+              <button class="dropdown-item danger" data-action="delete">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
         <div class="proj-card-body">
           <span class="proj-tag">${esc(n.topic)}</span>
           <div class="proj-title">${esc(n.title)}</div>
           <div class="proj-place">${esc(n.source) || 'Volga Infosys'} · ${fmtDate(n.publishedAt || n.createdAt)}</div>
           <p class="proj-desc">${esc(n.description)}</p>
-          <div class="card-actions">
-            <a class="btn-view" href="industry-news-edit.html?id=${esc(n._id)}">Edit</a>
-            <button class="btn-action btn-duplicate" data-id="${esc(n._id)}" data-type="industry-news" title="Duplicate">⎘ Clone</button>
-            <button class="btn-action btn-delete-item" data-id="${esc(n._id)}" data-type="industry-news" data-name="${esc(n.title.replace(/"/g,''))}" title="Delete">✕</button>
-          </div>
         </div>
       </div>`).join('');
 
-    grid.querySelectorAll('.btn-duplicate').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        try {
-          await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}/duplicate`, { method: 'POST' });
-          showToast('Cloned', 'Copy created', 'success');
-          loadIndustryNews();
-        } catch(e) { showToast('Error', e.message, 'error'); }
+    // Dropdown menu handlers for industry news cards
+    grid.querySelectorAll('.dropdown-toggle').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const menu = btn.nextElementSibling;
+        document.querySelectorAll('.dropdown-menu').forEach(m => {
+          if (m !== menu) m.classList.remove('show');
+        });
+        menu.classList.toggle('show');
       });
     });
-    grid.querySelectorAll('.btn-delete-item').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        if (!confirm(`Delete "${btn.dataset.name}"?`)) return;
-        try {
-          await apiFetch(`/${btn.dataset.type}/${btn.dataset.id}`, { method: 'DELETE' });
-          showToast('Deleted', 'Item removed', 'success');
-          loadIndustryNews();
-        } catch(e) { showToast('Error', e.message, 'error'); }
+
+    grid.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const dropdown = item.closest('.actions-dropdown');
+        const itemId = dropdown.dataset.id;
+        const itemType = dropdown.dataset.type;
+        const itemName = dropdown.dataset.name;
+        const action = item.dataset.action;
+        
+        // Close the menu
+        dropdown.querySelector('.dropdown-menu').classList.remove('show');
+
+        switch (action) {
+          case 'edit':
+            const newsData = await apiFetch(`/industry-news/${itemId}`);
+            openIndustryNewsModal(newsData);
+            break;
+          case 'duplicate':
+            try {
+              await apiFetch(`/${itemType}/${itemId}/duplicate`, { method: 'POST' });
+              showToast('Cloned', 'Copy created', 'success');
+              loadIndustryNews();
+            } catch(e) { showToast('Error', e.message, 'error'); }
+            break;
+          case 'delete':
+            const result = await Swal.fire({
+              title: `Delete "${itemName}"?`,
+              text: "This action cannot be undone.",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#dc2626',
+              cancelButtonColor: '#3085d6',
+              confirmButtonText: 'Delete',
+              cancelButtonText: 'Cancel'
+            });
+            if (result.isConfirmed) {
+              try {
+                await apiFetch(`/${itemType}/${itemId}`, { method: 'DELETE' });
+                showToast('Deleted', 'Item removed', 'success');
+                loadIndustryNews();
+              } catch(e) { showToast('Error', e.message, 'error'); }
+            }
+            break;
+        }
       });
     });
   }
@@ -1836,8 +2418,9 @@ document.getElementById("storyDeleteBtn")
     document.getElementById('in-title').value = item?.title || '';
     document.getElementById('in-topic').value = item?.topic || '';
     document.getElementById('in-source').value = item?.source || 'Volga Infosys';
-    document.getElementById('in-description').value = item?.description || '';
-    document.getElementById('in-image').value = item?.image || '';
+    if (editors.inDescription) {
+      editors.inDescription.setData(item?.description || '');
+    }
     document.getElementById('in-published').value = dateInputValue(item?.publishedAt);
     document.getElementById('in-order').value = item?.order ?? 0;
     document.getElementById('in-url').value = item?.url || '';
@@ -1855,18 +2438,52 @@ document.getElementById("storyDeleteBtn")
   });
 
   document.getElementById('industryNewsSaveBtn')?.addEventListener('click', async () => {
+    let image = '';
+    
+    // Handle image upload
+    const coverFile = document.getElementById('inCover').files[0];
+    if (coverFile) {
+      const formData = new FormData();
+      formData.append('file', coverFile);
+      
+      try {
+        const uploadResponse = await fetch(`${API}/media/upload`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${getToken()}` },
+          body: formData
+        });
+        
+        if (!uploadResponse.ok) {
+          const errorText = await uploadResponse.text();
+          throw new Error(`Upload failed with status ${uploadResponse.status}: ${errorText}`);
+        }
+        
+        const uploadData = await uploadResponse.json();
+        if (uploadData.url) {
+          image = uploadData.url;
+        }
+      } catch (e) {
+        document.getElementById('industryNewsFormError').textContent = 'Image upload failed: ' + e.message;
+        return;
+      }
+    } else if (editingIndustryNewsId) {
+      // Keep existing image if editing and no new file uploaded
+      const existingNews = await apiFetch(`/industry-news/${editingIndustryNewsId}`);
+      image = existingNews.image || '';
+    }
+
     const body = {
       title: document.getElementById('in-title').value.trim(),
       topic: document.getElementById('in-topic').value.trim(),
       source: document.getElementById('in-source').value.trim() || 'Volga Infosys',
-      description: document.getElementById('in-description').value.trim(),
-      image: document.getElementById('in-image').value.trim(),
+      description: editors.inDescription ? editors.inDescription.getData() : document.getElementById('in-description').value.trim(),
+      image: image,
       publishedAt: document.getElementById('in-published').value || new Date().toISOString(),
       order: Number(document.getElementById('in-order').value) || 0,
       url: document.getElementById('in-url').value.trim(),
     };
-    if (!body.title || !body.topic || !body.description || !body.image) {
-      document.getElementById('industryNewsFormError').textContent = 'Title, Topic, Description and Image URL are required.';
+    if (!body.title || !body.topic || !body.description) {
+      document.getElementById('industryNewsFormError').textContent = 'Title, Topic, and Description are required.';
       return;
     }
     const saveBtn = document.getElementById('industryNewsSaveBtn');
@@ -1888,11 +2505,23 @@ document.getElementById("storyDeleteBtn")
   });
 
   document.getElementById('industryNewsDeleteBtn')?.addEventListener('click', async () => {
-    if (!editingIndustryNewsId || !confirm('Delete this news item?')) return;
-    await apiFetch(`/industry-news/${editingIndustryNewsId}`, { method: 'DELETE' });
-    document.getElementById('industryNewsModalOverlay').classList.remove('open');
-    loadIndustryNews();
-    loadOverview();
+    if (!editingIndustryNewsId) return;
+    const result = await Swal.fire({
+      title: 'Delete this news item?',
+      text: "This action cannot be undone.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc2626',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    });
+    if (result.isConfirmed) {
+      await apiFetch(`/industry-news/${editingIndustryNewsId}`, { method: 'DELETE' });
+      document.getElementById('industryNewsModalOverlay').classList.remove('open');
+      loadIndustryNews();
+      loadOverview();
+    }
   });
 
   // MEDIA LIBRARY
@@ -1930,13 +2559,24 @@ document.getElementById("storyDeleteBtn")
 
     grid.querySelectorAll('.media-delete-btn').forEach(btn => {
       btn.addEventListener('click', async () => {
-        if (!confirm('Delete this media item?')) return;
-        try {
-          await apiFetch(`/media/${btn.dataset.id}`, { method: 'DELETE' });
-          showToast('Media Deleted', 'The media item has been removed', 'success');
-          loadMediaLibrary();
-        } catch (e) {
-          showToast('Delete Failed', e.message || 'Could not delete media item', 'error');
+        const result = await Swal.fire({
+          title: 'Delete this media item?',
+          text: "This action cannot be undone.",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#dc2626',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Delete',
+          cancelButtonText: 'Cancel'
+        });
+        if (result.isConfirmed) {
+          try {
+            await apiFetch(`/media/${btn.dataset.id}`, { method: 'DELETE' });
+            showToast('Media Deleted', 'The media item has been removed', 'success');
+            loadMediaLibrary();
+          } catch (e) {
+            showToast('Delete Failed', e.message || 'Could not delete media item', 'error');
+          }
         }
       });
     });
@@ -2315,14 +2955,26 @@ document.getElementById("storyDeleteBtn")
     });
 
     document.getElementById('userDeleteBtn')?.addEventListener('click', async () => {
-      if (!editingUserId || !confirm('Delete this user?')) return;
-      try {
-        await apiFetch(`/auth/users/${editingUserId}`, { method: 'DELETE' });
-        showToast('User Deleted', 'The user has been deleted successfully', 'success');
-        document.getElementById('userModalOverlay').classList.remove('open');
-        loadUsers();
-      } catch (e) {
-        showToast('Delete Failed', e.message || 'Could not delete the user', 'error');
+      if (!editingUserId) return;
+      const result = await Swal.fire({
+        title: 'Delete this user?',
+        text: "This action cannot be undone.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc2626',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel'
+      });
+      if (result.isConfirmed) {
+        try {
+          await apiFetch(`/auth/users/${editingUserId}`, { method: 'DELETE' });
+          showToast('User Deleted', 'The user has been deleted successfully', 'success');
+          document.getElementById('userModalOverlay').classList.remove('open');
+          loadUsers();
+        } catch (e) {
+          showToast('Delete Failed', e.message || 'Could not delete the user', 'error');
+        }
       }
     });
 
@@ -2365,13 +3017,24 @@ document.getElementById("storyDeleteBtn")
       
       tbody.querySelectorAll('.reject-role-btn').forEach(btn => {
         btn.addEventListener('click', async () => {
-          if (!confirm('Reject this application?')) return;
-          try {
-            await apiFetch(`/auth/role-applications/${btn.dataset.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'rejected' }) });
-            showToast('Application Rejected', 'The role application has been rejected', 'success');
-            loadRoleApplications();
-          } catch (e) {
-            showToast('Action Failed', e.message || 'Could not reject the application', 'error');
+          const result = await Swal.fire({
+            title: 'Reject this application?',
+            text: "This action cannot be undone.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Reject',
+            cancelButtonText: 'Cancel'
+          });
+          if (result.isConfirmed) {
+            try {
+              await apiFetch(`/auth/role-applications/${btn.dataset.id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'rejected' }) });
+              showToast('Application Rejected', 'The role application has been rejected', 'success');
+              loadRoleApplications();
+            } catch (e) {
+              showToast('Action Failed', e.message || 'Could not reject the application', 'error');
+            }
           }
         });
       });
@@ -2497,7 +3160,17 @@ document.getElementById("storyDeleteBtn")
               await updateJobStatus(jobId, 'archived');
               break;
             case 'delete':
-              if (confirm('Delete this job?')) {
+              const result = await Swal.fire({
+                title: 'Delete this job?',
+                text: "This action cannot be undone.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Delete',
+                cancelButtonText: 'Cancel'
+              });
+              if (result.isConfirmed) {
                 try {
                   await apiFetch(`/jobs/${jobId}`, { method: 'DELETE' });
                   showToast('Job Deleted', 'The job has been removed', 'success');
@@ -2624,14 +3297,26 @@ document.getElementById("storyDeleteBtn")
     });
 
     document.getElementById('jobDeleteBtn')?.addEventListener('click', async () => {
-      if (!editingJobId || !confirm('Delete this job?')) return;
-      try {
-        await apiFetch(`/jobs/${editingJobId}`, { method: 'DELETE' });
-        showToast('Job Deleted', 'The job has been removed', 'success');
-        document.getElementById('jobModalOverlay').classList.remove('open');
-        loadJobs();
-      } catch (e) {
-        showToast('Delete Failed', e.message || 'Could not delete job', 'error');
+      if (!editingJobId) return;
+      const result = await Swal.fire({
+        title: 'Delete this job?',
+        text: "This action cannot be undone.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc2626',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel'
+      });
+      if (result.isConfirmed) {
+        try {
+          await apiFetch(`/jobs/${editingJobId}`, { method: 'DELETE' });
+          showToast('Job Deleted', 'The job has been removed', 'success');
+          document.getElementById('jobModalOverlay').classList.remove('open');
+          loadJobs();
+        } catch (e) {
+          showToast('Delete Failed', e.message || 'Could not delete job', 'error');
+        }
       }
     });
 
@@ -2666,13 +3351,24 @@ document.getElementById("storyDeleteBtn")
       });
       tbody.querySelectorAll('.delete-app-btn').forEach(btn => {
         btn.addEventListener('click', async () => {
-          if (!confirm('Delete this application?')) return;
-          try {
-            await apiFetch(`/job-applications/${btn.dataset.id}`, { method: 'DELETE' });
-            showToast('Application Deleted', 'The application has been removed', 'success');
-            loadJobApplications();
-          } catch (e) {
-            showToast('Delete Failed', e.message || 'Could not delete application', 'error');
+          const result = await Swal.fire({
+            title: 'Delete this application?',
+            text: "This action cannot be undone.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancel'
+          });
+          if (result.isConfirmed) {
+            try {
+              await apiFetch(`/job-applications/${btn.dataset.id}`, { method: 'DELETE' });
+              showToast('Application Deleted', 'The application has been removed', 'success');
+              loadJobApplications();
+            } catch (e) {
+              showToast('Delete Failed', e.message || 'Could not delete application', 'error');
+            }
           }
         });
       });
@@ -2744,7 +3440,17 @@ function updateBulkBar(prefix) {
 async function bulkDelete(prefix, apiPath, reloadFn) {
   const checked = [...document.querySelectorAll(`.${prefix}-checkbox:checked`)];
   if (!checked.length) return;
-  if (!confirm(`Delete ${checked.length} item(s)? This cannot be undone.`)) return;
+  const result = await Swal.fire({
+    title: `Delete ${checked.length} item(s)?`,
+    text: "This action cannot be undone.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#dc2626',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Delete',
+    cancelButtonText: 'Cancel'
+  });
+  if (!result.isConfirmed) return;
   const ids = checked.map(cb => cb.dataset.id);
   try {
     // Delete one by one (bulk endpoint only exists for contacts)

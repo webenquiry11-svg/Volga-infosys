@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio | Volga Infosys</title>
   <link rel="stylesheet" href="portfolio-marquee.css" />
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -191,7 +192,7 @@
 @media(max-width:900px){.trust-strip{flex-direction:column;align-items:flex-start;}.testi-card{min-width:300px;}}
 
 /* CTA */
-.cta-band{position:relative;padding:130px 5%;text-align:center;overflow:hidden;background:var(--navy);}
+.cta-band{position:relative;padding:130px 5%;text-align:center;overflow:hidden;background:var(--navy);background-image: url('assets/images/homepage/fixed.jpg');}
 .cta-band::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 40%, rgba(232,147,10,.18) 0%, transparent 70%);}
 .cta-band .eyebrow{justify-content:center;}
 .cta-band .eyebrow::before{display:none;}
@@ -739,46 +740,784 @@
   </div>
 
   <!-- PROCESS -->
-  <section class="process" id="process">
-    <div class="wrap">
-      <div class="process-head reveal">
-        <div class="eyebrow on-dark">How We Work <span class="coord">// 5-STAGE PIPELINE</span></div>
-        <h2 class="section-title on-dark">From brief to <em>launch</em></h2>
-      </div>
-      <div class="process-rail" id="processRail"></div>
-      <div class="process-panel reveal" id="processPanel"></div>
-    </div>
-  </section>
+  <style>
+ 
+  .xrp-widget{
+    --xrp-bg: #0a0d16;
+    --xrp-bg-2: #0d1120;
+    --xrp-card: #0e1220;
+    --xrp-card-border: rgba(255,255,255,0.07);
+    --xrp-line: rgba(255,255,255,0.09);
+    --xrp-orange: #ff9433;
+    --xrp-orange-deep: #ff7a1a;
+    --xrp-orange-dim: rgba(255,148,51,0.18);
+    --xrp-blue: #4fa8ff;
+    --xrp-text: #eef1f8;
+    --xrp-text-dim: #8991a6;
+    --xrp-text-faint: #4b5266;
+    --xrp-radius: 20px;
 
-  <!-- INDUSTRIES -->
-  <section class="industries" id="industries">
-    <div class="wrap">
-      <div class="reveal">
-        <div class="eyebrow">Industries We've Worked In <span class="coord">// 10 SECTORS</span></div>
-        <h2 class="section-title">Built for every sector<br><em>that demands precision</em></h2>
-      </div>
-      <div class="ind-grid reveal" id="indGrid" style="margin-top:3rem;"></div>
-    </div>
-  </section>
+    /* replaces the old html/body reset, scoped to this widget only */
+    margin:0; padding:0;
+    background: var(--xrp-bg);
+    color: var(--xrp-text);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x:hidden;
+    position: relative;
+    isolation: isolate;
+  }
 
-  <!-- TESTIMONIALS -->
-  <section class="testi" id="testimonials">
-    <div class="wrap">
-      <div class="trust-strip reveal">
-        <span class="trust-label">Trusted by teams at</span>
-        <div class="trust-logos">
-          <span>ManufactureCo</span><span>Apex Properties</span><span>EnergySystems</span><span>Nordic Oil &amp; Gas</span><span>Berlin Museumsstiftung</span>
+  .xrp-widget, .xrp-widget *{ box-sizing:border-box; }
+
+  .xrp-bg-decor{
+    position:absolute; inset:0;
+    z-index:1;
+    overflow:hidden;
+    pointer-events:none;
+  }
+  .xrp-bg-base{
+    position:absolute; inset:0;
+    background:transparent;
+  }
+
+  .xrp-container{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 64px 24px 80px;
+    position:relative;
+  }
+
+  /* ---------- Header ---------- */
+  .xrp-eyebrow-row{
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+    margin-bottom: 28px;
+  }
+  .xrp-eyebrow{
+    display:flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px; letter-spacing:0.14em; font-weight:500;
+    color: var(--xrp-orange); text-transform:uppercase;
+  }
+  .xrp-eyebrow::before{
+    content:''; width:22px; height:2px; background: var(--xrp-orange); display:inline-block; border-radius:2px;
+  }
+  .xrp-counter-chip{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px; letter-spacing:0.05em;
+    color: var(--xrp-text-dim);
+    border:1px solid var(--xrp-card-border);
+    padding:7px 16px; border-radius:999px;
+    background: rgba(255,255,255,0.02);
+  }
+  .xrp-counter-chip b{ color: var(--xrp-orange); font-weight:600; }
+
+  .xrp-headline{
+    font-family:'Chakra Petch', sans-serif;
+    font-weight:700;
+    font-size: clamp(28px, 4.4vw, 44px);
+    letter-spacing: 0.01em;
+    text-transform:uppercase;
+    margin: 0 0 40px;
+    line-height:1.05;
+  }
+  .xrp-headline span{ color: var(--xrp-orange); }
+
+  /* ---------- Step Nav ---------- */
+  .xrp-stepnav{
+    position:relative;
+    display:flex; align-items:flex-start; justify-content:space-between;
+    margin-bottom: 40px;
+    padding: 0 6px;
+  }
+  .xrp-track{
+    position:absolute;
+    top:26px; left:32px; right:32px;
+    height:2px;
+    background: var(--xrp-line);
+    z-index:0;
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .xrp-track-fill{
+    height:100%;
+    background: linear-gradient(90deg, var(--xrp-orange-deep), var(--xrp-orange));
+    width:0%;
+    transition: width .6s cubic-bezier(.65,0,.35,1);
+  }
+  .xrp-step-node{
+    position:relative; z-index:1;
+    display:flex; flex-direction:column; align-items:center;
+    gap:10px;
+    cursor:pointer;
+    background:transparent; border:none; padding:0;
+    flex:1;
+    outline:none;
+    font-family:inherit;
+  }
+  .xrp-node-dot{
+    width:52px; height:52px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background: var(--xrp-bg-2);
+    border: 1.5px solid var(--xrp-line);
+    color: var(--xrp-text-faint);
+    transition: all .35s cubic-bezier(.65,0,.35,1);
+    position:relative;
+  }
+  .xrp-node-dot svg{ width:20px; height:20px; transition: all .35s; }
+  .xrp-step-node:hover .xrp-node-dot{
+    border-color: rgba(255,148,51,0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(255,148,51,0.12);
+  }
+  .xrp-step-node.xrp-done .xrp-node-dot{
+    border-color: var(--xrp-orange-deep);
+    color: var(--xrp-orange);
+    background: linear-gradient(155deg, rgba(255,148,51,0.14), rgba(255,148,51,0.03));
+  }
+  .xrp-step-node.xrp-active .xrp-node-dot{
+    border-color: var(--xrp-orange);
+    color: var(--xrp-orange);
+    background: linear-gradient(155deg, rgba(255,148,51,0.22), rgba(255,148,51,0.04));
+    box-shadow: 0 0 0 5px rgba(255,148,51,0.10), 0 0 24px rgba(255,148,51,0.25);
+  }
+  .xrp-ring{
+    position:absolute; inset:-6px;
+    border-radius:50%;
+    pointer-events:none;
+  }
+  .xrp-ring circle{
+    fill:none; stroke: var(--xrp-orange); stroke-width:1.6;
+    stroke-linecap:round;
+    transform-origin:center;
+    transform:rotate(-90deg);
+  }
+  .xrp-step-node .xrp-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; color: var(--xrp-text-faint); letter-spacing:0.05em;
+    transition: color .3s;
+  }
+  .xrp-step-node.xrp-active .xrp-num, .xrp-step-node.xrp-done .xrp-num{ color: var(--xrp-orange); }
+  .xrp-step-node .xrp-label{
+    font-family:'Chakra Petch', sans-serif;
+    font-size:12.5px; font-weight:600; letter-spacing:0.06em;
+    text-transform:uppercase;
+    color: var(--xrp-text-dim);
+    transition: color .3s;
+  }
+  .xrp-step-node.xrp-active .xrp-label{ color: var(--xrp-text); }
+  .xrp-step-node.xrp-done .xrp-label{ color: var(--xrp-text-dim); }
+
+  /* ---------- Card ---------- */
+  .xrp-card-wrap{ position:relative; }
+  .xrp-card{
+    position:relative;
+    border-radius: var(--xrp-radius);
+    border: 1px solid var(--xrp-card-border);
+    background: #0d1120;
+    overflow:hidden;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.6);
+  }
+  .xrp-card::before{
+    content:'';
+    position:absolute; top:0; left:0; right:0; height:1px;
+    background: linear-gradient(90deg, transparent, var(--xrp-orange), transparent);
+    opacity:0.5;
+  }
+
+  .xrp-panels{ position:relative; }
+  .xrp-panel{
+    display:none;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap:0;
+  }
+  .xrp-panel.xrp-active{ display:grid; animation: xrp-panelIn .55s cubic-bezier(.2,.7,.3,1); }
+  @keyframes xrp-panelIn{
+    from{ opacity:0; transform: translateY(10px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .xrp-panel-text{
+    padding: 44px 40px 36px;
+    position:relative;
+  }
+  .xrp-ghost-num{
+    position:absolute; top:20px; left:36px;
+    font-family:'Chakra Petch', sans-serif;
+    font-weight:700; font-size:96px;
+    color: rgba(255,255,255,0.035);
+    line-height:1; user-select:none;
+    z-index:0;
+  }
+  .xrp-panel-text-inner{ position:relative; z-index:1; padding-top:56px; }
+
+  .xrp-stage-title{
+    font-family:'Chakra Petch', sans-serif;
+    font-weight:700; font-size:34px; text-transform:uppercase;
+    letter-spacing:0.01em; margin:0 0 8px;
+  }
+  .xrp-tagline{
+    color: var(--xrp-orange); font-weight:500; font-size:15px; margin:0 0 14px;
+  }
+  .xrp-divider{
+    width:44px; height:2px; background: var(--xrp-orange); border-radius:2px; margin-bottom:18px;
+  }
+  .xrp-desc{
+    color: var(--xrp-text-dim); font-size:14.5px; line-height:1.65; margin:0 0 26px; max-width:420px;
+  }
+
+  .xrp-checklist{ display:flex; flex-direction:column; gap:4px; margin-bottom:28px; }
+  .xrp-check-item{
+    display:flex; align-items:flex-start; gap:14px;
+    padding: 11px 12px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    transition: all .25s ease;
+    cursor:default;
+  }
+  .xrp-check-item:hover{
+    background: rgba(255,148,51,0.06);
+    border-color: rgba(255,148,51,0.18);
+    transform: translateX(4px);
+  }
+  .xrp-check-badge{
+    flex-shrink:0; width:22px; height:22px; border-radius:50%;
+    background: var(--xrp-orange);
+    display:flex; align-items:center; justify-content:center;
+    margin-top:1px;
+  }
+  .xrp-check-badge svg{ width:12px; height:12px; stroke: #16110a; stroke-width:3; }
+  .xrp-check-item h4{ margin:0 0 2px; font-size:14.5px; font-weight:600; color: var(--xrp-text); }
+  .xrp-check-item p{ margin:0; font-size:12.5px; color: var(--xrp-text-faint); line-height:1.4; }
+
+  .xrp-progress-block{
+    display:flex; align-items:center; gap:14px;
+    padding-top:18px; border-top:1px solid var(--xrp-line);
+  }
+  .xrp-progress-icon{
+    width:38px; height:38px; border-radius:50%;
+    border:1px solid rgba(255,148,51,0.35);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--xrp-orange); flex-shrink:0;
+  }
+  .xrp-progress-icon svg{ width:16px; height:16px; }
+  .xrp-progress-main{ flex:1; }
+  .xrp-progress-label-row{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px; letter-spacing:0.08em; color: var(--xrp-text-faint);
+    text-transform:uppercase; margin-bottom:7px;
+  }
+  .xrp-progress-label-row b{ color: var(--xrp-orange); font-size:14px; font-family:'JetBrains Mono', monospace;}
+  .xrp-progress-track{
+    height:6px; border-radius:6px; background: rgba(255,255,255,0.06); overflow:hidden;
+  }
+  .xrp-progress-fill{
+    height:100%; border-radius:6px;
+    background: linear-gradient(90deg, var(--xrp-orange-deep), var(--xrp-orange));
+    width:0%;
+    transition: width .7s cubic-bezier(.65,0,.35,1);
+  }
+
+  /* ---------- Visual scene (icon-based) ---------- */
+  .xrp-panel-visual{
+    position:relative;
+    background:
+      radial-gradient(circle at 50% 42%, rgba(255,148,51,0.10), transparent 60%),
+      linear-gradient(160deg, rgba(255,255,255,0.025), rgba(255,255,255,0));
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    min-height:120px;
+  }
+  .xrp-panel-visual.xrp-has-image{
+    background:none;
+  }
+  .xrp-scene{
+    position:relative;
+    width:100%; height:100%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .xrp-scene-glow{
+    position:absolute;
+    width:200px; height:200px; border-radius:50%;
+    background: radial-gradient(circle, rgba(255,148,51,0.28), transparent 70%);
+    filter: blur(6px);
+    transition: all .4s ease;
+  }
+  .xrp-panel-visual:hover .xrp-scene-glow{
+    background: radial-gradient(circle, rgba(255,148,51,0.4), transparent 70%);
+    transform: scale(1.08);
+  }
+  .xrp-scene-core{
+    position:relative; z-index:2;
+    width:96px; height:96px; border-radius:26px;
+    background: linear-gradient(155deg, rgba(255,148,51,0.22), rgba(255,148,51,0.04));
+    border: 1px solid rgba(255,148,51,0.4);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--xrp-orange);
+    box-shadow: 0 0 0 1px rgba(255,148,51,0.06), 0 20px 45px -18px rgba(255,148,51,0.35);
+    transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease;
+  }
+  .xrp-scene-core svg{ width:42px; height:42px; }
+  .xrp-panel-visual:hover .xrp-scene-core{
+    transform: scale(1.07) rotate(-3deg);
+    box-shadow: 0 0 0 1px rgba(255,148,51,0.1), 0 26px 55px -16px rgba(255,148,51,0.5);
+  }
+  .xrp-chip{
+    position:absolute; z-index:3;
+    display:flex; align-items:center; gap:9px;
+    padding:9px 14px 9px 10px;
+    border-radius:12px;
+    background: rgba(13,17,32,0.72);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--xrp-card-border);
+    box-shadow: 0 12px 24px -12px rgba(0,0,0,0.5);
+    animation: xrp-bob 4.5s ease-in-out infinite;
+    transition: border-color .3s ease, transform .3s ease;
+  }
+  .xrp-panel-visual:hover .xrp-chip{ border-color: rgba(255,148,51,0.35); }
+  .xrp-chip:nth-child(1){ animation-delay: 0s; }
+  .xrp-chip:nth-child(2){ animation-delay: .6s; }
+  .xrp-chip:nth-child(3){ animation-delay: 1.2s; }
+  @keyframes xrp-bob{
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-7px); }
+  }
+  .xrp-chip-ic{
+    width:26px; height:26px; border-radius:8px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    background: rgba(255,148,51,0.14);
+    color: var(--xrp-orange);
+  }
+  .xrp-chip-ic.xrp-blue{ background: rgba(79,168,255,0.14); color: var(--xrp-blue); }
+  .xrp-chip-ic svg{ width:13px; height:13px; }
+  .xrp-chip-txt{ font-size:11.5px; font-weight:600; color: var(--xrp-text); white-space:nowrap; font-family:'Inter',sans-serif; }
+  .xrp-chip.xrp-c1{ top:14%; left:8%; }
+  .xrp-chip.xrp-c2{ bottom:16%; right:7%; }
+  .xrp-chip.xrp-c3{ top:12%; right:10%; }
+
+  .xrp-visual-img{
+    width:100%; height:100%;
+    min-height:340px;
+    object-fit: cover;
+    display:block;
+    border-radius:0;
+    transition: transform .6s cubic-bezier(.65,0,.35,1), filter .4s ease;
+    filter: saturate(1.02);
+  }
+  .xrp-panel-visual.xrp-has-image:hover .xrp-visual-img{
+    transform: scale(1.035);
+  }
+  .xrp-panel-visual.xrp-has-image::after{
+    content:'';
+    position:absolute; inset:0;
+    background: linear-gradient(90deg, rgba(13,17,32,0.35), transparent 30%),
+                linear-gradient(180deg, transparent 70%, rgba(10,13,22,0.35));
+    pointer-events:none;
+  }
+
+  /* ---------- Footer bar ---------- */
+  .xrp-card-footer{
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+    border-top: 1px solid var(--xrp-line);
+    padding: 20px 40px;
+    background: rgba(255,255,255,0.012);
+  }
+  .xrp-footer-msg{ display:flex; align-items:center; gap:14px; }
+  .xrp-footer-icon{
+    width:36px; height:36px; border-radius:50%;
+    border:1px solid rgba(255,148,51,0.35);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--xrp-orange); flex-shrink:0;
+  }
+  .xrp-footer-icon svg{ width:15px; height:15px; }
+  .xrp-footer-msg p{ margin:0; font-size:13px; color: var(--xrp-text-dim); line-height:1.4; }
+  .xrp-footer-msg p b{ display:block; color: var(--xrp-orange); font-weight:600; font-size:13.5px; margin-top:1px; }
+
+  .xrp-next-btn{
+    display:flex; align-items:center; gap:12px;
+    background:none; border:none; cursor:pointer;
+    padding: 6px;
+    font-family:inherit;
+  }
+  .xrp-next-text{ text-align:right; }
+  .xrp-next-text .xrp-k{
+    display:block; font-family:'JetBrains Mono', monospace; font-size:10px;
+    letter-spacing:0.1em; color: var(--xrp-text-faint); text-transform:uppercase;
+  }
+  .xrp-next-text .xrp-v{ font-size:14px; font-weight:600; color: var(--xrp-text); font-family:'Chakra Petch', sans-serif; }
+  .xrp-arrow-circle{
+    width:42px; height:42px; border-radius:50%;
+    border: 1.5px solid rgba(255,148,51,0.4);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--xrp-orange);
+    transition: all .3s cubic-bezier(.65,0,.35,1);
+    flex-shrink:0;
+  }
+  .xrp-arrow-circle svg{ width:16px; height:16px; transition: transform .3s; }
+  .xrp-next-btn:hover .xrp-arrow-circle{
+    background: var(--xrp-orange); color:#16110a;
+    box-shadow: 0 0 20px rgba(255,148,51,0.4);
+  }
+  .xrp-next-btn:hover .xrp-arrow-circle svg{ transform: translateX(3px); }
+
+  @media (max-width: 860px){
+    .xrp-panel.xrp-active{ grid-template-columns: 1fr; }
+    .xrp-panel-visual{ min-height:220px; }
+    .xrp-stepnav .xrp-label{ display:none; }
+    .xrp-track{ left:26px; right:26px; }
+    .xrp-card-footer{ flex-direction:column; align-items:flex-start; }
+    .xrp-next-btn{ align-self:flex-end; }
+  }
+  @media (max-width:520px){
+    .xrp-panel-text{ padding:32px 22px 26px; }
+    .xrp-ghost-num{ display:none; }
+    .xrp-panel-text-inner{ padding-top:0; }
+    .xrp-card-footer{ padding:18px 22px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .xrp-widget, .xrp-widget *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+
+<!-- ============ MARKUP ============ -->
+<div class="xrp-widget">
+  <div class="xrp-bg-decor">
+    <div class="xrp-bg-base"></div>
+  </div>
+
+  <div class="xrp-container" id="xrp-container">
+
+    <div class="xrp-eyebrow-row">
+      <div class="xrp-eyebrow">How We Work // 5-Stage Pipeline</div>
+      <div class="xrp-counter-chip"><b id="xrp-chipNum">01</b> / 05</div>
+    </div>
+
+    <h1 class="xrp-headline">FROM BRIEF TO <span>LAUNCH</span></h1>
+
+    <div class="xrp-stepnav" id="xrp-stepnav">
+      <div class="xrp-track"><div class="xrp-track-fill" id="xrp-trackFill"></div></div>
+      <!-- nodes injected by JS -->
+    </div>
+
+    <div class="xrp-card-wrap">
+      <div class="xrp-card">
+        <div class="xrp-panels" id="xrp-panels"></div>
+        <div class="xrp-card-footer">
+          <div class="xrp-footer-msg">
+            <div class="xrp-footer-icon" id="xrp-footerIcon"></div>
+            <p id="xrp-footerMsg"></p>
+          </div>
+          <button class="xrp-next-btn" id="xrp-nextBtn">
+            <div class="xrp-next-text">
+              <span class="xrp-k" id="xrp-nextKicker">Next up</span>
+              <span class="xrp-v" id="xrp-nextLabel">Strategy</span>
+            </div>
+            <div class="xrp-arrow-circle" id="xrp-arrowCircle"></div>
+          </button>
         </div>
       </div>
-      <div class="reveal">
-        <div class="eyebrow">Client Feedback <span class="coord">// VERIFIED</span></div>
-        <h2 class="section-title">What our clients say</h2>
-      </div>
     </div>
-    <div class="testi-marquee-wrap">
-      <div class="testi-marquee" id="testiMarquee"></div>
-    </div>
-  </section>
+
+  </div>
+</div>
+
+<!-- ============ SCRIPT ============ -->
+<script>
+(function(){
+  const ICONS = {
+    search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+    strategy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21V19a4 4 0 0 0-3-3.87"/><path d="M4 21v-2a4 4 0 0 1 3-3.87"/><path d="M9 8a3 3 0 1 0 6 0 3 3 0 1 0-6 0"/><path d="M12 12v3"/></svg>',
+    code: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
+    shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>',
+    rocket: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>',
+    users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    audit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/><path d="M8 14l2 2 4-4"/></svg>',
+    scope: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+    layout: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>',
+    box: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+    file: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+    calendar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+    puzzle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.44 13.44a2 2 0 0 1 0 3.12v2.44a2 2 0 0 1-2 2h-2.44a2 2 0 0 1-3.12 0H9.44a2 2 0 0 1-3.12 0H3.88a2 2 0 0 1-2-2v-2.44a2 2 0 0 1 0-3.12V9.44a2 2 0 0 1 0-3.12V3.88a2 2 0 0 1 2-2h2.44a2 2 0 0 1 3.12 0h2.44a2 2 0 0 1 3.12 0h2.44a2 2 0 0 1 2 2v2.44a2 2 0 0 1 0 3.12z"/></svg>',
+    headset: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>',
+    gauge: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 12l5-5"/><path d="M12 2v3"/></svg>',
+    upload: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>',
+    grad: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>',
+    target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+    trend: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+    arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>',
+    check: '<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+  };
+
+  const STEPS = [
+    {
+      id:1, key:"discovery", nav:"Discovery", icon:"search",
+      title:"Discovery", tagline:"Understand before we build.",
+      desc:"We start by deeply understanding your business, your users, and the challenges you want to solve. This shapes everything that follows.",
+      items:[
+        {icon:"users", t:"Stakeholder interviews", d:"Understanding goals from every angle"},
+        {icon:"audit", t:"Technical audit", d:"Assessing your current infrastructure"},
+        {icon:"scope", t:"Scope definition", d:"Clear deliverables and timeline agreed"},
+      ],
+      progress:20,
+      footerIcon:"target",
+      footerMsg:"Great foundation. <b>Clear scope, aligned expectations.</b>",
+      next:"Strategy",
+      visualIcon:"search",
+      visualTag:"01 — Discovery",
+      image:"assets/images/about/process1.png",
+      chips:[
+        {icon:"users", label:"4 Stakeholders", color:"blue-mod"},
+        {icon:"audit", label:"Audit Done", color:"blue-mod"},
+      ]
+    },
+    {
+      id:2, key:"strategy", nav:"Strategy", icon:"strategy",
+      title:"Strategy", tagline:"Plan smart. Build right.",
+      desc:"We translate discovery insights into a clear creative and technical roadmap — choosing the right XR technology, platform and experience architecture for your context.",
+      items:[
+        {icon:"layout", t:"Experience design", d:"UX wireframes and interaction flows"},
+        {icon:"box", t:"Tech selection", d:"Unity, Unreal, WebXR or native mobile"},
+        {icon:"file", t:"Proposal delivery", d:"Detailed proposal with cost breakdown"},
+      ],
+      progress:40,
+      footerIcon:"target",
+      footerMsg:"A solid strategy today ensures a seamless build tomorrow. <b>Plan with precision. Deliver with impact.</b>",
+      next:"Build",
+      visualIcon:"strategy",
+      visualTag:"02 — Strategy",
+      image:"images/step2.png",
+      chips:[
+        {icon:"box", label:"Unity · Unreal", color:"blue-mod"},
+        {icon:"layout", label:"UX Flows", color:"orange-mod"},
+      ]
+    },
+    {
+      id:3, key:"build", nav:"Build", icon:"code",
+      title:"Development", tagline:"Build. Iterate. Refine.",
+      desc:"We build in focused sprints, sharing interactive previews at every milestone. Our XR engineers work across Unity, Unreal, WebXR and native — picking the right stack for your goals.",
+      items:[
+        {icon:"calendar", t:"Sprint cycles", d:"2-week builds with client demos"},
+        {icon:"box", t:"Asset production", d:"3D modelling, animation and sound"},
+        {icon:"puzzle", t:"Integration", d:"CMS, APIs and backend connections"},
+      ],
+      progress:60,
+      footerIcon:"rocket",
+      footerMsg:"Great work in progress. <b>We iterate fast and test early to deliver maximum impact.</b>",
+      next:"QA",
+      visualIcon:"code",
+      visualTag:"03 — Build",
+      image:"assets/images/about/4-5.png",
+      chips:[
+        {icon:"calendar", label:"2-wk Sprints", color:"orange-mod"},
+        {icon:"puzzle", label:"API Ready", color:"blue-mod"},
+      ]
+    },
+    {
+      id:4, key:"qa", nav:"QA", icon:"shield",
+      title:"Testing / QA", tagline:"Ensure a flawless experience.",
+      desc:"Every experience goes through rigorous QA on real devices. We test for performance, comfort, accessibility and edge cases — so your users get a flawless first impression.",
+      items:[
+        {icon:"headset", t:"Device testing", d:"Quest, HoloLens, iOS, Android, PC"},
+        {icon:"gauge", t:"Performance QA", d:"Frame rate, latency and comfort checks"},
+        {icon:"users", t:"User testing", d:"Real feedback from target audience"},
+      ],
+      progress:80,
+      footerIcon:"shield",
+      footerMsg:"Quality isn't a step. It's our standard. <b>Tested. Refined. Ready for the real world.</b>",
+      next:"Launch",
+      visualIcon:"shield",
+      visualTag:"04 — QA",
+      image:"images/step4.png",
+      chips:[
+        {icon:"gauge", label:"90 FPS", color:"orange-mod"},
+        {icon:"check", label:"QA Passed", color:"blue-mod"},
+      ]
+    },
+    {
+      id:5, key:"launch", nav:"Launch", icon:"rocket",
+      title:"Launch", tagline:"Go live. Grow. Evolve.",
+      desc:"We handle deployment end-to-end — app store submissions, enterprise distribution, or web publishing. Then we stay close for support, analytics and future iterations.",
+      items:[
+        {icon:"upload", t:"Deployment", d:"Store submissions or enterprise rollout"},
+        {icon:"grad", t:"Training", d:"Team onboarding and documentation"},
+        {icon:"headset", t:"Support", d:"Ongoing updates and optimisation"},
+      ],
+      progress:100,
+      footerIcon:"users",
+      footerMsg:"We launch with precision and stay with you for the long run. <b>Your success is just the beginning.</b>",
+      next:"Ready to Launch",
+      visualIcon:"rocket",
+      visualTag:"05 — Launch",
+      isLast:true,
+      image:"images/step5.png",
+      chips:[
+        {icon:"trend", label:"+128% Growth", color:"orange-mod"},
+        {icon:"upload", label:"Live", color:"blue-mod"},
+      ]
+    },
+  ];
+
+  let current = 0;
+  let autoplay = true;
+  let timer = null;
+  const DURATION = 5000;
+
+  // Scope every lookup to this widget instance so multiple copies
+  // of this section could even coexist on one page without clashing.
+  const root = document.currentScript.previousElementSibling; // .xrp-widget
+  const stepnav = root.querySelector('#xrp-stepnav');
+  const panelsEl = root.querySelector('#xrp-panels');
+  const trackFill = root.querySelector('#xrp-trackFill');
+
+  function buildNav(){
+    STEPS.forEach((s, i)=>{
+      const btn = document.createElement('button');
+      btn.className = 'xrp-step-node';
+      btn.dataset.index = i;
+      btn.innerHTML = `
+        <div class="xrp-node-dot">
+          <svg class="xrp-ring" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" stroke-dasharray="176" stroke-dashoffset="176"/></svg>
+          ${ICONS[s.icon]}
+        </div>
+        <div class="xrp-num">0${s.id}</div>
+        <div class="xrp-label">${s.nav}</div>
+      `;
+      btn.addEventListener('click', ()=> goTo(i, true));
+      stepnav.appendChild(btn);
+    });
+  }
+
+  function buildPanels(){
+    STEPS.forEach((s, i)=>{
+      const panel = document.createElement('div');
+      panel.className = 'xrp-panel';
+      panel.dataset.index = i;
+      const itemsHtml = s.items.map(it => `
+        <div class="xrp-check-item">
+          <div class="xrp-check-badge">${ICONS.check}</div>
+          <div>
+            <h4>${it.t}</h4>
+            <p>${it.d}</p>
+          </div>
+        </div>
+      `).join('');
+
+      panel.innerHTML = `
+        <div class="xrp-panel-text">
+          <div class="xrp-ghost-num">0${s.id}</div>
+          <div class="xrp-panel-text-inner">
+            <h2 class="xrp-stage-title">${s.title}</h2>
+            <p class="xrp-tagline">${s.tagline}</p>
+            <div class="xrp-divider"></div>
+            <p class="xrp-desc">${s.desc}</p>
+            <div class="xrp-checklist">${itemsHtml}</div>
+            <div class="xrp-progress-block">
+              <div class="xrp-progress-icon">${ICONS.target}</div>
+              <div class="xrp-progress-main">
+                <div class="xrp-progress-label-row"><span>Stage Progress</span><b>${s.progress}%</b></div>
+                <div class="xrp-progress-track"><div class="xrp-progress-fill" data-target="${s.progress}"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="xrp-panel-visual ${s.image ? 'xrp-has-image' : ''}">
+          ${ s.image
+              ? `<img class="xrp-visual-img" src="${s.image}" alt="${s.title}">`
+              : `<div class="xrp-scene">
+                   <div class="xrp-scene-glow"></div>
+                   <div class="xrp-scene-core">${ICONS[s.visualIcon]}</div>
+                   ${ (s.chips||[]).map((c,idx)=>`
+                     <div class="xrp-chip xrp-c${idx+1}">
+                       <div class="xrp-chip-ic ${c.color==='blue-mod' ? 'xrp-blue':''}">${ICONS[c.icon]}</div>
+                       <span class="xrp-chip-txt">${c.label}</span>
+                     </div>
+                   `).join('') }
+                 </div>`
+          }
+        </div>
+      `;
+      panelsEl.appendChild(panel);
+    });
+  }
+
+  function render(){
+    root.querySelectorAll('.xrp-step-node').forEach((node,i)=>{
+      node.classList.toggle('xrp-active', i===current);
+      node.classList.toggle('xrp-done', i<current);
+      const ring = node.querySelector('.xrp-ring circle');
+      ring.style.transition = 'none';
+      ring.setAttribute('stroke-dashoffset','176');
+    });
+    root.querySelectorAll('.xrp-panel').forEach((p,i)=>{
+      p.classList.toggle('xrp-active', i===current);
+    });
+
+    const activeProgress = root.querySelector('.xrp-panel.xrp-active .xrp-progress-fill');
+    requestAnimationFrame(()=>{
+      if(activeProgress) activeProgress.style.width = activeProgress.dataset.target + '%';
+    });
+
+    trackFill.style.width = (current/(STEPS.length-1))*100 + '%';
+    root.querySelector('#xrp-chipNum').textContent = '0'+STEPS[current].id;
+
+    root.querySelector('#xrp-footerIcon').innerHTML = ICONS[STEPS[current].footerIcon];
+    root.querySelector('#xrp-footerMsg').innerHTML = STEPS[current].footerMsg;
+
+    const isLast = STEPS[current].isLast;
+    root.querySelector('#xrp-nextKicker').textContent = isLast ? 'Project status' : 'Next up';
+    root.querySelector('#xrp-nextLabel').textContent = STEPS[current].next;
+    root.querySelector('#xrp-arrowCircle').innerHTML = isLast ? ICONS.check : ICONS.arrow;
+
+    restartRing();
+  }
+
+  function goTo(i, manual){
+    current = (i + STEPS.length) % STEPS.length;
+    render();
+    if(manual) restartTimer();
+  }
+
+  function nextStep(){
+    goTo(current+1);
+  }
+
+  function restartTimer(){
+    clearInterval(timer);
+    if(autoplay){
+      timer = setInterval(()=>{ nextStep(); }, DURATION);
+    }
+  }
+
+  function restartRing(){
+    const activeNode = root.querySelectorAll('.xrp-step-node')[current];
+    if(!activeNode) return;
+    const circle = activeNode.querySelector('.xrp-ring circle');
+    circle.style.transition = 'none';
+    circle.setAttribute('stroke-dashoffset','176');
+    void circle.getBoundingClientRect();
+    if(autoplay){
+      circle.style.transition = `stroke-dashoffset ${DURATION}ms linear`;
+      requestAnimationFrame(()=>{ circle.setAttribute('stroke-dashoffset','0'); });
+    }
+  }
+
+  root.querySelector('#xrp-nextBtn').addEventListener('click', ()=> goTo(current+1, true));
+
+  const cardWrap = root.querySelector('.xrp-card-wrap');
+  cardWrap.addEventListener('mouseenter', ()=>{ autoplay=false; clearInterval(timer);
+    const c = root.querySelectorAll('.xrp-step-node')[current].querySelector('.xrp-ring circle');
+    c.style.transition = 'none';
+  });
+  cardWrap.addEventListener('mouseleave', ()=>{ autoplay=true; restartTimer(); restartRing(); });
+
+  buildNav();
+  buildPanels();
+  render();
+  restartTimer();
+})();
+</script>
 
   <!-- CTA -->
   <section class="cta-band" id="contact">
@@ -792,43 +1531,7 @@
   </section>
 
   <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="logo"><span class="dot" style="width:8px;height:8px;background:var(--signal);border-radius:50%;"></span>VOLGA</div>
-        <p>Crafting immersive digital realities — AR, VR, 3D and digital twin engineering for teams who ship.</p>
-        <div class="footer-social">
-          <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-          <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-          <a href="#"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#"><i class="fa-brands fa-github"></i></a>
-        </div>
-      </div>
-      <div class="footer-cols">
-        <div class="footer-col">
-          <h4>Business</h4>
-          <a href="#">Training Simulation</a>
-          <a href="#">3D Configurators</a>
-          <a href="#">Buildings &amp; Interiors</a>
-          <a href="#">E-Commerce</a>
-        </div>
-        <div class="footer-col">
-          <h4>Company</h4>
-          <a href="about.html">About Us</a>
-          <a href="portfolio.html">Our Work</a>
-          <a href="careers-page (1).html">Careers</a>
-          <a href="contact.html">Contact</a>
-        </div>
-        <div class="footer-col">
-          <h4>Services</h4>
-          <a href="#">AR / VR Solutions</a>
-          <a href="#">Product Visualisation</a>
-          <a href="#">Digital Twins</a>
-          <a href="#">3D Modeling</a>
-        </div>
-      </div>
-    </div>
-
+  
   <div id="site-footer-mount"></div>
   <script src="footer-include.js"></script>
 

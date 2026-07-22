@@ -365,6 +365,7 @@ section {
 
   /* Transparent at top of Hero */
   background: transparent;
+  backdrop-filter: blur(10px);
 
   border-bottom: none;
   transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.8s cubic-bezier(0.4, 0, 0.2, 1);

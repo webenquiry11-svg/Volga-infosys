@@ -342,16 +342,445 @@
 .section--process { background: #eaf2f8; color: #164b70; }
 .section--partners { background: linear-gradient(160deg, #0d1b26 0%, #0a1720 100%); color: var(--ab-on-dark); text-align:center; border-top: 1px solid rgba(255,255,255,0.06); }
 
-/* ── Thesis ── */
-.thesis-head { display:grid; grid-template-columns:1.1fr 1fr; gap:48px; margin-bottom:48px; }
-.thesis-head .h2 { color:var(--ab-on-dark); }
-.claims-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(255,255,255,0.12); border-radius:6px; overflow:hidden; }
-.claim { background:var(--ab-navy-2); padding:28px 24px; display:flex; flex-direction:column; gap:14px; }
-.claim .frame { height:64px; background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.1); }
-.claim .frame svg { width:18px; height:18px; }
-.claim h3 { color:var(--ab-on-dark); }
-.claim p { font-size:13.5px; color:var(--ab-on-dark-muted); }
 
+
+
+.volga-approach {
+  --bg: #060810;
+  --surface: #0b0e1a;
+  --surface-2: #0f1220;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.13);
+  --text-0: #f3f4f8;
+  --text-1: #8d92a6;
+  --text-2: #565b70;
+  --accent-a: #f5871f;
+  --accent-mid: #e8635f;
+  --accent-b: #8b5cf6;
+  --accent-c: #3ea5ff;
+  --radius-lg: 14px;
+  --radius-md: 10px;
+  --radius-sm: 7px;
+  --container: 1180px;
+
+  position: relative;
+  padding: 110px 32px 90px;
+  background: radial-gradient(1000px 560px at 84% 6%, rgba(139, 92, 246, 0.16), transparent 62%),
+    radial-gradient(760px 460px at 6% 96%, rgba(245, 135, 31, 0.1), transparent 60%),
+    var(--bg);
+  color: var(--text-0);
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.volga-approach * {
+  box-sizing: border-box;
+}
+
+.volga-approach .grid-tex {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: linear-gradient(180deg, black, transparent 70%);
+  mask-image: linear-gradient(180deg, black, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.volga-approach .wrap {
+  max-width: var(--container);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* ============ HEADER ============ */
+.volga-approach .brand-mark {
+  display: block;
+  margin-bottom: 14px;
+  opacity: 0;
+}
+
+.volga-approach .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-1);
+  margin-bottom: 20px;
+  opacity: 0;
+}
+
+.volga-approach .eyebrow i {
+  width: 7px;
+  height: 7px;
+  border-radius: 1.5px;
+  background: var(--accent-a);
+  display: inline-block;
+  box-shadow: 0 0 0 3px rgba(255, 122, 69, 0.14);
+}
+
+.volga-approach .top-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.92fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.volga-approach h1.headline {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-size: clamp(38px, 4.4vw, 60px);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--text-0);
+  margin-bottom: 22px;
+}
+
+.volga-approach h1.headline .line {
+  overflow: hidden;
+  display: block;
+}
+
+.volga-approach h1.headline .line span {
+  display: inline-block;
+  will-change: transform;
+}
+
+.volga-approach h1.headline .accent {
+  background: linear-gradient(92deg, var(--accent-a) 0%, var(--accent-mid) 45%, var(--accent-b) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.volga-approach p.lede {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--text-1);
+  max-width: 480px;
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.volga-approach .cta-row {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+/* ============ BUTTONS ============ */
+.volga-approach .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--text-0);
+  color: #0a0b0f;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 13px 22px;
+  border-radius: 9px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.volga-approach .btn-primary svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.25s ease;
+}
+
+.volga-approach .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(255, 255, 255, 0.12);
+}
+
+.volga-approach .btn-primary:hover svg {
+  transform: translateX(3px);
+}
+
+.volga-approach .link-secondary {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  position: relative;
+}
+
+.volga-approach .link-secondary::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: var(--text-2);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.volga-approach .link-secondary:hover::after {
+  transform: scaleX(1);
+}
+
+.volga-approach .link-secondary:hover {
+  color: var(--text-0);
+}
+
+/* ============ HERO VISUAL ============ */
+.volga-approach .hero-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(22px) scale(0.98);
+}
+
+.volga-approach .hero-visual img {
+  width: 100%;
+  max-width: 560px;
+  display: block;
+  filter: drop-shadow(0 30px 60px rgba(1, 51, 80, 0.55));
+}
+
+.volga-approach .hero-glow {
+  position: absolute;
+  width: 420px;
+  height: 220px;
+  left: 50%;
+  bottom: 6%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse, rgba(139, 92, 246, 0.3), rgba(245, 135, 31, 0.12) 55%, transparent 75%);
+  filter: blur(40px);
+  z-index: -1;
+}
+
+/* ============ PROCESS ============ */
+.volga-approach .process {
+  margin-top: 96px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  position: relative;
+}
+
+.volga-approach .process-line {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border);
+}
+
+.volga-approach .process-line-fill {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-a), var(--accent-c));
+  width: 0%;
+}
+
+.volga-approach .step {
+  position: relative;
+  padding-right: 24px;
+}
+
+.volga-approach .step-index {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  color: var(--text-1);
+  margin-bottom: 22px;
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.volga-approach .step.in-view .step-index {
+  color: var(--step-color, var(--accent-a));
+  border-color: var(--step-color, var(--accent-a));
+}
+
+.volga-approach .step h3 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 21px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: 9px;
+  color: var(--text-0);
+}
+
+.volga-approach .step p {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text-1);
+  max-width: 250px;
+}
+
+/* ============ CARDS ============ */
+.volga-approach .cards {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.volga-approach .card {
+  background: var(--surface);
+  padding: 28px 24px 26px;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: background 0.3s ease;
+}
+
+.volga-approach .card:hover {
+  background: var(--surface-2);
+}
+
+.volga-approach .card-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: var(--card-color, var(--accent-a));
+  margin-bottom: 22px;
+}
+
+.volga-approach .card-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.volga-approach .card h3 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: var(--text-0);
+}
+
+.volga-approach .card p {
+  font-size: 13.2px;
+  line-height: 1.7;
+  color: var(--text-1);
+  margin-bottom: 20px;
+}
+
+.volga-approach .card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Inter", sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--card-color, var(--accent-a));
+  cursor: pointer;
+}
+
+.volga-approach .card-link svg {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.25s ease;
+}
+
+.volga-approach .card:hover .card-link svg {
+  transform: translateX(3px);
+}
+
+/* ============ STATS ============ */
+
+
+/* ============ SCROLL PROGRESS ============ */
+.volga-approach .scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.volga-approach .scroll-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-a), var(--accent-mid), var(--accent-b));
+  transform-origin: left;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 980px) {
+  .volga-approach .top-grid {
+    grid-template-columns: 1fr;
+  }
+  .volga-approach .process {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 36px;
+  }
+  .volga-approach .process-line,
+  .volga-approach .process-line-fill {
+    display: none;
+  }
+  .volga-approach .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .volga-approach .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .volga-approach .cards,
+  .volga-approach .stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============ ACCESSIBILITY ============ */
+@media (prefers-reduced-motion: reduce) {
+  .volga-approach * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
 /* ── Leadership ── */
 #leadership .wrap { display:grid; grid-template-columns:0.95fr 1.05fr; gap:56px; align-items:center; }
 .leadership .frame { height:300px; }
@@ -571,39 +1000,57 @@
 </div>
 
 <!-- NAV -->
-<nav id="navbar">
-  <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
-    <img src="favicon.png" alt="VOLGA Infosys logo" />
-  </a>
-  <ul class="nav-links">
-    <li class="nav-item" data-menu="solutions"><button class="nav-link">Solutions <span class="nav-arrow"></span></button></li>
-    <li class="nav-item" data-menu="industries"><button class="nav-link">Industries <span class="nav-arrow"></span></button></li>
-    <li class="nav-item" data-menu="services"><button class="nav-link">Services <span class="nav-arrow"></span></button></li>
-    <li class="nav-item" data-menu="work"><button class="nav-link">Work <span class="nav-arrow"></span></button></li>
-    <li class="nav-item" data-menu="technologies"><a class="nav-link" href="technologies(2).html">Technologies</a></li>
-    <li class="nav-item" data-menu="insights"><a class="nav-link" href="insights-overview.html">Insights</a></li>
-    <li class="nav-item" data-menu="company"><button class="nav-link">Company <span class="nav-arrow"></span></button></li>
-  </ul>
-  <a href="contact.html" class="nav-cta">Contact Us</a>
-  <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
-    <span class="burger-bar"></span><span class="burger-bar"></span><span class="burger-bar"></span>
-  </button>
-</nav>
+ <nav id="navbar">
+    <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
+      <img src="favicon.png" alt="VOLGA Infosys logo" />
+    </a>
 
-<div class="mobile-menu" id="mobileMenu">
-  <button class="mobile-close" id="mobileClose" aria-label="Close mobile menu">X</button>
-  <ul>
-    <li><a href="index.html" class="mm-link">Home</a></li>
-    <li><a href="solutions.html" class="mm-link">Solutions</a></li>
-    <li><a href="industries.html" class="mm-link">Industries</a></li>
-    <li><a href="services.html" class="mm-link">Services</a></li>
-    <li><a href="portfolio.html" class="mm-link">Work</a></li>
-    <li><a href="technologies.html" class="mm-link">Technologies</a></li>
-    <li><a href="blog.html" class="mm-link">Insights</a></li>
-    <li><a href="company.html" class="mm-link">Company</a></li>
-    <li><a href="contact.html" class="mm-link">Contact</a></li>
-  </ul>
-</div>
+    <ul class="nav-links">
+      <li class="nav-item" data-menu="solutions">
+        <button class="nav-link">Solutions <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="industries">
+        <button class="nav-link">Industries <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="services">
+        <button class="nav-link">Services <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="work">
+        <button class="nav-link">Work <span class="nav-arrow"></span></button>
+      </li>
+      <li class="nav-item" data-menu="technologies">
+        <a class="nav-link" href="technologies (2).html">Technologies</a>
+      </li>
+      <li class="nav-item" data-menu="insights">
+        <a class="nav-link" href="insights-overview-new.html">Insights </a>
+      </li>
+      <li class="nav-item" data-menu="company">
+        <button class="nav-link">Company <span class="nav-arrow"></span></button>
+      </li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Contact Us</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose" aria-label="Close mobile menu">X</button>
+    <ul>
+      <li><a href="index.html" class="mm-link">Home</a></li>
+      <li><a href="solutions.html" class="mm-link">Solutions</a></li>
+      <li><a href="industries.html" class="mm-link">Industries</a></li>
+      <li><a href="services.html" class="mm-link">Services</a></li>
+      <li><a href="portfolio.html" class="mm-link">Work</a></li>
+      <li><a href="technologies(2).html" class="mm-link">Technologies</a></li>
+      <li><a href="blog.html" class="mm-link">Insights</a></li>
+      <li><a href="company.html" class="mm-link">Company</a></li>
+      <li><a href="contact.html" class="mm-link">Contact</a></li>
+    </ul>
+  </div>
+  
 
   <!-- MEGA MENUS -->
   <div class="mega-menu" id="menu-solutions">
@@ -612,20 +1059,88 @@
       <div class="mega-cols">
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>AR Solutions</a></li>
-            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z"/><circle cx="12" cy="10" r="3"/></svg></span>VR Solutions</a></li>
-            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>MR / XR Applications</a></li>
-            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>Digital Twin</a></li>
-            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>AI Integration</a></li>
+            <li><a class="mega-item" href="solutions.html#ar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality-2">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M10 21h-2a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v3.5" />
+	<path d="M17 17l-4 -2.5l4 -2.5l4 2.5v4.5l-4 2.5l0 -4.5" />
+	<path d="M13 14.5v4.5l4 2.5" />
+	<path d="M17 17l4 -2.5" />
+	<path d="M11 4h2" />
+</svg> AR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html#vr"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cardboards">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 8v8.5a2.5 2.5 0 0 0 2.5 2.5h1.06a3 3 0 0 0 2.34 -1.13l1.54 -1.92a2 2 0 0 1 3.12 0l1.54 1.92a3 3 0 0 0 2.34 1.13h1.06a2.5 2.5 0 0 0 2.5 -2.5v-8.5a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2" />
+	<path d="M7 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+	<path d="M15 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+</svg>VR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html#xr"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
+	<path d="M4 16v2a2 2 0 0 0 2 2h2" />
+	<path d="M16 4h2a2 2 0 0 1 2 2v2" />
+	<path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
+	<path d="M12 12.5l4 -2.5" />
+	<path d="M8 10l4 2.5v4.5l4 -2.5v-4.5l-4 -2.5l-4 2.5" />
+	<path d="M8 10v4.5l4 2.5" />
+</svg>MR / XR Applications</a></li>
+            <li><a class="mega-item" href="solutions.html#twin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-box-multiple">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M7 5a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2l0 -10" />
+	<path d="M17 17v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" />
+</svg>Digital Twin</a></li>
+            <li><a class="mega-item" href="solutions.html#ai"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brain">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M15.5 13a3.5 3.5 0 0 0 -3.5 3.5v1a3.5 3.5 0 0 0 7 0v-1.8" />
+	<path d="M8.5 13a3.5 3.5 0 0 1 3.5 3.5v1a3.5 3.5 0 0 1 -7 0v-1.8" />
+	<path d="M17.5 16a3.5 3.5 0 0 0 0 -7h-.5" />
+	<path d="M19 9.3v-2.8a3.5 3.5 0 0 0 -7 0" />
+	<path d="M6.5 16a3.5 3.5 0 0 1 0 -7h.5" />
+	<path d="M5 9.3v-2.8a3.5 3.5 0 0 1 7 0v10" />
+</svg>AI Integration</a></li>
           </ul>
         </div>
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>3D Configurators</a></li>
-            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Virtual Showrooms</a></li>
-            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>Simulation Systems</a></li>
-            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Interactive Training</a></li>
-            <li><a class="mega-item" href="solutions.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>Metaverse Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html#cfg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cube">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M21 16.008v-8.018a1.98 1.98 0 0 0 -1 -1.717l-7 -4.008a2.016 2.016 0 0 0 -2 0l-7 4.008c-.619 .355 -1 1.01 -1 1.718v8.018c0 .709 .381 1.363 1 1.717l7 4.008a2.016 2.016 0 0 0 2 0l7 -4.008c.619 -.355 1 -1.01 1 -1.718" />
+	<path d="M12 22v-10" />
+	<path d="M12 12l8.73 -5.04" />
+	<path d="M3.27 6.96l8.73 5.04" />
+</svg>3D Configurators</a></li>
+            <li><a class="mega-item" href="solutions.html#vs"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-store">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 21l18 0" />
+	<path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
+	<path d="M5 21l0 -10.15" />
+	<path d="M19 21l0 -10.15" />
+	<path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
+</svg>Virtual Showrooms</a></li>
+            <li><a class="mega-item" href="solutions.html#sim"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-atom-2">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+	<path d="M12 21l0 .01" />
+	<path d="M3 9l0 .01" />
+	<path d="M21 9l0 .01" />
+	<path d="M8 20.1a9 9 0 0 1 -5 -7.1" />
+	<path d="M16 20.1a9 9 0 0 0 5 -7.1" />
+	<path d="M6.2 5a9 9 0 0 1 11.4 0" />
+</svg>Simulation Systems</a></li>
+            <li><a class="mega-item" href="solutions.html#trn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-school">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+	<path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
+</svg>Interactive Training</a></li>
+            <li><a class="mega-item" href="solutions.html#meta"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-react-native">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M6.357 9c-2.637 .68 -4.357 1.845 -4.357 3.175c0 2.107 4.405 3.825 9.85 3.825c.74 0 1.26 -.039 1.95 -.097" />
+	<path d="M9.837 15.9c-.413 -.596 -.806 -1.133 -1.18 -1.8c-2.751 -4.9 -3.488 -9.77 -1.63 -10.873c1.15 -.697 3.047 .253 4.974 2.254" />
+	<path d="M6.429 15.387c-.702 2.688 -.56 4.716 .56 5.395c1.783 1.08 5.387 -1.958 8.043 -6.804c.36 -.67 .683 -1.329 .968 -1.978" />
+	<path d="M12 18.52c1.928 2 3.817 2.95 4.978 2.253c1.85 -1.102 1.121 -5.972 -1.633 -10.873c-.384 -.677 -.777 -1.204 -1.18 -1.8" />
+	<path d="M17.66 15c2.612 -.687 4.34 -1.85 4.34 -3.176c0 -2.11 -4.408 -3.824 -9.845 -3.824c-.747 0 -1.266 .029 -1.955 .087" />
+	<path d="M8 12c.285 -.66 .607 -1.308 .968 -1.978c2.647 -4.844 6.253 -7.89 8.046 -6.801c1.11 .679 1.262 2.706 .56 5.393" />
+	<path d="M12.26 12.015h-.01c-.01 .13 -.12 .24 -.26 .24a.263 .263 0 0 1 -.25 -.26c0 -.14 .11 -.25 .24 -.25h-.01c.13 -.01 .25 .11 .25 .24" />
+</svg>Metaverse Solutions</a></li>
           </ul>
         </div>
       </div>
@@ -643,20 +1158,84 @@
       <div class="mega-cols">
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="industries.html#healthcare"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>Healthcare</a></li>
-            <li><a class="mega-item" href="industries.html#manufacturing"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>Manufacturing</a></li>
-            <li><a class="mega-item" href="industries.html#realestate"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>Real Estate</a></li>
-            <li><a class="mega-item" href="industries.html#education"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>Education</a></li>
-            <li><a class="mega-item" href="industries.html#automotive"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>Automotive</a></li>
+            <li><a class="mega-item" href="industries.html#healthcare"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-activity-heartbeat">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 12h4.5l1.5 -6l4 12l2 -9l1.5 3h4.5" />
+</svg>Healthcare</a></li>
+            <li><a class="mega-item" href="industries.html#manufacturing"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-factory-2">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 21h18" />
+	<path d="M5 21v-12l5 4v-4l5 4h4" />
+	<path d="M19 21v-8l-1.436 -9.574a.5 .5 0 0 0 -.495 -.426h-1.145a.5 .5 0 0 0 -.494 .418l-1.43 8.582" />
+	<path d="M9 17h1" />
+	<path d="M14 17h1" />
+</svg>Manufacturing</a></li>
+            <li><a class="mega-item" href="industries.html#realestate"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-home">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+	<path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+	<path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>Real Estate</a></li>
+            <li><a class="mega-item" href="industries.html#education"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-school">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+	<path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
+</svg>Education</a></li>
+            <li><a class="mega-item" href="industries.html#automotive"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-car-suv">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M5 17a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+	<path d="M16 17a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+	<path d="M5 9l2 -4h7.438a2 2 0 0 1 1.94 1.515l.622 2.485h3a2 2 0 0 1 2 2v3" />
+	<path d="M10 9v-4" />
+	<path d="M2 7v4" />
+	<path d="M22.001 14.001a4.992 4.992 0 0 0 -4.001 -2.001a4.992 4.992 0 0 0 -4 2h-3a4.998 4.998 0 0 0 -8.003 .003" />
+	<path d="M5 12v-3h13" />
+</svg>Automotive</a></li>
           </ul>
         </div>
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="industries.html#retail"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>Retail</a></li>
-            <li><a class="mega-item" href="industries.html#architecture"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>Architecture</a></li>
-            <li><a class="mega-item" href="industries.html#defense"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Defense</a></li>
-            <li><a class="mega-item" href="industries.html#tourism"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Tourism</a></li>
-            <li><a class="mega-item" href="industries.html#energy"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>Energy</a></li>
+            <li><a class="mega-item" href="industries.html#retail"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M4 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+	<path d="M15 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+	<path d="M17 17h-11v-14h-2" />
+	<path d="M6 5l14 1l-1 7h-13" />
+</svg>Retail</a></li>
+            <li><a class="mega-item" href="industries.html#architecture"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-buildings">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M4 21v-15c0 -1 1 -2 2 -2h5c1 0 2 1 2 2v15" />
+	<path d="M16 8h2c1 0 2 1 2 2v11" />
+	<path d="M3 21h18" />
+	<path d="M10 12v.01" />
+	<path d="M10 16v.01" />
+	<path d="M10 8v.01" />
+	<path d="M7 12v.01" />
+	<path d="M7 16v.01" />
+	<path d="M7 8v.01" />
+	<path d="M17 12v.01" />
+	<path d="M17 16v.01" />
+</svg></span>Architecture</a></li>
+            <li><a class="mega-item" href="industries.html#defense"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-shield-chevron">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
+	<path d="M4 14l8 -3l8 3" />
+</svg>  Defense</a></li>
+            <li><a class="mega-item" href="industries.html#tourism"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+	<path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" />
+</svg>Tourism</a></li>
+            <li><a class="mega-item" href="industries.html#energy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-wind-turbine">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M10 11a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+	<path d="M10 11v-2.573c0 -.18 .013 -.358 .04 -.536l.716 -4.828c.064 -.597 .597 -1.063 1.244 -1.063s1.18 .466 1.244 1.063l.716 4.828c.027 .178 .04 .357 .04 .536v2.573" />
+	<path d="M13.01 9.28l2.235 1.276c.156 .09 .305 .19 .446 .3l3.836 2.911c.487 .352 .624 1.04 .3 1.596c-.325 .556 -1 .782 -1.548 .541l-4.555 -1.68a3.624 3.624 0 0 1 -.486 -.231l-2.235 -1.277" />
+	<path d="M13 12.716l-2.236 1.277a3.624 3.624 0 0 1 -.485 .23l-4.555 1.681c-.551 .241 -1.223 .015 -1.548 -.54c-.324 -.557 -.187 -1.245 .3 -1.597l3.836 -2.91a3.41 3.41 0 0 1 .446 -.3l2.235 -1.277" />
+	<path d="M7 21h10" />
+	<path d="M10 21l1 -7" />
+	<path d="M13 14l1 7" />
+</svg>Energy</a></li>
           </ul>
         </div>
       </div>
@@ -674,18 +1253,69 @@
       <div class="mega-cols">
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="services.html#custom-ar"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>Custom AR App Development</a></li>
-            <li><a class="mega-item" href="services.html#vr-training"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-5l-2-2H6a2 2 0 0 1-2-2V6z"/><circle cx="12" cy="10" r="3"/></svg></span>VR Training Platforms</a></li>
-            <li><a class="mega-item" href="services.html#unity-dev"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>Unity Development</a></li>
-            <li><a class="mega-item" href="services.html#webgl"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>WebGL Experiences</a></li>
+            <li><a class="mega-item" href="services.html#custom-ar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality-2">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M10 21h-2a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v3.5" />
+	<path d="M17 17l-4 -2.5l4 -2.5l4 2.5v4.5l-4 2.5l0 -4.5" />
+	<path d="M13 14.5v4.5l4 2.5" />
+	<path d="M17 17l4 -2.5" />
+	<path d="M11 4h2" />
+</svg>Custom AR App Development</a></li>
+            <li><a class="mega-item" href="services.html#vr-training"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cardboards">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 8v8.5a2.5 2.5 0 0 0 2.5 2.5h1.06a3 3 0 0 0 2.34 -1.13l1.54 -1.92a2 2 0 0 1 3.12 0l1.54 1.92a3 3 0 0 0 2.34 1.13h1.06a2.5 2.5 0 0 0 2.5 -2.5v-8.5a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2" />
+	<path d="M7 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+	<path d="M15 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+</svg>VR Training Platforms</a></li>
+            <li><a class="mega-item" href="services.html#unity-dev"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-unity">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M14 3l6 4v7" />
+	<path d="M18 17l-6 4l-6 -4" />
+	<path d="M4 14v-7l6 -4" />
+	<path d="M4 7l8 5v9" />
+	<path d="M20 7l-8 5" />
+</svg>Unity Development</a></li>
+            <li><a class="mega-item" href="services.html#webgl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cube-3d-sphere">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M6 17.6l-2 -1.1v-2.5" />
+	<path d="M4 10v-2.5l2 -1.1" />
+	<path d="M10 4.1l2 -1.1l2 1.1" />
+	<path d="M18 6.4l2 1.1v2.5" />
+	<path d="M20 14v2.5l-2 1.12" />
+	<path d="M14 19.9l-2 1.1l-2 -1.1" />
+	<path d="M12 12l2 -1.1" />
+	<path d="M18 8.6l2 -1.1" />
+	<path d="M12 12l0 2.5" />
+	<path d="M12 18.5l0 2.5" />
+	<path d="M12 12l-2 -1.12" />
+	<path d="M6 8.6l-2 -1.1" />
+</svg>WebGL Experiences</a></li>
           </ul>
         </div>
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="services.html#3d-modeling"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>3D Modeling & Animation</a></li>
-            <li><a class="mega-item" href="services.html#uiux"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 17l10-10 4 4 6-6"/></svg></span>UI/UX Design</a></li>
-            <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>Cloud Deployment</a></li>
-            <li><a class="mega-item" href="services.html#support"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg></span>Maintenance & Support</a></li>
+            <li><a class="mega-item" href="services.html#3d-modeling"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-3d">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M14 3v4a1 1 0 0 0 1 1h4" />
+	<path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+	<path d="M12 13.5l4 -1.5" />
+	<path d="M8 11.846l4 1.654v4.5l4 -1.846v-4.308l-4 -1.846l-4 1.846" />
+	<path d="M8 12v4.2l4 1.8" />
+</svg>3D Modeling & Animation</a></li>
+            <li><a class="mega-item" href="services.html#uiux"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-layout">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M4 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -1" />
+	<path d="M4 15a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -3" />
+	<path d="M14 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -12" />
+</svg>UI/UX Design</a></li>
+            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cloud">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M6.657 18c-2.572 0 -4.657 -2.007 -4.657 -4.483c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486c0 1.927 -1.551 3.487 -3.465 3.487h-11.878" />
+</svg>Cloud Deployment</a></li>
+            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-tool">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" />
+</svg>Maintenance & Support</a></li>
           </ul>
         </div>
       </div>
@@ -703,10 +1333,25 @@
       <div class="mega-cols">
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="portfolio2.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>Case Studies</a></li>
-            <li><a class="mega-item" href="portfolio.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>Portfolio</a></li>
-            <li><a class="mega-item" href="client-stories.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Client Stories</a></li>
-            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></span>Product Demos</a></li>
+            
+            <li><a class="mega-item" href="portfolio.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9" />
+	<path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+	<path d="M12 12l0 .01" />
+	<path d="M3 13a20 20 0 0 0 18 0" />
+</svg>Portfolio</a></li>
+            <li><a class="mega-item" href="client-stories.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-users">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+	<path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+	<path d="M16 3.13a4 4 0 0 1 0 7.75" />
+	<path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
+</svg>Client Stories</a></li>
+            <li><a class="mega-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-player-play">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M7 4v16l13 -8l-13 -8" />
+</svg></span>Product Demos</a></li>
           </ul>
         </div>
       </div>
@@ -724,9 +1369,27 @@
       <div class="mega-cols">
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="about.html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>About Us</a></li>
-            <li><a class="mega-item" href="careers-page (1).html"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>Careers</a></li>
-            <li><a class="mega-item" href="#"><span class="mega-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Partnerships</a></li>
+            <li><a class="mega-item" href="about.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-users-group">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+	<path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
+	<path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+	<path d="M17 10h2a2 2 0 0 1 2 2v1" />
+	<path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+	<path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
+</svg>About Us</a></li>
+            <li><a class="mega-item" href="careers-page (1).html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase-2">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9" />
+	<path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+</svg>Careers</a></li>
+            <li><a class="mega-item" href=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-heart-handshake">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+	<path d="M12 6l-3.293 3.293a1 1 0 0 0 0 1.414l.543 .543c.69 .69 1.81 .69 2.5 0l1 -1a3.182 3.182 0 0 1 4.5 0l2.25 2.25" />
+	<path d="M12.5 15.5l2 2" />
+	<path d="M15 13l2 2" />
+</svg>Partnerships</a></li>
           </ul>
         </div>
       </div>
@@ -737,6 +1400,7 @@
       </div>
     </div>
   </div>
+
   <div id="backdrop" aria-hidden="true"></div>
 
 <section class="Hero" id="Hero">
@@ -810,45 +1474,196 @@
   </div>
 </section>
 
-<section class="section section--dark on-dark">
+<!-- 
+  VOLGA INFOSYS APPROACH SECTION — HTML ONLY
+  Use this with approach-section-styles.css
+  All animations handled by approach-section-scripts.js
+-->
+
+<section class="volga-approach">
+  <div class="grid-tex"></div>
   <div class="wrap">
-    <div class="thesis-head">
-      <div class="reveal">
-        <p class="eyebrow">Our approach</p>
-        <h2 class="h2">Volga Infosys combines immersive technology with enterprise-grade engineering.</h2>
-      </div>
-      <p class="lede reveal">We believe technology should solve real business challenges — not simply showcase innovation. Our team builds immersive solutions that improve training, accelerate decision-making, enhance customer engagement, and optimize operational efficiency.</p>
-    </div>
-    <div class="claims-grid reveal">
-      <div class="claim">
-        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M4 16l4-8 4 5 3-4 5 7"/></svg>
+
+    <!-- TOP SECTION: COPY + HERO VISUAL -->
+    <div class="top-grid">
+      <div class="copy">
+        <!-- Brand Mark SVG -->
+        <svg class="brand-mark" width="34" height="30" viewBox="0 0 34 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 12C1 8 4 3 9 1" stroke="#f35f37" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M6 15C4.5 10 9 3 16 1" stroke="#dc950a" stroke-width="3.4" stroke-linecap="round"/>
+          <path d="M11 19C8 12 17 1 27 1C31 1 30 8 22 13C17 16 14 15 13.5 12.5" stroke="#013350" stroke-width="4.2" stroke-linecap="round"/>
+        </svg>
+
+        <!-- Eyebrow Text -->
+        <div class="eyebrow">
+          <i></i>Our Approach
         </div>
+
+        <!-- Main Headline -->
+        <h1 class="headline">
+          <span class="line"><span>Volga Infosys combines</span></span>
+          <span class="line"><span class="accent">immersive technology</span></span>
+          <span class="line"><span>with enterprise-grade</span></span>
+          <span class="line"><span>engineering.</span></span>
+        </h1>
+
+        <!-- Lead Paragraph -->
+        <p class="lede">
+          We believe technology should solve real business challenges — not simply showcase innovation. Our team builds immersive solutions that improve training, accelerate decision-making, enhance customer engagement, and optimize operational efficiency.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="cta-row">
+          <button class="btn-primary">
+            See how we work
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </button>
+          <a class="link-secondary" href="#">View case studies</a>
+        </div>
+      </div>
+
+      <!-- Hero Visual with Floating Image -->
+      <div class="hero-visual" id="heroVisual">
+        <div class="hero-glow"></div>
+        <img src="assets\images\about\our-approch.png" alt="Digital Twin platform rendering with live analytics and monitoring overlays" />
+      </div>
+    </div>
+
+    <!-- PROCESS STRIP: 4-Step Timeline -->
+    <div class="process">
+      <div class="process-line"></div>
+      <div class="process-line-fill" id="processFill"></div>
+
+      <!-- Step 1 -->
+      <div class="step" style="--step-color:var(--accent-a)">
+        <div class="step-index">01</div>
         <h3>Immersive technology with impact</h3>
         <p>AR applications, VR training modules, and Digital Twin ecosystems that unlock new operational possibilities.</p>
       </div>
-      <div class="claim">
-        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M4 18l5-6 4 3 7-9"/></svg>
-        </div>
+
+      <!-- Step 2 -->
+      <div class="step" style="--step-color:var(--accent-c)">
+        <div class="step-index">02</div>
         <h3>Strategic and measurable</h3>
         <p>Deep technical expertise paired with strategic thinking, aimed at measurable business outcomes.</p>
       </div>
-      <div class="claim">
-        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="8" r="3"/><path d="M5 20c0-3 3-5 7-5s7 2 7 5"/></svg>
-        </div>
+
+      <!-- Step 3 -->
+      <div class="step" style="--step-color:var(--accent-b)">
+        <div class="step-index">03</div>
         <h3>Enterprise-ready delivery</h3>
         <p>A multidisciplinary team of strategists, developers, 3D artists, and consultants bridging business and innovation.</p>
       </div>
-      <div class="claim">
-        <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg>
-        </div>
+
+      <!-- Step 4 -->
+      <div class="step" style="--step-color:var(--accent-a)">
+        <div class="step-index">04</div>
         <h3>Trusted across sectors</h3>
         <p>Over a decade partnering with enterprises, startups, and government organizations on scalable solutions.</p>
       </div>
     </div>
+
+    <!-- CAPABILITY CARDS -->
+    <div class="cards">
+
+      <!-- Card 1: AR & VR Training -->
+      <div class="card" style="--card-color:var(--accent-a)">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <rect x="3" y="6" width="18" height="12" rx="2"/>
+            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          </svg>
+        </div>
+        <h3>AR &amp; VR training</h3>
+        <p>Reduce onboarding time with guided, hands-on simulations built for real operational environments.</p>
+       
+      </div>
+
+      <!-- Card 2: Digital Twin Analytics -->
+      <div class="card" style="--card-color:var(--accent-c)">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="M3 3v18h18"/>
+            <path d="M7 15l3-4 3 3 5-7"/>
+          </svg>
+        </div>
+        <h3>Digital Twin analytics</h3>
+        <p>Model live systems in real time to surface bottlenecks before they affect throughput.</p>
+       
+      </div>
+
+      <!-- Card 3: Delivery Teams -->
+      <div class="card" style="--card-color:var(--accent-b)">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <circle cx="8" cy="8" r="3"/>
+            <path d="M2 20c0-3 2.5-5 6-5s6 2 6 5"/>
+            <circle cx="17" cy="9" r="2.2"/>
+            <path d="M14.5 20c.3-2.2 1.6-3.6 3.5-3.9"/>
+          </svg>
+        </div>
+        <h3>Delivery teams</h3>
+        <p>Strategists, engineers, and 3D artists embedded with your team from discovery through rollout.</p>
+        
+      </div>
+
+      <!-- Card 4: Enterprise Security -->
+      <div class="card" style="--card-color:var(--accent-a)">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="M12 2 4 5v6c0 5 3.4 8.6 8 11 4.6-2.4 8-6 8-11V5Z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <h3>Enterprise security</h3>
+        <p>SOC-aligned delivery practices built for regulated and government-grade environments.</p>
+        
+        
+      </div>
+    </div>
+
+    <!-- STATS SECTION -->
+    <div class="stats">
+
+      <!-- Stat 1: Years of Excellence -->
+      <div class="stat">
+        <div class="stat-num">
+          <span class="count" data-target="10">0</span>
+          <small>+</small>
+        </div>
+        <div class="stat-label">YEARS OF EXCELLENCE</div>
+      </div>
+
+      <!-- Stat 2: Projects Delivered -->
+      <div class="stat">
+        <div class="stat-num">
+          <span class="count" data-target="250">0</span>
+          <small>+</small>
+        </div>
+        <div class="stat-label">PROJECTS DELIVERED</div>
+      </div>
+
+      <!-- Stat 3: Industries Served -->
+      <div class="stat">
+        <div class="stat-num">
+          <span class="count" data-target="20">0</span>
+          <small>+</small>
+        </div>
+        <div class="stat-label">INDUSTRIES SERVED</div>
+      </div>
+
+      <!-- Stat 4: Client Retention -->
+      <div class="stat">
+        <div class="stat-num">
+          <span class="count" data-target="95">0</span>
+          <small>%</small>
+        </div>
+        <div class="stat-label">CLIENT RETENTION</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -865,14 +1680,14 @@
       </div>
     </div>
     <div class="nb-cards-row" id="nbCardsRow">
-      <div class="nb-card nb-card-1" data-rot="-9" data-depth="14"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=600&fit=crop&crop=faces&q=80" alt=""></div>
-      <div class="nb-card nb-card-2" data-rot="-5" data-depth="10"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop&crop=faces&q=80" alt=""></div>
-      <div class="nb-card nb-card-3" data-rot="-2" data-depth="8"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=600&fit=crop&crop=faces&q=80" alt=""></div>
-      <div class="nb-card nb-card-4" data-rot="3" data-depth="12"><img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&h=600&fit=crop&crop=faces&q=80" alt=""></div>
-      <div class="nb-card nb-card-5" data-rot="0" data-depth="6"><img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=600&fit=crop&crop=faces&q=80" alt=""></div>
-      <div class="nb-card nb-card-6" data-rot="4" data-depth="11"><img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=400&h=600&fit=crop&crop=faces&q=80" alt=""></div>
-      <div class="nb-card nb-card-7" data-rot="7" data-depth="9"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=600&fit=crop&crop=faces&q=80" alt=""></div>
-      <div class="nb-card nb-card-8" data-rot="-4" data-depth="13"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=600&fit=crop&crop=faces&q=80" alt=""></div>
+      <div class="nb-card nb-card-1" data-rot="-9" data-depth="14"><img src="https://images.unsplash.com/photo-1782025419629-d69df1556e0c?q=80&w=725&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt=""></div>
+      <div class="nb-card nb-card-2" data-rot="-5" data-depth="10"><img src="https://images.unsplash.com/photo-1782025419629-d69df1556e0c?q=80&w=725&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt=""></div>
+      <div class="nb-card nb-card-3" data-rot="-2" data-depth="8"><img src="https://images.unsplash.com/photo-1782025419629-d69df1556e0c?q=80&w=725&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt=""></div>
+      <div class="nb-card nb-card-4" data-rot="3" data-depth="12"><img src="https://images.unsplash.com/photo-1782025419629-d69df1556e0c?q=80&w=725&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt=""></div>
+      <div class="nb-card nb-card-5" data-rot="0" data-depth="6"><img src="https://images.unsplash.com/photo-1782025419629-d69df1556e0c?q=80&w=725&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt=""></div>
+      <div class="nb-card nb-card-6" data-rot="4" data-depth="11"><img src="https://images.unsplash.com/photo-1782025419629-d69df1556e0c?q=80&w=725&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt=""></div>
+      <div class="nb-card nb-card-7" data-rot="7" data-depth="9"><img src="https://images.unsplash.com/photo-1782025419629-d69df1556e0c?q=80&w=725&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt=""></div>
+      <div class="nb-card nb-card-8" data-rot="-4" data-depth="13"><img src="https://images.unsplash.com/photo-1782025419629-d69df1556e0c?q=80&w=725&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt=""></div>
     </div>
     <div class="nb-subline">
       <button class="nb-pill">Meet the crew<span class="nb-ar"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span></button>
@@ -1054,37 +1869,786 @@
   </div>
 </section>
 
-<section class="section section--process on-process" id="process">
-  <div class="wrap">
-    <div class="process-head reveal">
-      <p class="eyebrow">Our process</p>
-      <h2 class="h2">A proven framework for successful digital transformation</h2>
-      <p class="lede">From discovery to deployment, our process is designed to minimize risk and maximize value.</p>
-    </div>
-    <div class="process-rail reveal">
-      <div class="process-step">
-        <div class="index">01</div>
-        <h3>Understand the business challenge</h3>
-        <p>We work closely with stakeholders to deeply understand business challenges and goals.</p>
-      </div>
-      <div class="process-step">
-        <div class="index">02</div>
-        <h3>Prototype with purpose</h3>
-        <p>We build interactive prototypes, collaboratively refined to align with business and user needs.</p>
-      </div>
-      <div class="process-step">
-        <div class="index">03</div>
-        <h3>Launch with confidence</h3>
-        <p>Agile delivery keeps the project transparent, aligned, and on budget at every stage.</p>
-      </div>
-      <div class="process-step">
-        <div class="index">04</div>
-        <h3>Support long-term success</h3>
-        <p>Post-launch, we continue optimization, maintenance, and support as systems evolve.</p>
-      </div>
-    </div>
+
+
+<style>
+ 
+  .xrp-widget{
+    --xrp-bg: #0a0d16;
+    --xrp-bg-2: #0d1120;
+    --xrp-card: #0e1220;
+    --xrp-card-border: rgba(255,255,255,0.07);
+    --xrp-line: rgba(255,255,255,0.09);
+    --xrp-orange: #ff9433;
+    --xrp-orange-deep: #ff7a1a;
+    --xrp-orange-dim: rgba(255,148,51,0.18);
+    --xrp-blue: #4fa8ff;
+    --xrp-text: #eef1f8;
+    --xrp-text-dim: #8991a6;
+    --xrp-text-faint: #4b5266;
+    --xrp-radius: 20px;
+
+    /* replaces the old html/body reset, scoped to this widget only */
+    margin:0; padding:0;
+    background: var(--xrp-bg);
+    color: var(--xrp-text);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x:hidden;
+    position: relative;
+    isolation: isolate;
+  }
+
+  .xrp-widget, .xrp-widget *{ box-sizing:border-box; }
+
+  .xrp-bg-decor{
+    position:absolute; inset:0;
+    z-index:1;
+    overflow:hidden;
+    pointer-events:none;
+  }
+  .xrp-bg-base{
+    position:absolute; inset:0;
+    background:transparent;
+  }
+
+  .xrp-container{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 64px 24px 80px;
+    position:relative;
+  }
+
+  /* ---------- Header ---------- */
+  .xrp-eyebrow-row{
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+    margin-bottom: 28px;
+  }
+  .xrp-eyebrow{
+    display:flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px; letter-spacing:0.14em; font-weight:500;
+    color: var(--xrp-orange); text-transform:uppercase;
+  }
+  .xrp-eyebrow::before{
+    content:''; width:22px; height:2px; background: var(--xrp-orange); display:inline-block; border-radius:2px;
+  }
+  .xrp-counter-chip{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px; letter-spacing:0.05em;
+    color: var(--xrp-text-dim);
+    border:1px solid var(--xrp-card-border);
+    padding:7px 16px; border-radius:999px;
+    background: rgba(255,255,255,0.02);
+  }
+  .xrp-counter-chip b{ color: var(--xrp-orange); font-weight:600; }
+
+  .xrp-headline{
+    font-family:'Chakra Petch', sans-serif;
+    font-weight:700;
+    font-size: clamp(28px, 4.4vw, 44px);
+    letter-spacing: 0.01em;
+    text-transform:uppercase;
+    margin: 0 0 40px;
+    line-height:1.05;
+  }
+  .xrp-headline span{ color: var(--xrp-orange); }
+
+  /* ---------- Step Nav ---------- */
+  .xrp-stepnav{
+    position:relative;
+    display:flex; align-items:flex-start; justify-content:space-between;
+    margin-bottom: 40px;
+    padding: 0 6px;
+  }
+  .xrp-track{
+    position:absolute;
+    top:26px; left:32px; right:32px;
+    height:2px;
+    background: var(--xrp-line);
+    z-index:0;
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .xrp-track-fill{
+    height:100%;
+    background: linear-gradient(90deg, var(--xrp-orange-deep), var(--xrp-orange));
+    width:0%;
+    transition: width .6s cubic-bezier(.65,0,.35,1);
+  }
+  .xrp-step-node{
+    position:relative; z-index:1;
+    display:flex; flex-direction:column; align-items:center;
+    gap:10px;
+    cursor:pointer;
+    background:transparent; border:none; padding:0;
+    flex:1;
+    outline:none;
+    font-family:inherit;
+  }
+  .xrp-node-dot{
+    width:52px; height:52px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background: var(--xrp-bg-2);
+    border: 1.5px solid var(--xrp-line);
+    color: var(--xrp-text-faint);
+    transition: all .35s cubic-bezier(.65,0,.35,1);
+    position:relative;
+  }
+  .xrp-node-dot svg{ width:20px; height:20px; transition: all .35s; }
+  .xrp-step-node:hover .xrp-node-dot{
+    border-color: rgba(255,148,51,0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(255,148,51,0.12);
+  }
+  .xrp-step-node.xrp-done .xrp-node-dot{
+    border-color: var(--xrp-orange-deep);
+    color: var(--xrp-orange);
+    background: linear-gradient(155deg, rgba(255,148,51,0.14), rgba(255,148,51,0.03));
+  }
+  .xrp-step-node.xrp-active .xrp-node-dot{
+    border-color: var(--xrp-orange);
+    color: var(--xrp-orange);
+    background: linear-gradient(155deg, rgba(255,148,51,0.22), rgba(255,148,51,0.04));
+    box-shadow: 0 0 0 5px rgba(255,148,51,0.10), 0 0 24px rgba(255,148,51,0.25);
+  }
+  .xrp-ring{
+    position:absolute; inset:-6px;
+    border-radius:50%;
+    pointer-events:none;
+  }
+  .xrp-ring circle{
+    fill:none; stroke: var(--xrp-orange); stroke-width:1.6;
+    stroke-linecap:round;
+    transform-origin:center;
+    transform:rotate(-90deg);
+  }
+  .xrp-step-node .xrp-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; color: var(--xrp-text-faint); letter-spacing:0.05em;
+    transition: color .3s;
+  }
+  .xrp-step-node.xrp-active .xrp-num, .xrp-step-node.xrp-done .xrp-num{ color: var(--xrp-orange); }
+  .xrp-step-node .xrp-label{
+    font-family:'Chakra Petch', sans-serif;
+    font-size:12.5px; font-weight:600; letter-spacing:0.06em;
+    text-transform:uppercase;
+    color: var(--xrp-text-dim);
+    transition: color .3s;
+  }
+  .xrp-step-node.xrp-active .xrp-label{ color: var(--xrp-text); }
+  .xrp-step-node.xrp-done .xrp-label{ color: var(--xrp-text-dim); }
+
+  /* ---------- Card ---------- */
+  .xrp-card-wrap{ position:relative; }
+  .xrp-card{
+    position:relative;
+    border-radius: var(--xrp-radius);
+    border: 1px solid var(--xrp-card-border);
+    background: #0d1120;
+    overflow:hidden;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.6);
+  }
+  .xrp-card::before{
+    content:'';
+    position:absolute; top:0; left:0; right:0; height:1px;
+    background: linear-gradient(90deg, transparent, var(--xrp-orange), transparent);
+    opacity:0.5;
+  }
+
+  .xrp-panels{ position:relative; }
+  .xrp-panel{
+    display:none;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap:0;
+  }
+  .xrp-panel.xrp-active{ display:grid; animation: xrp-panelIn .55s cubic-bezier(.2,.7,.3,1); }
+  @keyframes xrp-panelIn{
+    from{ opacity:0; transform: translateY(10px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .xrp-panel-text{
+    padding: 44px 40px 36px;
+    position:relative;
+  }
+  .xrp-ghost-num{
+    position:absolute; top:20px; left:36px;
+    font-family:'Chakra Petch', sans-serif;
+    font-weight:700; font-size:96px;
+    color: rgba(255,255,255,0.035);
+    line-height:1; user-select:none;
+    z-index:0;
+  }
+  .xrp-panel-text-inner{ position:relative; z-index:1; padding-top:56px; }
+
+  .xrp-stage-title{
+    font-family:'Chakra Petch', sans-serif;
+    font-weight:700; font-size:34px; text-transform:uppercase;
+    letter-spacing:0.01em; margin:0 0 8px;
+  }
+  .xrp-tagline{
+    color: var(--xrp-orange); font-weight:500; font-size:15px; margin:0 0 14px;
+  }
+  .xrp-divider{
+    width:44px; height:2px; background: var(--xrp-orange); border-radius:2px; margin-bottom:18px;
+  }
+  .xrp-desc{
+    color: var(--xrp-text-dim); font-size:14.5px; line-height:1.65; margin:0 0 26px; max-width:420px;
+  }
+
+  .xrp-checklist{ display:flex; flex-direction:column; gap:4px; margin-bottom:28px; }
+  .xrp-check-item{
+    display:flex; align-items:flex-start; gap:14px;
+    padding: 11px 12px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    transition: all .25s ease;
+    cursor:default;
+  }
+  .xrp-check-item:hover{
+    background: rgba(255,148,51,0.06);
+    border-color: rgba(255,148,51,0.18);
+    transform: translateX(4px);
+  }
+  .xrp-check-badge{
+    flex-shrink:0; width:22px; height:22px; border-radius:50%;
+    background: var(--xrp-orange);
+    display:flex; align-items:center; justify-content:center;
+    margin-top:1px;
+  }
+  .xrp-check-badge svg{ width:12px; height:12px; stroke: #16110a; stroke-width:3; }
+  .xrp-check-item h4{ margin:0 0 2px; font-size:14.5px; font-weight:600; color: var(--xrp-text); }
+  .xrp-check-item p{ margin:0; font-size:12.5px; color: var(--xrp-text-faint); line-height:1.4; }
+
+  .xrp-progress-block{
+    display:flex; align-items:center; gap:14px;
+    padding-top:18px; border-top:1px solid var(--xrp-line);
+  }
+  .xrp-progress-icon{
+    width:38px; height:38px; border-radius:50%;
+    border:1px solid rgba(255,148,51,0.35);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--xrp-orange); flex-shrink:0;
+  }
+  .xrp-progress-icon svg{ width:16px; height:16px; }
+  .xrp-progress-main{ flex:1; }
+  .xrp-progress-label-row{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px; letter-spacing:0.08em; color: var(--xrp-text-faint);
+    text-transform:uppercase; margin-bottom:7px;
+  }
+  .xrp-progress-label-row b{ color: var(--xrp-orange); font-size:14px; font-family:'JetBrains Mono', monospace;}
+  .xrp-progress-track{
+    height:6px; border-radius:6px; background: rgba(255,255,255,0.06); overflow:hidden;
+  }
+  .xrp-progress-fill{
+    height:100%; border-radius:6px;
+    background: linear-gradient(90deg, var(--xrp-orange-deep), var(--xrp-orange));
+    width:0%;
+    transition: width .7s cubic-bezier(.65,0,.35,1);
+  }
+
+  /* ---------- Visual scene (icon-based) ---------- */
+  .xrp-panel-visual{
+    position:relative;
+    background:
+      radial-gradient(circle at 50% 42%, rgba(255,148,51,0.10), transparent 60%),
+      linear-gradient(160deg, rgba(255,255,255,0.025), rgba(255,255,255,0));
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    min-height:120px;
+  }
+  .xrp-panel-visual.xrp-has-image{
+    background:none;
+  }
+  .xrp-scene{
+    position:relative;
+    width:100%; height:100%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .xrp-scene-glow{
+    position:absolute;
+    width:200px; height:200px; border-radius:50%;
+    background: radial-gradient(circle, rgba(255,148,51,0.28), transparent 70%);
+    filter: blur(6px);
+    transition: all .4s ease;
+  }
+  .xrp-panel-visual:hover .xrp-scene-glow{
+    background: radial-gradient(circle, rgba(255,148,51,0.4), transparent 70%);
+    transform: scale(1.08);
+  }
+  .xrp-scene-core{
+    position:relative; z-index:2;
+    width:96px; height:96px; border-radius:26px;
+    background: linear-gradient(155deg, rgba(255,148,51,0.22), rgba(255,148,51,0.04));
+    border: 1px solid rgba(255,148,51,0.4);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--xrp-orange);
+    box-shadow: 0 0 0 1px rgba(255,148,51,0.06), 0 20px 45px -18px rgba(255,148,51,0.35);
+    transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease;
+  }
+  .xrp-scene-core svg{ width:42px; height:42px; }
+  .xrp-panel-visual:hover .xrp-scene-core{
+    transform: scale(1.07) rotate(-3deg);
+    box-shadow: 0 0 0 1px rgba(255,148,51,0.1), 0 26px 55px -16px rgba(255,148,51,0.5);
+  }
+  .xrp-chip{
+    position:absolute; z-index:3;
+    display:flex; align-items:center; gap:9px;
+    padding:9px 14px 9px 10px;
+    border-radius:12px;
+    background: rgba(13,17,32,0.72);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--xrp-card-border);
+    box-shadow: 0 12px 24px -12px rgba(0,0,0,0.5);
+    animation: xrp-bob 4.5s ease-in-out infinite;
+    transition: border-color .3s ease, transform .3s ease;
+  }
+  .xrp-panel-visual:hover .xrp-chip{ border-color: rgba(255,148,51,0.35); }
+  .xrp-chip:nth-child(1){ animation-delay: 0s; }
+  .xrp-chip:nth-child(2){ animation-delay: .6s; }
+  .xrp-chip:nth-child(3){ animation-delay: 1.2s; }
+  @keyframes xrp-bob{
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-7px); }
+  }
+  .xrp-chip-ic{
+    width:26px; height:26px; border-radius:8px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    background: rgba(255,148,51,0.14);
+    color: var(--xrp-orange);
+  }
+  .xrp-chip-ic.xrp-blue{ background: rgba(79,168,255,0.14); color: var(--xrp-blue); }
+  .xrp-chip-ic svg{ width:13px; height:13px; }
+  .xrp-chip-txt{ font-size:11.5px; font-weight:600; color: var(--xrp-text); white-space:nowrap; font-family:'Inter',sans-serif; }
+  .xrp-chip.xrp-c1{ top:14%; left:8%; }
+  .xrp-chip.xrp-c2{ bottom:16%; right:7%; }
+  .xrp-chip.xrp-c3{ top:12%; right:10%; }
+
+  .xrp-visual-img{
+    width:100%; height:100%;
+    min-height:340px;
+    object-fit: cover;
+    display:block;
+    border-radius:0;
+    transition: transform .6s cubic-bezier(.65,0,.35,1), filter .4s ease;
+    filter: saturate(1.02);
+  }
+  .xrp-panel-visual.xrp-has-image:hover .xrp-visual-img{
+    transform: scale(1.035);
+  }
+  .xrp-panel-visual.xrp-has-image::after{
+    content:'';
+    position:absolute; inset:0;
+    background: linear-gradient(90deg, rgba(13,17,32,0.35), transparent 30%),
+                linear-gradient(180deg, transparent 70%, rgba(10,13,22,0.35));
+    pointer-events:none;
+  }
+
+  /* ---------- Footer bar ---------- */
+  .xrp-card-footer{
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+    border-top: 1px solid var(--xrp-line);
+    padding: 20px 40px;
+    background: rgba(255,255,255,0.012);
+  }
+  .xrp-footer-msg{ display:flex; align-items:center; gap:14px; }
+  .xrp-footer-icon{
+    width:36px; height:36px; border-radius:50%;
+    border:1px solid rgba(255,148,51,0.35);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--xrp-orange); flex-shrink:0;
+  }
+  .xrp-footer-icon svg{ width:15px; height:15px; }
+  .xrp-footer-msg p{ margin:0; font-size:13px; color: var(--xrp-text-dim); line-height:1.4; }
+  .xrp-footer-msg p b{ display:block; color: var(--xrp-orange); font-weight:600; font-size:13.5px; margin-top:1px; }
+
+  .xrp-next-btn{
+    display:flex; align-items:center; gap:12px;
+    background:none; border:none; cursor:pointer;
+    padding: 6px;
+    font-family:inherit;
+  }
+  .xrp-next-text{ text-align:right; }
+  .xrp-next-text .xrp-k{
+    display:block; font-family:'JetBrains Mono', monospace; font-size:10px;
+    letter-spacing:0.1em; color: var(--xrp-text-faint); text-transform:uppercase;
+  }
+  .xrp-next-text .xrp-v{ font-size:14px; font-weight:600; color: var(--xrp-text); font-family:'Chakra Petch', sans-serif; }
+  .xrp-arrow-circle{
+    width:42px; height:42px; border-radius:50%;
+    border: 1.5px solid rgba(255,148,51,0.4);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--xrp-orange);
+    transition: all .3s cubic-bezier(.65,0,.35,1);
+    flex-shrink:0;
+  }
+  .xrp-arrow-circle svg{ width:16px; height:16px; transition: transform .3s; }
+  .xrp-next-btn:hover .xrp-arrow-circle{
+    background: var(--xrp-orange); color:#16110a;
+    box-shadow: 0 0 20px rgba(255,148,51,0.4);
+  }
+  .xrp-next-btn:hover .xrp-arrow-circle svg{ transform: translateX(3px); }
+
+  @media (max-width: 860px){
+    .xrp-panel.xrp-active{ grid-template-columns: 1fr; }
+    .xrp-panel-visual{ min-height:220px; }
+    .xrp-stepnav .xrp-label{ display:none; }
+    .xrp-track{ left:26px; right:26px; }
+    .xrp-card-footer{ flex-direction:column; align-items:flex-start; }
+    .xrp-next-btn{ align-self:flex-end; }
+  }
+  @media (max-width:520px){
+    .xrp-panel-text{ padding:32px 22px 26px; }
+    .xrp-ghost-num{ display:none; }
+    .xrp-panel-text-inner{ padding-top:0; }
+    .xrp-card-footer{ padding:18px 22px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .xrp-widget, .xrp-widget *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+
+<!-- ============ MARKUP ============ -->
+<div class="xrp-widget">
+  <div class="xrp-bg-decor">
+    <div class="xrp-bg-base"></div>
   </div>
-</section>
+
+  <div class="xrp-container" id="xrp-container">
+
+    <div class="xrp-eyebrow-row">
+      <div class="xrp-eyebrow">How We Work // 5-Stage Pipeline</div>
+      <div class="xrp-counter-chip"><b id="xrp-chipNum">01</b> / 05</div>
+    </div>
+
+    <h1 class="xrp-headline">FROM BRIEF TO <span>LAUNCH</span></h1>
+
+    <div class="xrp-stepnav" id="xrp-stepnav">
+      <div class="xrp-track"><div class="xrp-track-fill" id="xrp-trackFill"></div></div>
+      <!-- nodes injected by JS -->
+    </div>
+
+    <div class="xrp-card-wrap">
+      <div class="xrp-card">
+        <div class="xrp-panels" id="xrp-panels"></div>
+        <div class="xrp-card-footer">
+          <div class="xrp-footer-msg">
+            <div class="xrp-footer-icon" id="xrp-footerIcon"></div>
+            <p id="xrp-footerMsg"></p>
+          </div>
+          <button class="xrp-next-btn" id="xrp-nextBtn">
+            <div class="xrp-next-text">
+              <span class="xrp-k" id="xrp-nextKicker">Next up</span>
+              <span class="xrp-v" id="xrp-nextLabel">Strategy</span>
+            </div>
+            <div class="xrp-arrow-circle" id="xrp-arrowCircle"></div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ SCRIPT ============ -->
+<script>
+(function(){
+  const ICONS = {
+    search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+    strategy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21V19a4 4 0 0 0-3-3.87"/><path d="M4 21v-2a4 4 0 0 1 3-3.87"/><path d="M9 8a3 3 0 1 0 6 0 3 3 0 1 0-6 0"/><path d="M12 12v3"/></svg>',
+    code: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
+    shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>',
+    rocket: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>',
+    users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    audit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/><path d="M8 14l2 2 4-4"/></svg>',
+    scope: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+    layout: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>',
+    box: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+    file: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+    calendar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+    puzzle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.44 13.44a2 2 0 0 1 0 3.12v2.44a2 2 0 0 1-2 2h-2.44a2 2 0 0 1-3.12 0H9.44a2 2 0 0 1-3.12 0H3.88a2 2 0 0 1-2-2v-2.44a2 2 0 0 1 0-3.12V9.44a2 2 0 0 1 0-3.12V3.88a2 2 0 0 1 2-2h2.44a2 2 0 0 1 3.12 0h2.44a2 2 0 0 1 3.12 0h2.44a2 2 0 0 1 2 2v2.44a2 2 0 0 1 0 3.12z"/></svg>',
+    headset: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>',
+    gauge: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 12l5-5"/><path d="M12 2v3"/></svg>',
+    upload: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>',
+    grad: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>',
+    target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+    trend: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+    arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>',
+    check: '<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+  };
+
+  const STEPS = [
+    {
+      id:1, key:"discovery", nav:"Discovery", icon:"search",
+      title:"Discovery", tagline:"Understand before we build.",
+      desc:"We start by deeply understanding your business, your users, and the challenges you want to solve. This shapes everything that follows.",
+      items:[
+        {icon:"users", t:"Stakeholder interviews", d:"Understanding goals from every angle"},
+        {icon:"audit", t:"Technical audit", d:"Assessing your current infrastructure"},
+        {icon:"scope", t:"Scope definition", d:"Clear deliverables and timeline agreed"},
+      ],
+      progress:20,
+      footerIcon:"target",
+      footerMsg:"Great foundation. <b>Clear scope, aligned expectations.</b>",
+      next:"Strategy",
+      visualIcon:"search",
+      visualTag:"01 — Discovery",
+      image:"assets/images/about/process1.png",
+      chips:[
+        {icon:"users", label:"4 Stakeholders", color:"blue-mod"},
+        {icon:"audit", label:"Audit Done", color:"blue-mod"},
+      ]
+    },
+    {
+      id:2, key:"strategy", nav:"Strategy", icon:"strategy",
+      title:"Strategy", tagline:"Plan smart. Build right.",
+      desc:"We translate discovery insights into a clear creative and technical roadmap — choosing the right XR technology, platform and experience architecture for your context.",
+      items:[
+        {icon:"layout", t:"Experience design", d:"UX wireframes and interaction flows"},
+        {icon:"box", t:"Tech selection", d:"Unity, Unreal, WebXR or native mobile"},
+        {icon:"file", t:"Proposal delivery", d:"Detailed proposal with cost breakdown"},
+      ],
+      progress:40,
+      footerIcon:"target",
+      footerMsg:"A solid strategy today ensures a seamless build tomorrow. <b>Plan with precision. Deliver with impact.</b>",
+      next:"Build",
+      visualIcon:"strategy",
+      visualTag:"02 — Strategy",
+      image:"images/step2.png",
+      chips:[
+        {icon:"box", label:"Unity · Unreal", color:"blue-mod"},
+        {icon:"layout", label:"UX Flows", color:"orange-mod"},
+      ]
+    },
+    {
+      id:3, key:"build", nav:"Build", icon:"code",
+      title:"Development", tagline:"Build. Iterate. Refine.",
+      desc:"We build in focused sprints, sharing interactive previews at every milestone. Our XR engineers work across Unity, Unreal, WebXR and native — picking the right stack for your goals.",
+      items:[
+        {icon:"calendar", t:"Sprint cycles", d:"2-week builds with client demos"},
+        {icon:"box", t:"Asset production", d:"3D modelling, animation and sound"},
+        {icon:"puzzle", t:"Integration", d:"CMS, APIs and backend connections"},
+      ],
+      progress:60,
+      footerIcon:"rocket",
+      footerMsg:"Great work in progress. <b>We iterate fast and test early to deliver maximum impact.</b>",
+      next:"QA",
+      visualIcon:"code",
+      visualTag:"03 — Build",
+      image:"assets/images/about/4-5.png",
+      chips:[
+        {icon:"calendar", label:"2-wk Sprints", color:"orange-mod"},
+        {icon:"puzzle", label:"API Ready", color:"blue-mod"},
+      ]
+    },
+    {
+      id:4, key:"qa", nav:"QA", icon:"shield",
+      title:"Testing / QA", tagline:"Ensure a flawless experience.",
+      desc:"Every experience goes through rigorous QA on real devices. We test for performance, comfort, accessibility and edge cases — so your users get a flawless first impression.",
+      items:[
+        {icon:"headset", t:"Device testing", d:"Quest, HoloLens, iOS, Android, PC"},
+        {icon:"gauge", t:"Performance QA", d:"Frame rate, latency and comfort checks"},
+        {icon:"users", t:"User testing", d:"Real feedback from target audience"},
+      ],
+      progress:80,
+      footerIcon:"shield",
+      footerMsg:"Quality isn't a step. It's our standard. <b>Tested. Refined. Ready for the real world.</b>",
+      next:"Launch",
+      visualIcon:"shield",
+      visualTag:"04 — QA",
+      image:"images/step4.png",
+      chips:[
+        {icon:"gauge", label:"90 FPS", color:"orange-mod"},
+        {icon:"check", label:"QA Passed", color:"blue-mod"},
+      ]
+    },
+    {
+      id:5, key:"launch", nav:"Launch", icon:"rocket",
+      title:"Launch", tagline:"Go live. Grow. Evolve.",
+      desc:"We handle deployment end-to-end — app store submissions, enterprise distribution, or web publishing. Then we stay close for support, analytics and future iterations.",
+      items:[
+        {icon:"upload", t:"Deployment", d:"Store submissions or enterprise rollout"},
+        {icon:"grad", t:"Training", d:"Team onboarding and documentation"},
+        {icon:"headset", t:"Support", d:"Ongoing updates and optimisation"},
+      ],
+      progress:100,
+      footerIcon:"users",
+      footerMsg:"We launch with precision and stay with you for the long run. <b>Your success is just the beginning.</b>",
+      next:"Ready to Launch",
+      visualIcon:"rocket",
+      visualTag:"05 — Launch",
+      isLast:true,
+      image:"images/step5.png",
+      chips:[
+        {icon:"trend", label:"+128% Growth", color:"orange-mod"},
+        {icon:"upload", label:"Live", color:"blue-mod"},
+      ]
+    },
+  ];
+
+  let current = 0;
+  let autoplay = true;
+  let timer = null;
+  const DURATION = 5000;
+
+  // Scope every lookup to this widget instance so multiple copies
+  // of this section could even coexist on one page without clashing.
+  const root = document.currentScript.previousElementSibling; // .xrp-widget
+  const stepnav = root.querySelector('#xrp-stepnav');
+  const panelsEl = root.querySelector('#xrp-panels');
+  const trackFill = root.querySelector('#xrp-trackFill');
+
+  function buildNav(){
+    STEPS.forEach((s, i)=>{
+      const btn = document.createElement('button');
+      btn.className = 'xrp-step-node';
+      btn.dataset.index = i;
+      btn.innerHTML = `
+        <div class="xrp-node-dot">
+          <svg class="xrp-ring" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" stroke-dasharray="176" stroke-dashoffset="176"/></svg>
+          ${ICONS[s.icon]}
+        </div>
+        <div class="xrp-num">0${s.id}</div>
+        <div class="xrp-label">${s.nav}</div>
+      `;
+      btn.addEventListener('click', ()=> goTo(i, true));
+      stepnav.appendChild(btn);
+    });
+  }
+
+  function buildPanels(){
+    STEPS.forEach((s, i)=>{
+      const panel = document.createElement('div');
+      panel.className = 'xrp-panel';
+      panel.dataset.index = i;
+      const itemsHtml = s.items.map(it => `
+        <div class="xrp-check-item">
+          <div class="xrp-check-badge">${ICONS.check}</div>
+          <div>
+            <h4>${it.t}</h4>
+            <p>${it.d}</p>
+          </div>
+        </div>
+      `).join('');
+
+      panel.innerHTML = `
+        <div class="xrp-panel-text">
+          <div class="xrp-ghost-num">0${s.id}</div>
+          <div class="xrp-panel-text-inner">
+            <h2 class="xrp-stage-title">${s.title}</h2>
+            <p class="xrp-tagline">${s.tagline}</p>
+            <div class="xrp-divider"></div>
+            <p class="xrp-desc">${s.desc}</p>
+            <div class="xrp-checklist">${itemsHtml}</div>
+            <div class="xrp-progress-block">
+              <div class="xrp-progress-icon">${ICONS.target}</div>
+              <div class="xrp-progress-main">
+                <div class="xrp-progress-label-row"><span>Stage Progress</span><b>${s.progress}%</b></div>
+                <div class="xrp-progress-track"><div class="xrp-progress-fill" data-target="${s.progress}"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="xrp-panel-visual ${s.image ? 'xrp-has-image' : ''}">
+          ${ s.image
+              ? `<img class="xrp-visual-img" src="${s.image}" alt="${s.title}">`
+              : `<div class="xrp-scene">
+                   <div class="xrp-scene-glow"></div>
+                   <div class="xrp-scene-core">${ICONS[s.visualIcon]}</div>
+                   ${ (s.chips||[]).map((c,idx)=>`
+                     <div class="xrp-chip xrp-c${idx+1}">
+                       <div class="xrp-chip-ic ${c.color==='blue-mod' ? 'xrp-blue':''}">${ICONS[c.icon]}</div>
+                       <span class="xrp-chip-txt">${c.label}</span>
+                     </div>
+                   `).join('') }
+                 </div>`
+          }
+        </div>
+      `;
+      panelsEl.appendChild(panel);
+    });
+  }
+
+  function render(){
+    root.querySelectorAll('.xrp-step-node').forEach((node,i)=>{
+      node.classList.toggle('xrp-active', i===current);
+      node.classList.toggle('xrp-done', i<current);
+      const ring = node.querySelector('.xrp-ring circle');
+      ring.style.transition = 'none';
+      ring.setAttribute('stroke-dashoffset','176');
+    });
+    root.querySelectorAll('.xrp-panel').forEach((p,i)=>{
+      p.classList.toggle('xrp-active', i===current);
+    });
+
+    const activeProgress = root.querySelector('.xrp-panel.xrp-active .xrp-progress-fill');
+    requestAnimationFrame(()=>{
+      if(activeProgress) activeProgress.style.width = activeProgress.dataset.target + '%';
+    });
+
+    trackFill.style.width = (current/(STEPS.length-1))*100 + '%';
+    root.querySelector('#xrp-chipNum').textContent = '0'+STEPS[current].id;
+
+    root.querySelector('#xrp-footerIcon').innerHTML = ICONS[STEPS[current].footerIcon];
+    root.querySelector('#xrp-footerMsg').innerHTML = STEPS[current].footerMsg;
+
+    const isLast = STEPS[current].isLast;
+    root.querySelector('#xrp-nextKicker').textContent = isLast ? 'Project status' : 'Next up';
+    root.querySelector('#xrp-nextLabel').textContent = STEPS[current].next;
+    root.querySelector('#xrp-arrowCircle').innerHTML = isLast ? ICONS.check : ICONS.arrow;
+
+    restartRing();
+  }
+
+  function goTo(i, manual){
+    current = (i + STEPS.length) % STEPS.length;
+    render();
+    if(manual) restartTimer();
+  }
+
+  function nextStep(){
+    goTo(current+1);
+  }
+
+  function restartTimer(){
+    clearInterval(timer);
+    if(autoplay){
+      timer = setInterval(()=>{ nextStep(); }, DURATION);
+    }
+  }
+
+  function restartRing(){
+    const activeNode = root.querySelectorAll('.xrp-step-node')[current];
+    if(!activeNode) return;
+    const circle = activeNode.querySelector('.xrp-ring circle');
+    circle.style.transition = 'none';
+    circle.setAttribute('stroke-dashoffset','176');
+    void circle.getBoundingClientRect();
+    if(autoplay){
+      circle.style.transition = `stroke-dashoffset ${DURATION}ms linear`;
+      requestAnimationFrame(()=>{ circle.setAttribute('stroke-dashoffset','0'); });
+    }
+  }
+
+  root.querySelector('#xrp-nextBtn').addEventListener('click', ()=> goTo(current+1, true));
+
+  const cardWrap = root.querySelector('.xrp-card-wrap');
+  cardWrap.addEventListener('mouseenter', ()=>{ autoplay=false; clearInterval(timer);
+    const c = root.querySelectorAll('.xrp-step-node')[current].querySelector('.xrp-ring circle');
+    c.style.transition = 'none';
+  });
+  cardWrap.addEventListener('mouseleave', ()=>{ autoplay=true; restartTimer(); restartRing(); });
+
+  buildNav();
+  buildPanels();
+  render();
+  restartTimer();
+})();
+</script>
 
 
 
@@ -1671,6 +3235,7 @@
     
     renderJobs();
   }
+  
 
   // Initialize
   document.addEventListener('DOMContentLoaded', () => {
@@ -1681,6 +3246,205 @@
     document.getElementById('cjType').addEventListener('change', filterJobs);
     document.getElementById('cjLoc').addEventListener('change', filterJobs);
   });
+  (function initVolgaApproach() {
+  // Check if section exists
+  const volga = document.querySelector('.volga-approach');
+  if (!volga) return;
+ 
+  // Check if GSAP is loaded
+  if (typeof gsap === 'undefined') {
+    console.warn('GSAP not loaded — skipping Volga Approach animations');
+    return;
+  }
+ 
+  gsap.registerPlugin(ScrollTrigger);
+ 
+  // ========== INITIAL LOAD SEQUENCE ==========
+  // Restrained, sequential animations for first load
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+ 
+  tl.to('.volga-approach .brand-mark', {
+    opacity: 1,
+    duration: 0.5
+  })
+    .to('.volga-approach .eyebrow', {
+      opacity: 1,
+      duration: 0.5
+    }, '-=.25')
+    .from('.volga-approach h1.headline .line span', {
+      yPercent: 110,
+      duration: 0.7,
+      stagger: 0.08
+    }, '-=.2')
+    .to('.volga-approach .lede', {
+      opacity: 1,
+      y: 0,
+      duration: 0.6
+    }, '-=.35')
+    .to('.volga-approach .cta-row', {
+      opacity: 1,
+      y: 0,
+      duration: 0.6
+    }, '-=.4')
+    .to('.volga-approach .hero-visual', {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 1,
+      ease: 'power3.out'
+    }, '-=.7');
+ 
+  // ========== AMBIENT FLOAT ==========
+  // Subtle floating effect on hero image
+  gsap.to('.volga-approach .hero-visual img', {
+    y: -14,
+    duration: 3.4,
+    ease: 'sine.inOut',
+    yoyo: true,
+    repeat: -1
+  });
+ 
+  // Breathing glow effect
+  gsap.to('.volga-approach .hero-glow', {
+    scale: 1.08,
+    opacity: 0.85,
+    duration: 3.4,
+    ease: 'sine.inOut',
+    yoyo: true,
+    repeat: -1
+  });
+ 
+  // ========== PARALLAX EFFECTS ==========
+  // Hero image parallax on scroll
+  gsap.to('.volga-approach .hero-visual img', {
+    yPercent: -8,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.volga-approach',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 0.6
+    }
+  });
+ 
+  // Glow parallax (opposite direction)
+  gsap.to('.volga-approach .hero-glow', {
+    yPercent: 10,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.volga-approach',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 0.6
+    }
+  });
+ 
+  // Grid texture parallax
+  gsap.to('.volga-approach .grid-tex', {
+    yPercent: -14,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.volga-approach',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 0.6
+    }
+  });
+ 
+  // ========== PROCESS LINE ANIMATION ==========
+  // Line fills as you scroll through the process section
+  gsap.to('.volga-approach #processFill', {
+    width: '100%',
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.volga-approach .process',
+      start: 'top 85%',
+      end: 'bottom 60%',
+      scrub: 0.5
+    }
+  });
+ 
+  // ========== PROCESS STEPS REVEAL ==========
+  // Each step reveals when it comes into view
+  gsap.utils.toArray('.volga-approach .step').forEach((step, i) => {
+    ScrollTrigger.create({
+      trigger: step,
+      start: 'top 88%',
+      once: true,
+      onEnter: () => {
+        // Animate step number
+        gsap.to(step.querySelector('.step-index'), {
+          opacity: 1,
+          scale: 1,
+          duration: 0.55,
+          ease: 'power2.out',
+          onStart: () => step.classList.add('in-view')
+        });
+ 
+        // Animate text content
+        gsap.from(step.querySelectorAll('h3, p'), {
+          opacity: 0,
+          y: 12,
+          duration: 0.5,
+          delay: 0.1,
+          stagger: 0.06,
+          ease: 'power2.out'
+        });
+      }
+    });
+  });
+ 
+  // ========== CARDS REVEAL ==========
+  // Cards stagger in as they enter view
+  gsap.utils.toArray('.volga-approach .card').forEach((card, i) => {
+    ScrollTrigger.create({
+      trigger: card,
+      start: 'top 90%',
+      once: true,
+      onEnter: () =>
+        gsap.to(card, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: (i % 4) * 0.06,
+          ease: 'power3.out'
+        })
+    });
+  });
+ 
+  // ========== STATS COUNT-UP ==========
+  // Numbers animate when stats section comes into view
+  ScrollTrigger.create({
+    trigger: '.volga-approach .stats',
+    start: 'top 92%',
+    once: true,
+    onEnter: () => {
+      // Animate each counter
+      document.querySelectorAll('.volga-approach .stats .count').forEach((el) => {
+        const target = +el.dataset.target;
+        const obj = { v: 0 };
+        gsap.to(obj, {
+          v: target,
+          duration: 1.4,
+          ease: 'power2.out',
+          onUpdate: () => {
+            el.textContent = Math.floor(obj.v);
+          }
+        });
+      });
+ 
+      // Fade in stats section
+      gsap.from('.volga-approach .stats', {
+        opacity: 0,
+        y: 20,
+        duration: 0.6,
+        ease: 'power3.out'
+      });
+    }
+  });
+ 
+  console.log('✓ Volga Infosys section animations initialized');
+})();
 </script>
 
 <style>

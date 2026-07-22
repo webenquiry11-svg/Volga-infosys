@@ -97,10 +97,11 @@
       grid-template-columns: 1fr 350px;
       gap: 4rem;
       padding: 0 3rem;
+      align-items: start;
     }
 
     .case-study-detail-content {
-      max-width: 100%;
+      max-width: 800px;
     }
 
     .case-study-meta {
@@ -231,6 +232,128 @@
       gap: 1.5rem;
       position: sticky;
       top: 120px;
+      align-self: start;
+      max-height: calc(100vh - 140px);
+      overflow-y: auto;
+    }
+
+    /* Reading Progress Bar */
+    .reading-progress {
+      position: fixed;
+      top: 66px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(86, 124, 141, 0.1);
+      z-index: 100;
+    }
+
+    .reading-progress-bar {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 0.1s ease;
+    }
+
+    /* Table of Contents */
+    .case-study-toc {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(86, 124, 141, 0.1);
+    }
+
+    .case-study-toc-title {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid rgba(86, 124, 141, 0.2);
+    }
+
+    .case-study-toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .case-study-toc-item {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      padding: 0.5rem 0;
+      cursor: pointer;
+      transition: color 0.2s ease;
+      line-height: 1.4;
+    }
+
+    .case-study-toc-item:hover {
+      color: var(--accent);
+    }
+
+    .case-study-toc-item.h3 {
+      padding-left: 1rem;
+      font-size: 0.8rem;
+    }
+
+    /* Share Buttons */
+    .share-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .share-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .share-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .share-btn:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* Tags */
+    .case-study-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .case-study-tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      background: rgba(86, 124, 141, 0.1);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      letter-spacing: 0.05em;
     }
 
     .case-study-sidebar-header {
@@ -352,6 +475,11 @@
 
   <div class="cursor" id="cursor"></div>
   <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- Reading Progress Bar -->
+  <div class="reading-progress">
+    <div class="reading-progress-bar" id="readingProgressBar"></div>
+  </div>
 
   <!-- NAV -->
   <nav id="navbar">
@@ -772,12 +900,40 @@
           <p>Loading...</p>
         </div>
 
-        <a href="case-studies.html" class="case-study-back-link reveal-fade">
-          <i class="fas fa-arrow-left"></i> Back to Case Studies
+        <!-- Tags -->
+        <div class="case-study-tags reveal-fade" id="caseStudyTags"></div>
+
+        <!-- Share Buttons -->
+        <div class="share-buttons reveal-fade">
+          <span class="share-label">Share:</span>
+          <button class="share-btn" onclick="shareArticle('twitter')" title="Share on Twitter">
+            <i class="fab fa-twitter"></i>
+          </button>
+          <button class="share-btn" onclick="shareArticle('linkedin')" title="Share on LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </button>
+          <button class="share-btn" onclick="shareArticle('facebook')" title="Share on Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </button>
+          <button class="share-btn" onclick="copyLink()" title="Copy Link">
+            <i class="fas fa-link"></i>
+          </button>
+        </div>
+
+        <a href="insights-overview-new.html" class="case-study-back-link reveal-fade">
+          <i class="fas fa-arrow-left"></i> Back to insights
         </a>
       </div>
 
       <div class="case-study-sidebar">
+        <!-- Table of Contents -->
+        <div class="case-study-toc">
+          <div class="case-study-toc-title">Table of Contents</div>
+          <ul class="case-study-toc-list" id="caseStudyToc">
+            <li class="case-study-toc-item">Loading...</li>
+          </ul>
+        </div>
+
         <div class="case-study-sidebar-header">More Case Studies</div>
       </div>
     </div>
@@ -830,10 +986,28 @@
         const contentEl = document.getElementById('caseStudyContent');
         contentEl.innerHTML = caseStudy.description || '<p>No content available.</p>';
         
+        // Tags
+        const tagsEl = document.getElementById('caseStudyTags');
+        if (caseStudy.industry) {
+          tagsEl.innerHTML = `<span class="case-study-tag">${caseStudy.industry}</span>`;
+        } else {
+          tagsEl.innerHTML = '';
+        }
+        
+        // Generate Table of Contents
+        generateTableOfContents();
+        
+        // Setup reading progress
+        setupReadingProgress();
+        
         // Sidebar - other case studies (excluding current one)
         const otherCaseStudies = caseStudies.filter(cs => cs._id !== id).slice(0, 3);
         const sidebarEl = document.querySelector('.case-study-sidebar');
         sidebarEl.innerHTML = `
+          <div class="case-study-toc">
+            <div class="case-study-toc-title">Table of Contents</div>
+            <ul class="case-study-toc-list" id="caseStudyToc"></ul>
+          </div>
           <div class="case-study-sidebar-header">More Case Studies</div>
           ${otherCaseStudies.map(cs => `
             <a href="case-study-detail.html?id=${cs._id}" class="case-study-card-mini">
@@ -846,11 +1020,121 @@
             </a>
           `).join('')}
         `;
+        
+        // Re-generate TOC after sidebar is updated
+        generateTableOfContents();
       } catch (err) {
         console.error('Error:', err);
         document.getElementById('caseStudyContent').innerHTML = '<p>Could not load case study. Make sure the server is running.</p>';
       }
     }
+
+    function generateTableOfContents() {
+      const contentEl = document.getElementById('caseStudyContent');
+      const tocEl = document.getElementById('caseStudyToc');
+      if (!contentEl || !tocEl) return;
+      
+      const headings = contentEl.querySelectorAll('h2, h3');
+      if (headings.length === 0) {
+        tocEl.innerHTML = '<li class="case-study-toc-item">No sections</li>';
+        return;
+      }
+      
+      tocEl.innerHTML = Array.from(headings).map((heading, index) => {
+        const level = heading.tagName.toLowerCase();
+        const text = heading.textContent.trim();
+        const id = `heading-${index}`;
+        heading.id = id;
+        
+        return `<li class="case-study-toc-item ${level}" onclick="scrollToHeading('${id}')">${text}</li>`;
+      }).join('');
+    }
+
+    function scrollToHeading(id) {
+      const element = document.getElementById(id);
+      if (element) {
+        const offset = 100;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+
+    function setupReadingProgress() {
+      const progressBar = document.getElementById('readingProgressBar');
+      if (!progressBar) return;
+      
+      window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (scrollTop / docHeight) * 100;
+        progressBar.style.width = `${Math.min(progress, 100)}%`;
+      });
+    }
+
+    function shareArticle(platform) {
+      const url = encodeURIComponent(window.location.href);
+      const title = encodeURIComponent(document.getElementById('HeroTitle').textContent);
+      
+      const urls = {
+        twitter: `https://twitter.com/intent/tweet?url=${url}&text=${title}`,
+        linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+        facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`
+      };
+      
+      if (urls[platform]) {
+        window.open(urls[platform], '_blank', 'width=600,height=400');
+      }
+    }
+
+    function copyLink() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        showToast('Link copied!', 'Article link copied to clipboard', 'success');
+      }).catch(() => {
+        showToast('Error', 'Failed to copy link', 'error');
+      });
+    }
+
+    function showToast(title, message, type) {
+      const toast = document.createElement('div');
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#34d399' : '#ef4444'};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 1000;
+        animation: slideIn 0.3s ease;
+      `;
+      toast.innerHTML = `<strong>${title}</strong><br>${message}`;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Add toast animations
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
 
     loadCaseStudy();
   </script>

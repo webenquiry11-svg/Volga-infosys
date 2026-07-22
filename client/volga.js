@@ -453,8 +453,8 @@ function setupGlobalTextScrollAnimation() {
     'h5',
     'h6',
     'p',
-    '.nav-link',
-    '.nav-cta',
+    
+    
     '.mm-link',
     '.btn-primary',
     '.btn-ghost',
@@ -2101,20 +2101,7 @@ function initCustomCursor() {
   });
 
   // Animate cursor positions
-  function animate() {
-    // Main cursor follows immediately
-    cursorX = mouseX;
-    cursorY = mouseY;
-    gsap.set(cursor, { x: cursorX - 4, y: cursorY - 4 });
 
-    // Follower follows with delay
-    followerX += (mouseX - followerX) * 0.15;
-    followerY += (mouseY - followerY) * 0.15;
-    gsap.set(cursorFollower, { x: followerX - 20, y: followerY - 20 });
-
-    requestAnimationFrame(animate);
-  }
-  animate();
 
   // Function to wrap every character in a span for text elements
   function wrapTextCharacters() {
