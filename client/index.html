@@ -5,11 +5,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Volga Infosys — VR & AR Pioneers</title>
-  <link rel="stylesheet" href="volga.css" />
   
+  <!-- Preconnect to Google Fonts for faster font delivery -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Orbitron:wght@400;500;700&family=Exo+2:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="volga.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="portfolio-marquee.css" />
 
@@ -19,9 +22,6 @@
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-
 </head>
 
 <body>
@@ -35,7 +35,7 @@
   <div class="loader" id="loader">
     <div class="loader-bg" aria-hidden="true"></div>
     <div class="loader-inner">
-      <img src="favicon.png" alt="VOLGA" class="loader-logo-img" />
+      <img src="logo.png" alt="VOLGA" class="loader-logo-img" />
       <div class="loader-bar">
         <div class="loader-bar-fill" id="loaderFill"></div>
       </div>
@@ -46,7 +46,7 @@
   <!-- ═══════════════════════════════════════════ NAV -->
   <nav id="navbar">
     <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
-      <img src="favicon.png" alt="VOLGA Infosys logo" />
+      <img src="logo.png" alt="VOLGA Infosys logo" />
     </a>
 
     <ul class="nav-links">
@@ -65,8 +65,8 @@
       <li class="nav-item" data-menu="technologies">
         <a class="nav-link" href="technologies (2).html">Technologies</a>
       </li>
-      <li class="nav-item" data-menu="insights">
-        <a class="nav-link" href="insights-overview-new.html">Insights </a>
+      <li class="nav-item">
+        <a class="nav-link" href="insights-overview-new.html">Blogs</a>
       </li>
       <li class="nav-item" data-menu="company">
         <button class="nav-link">Company <span class="nav-arrow"></span></button>
@@ -88,8 +88,8 @@
       <li><a href="industries.html" class="mm-link">Industries</a></li>
       <li><a href="services.html" class="mm-link">Services</a></li>
       <li><a href="portfolio.html" class="mm-link">Work</a></li>
-      <li><a href="technologies(2).html" class="mm-link">Technologies</a></li>
-      <li><a href="blog.html" class="mm-link">Insights</a></li>
+      <li><a href="technologies (2).html" class="mm-link">Technologies</a></li>
+      <li><a href="insights-overview-new.html" class="mm-link">Blogs</a></li>
       <li><a href="company.html" class="mm-link">Company</a></li>
       <li><a href="contact.html" class="mm-link">Contact</a></li>
     </ul>
@@ -449,8 +449,12 @@
 
   <!-- ═══════════════════════════════════════════ HERO -->
   <section class="Hero" id="Hero">
-    <!-- 3D Canvas as Background -->
-    <canvas id="three-hero-canvas" class="Hero-3d-canvas"></canvas>
+    <img
+      class="Hero-image"
+      src="hero-visual.png"
+      fetchpriority="high"
+      decoding="async"
+      alt="Engineer using an XR headset beside a digital twin visualization" />
 
     <div class="Hero-noise"></div>
 
@@ -510,12 +514,6 @@
     </div>
 
     <!-- Scroll hint -->
-    <div class="Hero-scroll-hint">
-      <div class="Hero-scroll-mouse">
-        <div class="Hero-scroll-wheel"></div>
-      </div>
-      <span>Scroll to explore</span>
-    </div>
 
   </section>
 
@@ -687,73 +685,73 @@
     <div class="solutionss-grid">
       <div class="solutions-card">
         <div class="card-default">
-          <img class="icon" src="assets\images\homepage\AR SOLUTIONS.png" alt="AR solutions"/>
+          <img class="icon" src="assets/images/homepage/AR SOLUTIONS.png" loading="lazy" decoding="async" alt="AR solutions"/>
           <h3 style="color: #0f3e74;">AR Solutions</h3>
           <p style="color: #0f3e74;" >Interactive overlays, visualization tools, and real-world product or training experiences.</p>
         </div>
         <div class="card-hover">
           <div class="hover-bg-title"><span>AR Solutions</span></div>
-          <img class="hover-icon" src="assets\images\homepage\AR SOLUTIONS.png" alt=""/>
+          <img class="hover-icon" src="assets/images/homepage/AR SOLUTIONS.png" loading="lazy" decoding="async" alt=""/>
           <p class="hover-desc">Interactive overlays, visualization tools, and real-world product or training experiences.</p>
         </div>
       </div>
       <div class="solutions-card">
         <div class="card-default">
-          <img class="icon" src="assets\images\homepage\VR-solutions.png" alt="VR solutions"/>
+          <img class="icon" src="assets/images/homepage/VR-solutions.png" loading="lazy" decoding="async" alt="VR solutions"/>
           <h3 style="color: #0f3e74;">VR Solutions</h3>
           <p style="color: #0f3e74;">Immersive environments for training, simulation, demos, and branded experiences.</p>
         </div>
         <div class="card-hover">
           <div class="hover-bg-title"><span>VR Solutions</span></div>
-          <img class="hover-icon" src="assets\images\homepage\VR-solutions.png" alt=""/>
+          <img class="hover-icon" src="assets/images/homepage/VR-solutions.png" loading="lazy" decoding="async" alt=""/>
           <p class="hover-desc">Immersive environments for training, simulation, demos, and branded experiences.</p>
         </div>
       </div>
       <div class="solutions-card">
         <div class="card-default">
-          <img class="icon" src="assets\images\homepage\MRsolutions.png" alt="MR and XR"/>
+          <img class="icon" src="assets/images/homepage/MRsolutions.png" loading="lazy" decoding="async" alt="MR and XR"/>
           <h3 style="color: #0f3e74;">MR / XR Applications</h3>
           <p style="color: #0f3e74;">Mixed reality applications that connect physical workflows with digital interfaces.</p>
         </div>
         <div class="card-hover">
           <div class="hover-bg-title"><span>MR / XR</span></div>
-          <img class="hover-icon" src="assets\images\homepage\MRsolutions.png" alt=""/>
+          <img class="hover-icon" src="assets/images/homepage/MRsolutions.png" loading="lazy" decoding="async" alt=""/>
           <p class="hover-desc">Mixed reality applications that connect physical workflows with digital interfaces.</p>
         </div>
       </div>
       <div class="solutions-card">
         <div class="card-default">
-          <img class="icon" src="assets\images\homepage\twin.png" alt="Digital twin"/>
+          <img class="icon" src="assets/images/homepage/twin.png" loading="lazy" decoding="async" alt="Digital twin"/>
           <h3 style="color: #0f3e74;">Digital Twin</h3>
           <p style="color: #0f3e74;">Connected replicas for facilities, systems, products, and operational views.</p>
         </div>
         <div class="card-hover">
           <div class="hover-bg-title"><span>Digital Twin</span></div>
-          <img class="hover-icon" src="assets\images\homepage\twin.png" alt=""/>
+          <img class="hover-icon" src="assets/images/homepage/twin.png" loading="lazy" decoding="async" alt=""/>
           <p class="hover-desc">Connected replicas for facilities, systems, products, and operational views.</p>
         </div>
       </div>
       <div class="solutions-card">
         <div class="card-default">
-          <img class="icon" src="assets\images\homepage\traning.png" alt="Interactive training"/>
+          <img class="icon" src="assets/images/homepage/traning.png" loading="lazy" decoding="async" alt="Interactive training"/>
           <h3 style="color: #0f3e74;">Interactive Training</h3>
           <p style="color: #0f3e74;">Guided learning modules with repeatable practice, feedback, and measurable outcomes.</p>
         </div>
         <div class="card-hover">
           <div class="hover-bg-title"><span>Training</span></div>
-          <img class="hover-icon" src="assets\images\homepage\traning.png" alt=""/>
+          <img class="hover-icon" src="assets/images/homepage/traning.png" loading="lazy" decoding="async" alt=""/>
           <p class="hover-desc">Guided learning modules with repeatable practice, feedback, and measurable outcomes.</p>
         </div>
       </div>
       <div class="solutions-card">
         <div class="card-default">
-          <img class="icon" src="assets\images\homepage\integration.png" alt="AI integration"/>
+          <img class="icon" src="assets/images/homepage/integration.png" loading="lazy" decoding="async" alt="AI integration"/>
           <h3 style="color: #0f3e74;">AI Integration</h3>
           <p style="color: #0f3e74;">AI-powered automation, intelligent interfaces, and smarter immersive workflows.</p>
         </div>
         <div class="card-hover">
           <div class="hover-bg-title"><span>AI Integration</span></div>
-          <img class="hover-icon" src="assets\images\homepage\integration.png" alt=""/>
+          <img class="hover-icon" src="assets/images/homepage/integration.png" loading="lazy" decoding="async" alt=""/>
           <p class="hover-desc">AI-powered automation, intelligent interfaces, and smarter immersive workflows.</p>
         </div>
       </div>
@@ -784,18 +782,22 @@
       <article class="svc-card" style="--card-bg:url('assets/images/homepage/ar-app.png')">
         <div class="svc-card-inner">
           <div class="svc-card-glow"></div>
-          <span class="svc-card-label">Immersive Apps</span>
-          <h3>Custom AR App Development</h3>
-          <p>Mobile and headset-ready augmented reality applications for visualization, learning, and product interaction.</p>
+          <div class="svc-card-content">
+            <span class="svc-card-label">Immersive Apps</span>
+            <h3>Custom AR App Development</h3>
+            <p>Mobile and headset-ready augmented reality applications for visualization, learning, and product interaction.</p>
+          </div>
           <div class="svc-card-tags"><small>ARKit</small><small>ARCore</small><small>WebAR</small></div>
         </div>
       </article>
       <article class="svc-card" style="--card-bg:url('assets/images/homepage/vr-traning.png')">
         <div class="svc-card-inner">
           <div class="svc-card-glow"></div>
-          <span class="svc-card-label">Training</span>
-          <h3>VR Training Platforms</h3>
-          <p>Repeatable, measurable simulation platforms for safety, equipment, process, and field training.</p>
+          <div class="svc-card-content">
+            <span class="svc-card-label">Training</span>
+            <h3>VR Training Platforms</h3>
+            <p>Repeatable, measurable simulation platforms for safety, equipment, process, and field training.</p>
+          </div>
           <div class="svc-card-tags"><small>Simulation</small><small>Analytics</small><small>Enterprise LMS</small></div>
         </div>
       </article>
@@ -849,89 +851,54 @@
     <div class="tech-grid">
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="assets\images\homepage\unity.png"></i>
+          <i class=""><img src="assets/images/homepage/unity.png" loading="lazy" decoding="async" alt="Unity Engine"></i>
           <h3>Unity Engine</h3>
         </div>
       </div>
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="assets\images\homepage\unreal.png"></i>
+          <i class=""><img src="assets/images/homepage/unreal.png" loading="lazy" decoding="async" alt="Unreal Engine"></i>
           <h3>Unreal Engine</h3>
         </div>
       </div>
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="assets\images\homepage\three.png"></i>
+          <i class=""><img src="assets/images/homepage/three.png" loading="lazy" decoding="async" alt="Three.js"></i>
           <h3>Three.js</h3>
         </div>
       </div>
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="assets\images\homepage\webgl.png"></i>
+          <i class=""><img src="assets/images/homepage/webgl.png" loading="lazy" decoding="async" alt="WebGL"></i>
           <h3>WebGL</h3>
         </div>
       </div>
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="assets\images\homepage\ai.png"></i>
+          <i class=""><img src="assets/images/homepage/ai.png" loading="lazy" decoding="async" alt="AI / ML"></i>
           <h3>AI / ML</h3>
         </div>
       </div>
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="assets\images\homepage\webxr.png"></i>
+          <i class=""><img src="assets/images/homepage/webxr.png" loading="lazy" decoding="async" alt="Open XR"></i>
           <h3>Open XR</h3>
         </div>
       </div>
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="assets\images\homepage\arkit.png"></i>
+          <i class=""><img src="assets/images/homepage/arkit.png" loading="lazy" decoding="async" alt="AR Kit"></i>
           <h3>AR Kit</h3>
         </div>
       </div>
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="assets\images\homepage\arcore.png"></i>
+          <i class=""><img src="assets/images/homepage/arcore.png" loading="lazy" decoding="async" alt="AR Core"></i>
           <h3>AR Core</h3>
         </div>
       </div>
+    </div>
      
-  </section>
-    <section class="home-suite-stats" aria-label="Company stats">
-    <div class="home-suite-stat">
-      <div class="home-suite-stat-num">250<span>+</span></div>
-      <div class="home-suite-stat-label">Projects delivered</div>
-    </div>
-    <div class="home-suite-stat">
-      <div class="home-suite-stat-num">10<span>+</span></div>
-      <div class="home-suite-stat-label">Years of experience</div>
-    </div>
-    <div class="home-suite-stat">
-      <div class="home-suite-stat-num">98<span>%</span></div>
-      <div class="home-suite-stat-label">Clients Satisfaction</div>
-    </div>
-    <div class="home-suite-stat">
-      <div class="home-suite-stat-num">10<span>+</span></div>
-      <div class="home-suite-stat-label">Industries served</div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════ TESTIMONIALS -->
-  <section class="section-intro">
-    <div class="intro-content">
-      <h1>Client Testimonials</h1>
-      <p>Hear from the leaders who trusted Volga XR to transform their teams, products, and customer experiences.</p>
-      <div class="portfolio card"><img src="blog-Hero.jpg" alt="Client testimonial 1" class="pf-image"/><div class="pf-info"><h3>"Volga XR turned our training into a measurable competitive advantage."</h3><p>Our field teams onboarded 50% faster, and retention improved dramatically with the new simulation platform.</p></div><div class="portfolio-tags"><span class="pf-tag">Manufacturing</span><span class="pf-tag">Virtual Reality</span></div></div>
-      <div class="portfolio card"><img src="contact-Hero.jpg" alt="Client testimonial 2" class="pf-image"/><div class="pf-info"><h3>"The AR guidance system saved our technicians hours every week."</h3><p>Volga's solution reduced maintenance errors and helped us scale support safely across plants.</p></div><div class="portfolio-tags"><span class="pf-tag">Aerospace</span><span class="pf-tag">Augmented Reality</span></div></div>
-      <div class="portfolio card"><img src="infinity.png" alt="Client testimonial 3" class="pf-image"/><div class="pf-info"><h3>"Remote buyers now feel like they are walking through the home in person."</h3><p>The virtual tours increased qualified leads by 30% and made distant buyers feel confident.</p></div><div class="portfolio-tags"><span class="pf-tag">Real Estate</span><span class="pf-tag">Virtual Reality</span></div></div>
-      <div class="portfolio card"><img src="logo.png" alt="Client testimonial 4" class="pf-image"/><div class="pf-info"><h3>"Our product launch was seamless thanks to immersive customer previews."</h3><p>Interactive demos shortened the sales cycle and gave buyers confidence before launch.</p></div><div class="portfolio-tags"><span class="pf-tag">Retail</span><span class="pf-tag">Augmented Reality</span></div></div>
-      <div class="portfolio card"><img src="mission-2.jfif" alt="Client testimonial 5" class="pf-image"/><div class="pf-info"><h3>"Volga's VR simulations made training safer, faster, and more engaging."</h3><p>Healthcare staff practiced critical procedures in a risk-free environment, improving performance under pressure.</p></div><div class="portfolio-tags"><span class="pf-tag">Healthcare</span><span class="pf-tag">Virtual Reality</span></div></div>
-      <div class="portfolio card"><img src="ar-application.jpg" alt="Client testimonial 6" class="pf-image"/><div class="pf-info"><h3>"The AR product configurator became a customer favorite overnight."</h3><p>Shoppers visualized products in their space and confidence in our brand jumped with every interaction.</p></div><div class="portfolio-tags"><span class="pf-tag">Retail</span><span class="pf-tag">Augmented Reality</span></div></div>
-      <div class="portfolio card"><img src="global-reach.jpg" alt="Client testimonial 7" class="pf-image"/><div class="pf-info"><h3>"Immersive events created the buzz our launch needed."</h3><p>Virtual audience engagement grew across markets and generated new business inquiries.</p></div><div class="portfolio-tags"><span class="pf-tag">Entertainment</span><span class="pf-tag">Virtual Reality</span></div></div>
-      <div class="portfolio card"><img src="pexels-ayush-kumar-907951968-23466429.jpg" alt="Client testimonial 8" class="pf-image"/><div class="pf-info"><h3>"Wayfinding AR made our city feel more connected."</h3><p>Residents and visitors found routes faster with context-aware navigation and local information.</p></div><div class="portfolio-tags"><span class="pf-tag">Smart Cities</span><span class="pf-tag">Augmented Reality</span></div></div>
-      <div class="portfolio card"><img src="fixed.jpg" alt="Client testimonial 9" class="pf-image"/><div class="pf-info"><h3>"Remote collaboration finally feels natural and productive."</h3><p>Teams brainstormed in VR with real-time tools, keeping creativity flowing across continents.</p></div><div class="portfolio-tags"><span class="pf-tag">Collaboration</span><span class="pf-tag">Virtual Reality</span></div></div>
-      <button class="pf-discover" onclick="window.location.href='contact.html'">Start Your Project</button>
-    </div>
   </section>
 
   <!-- ═══════════════════════════════════════════ TECH STACK -->
@@ -940,8 +907,8 @@
   <!-- ═══════════════════════════════════════════ BLOG -->
   <section class="blog-section" id="blog">
     <div class="blog-section-heading">
-      <p class="blog-heading-label">Latest Insights</p>
-      <h2>Explore stories, ideas and real work from the VOLGA team.</h2>
+      <p class="blog-heading-label">Latest blogs</p>
+      <h2>Explore stories, ideas and real work from the volga team.</h2>
       <p class="blog-heading-subline">From VR case studies to industry trends, stay ahead with expert analysis and creative thinking.</p>
     </div>
     <div class="blog-cards-row">
@@ -951,10 +918,11 @@
       <div class="card"><div class="card-bg" style="background-color:#126cc0;"></div><div class="color-overlay" style="background:#0f3e74;"></div><div class="scan-lines"></div><div class="card-number">04</div><div class="card-genre-pill">connect server</div><div class="card-content"><div class="card-avatar">SL</div><div class="card-tag"></div><div class="card-name">Server lose</div><div class="card-bio"></div><a class="card-cta" href="blog.html">Read more <i class="fas fa-arrow-right" style="font-size:12px" aria-hidden="true"></i></a></div></div>
       <div class="card"><div class="card-bg" style="background-color:#ffffff;"></div><div class="color-overlay" style="background:rgb(245,145,32);"></div><div class="scan-lines"></div><div class="card-number">05</div><div class="card-genre-pill">connect server</div><div class="card-content"><div class="card-avatar">SL</div><div class="card-tag"></div><div class="card-name">Server lose</div><div class="card-bio"></div><a class="card-cta" href="blog.html">Read more <i class="fas fa-arrow-right" style="font-size:12px" aria-hidden="true"></i></a></div></div>
     </div>
+    <div class="blog-section-footer">
+      <a href="blog.html" class="btn-see-all">VIEW ALL BLOGS
+         <i class="fas fa-arrow-right"></i></a>
+    </div>
   </section>
-
-  <!-- ═══════════════════════════════════════════ CUBE MISSION (replaces old .mission section) -->
-
 
   <!-- ═══════════════════════════════════════════ CTA BANNER -->
   <section class="cta-banner">
@@ -1449,9 +1417,6 @@
     })();
   </script>
   <script src="portfolio-marquee.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-  <script src="assets/js/hero-3d.js"></script>
-
   <!-- ▶ Cube Mission — loads after volga.js, fully isolated -->
   <script src="cube-mission.js" defer></script>
  

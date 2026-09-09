@@ -924,7 +924,7 @@ if (document.getElementById("logoutBtn")) {
       const row = document.createElement("tr");
       row.innerHTML = compact
         ? `<td>${esc(c.name)}</td><td>${esc(c.email)}</td><td>${esc(c.country) || "—"}</td><td>${esc(c.serviceInterested) || "—"}</td><td><span class="badge badge-${esc(c.status)}">${esc(c.status)}</span></td><td>${fmtDate(c.createdAt)}</td>`
-        : `<td>${esc(c.name)}</td><td>${esc(c.email)}</td><td>${esc(c.company) || "—"}</td><td>${esc(c.country) || "—"}</td><td>${esc(c.budget) || "—"}</td><td>${esc(c.serviceInterested) || "—"}</td><td class="msg-cell">${esc(c.message)}</td><td><span class="badge badge-${esc(c.status)}">${esc(c.status)}</span></td><td>${fmtDate(c.createdAt)}</td><td><button class="btn-view" data-id="${esc(c._id)}">View</button></td>`;
+        : `<td>${esc(c.name)}</td><td>${esc(c.email)}</td><td>${esc(c.company) || "—"}</td><td>${esc(c.country) || "—"}</td><td>${esc(c.serviceInterested) || "—"}</td><td class="msg-cell">${esc(c.message)}</td><td><span class="badge badge-${esc(c.status)}">${esc(c.status)}</span></td><td>${fmtDate(c.createdAt)}</td><td><button class="btn-view" data-id="${esc(c._id)}">View</button></td>`;
       tbody.appendChild(row);
     });
     if (!compact) {
@@ -934,16 +934,88 @@ if (document.getElementById("logoutBtn")) {
     }
   }
 
-  function renderPagination(pages, current) {
-    const el = document.getElementById("pagination");
+  function renderPagination(pages, current, containerId = "pagination", onPageClick = (p) => loadLeads(p)) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
     el.innerHTML = "";
-    for (let i = 1; i <= pages; i++) {
+    if (pages <= 1) return;
+
+    // Previous button
+    const prevBtn = document.createElement("button");
+    prevBtn.className = `page-btn page-btn-nav ${current <= 1 ? "disabled" : ""}`;
+    prevBtn.innerHTML = `<i class="fa-solid fa-chevron-left"></i>`;
+    prevBtn.title = "Previous Page";
+    if (current > 1) {
+      prevBtn.addEventListener("click", () => onPageClick(current - 1));
+    } else {
+      prevBtn.disabled = true;
+    }
+    el.appendChild(prevBtn);
+
+    // Smart windowing for pages
+    let startPage = 1;
+    let endPage = pages;
+    if (pages > 7) {
+      if (current <= 4) {
+        startPage = 1;
+        endPage = 5;
+      } else if (current + 3 >= pages) {
+        startPage = pages - 4;
+        endPage = pages;
+      } else {
+        startPage = current - 2;
+        endPage = current + 2;
+      }
+    }
+
+    if (startPage > 1) {
+      const firstBtn = document.createElement("button");
+      firstBtn.textContent = "1";
+      firstBtn.className = "page-btn";
+      firstBtn.addEventListener("click", () => onPageClick(1));
+      el.appendChild(firstBtn);
+
+      if (startPage > 2) {
+        const dots = document.createElement("span");
+        dots.className = "page-dots";
+        dots.textContent = "…";
+        el.appendChild(dots);
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
       const btn = document.createElement("button");
       btn.textContent = i;
       btn.className = `page-btn${i === current ? " active" : ""}`;
-      btn.addEventListener("click", () => loadLeads(i));
+      btn.addEventListener("click", () => onPageClick(i));
       el.appendChild(btn);
     }
+
+    if (endPage < pages) {
+      if (endPage < pages - 1) {
+        const dots = document.createElement("span");
+        dots.className = "page-dots";
+        dots.textContent = "…";
+        el.appendChild(dots);
+      }
+      const lastBtn = document.createElement("button");
+      lastBtn.textContent = pages;
+      lastBtn.className = "page-btn";
+      lastBtn.addEventListener("click", () => onPageClick(pages));
+      el.appendChild(lastBtn);
+    }
+
+    // Next button
+    const nextBtn = document.createElement("button");
+    nextBtn.className = `page-btn page-btn-nav ${current >= pages ? "disabled" : ""}`;
+    nextBtn.innerHTML = `<i class="fa-solid fa-chevron-right"></i>`;
+    nextBtn.title = "Next Page";
+    if (current < pages) {
+      nextBtn.addEventListener("click", () => onPageClick(current + 1));
+    } else {
+      nextBtn.disabled = true;
+    }
+    el.appendChild(nextBtn);
   }
 
   // ── EMAIL LOGS ────────────────────────────────────────
@@ -1057,7 +1129,6 @@ if (document.getElementById("logoutBtn")) {
       <div><span>Company</span><strong>${esc(contact.company) || "—"}</strong></div>
       <div><span>Country</span><strong>${esc(contact.country) || "—"}</strong></div>
       <div><span>Service</span><strong>${esc(contact.serviceInterested) || "—"}</strong></div>
-      <div><span>Budget</span><strong>${esc(contact.budget) || "—"}</strong></div>
       <div><span>Date</span><strong>${fmtDate(contact.createdAt)}</strong></div>`;
     document.getElementById("modalMessage").textContent = contact.message;
     document.getElementById("modalStatus").value = contact.status;
@@ -1205,27 +1276,42 @@ if (document.getElementById("logoutBtn")) {
 
   // ── PORTFOLIO ──────────────────────────────────────────
   let editingProjectId = null;
+  let currentProjPage = 1;
+  const PROJ_PAGE_SIZE = 6;
+  let cachedProjects = [];
 
-  async function loadPortfolio() {
+  async function loadPortfolio(page = 1) {
+    currentProjPage = page;
     const projects = await apiFetch("/projects");
+    cachedProjects = Array.isArray(projects) ? projects : (projects?.data || []);
     const grid = document.getElementById("projGrid");
-    if (!projects.length) {
+    const pagEl = document.getElementById("projPagination");
+    if (!grid) return;
+
+    if (!cachedProjects.length) {
       grid.innerHTML = `<p class="empty" style="padding:2rem">No projects yet. Click + Add Project to get started.</p>`;
+      if (pagEl) pagEl.innerHTML = "";
       return;
     }
-    grid.innerHTML = projects.map(p => `
+
+    const totalPages = Math.ceil(cachedProjects.length / PROJ_PAGE_SIZE) || 1;
+    const activePage = Math.max(1, Math.min(currentProjPage, totalPages));
+    const startIdx = (activePage - 1) * PROJ_PAGE_SIZE;
+    const pageProjects = cachedProjects.slice(startIdx, startIdx + PROJ_PAGE_SIZE);
+
+    grid.innerHTML = pageProjects.map(p => `
       <div class="proj-card">
         <div class="proj-card-img" style="background-image:url('${esc(p.image)}');position:relative;">
           <div class="actions-dropdown" data-id="${esc(p._id)}" data-type="projects" data-name="${esc(p.title)}">
-            <button class="dropdown-toggle">⋮</button>
+            <button class="dropdown-toggle" title="Options" aria-label="Project actions"><i class="fa-solid fa-ellipsis-vertical"></i></button>
             <div class="dropdown-menu">
               <button class="dropdown-item" data-action="edit">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                Edit
+                <i class="fa-solid fa-pen-to-square"></i>
+                <span>Edit Project</span>
               </button>
               <button class="dropdown-item danger" data-action="delete">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                Delete
+                <i class="fa-solid fa-trash"></i>
+                <span>Delete Project</span>
               </button>
             </div>
           </div>
@@ -1287,12 +1373,17 @@ if (document.getElementById("logoutBtn")) {
               try {
                 await apiFetch(`/${itemType}/${itemId}`, { method: 'DELETE' });
                 showToast('Deleted', 'Item removed', 'success');
-                loadPortfolio();
+                loadPortfolio(activePage);
               } catch(e) { showToast('Error', e.message, 'error'); }
             }
             break;
         }
       });
+    });
+
+    renderPagination(totalPages, activePage, "projPagination", (p) => {
+      loadPortfolio(p);
+      grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }
 
@@ -1421,132 +1512,140 @@ if (document.getElementById("logoutBtn")) {
   });
 
   // ── CLIENT STORIES ───────────────────────────────────
- // ── CLIENT STORIES ───────────────────────────────────
-let editingStoryId = null;
+  let editingStoryId = null;
+  let currentStoriesPage = 1;
+  const STORIES_PAGE_SIZE = 6;
+  let cachedStories = [];
 
-async function loadClientStories() {
-  const stories = await apiFetch("/client-stories");
-  const grid = document.getElementById("storiesGrid");
+  async function loadClientStories(page = 1) {
+    currentStoriesPage = page;
+    const stories = await apiFetch("/client-stories");
+    cachedStories = Array.isArray(stories) ? stories : (stories?.data || []);
+    const grid = document.getElementById("storiesGrid");
+    const pagEl = document.getElementById("storiesPagination");
 
-  if (!stories || !stories.length) {
-    if (grid) {
-      grid.innerHTML = `
-        <p class="empty" style="padding:2rem">
-          No client stories yet. Click + Add Story to get started.
-        </p>`;
+    if (!cachedStories.length) {
+      if (grid) {
+        grid.innerHTML = `
+          <p class="empty" style="padding:2rem">
+            No client stories yet. Click + Add Story to get started.
+          </p>`;
+      }
+      if (pagEl) pagEl.innerHTML = "";
+      return;
     }
-    return;
-  }
 
-  if (!grid) return;
+    if (!grid) return;
 
-  grid.innerHTML = stories.map(s => `
-    <div class="proj-card content-card" data-id="${esc(s._id)}">
-      <div class="proj-card-img" style="background-image:url('${esc(s.image || "")}');position:relative;">
-        <div class="actions-dropdown" data-id="${esc(s._id)}" data-type="client-stories" data-name="${esc(s.clientName)}">
-          <button class="dropdown-toggle">⋮</button>
-          <div class="dropdown-menu">
-            <button class="dropdown-item" data-action="edit">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-              Edit
-            </button>
-            <button class="dropdown-item" data-action="duplicate">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              Duplicate
-            </button>
-            <button class="dropdown-item danger" data-action="delete">
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-              Delete
-            </button>
+    const totalPages = Math.ceil(cachedStories.length / STORIES_PAGE_SIZE) || 1;
+    const activePage = Math.max(1, Math.min(currentStoriesPage, totalPages));
+    const startIdx = (activePage - 1) * STORIES_PAGE_SIZE;
+    const pageStories = cachedStories.slice(startIdx, startIdx + STORIES_PAGE_SIZE);
+
+    grid.innerHTML = pageStories.map(s => `
+      <div class="proj-card content-card" data-id="${esc(s._id)}">
+        <div class="proj-card-img" style="background-image:url('${esc(s.image || "")}');position:relative;">
+          <div class="actions-dropdown" data-id="${esc(s._id)}" data-type="client-stories" data-name="${esc(s.clientName)}">
+            <button class="dropdown-toggle" title="Options" aria-label="Story actions"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+            <div class="dropdown-menu">
+              <button class="dropdown-item" data-action="edit">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <span>Edit Story</span>
+              </button>
+              <button class="dropdown-item" data-action="duplicate">
+                <i class="fa-solid fa-copy"></i>
+                <span>Duplicate</span>
+              </button>
+              <button class="dropdown-item danger" data-action="delete">
+                <i class="fa-solid fa-trash"></i>
+                <span>Delete Story</span>
+              </button>
+            </div>
           </div>
         </div>
+
+        <div class="proj-card-body">
+          <span class="proj-tag">${esc(s.industry)}</span>
+          <div class="proj-title">${esc(s.clientName)}</div>
+          <div class="proj-place">${esc(s.clientRole)}</div>
+          <p class="proj-desc">${esc(s.testimonial)}</p>
+        </div>
       </div>
+    `).join("");
 
-      <div class="proj-card-body">
-        <span class="proj-tag">${esc(s.industry)}</span>
-
-        <div class="proj-title">${esc(s.clientName)}</div>
-
-        <div class="proj-place">${esc(s.clientRole)}</div>
-
-        <p class="proj-desc">${esc(s.testimonial)}</p>
-      </div>
-    </div>
-  `).join("");
-
-  // Dropdown menu handlers for client story cards
-  grid.querySelectorAll('.dropdown-toggle').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const menu = btn.nextElementSibling;
-      document.querySelectorAll('.dropdown-menu').forEach(m => {
-        if (m !== menu) m.classList.remove('show');
+    // Dropdown menu handlers for client story cards
+    grid.querySelectorAll('.dropdown-toggle').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const menu = btn.nextElementSibling;
+        document.querySelectorAll('.dropdown-menu').forEach(m => {
+          if (m !== menu) m.classList.remove('show');
+        });
+        menu.classList.toggle('show');
       });
-      menu.classList.toggle('show');
     });
-  });
 
-  grid.querySelectorAll('.dropdown-item').forEach(item => {
-    item.addEventListener('click', async (e) => {
-      e.stopPropagation();
-      const dropdown = item.closest('.actions-dropdown');
-      const itemId = dropdown.dataset.id;
-      const itemType = dropdown.dataset.type;
-      const itemName = dropdown.dataset.name;
-      const action = item.dataset.action;
-      
-      // Close the menu
-      dropdown.querySelector('.dropdown-menu').classList.remove('show');
+    grid.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const dropdown = item.closest('.actions-dropdown');
+        const itemId = dropdown.dataset.id;
+        const itemType = dropdown.dataset.type;
+        const itemName = dropdown.dataset.name;
+        const action = item.dataset.action;
+        
+        // Close the menu
+        dropdown.querySelector('.dropdown-menu').classList.remove('show');
 
-      switch (action) {
-        case 'edit':
-          const storyData = await apiFetch(`/client-stories/${itemId}`);
-          openStoryModal(storyData);
-          break;
-        case 'duplicate':
-          try {
-            await apiFetch(`/${itemType}/${itemId}/duplicate`, { method: 'POST' });
-            showToast('Cloned', 'Copy created successfully', 'success');
-            loadClientStories();
-          } catch(e) {
-            Swal.fire({
-              icon: "error",
-              title: "Clone Failed",
-              text: e.message
-            });
-          }
-          break;
-        case 'delete':
-          const result = await Swal.fire({
-            title: `Delete "${itemName}"?`,
-            text: "This action cannot be undone.",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Delete",
-            cancelButtonText: "Cancel",
-            confirmButtonColor: "#dc2626",
-            cancelButtonColor: "#6b7280",
-            reverseButtons: true
-          });
-
-          if (!result.isConfirmed) return;
-
-          try {
-            await apiFetch(`/${itemType}/${itemId}`, {
-              method: "DELETE"
+        switch (action) {
+          case 'edit':
+            const storyData = await apiFetch(`/client-stories/${itemId}`);
+            openStoryModal(storyData);
+            break;
+          case 'duplicate':
+            try {
+              await apiFetch(`/${itemType}/${itemId}/duplicate`, { method: 'POST' });
+              showToast('Cloned', 'Copy created successfully', 'success');
+              loadClientStories(activePage);
+            } catch(e) {
+              Swal.fire({
+                icon: "error",
+                title: "Clone Failed",
+                text: e.message
+              });
+            }
+            break;
+          case 'delete':
+            const result = await Swal.fire({
+              title: `Delete "${itemName}"?`,
+              text: "This action cannot be undone.",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonText: "Delete",
+              cancelButtonText: "Cancel",
+              confirmButtonColor: "#dc2626",
+              cancelButtonColor: "#6b7280",
+              reverseButtons: true
             });
 
-            await Swal.fire({
-              icon: "success",
-              title: "Deleted!",
-              text: "Client story deleted successfully.",
-              timer: 1500,
-              showConfirmButton: false
-            });
+            if (!result.isConfirmed) return;
 
-            loadClientStories();
+            try {
+              await apiFetch(`/${itemType}/${itemId}`, {
+                method: "DELETE"
+              });
 
-          } catch (e) {
+              await Swal.fire({
+                icon: "success",
+                title: "Deleted!",
+                text: "Client story deleted successfully.",
+                timer: 1500,
+                showConfirmButton: false
+              });
+
+              loadClientStories(activePage);
+
+            } catch (e) {
             Swal.fire({
               icon: "error",
               title: "Delete Failed",
@@ -1556,6 +1655,11 @@ async function loadClientStories() {
           break;
       }
     });
+  });
+
+  renderPagination(totalPages, activePage, "storiesPagination", (p) => {
+    loadClientStories(p);
+    grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 }
 
@@ -1834,39 +1938,53 @@ document.getElementById("storyDeleteBtn")
 
   // ── BLOG ───────────────────────────────────────────────────
   let editingBlogId = null;
+  let currentBlogPage = 1;
+  const BLOG_PAGE_SIZE = 6;
+  let cachedBlogs = [];
 
-  async function loadBlogs() {
+  async function loadBlogs(page = 1) {
+    currentBlogPage = page;
     const data = await apiFetch('/blogs/admin/all');
-    const blogs = data?.data || data;
+    const allBlogs = data?.data || data;
+    cachedBlogs = Array.isArray(allBlogs) ? allBlogs : [];
     const grid = document.getElementById('blogGrid');
-    if (!blogs || !blogs.length) {
+    const pagEl = document.getElementById('blogPagination');
+    if (!grid) return;
+
+    if (!cachedBlogs.length) {
       grid.innerHTML = `<p class="empty" style="padding:2rem">No blog posts yet. Click + Add Post to get started.</p>`;
+      if (pagEl) pagEl.innerHTML = '';
       return;
     }
 
-    grid.innerHTML = blogs.map(b => `
+    const totalPages = Math.ceil(cachedBlogs.length / BLOG_PAGE_SIZE) || 1;
+    const activePage = Math.max(1, Math.min(currentBlogPage, totalPages));
+    const startIdx = (activePage - 1) * BLOG_PAGE_SIZE;
+    const pageBlogs = cachedBlogs.slice(startIdx, startIdx + BLOG_PAGE_SIZE);
+
+    grid.innerHTML = pageBlogs.map(b => `
       <div class="proj-card content-card" data-id="${esc(b._id)}">
         <div class="proj-card-img" style="background-image:url('${esc(b.coverImage || b.image || '')}');position:relative;">
           ${b.featured ? '<span class="card-badge badge-featured">★ Featured</span>' : ''}
           <span class="card-status-badge status-${esc(b.status)}">${esc(b.status)}</span>
           <div class="actions-dropdown" data-id="${esc(b._id)}" data-type="blogs" data-name="${esc(b.title.replace(/"/g,''))}" data-status="${esc(b.status)}">
-            <button class="dropdown-toggle">⋮</button>
+            <button class="dropdown-toggle" title="Options" aria-label="Blog actions"><i class="fa-solid fa-ellipsis-vertical"></i></button>
             <div class="dropdown-menu">
               <button class="dropdown-item" data-action="edit">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                Edit
+                <i class="fa-solid fa-pen-to-square"></i>
+                <span>Edit Post</span>
               </button>
               <button class="dropdown-item" data-action="toggle-status">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                ${b.status === 'published' ? 'Set to Draft' : 'Publish'}
+                <i class="fa-solid ${b.status === 'published' ? 'fa-eye-slash' : 'fa-globe'}"></i>
+                <span>${b.status === 'published' ? 'Set to Draft' : 'Publish'}</span>
               </button>
               <button class="dropdown-item" data-action="duplicate">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                Duplicate
+                <i class="fa-solid fa-copy"></i>
+                <span>Duplicate</span>
               </button>
               <button class="dropdown-item danger" data-action="delete">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                Delete
+                <i class="fa-solid fa-trash"></i>
+                <span>Delete Post</span>
               </button>
             </div>
           </div>
@@ -1920,14 +2038,14 @@ document.getElementById("storyDeleteBtn")
             try {
               await apiFetch(`/blogs/${itemId}`, { method: 'PATCH', body: JSON.stringify({ status: newStatus }) });
               showToast('Status updated', `Post set to ${newStatus}`, 'success');
-              loadBlogs();
+              loadBlogs(activePage);
             } catch(e) { showToast('Error', e.message, 'error'); }
             break;
           case 'duplicate':
             try {
               await apiFetch(`/${itemType}/${itemId}/duplicate`, { method: 'POST' });
               showToast('Cloned', 'Draft copy created', 'success');
-              loadBlogs();
+              loadBlogs(activePage);
             } catch(e) { showToast('Error', e.message, 'error'); }
             break;
           case 'delete':
@@ -1945,12 +2063,17 @@ document.getElementById("storyDeleteBtn")
               try {
                 await apiFetch(`/${itemType}/${itemId}`, { method: 'DELETE' });
                 showToast('Deleted', 'Item removed', 'success');
-                loadBlogs();
+                loadBlogs(activePage);
               } catch(e) { showToast('Error', e.message, 'error'); }
             }
             break;
         }
       });
+    });
+
+    renderPagination(totalPages, activePage, "blogPagination", (p) => {
+      loadBlogs(p);
+      grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }
 
@@ -2094,19 +2217,19 @@ document.getElementById("storyDeleteBtn")
       <div class="proj-card content-card" data-id="${esc(c._id)}">
         <div class="proj-card-img" style="background-image:url('${esc(c.image || '')}');position:relative;">
           <div class="actions-dropdown" data-id="${esc(c._id)}" data-type="case-studies" data-name="${esc(c.title.replace(/"/g,''))}">
-            <button class="dropdown-toggle">⋮</button>
+            <button class="dropdown-toggle" title="Options" aria-label="Case study actions"><i class="fa-solid fa-ellipsis-vertical"></i></button>
             <div class="dropdown-menu">
               <button class="dropdown-item" data-action="edit">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                Edit
+                <i class="fa-solid fa-pen-to-square"></i>
+                <span>Edit Case Study</span>
               </button>
               <button class="dropdown-item" data-action="duplicate">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                Duplicate
+                <i class="fa-solid fa-copy"></i>
+                <span>Duplicate</span>
               </button>
               <button class="dropdown-item danger" data-action="delete">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                Delete
+                <i class="fa-solid fa-trash"></i>
+                <span>Delete Case Study</span>
               </button>
             </div>
           </div>
@@ -2322,19 +2445,19 @@ document.getElementById("storyDeleteBtn")
       <div class="proj-card content-card" data-id="${esc(n._id)}">
         <div class="proj-card-img" style="background-image:url('${esc(n.image || '')}');position:relative;">
           <div class="actions-dropdown" data-id="${esc(n._id)}" data-type="industry-news" data-name="${esc(n.title.replace(/"/g,''))}">
-            <button class="dropdown-toggle">⋮</button>
+            <button class="dropdown-toggle" title="Options" aria-label="News actions"><i class="fa-solid fa-ellipsis-vertical"></i></button>
             <div class="dropdown-menu">
               <button class="dropdown-item" data-action="edit">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                Edit
+                <i class="fa-solid fa-pen-to-square"></i>
+                <span>Edit News</span>
               </button>
               <button class="dropdown-item" data-action="duplicate">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                Duplicate
+                <i class="fa-solid fa-copy"></i>
+                <span>Duplicate</span>
               </button>
               <button class="dropdown-item danger" data-action="delete">
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                Delete
+                <i class="fa-solid fa-trash"></i>
+                <span>Delete News</span>
               </button>
             </div>
           </div>
@@ -2672,18 +2795,32 @@ document.getElementById("storyDeleteBtn")
       const profileAvatarImg = document.getElementById('profileAvatarImg');
       const profileAvatarText = document.getElementById('profileAvatarText');
       const profilePicPreview = document.getElementById('profilePicturePreview');
+      const settingsAvatarText = document.getElementById('profileAvatarTextSettings');
       if (currentUser.profilePicture) {
-        profileAvatarImg.src = currentUser.profilePicture;
-        profileAvatarImg.style.display = 'block';
-        profileAvatarText.style.display = 'none';
-        profilePicPreview.style.backgroundImage = `url(${currentUser.profilePicture})`;
-        profilePicPreview.style.backgroundSize = 'cover';
-        profilePicPreview.style.backgroundPosition = 'center';
+        if (profileAvatarImg) {
+          profileAvatarImg.src = currentUser.profilePicture;
+          profileAvatarImg.style.display = 'block';
+        }
+        if (profileAvatarText) profileAvatarText.style.display = 'none';
+        if (profilePicPreview) {
+          profilePicPreview.style.backgroundImage = `url(${currentUser.profilePicture})`;
+          profilePicPreview.style.backgroundSize = 'cover';
+          profilePicPreview.style.backgroundPosition = 'center';
+        }
+        if (settingsAvatarText) settingsAvatarText.style.display = 'none';
       } else {
-        profileAvatarImg.style.display = 'none';
-        profileAvatarText.style.display = 'block';
-        profileAvatarText.textContent = (currentUser.name || 'A').charAt(0).toUpperCase();
-        profilePicPreview.style.backgroundImage = 'none';
+        if (profileAvatarImg) profileAvatarImg.style.display = 'none';
+        if (profileAvatarText) {
+          profileAvatarText.style.display = 'block';
+          profileAvatarText.textContent = (currentUser.name || 'A').charAt(0).toUpperCase();
+        }
+        if (profilePicPreview) {
+          profilePicPreview.style.backgroundImage = 'none';
+        }
+        if (settingsAvatarText) {
+          settingsAvatarText.style.display = 'block';
+          settingsAvatarText.textContent = (currentUser.name || 'A').charAt(0).toUpperCase();
+        }
       }
       
       // Show/hide nav items based on permissions
@@ -3109,13 +3246,28 @@ document.getElementById("storyDeleteBtn")
           <td>${fmtDate(j.createdAt)}</td>
           <td>
             <div class="actions-dropdown" data-id="${esc(j._id)}">
-              <button class="dropdown-toggle">⋮</button>
+              <button class="dropdown-toggle" title="Options" aria-label="Job actions"><i class="fa-solid fa-ellipsis-vertical"></i></button>
               <div class="dropdown-menu">
-                <button class="dropdown-item" data-action="edit">Edit</button>
-                <button class="dropdown-item" data-action="duplicate">Duplicate</button>
-                <button class="dropdown-item" data-action="close">Close Job</button>
-                <button class="dropdown-item" data-action="archive">Archive</button>
-                <button class="dropdown-item danger" data-action="delete">Delete</button>
+                <button class="dropdown-item" data-action="edit">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                  <span>Edit Job</span>
+                </button>
+                <button class="dropdown-item" data-action="duplicate">
+                  <i class="fa-solid fa-copy"></i>
+                  <span>Duplicate</span>
+                </button>
+                <button class="dropdown-item" data-action="close">
+                  <i class="fa-solid fa-ban"></i>
+                  <span>Close Job</span>
+                </button>
+                <button class="dropdown-item" data-action="archive">
+                  <i class="fa-solid fa-box-archive"></i>
+                  <span>Archive</span>
+                </button>
+                <button class="dropdown-item danger" data-action="delete">
+                  <i class="fa-solid fa-trash"></i>
+                  <span>Delete Job</span>
+                </button>
               </div>
             </div>
           </td>
@@ -3510,15 +3662,7 @@ async function loadAnalytics() {
   contacts.forEach(lead => { if (lead.country) countryCounts[lead.country] = (countryCounts[lead.country] || 0) + 1; });
   const topCountry = Object.entries(countryCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || '—';
 
-  const budgets = contacts.map(lead => parseInt(lead.budget)).filter(n => !isNaN(n));
-  function fmtINR(val) {
-    if (val >= 10000000) return `₹${(val/10000000).toFixed(1)}Cr`;
-    if (val >= 100000)   return `₹${(val/100000).toFixed(1)}L`;
-    if (val >= 1000)     return `₹${(val/1000).toFixed(0)}K`;
-    return `₹${val.toLocaleString('en-IN')}`;
-  }
-  const totalBudget = budgets.length > 0 ? fmtINR(budgets.reduce((a, b) => a + b, 0)) : '—';
-  const avgBudget = budgets.length > 0 ? fmtINR(Math.round(budgets.reduce((a, b) => a + b, 0) / budgets.length)) : '—';
+  const activeInquiries = contacts.filter(c => c.status === 'new' || c.status === 'contacted').length;
 
   const sentEmails = emails.filter(e => e.status === 'sent').length;
   const emailRate = emails.length > 0 ? ((sentEmails / emails.length) * 100).toFixed(0) + '%' : '—';
@@ -3527,7 +3671,8 @@ async function loadAnalytics() {
   document.getElementById('an-conversion').textContent  = convRate;
   document.getElementById('an-topService').textContent  = topService;
   document.getElementById('an-topCountry').textContent  = topCountry;
-  document.getElementById('an-avgBudget').textContent   = avgBudget;
+  const avgBudgetEl = document.getElementById('an-avgBudget');
+  if (avgBudgetEl) avgBudgetEl.textContent = activeInquiries;
   document.getElementById('an-emailRate').textContent   = emailRate;
 
   // ── Line chart: leads over time (last N days) ──────────

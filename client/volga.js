@@ -30,17 +30,57 @@ try {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// ─── 2. LOADER ───────────────────────────────────────────
+// ─── 2. UNIVERSAL ANIMATION ENGINE & LOADER ──────────────
+let volgaAnimationsInitialized = false;
+
+function initAllAnimations() {
+  if (volgaAnimationsInitialized) return;
+  volgaAnimationsInitialized = true;
+
+  if (typeof gsap === 'undefined') return;
+  if (typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  initHeroAnimation();
+  setupSectionHeaderAnimations();
+  setupGridAndCardAnimations();
+  setupGenericReveals();
+  setupStatCounters();
+  setupEnhancedServices();
+  setupTextScramble();
+  setupParallax();
+  setupMagnetic();
+  
+  if (typeof ScrollTrigger !== 'undefined') {
+    ScrollTrigger.refresh();
+    setTimeout(() => ScrollTrigger.refresh(), 300);
+    setTimeout(() => ScrollTrigger.refresh(), 800);
+  }
+}
+
+// Global hook
+window.initVolgaAnimations = initAllAnimations;
+
+// Loader logic (runs if #loader is present, otherwise initAllAnimations runs immediately)
 (function initLoader() {
   const loader = document.getElementById('loader');
   const fill = document.getElementById('loaderFill');
   const loaderTx = document.getElementById('loaderText');
-  if (!loader || !fill || !loaderTx) return;
+
+  if (!loader || !fill || !loaderTx) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAllAnimations);
+    } else {
+      initAllAnimations();
+    }
+    return;
+  }
 
   const messages = [
     'Initializing Reality...',
-    'Calibrating VR Engine...',
-    'Loading Dimensions...',
+    'Calibrating XR Engine...',
+    'Loading Assets...',
     'Welcome to VOLGA'
   ];
 
@@ -51,504 +91,494 @@ try {
     if (dismissed) return;
     dismissed = true;
     clearInterval(interval);
-    fill.style.width = '100%';
-    loaderTx.textContent = 'Welcome to VOLGA';
-    setTimeout(() => {
-      gsap.to(loader, {
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power2.inOut',
-        onComplete: () => {
-          loader.style.display = 'none';
-          initHeroAnimation();
-          setupEnhancedServices();
-          setupTextScramble();
-          if (typeof setupScrollReveals === 'function') setupScrollReveals();
-          if (typeof setupParallax === 'function') setupParallax();
-          if (typeof setupMagnetic === 'function') setupMagnetic();
-          if (typeof setupGlobalTextScrollAnimation === 'function') setupGlobalTextScrollAnimation();
-        }
-      });
-    }, 300);
+    if (fill) fill.style.width = '100%';
+    if (loaderTx) loaderTx.textContent = 'Welcome to VOLGA';
+
+    gsap.to(loader, {
+      opacity: 0,
+      duration: 0.45,
+      ease: 'power2.inOut',
+      onComplete: () => {
+        loader.style.display = 'none';
+        initAllAnimations();
+      }
+    });
   }
 
-  // Expose so hero-3d.js can call it when the first frame renders
   window.heroReady = dismissLoader;
 
-  // Safety fallback — dismiss after 8s no matter what
-  const safetyTimer = setTimeout(dismissLoader, 8000);
-
-  // Fake progress — runs up to 85% then holds, waiting for heroReady()
   const interval = setInterval(() => {
-    if (pct >= 85) return; // hold here until hero signals ready
-    pct += Math.random() * 18 + 4;
-    if (pct > 85) pct = 85;
-    fill.style.width = pct + '%';
-    const msgIdx = Math.floor((pct / 100) * (messages.length - 1));
-    loaderTx.textContent = messages[msgIdx];
-  }, 60);
+    pct += Math.random() * 22 + 12;
+    if (pct >= 100) {
+      pct = 100;
+      clearInterval(interval);
+      dismissLoader();
+    }
+    if (fill) fill.style.width = pct + '%';
+    const msgIdx = Math.min(messages.length - 1, Math.floor((pct / 100) * messages.length));
+    if (loaderTx && messages[msgIdx]) loaderTx.textContent = messages[msgIdx];
+  }, 45);
+
+  if (document.readyState === 'complete') {
+    setTimeout(dismissLoader, 250);
+  } else {
+    window.addEventListener('load', () => setTimeout(dismissLoader, 150));
+  }
 })();
 
-// ─── 4. HERO ANIMATION ───────────────────────────────────
+// Automatic fallback on DOMContentLoaded for all pages
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    const loader = document.getElementById('loader');
+    if (!loader) initAllAnimations();
+  });
+} else {
+  const loader = document.getElementById('loader');
+  if (!loader) initAllAnimations();
+}
+
+window.addEventListener('load', () => {
+  if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+});
+
+// ─── 4. HERO ANIMATION (UNIVERSAL) ───────────────────────
 function initHeroAnimation() {
-  const lines = document.querySelectorAll('.Hero-line');
-  if (!lines.length) return;
-  const tl = gsap.timeline();
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  tl.fromTo(lines,
-    { y: '110%', opacity: 0 },
-    {
-      y: '0%', opacity: 1,
-      duration: 1.1,
-      ease: 'power4.out',
-      stagger: 0.12
+  // 4a. Homepage Hero
+  const homeLines = document.querySelectorAll('.Hero-line');
+  if (homeLines.length) {
+    if (prefersReducedMotion) {
+      gsap.set('.Hero-line, .Hero-badge, .Hero-sub, .Hero-cta-row, .Hero-stats .stat', { opacity: 1, y: 0 });
+    } else {
+      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+      tl.fromTo(homeLines,
+        { y: '100%', opacity: 0 },
+        { y: '0%', opacity: 1, duration: 0.95, stagger: 0.1 }
+      )
+      .fromTo('.Hero-badge',
+        { opacity: 0, y: -15 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' },
+        '-=0.45'
+      )
+      .fromTo('.Hero-sub',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out' },
+        '-=0.4'
+      )
+      .fromTo('.Hero-cta-row',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out' },
+        '-=0.4'
+      )
+      .fromTo('.Hero-stats .stat',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.1 },
+        '-=0.35'
+      );
     }
-  )
-    .fromTo('.Hero-badge',
-      { opacity: 0, y: -20 },
-      { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' },
-      '-=0.5'
-    )
-    .fromTo('.Hero-sub',
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' },
-      '-=0.4'
-    )
-    .fromTo('.Hero-cta-row',
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' },
-      '-=0.4'
-    )
-    .fromTo('.Hero-scroll-hint',
-      { opacity: 0, x: 20 },
-      { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out' },
-      '-=0.5'
-    )
-    .fromTo('.Hero-stats .stat',
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.15 },
-      '-=0.4'
-    );
+  }
 
-  // Hero video parallax
-  const heroVideo = document.querySelector('.Hero-video');
-  if (heroVideo) {
-    gsap.to('.Hero-video', {
-      yPercent: 25,
+  // 4b. Inner Page Heroes (Technologies, Services, Solutions, Industries, Contact, About, Careers, Insights)
+  const innerHeroes = document.querySelectorAll('.hero, .page-Hero, .page-hero, .about-hero, .tech-hero, .services-hero, .career-hero, .spotlight, .contact-hero, .insights-hero, .hero-cinema');
+  innerHeroes.forEach(hero => {
+    if (hero.classList.contains('Hero')) return; // handled above
+
+    const badge = hero.querySelector('.hero-pill, .hero-badge, .page-kicker, .hero-kicker, .breadcrumb, .pill');
+    const titles = hero.querySelectorAll('.hero-title .word-inner, .hero-title, .page-hero-title, h1');
+    const subtitle = hero.querySelector('.hero-sub, .hero-subtitle, .hero-desc, .hero-description, .page-hero-sub, .hero-lead, p.lead');
+    const ctas = hero.querySelectorAll('.hero-cta-wrap, .hero-cta, .hero-cta-row, .hero-actions, .hero-buttons, .btn-primary, .btn-ghost');
+    const statOrbs = hero.querySelectorAll('.stat-orb, .hero-stat, .hero-stat-card');
+    const media = hero.querySelector('.hero-video-wrap, .hero-visual, .hero-media, .hero-image, .tech-cube-container, .hero-media-wrap');
+
+    if (prefersReducedMotion) {
+      if (badge) gsap.set(badge, { opacity: 1, y: 0 });
+      if (titles.length) gsap.set(titles, { opacity: 1, y: 0 });
+      if (subtitle) gsap.set(subtitle, { opacity: 1, y: 0 });
+      if (ctas.length) gsap.set(ctas, { opacity: 1, y: 0 });
+      if (statOrbs.length) gsap.set(statOrbs, { opacity: 1, y: 0, scale: 1 });
+      if (media) gsap.set(media, { opacity: 1, scale: 1 });
+      return;
+    }
+
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    if (badge) {
+      tl.fromTo(badge, { opacity: 0, y: -15 }, { opacity: 1, y: 0, duration: 0.6, delay: 0.1 });
+    }
+
+    if (titles.length) {
+      tl.fromTo(titles,
+        { opacity: 0, y: 35 },
+        { opacity: 1, y: 0, duration: 0.85, stagger: 0.08, ease: 'power4.out' },
+        badge ? '-=0.35' : '+=0.1'
+      );
+    }
+
+    if (subtitle) {
+      tl.fromTo(subtitle,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.65 },
+        '-=0.45'
+      );
+    }
+
+    if (ctas.length) {
+      tl.fromTo(ctas,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, stagger: 0.08 },
+        '-=0.4'
+      );
+    }
+
+    if (statOrbs.length) {
+      tl.fromTo(statOrbs,
+        { opacity: 0, y: 20, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.1, ease: 'back.out(1.5)' },
+        '-=0.35'
+      );
+    }
+
+    if (media) {
+      tl.fromTo(media,
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.85, ease: 'power3.out' },
+        '-=0.6'
+      );
+    }
+  });
+
+  // Hero background video / image parallax
+  const heroVideo = document.querySelector('.Hero-video, .hero-video-bg, .hero-cinema video');
+  if (heroVideo && typeof ScrollTrigger !== 'undefined') {
+    gsap.to(heroVideo, {
+      yPercent: 20,
       ease: 'none',
       scrollTrigger: {
-        trigger: '.Hero',
+        trigger: heroVideo.closest('section') || '.Hero',
         start: 'top top',
         end: 'bottom top',
         scrub: true
       }
     });
   }
+}
 
-  // Animate stats counters
-  document.querySelectorAll('.stat-num').forEach(el => {
-    if (el.dataset.val) {
-      const target = parseInt(el.dataset.val);
-      if (!isNaN(target)) {
-        gsap.to(el, {
-          innerText: target,
-          duration: 2.5,
+// ─── 5. SECTION HEADERS SCROLL ANIMATION ─────────────────
+function setupSectionHeaderAnimations() {
+  if (typeof ScrollTrigger === 'undefined') return;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) return;
+
+  const headerContainers = document.querySelectorAll(`
+    .section-header, .section-head, .tech-header, .solutionss-header,
+    .svc-header, .cube-mission-header, .why-header, .process-header,
+    .industries-header, .contact-header, .blog-section-header,
+    .page-section-header, .about-header, .heading-wrap, .sec-head,
+    .sh-head, .section-top, .grid-header, .tech-top
+  `);
+
+  headerContainers.forEach(header => {
+    // Avoid double-animating if within hero
+    if (header.closest('.Hero, .hero, .page-Hero, .page-hero')) return;
+
+    const kicker = header.querySelector('.section-kicker, .kicker, .cube-mission-kicker, .svc-kicker, .tech-kicker, .pill-badge, .badge, span.kicker');
+    const title = header.querySelector('h2, h3.section-title, .section-title, .tech-title, .svc-title, .cube-mission-title, .why-title');
+    const desc = header.querySelector('.section-desc, .section-subtitle, .tech-desc, .svc-desc, .cube-mission-desc, p');
+    const link = header.querySelector('.svc-link, .header-link, .btn-see-all');
+
+    const els = [kicker, title, desc, link].filter(Boolean);
+    if (!els.length) return;
+
+    gsap.set(els, { opacity: 0, y: 26 });
+
+    gsap.to(els, {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      ease: 'power3.out',
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: header,
+        start: 'top 86%',
+        once: true
+      }
+    });
+  });
+}
+
+// ─── 6. CARDS & GRIDS STAGGERED SCROLL ANIMATION ──────────
+function setupGridAndCardAnimations() {
+  if (typeof ScrollTrigger === 'undefined') return;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) return;
+
+  // Find distinct grid containers
+  const gridSelectors = [
+    '.solutionss-grid', '.svc-grid', '.tech-grid', '.tech-stack-grid',
+    '.industry-grid', '.portfolio-grid', '.blog-grid', '.cards-grid',
+    '.benefits-grid', '.why-cards', '.mission-grid', '.values-grid',
+    '.process-steps', '.step-grid', '.team-grid', '.faq-grid',
+    '.features-grid', '.stories-grid', '.jobs-list', '.wc-grid',
+    '.ai-grid', '.ar-grid', '.apc-grid', '.about-grid', '.client-grid',
+    '.insights-grid', '.services-grid', '.tech-cards-wrap', '.blog-section .container',
+    '#svcGrid', '#techGrid'
+  ];
+
+  const grids = document.querySelectorAll(gridSelectors.join(','));
+
+  grids.forEach(grid => {
+    // Collect child cards
+    const cards = Array.from(grid.querySelectorAll(`
+      .solutions-card, .svc-card, .tech-card, .tech-item, .industry-card,
+      .portfolio-card, .card, .blog-card, .why-card, .benefit-card,
+      .feature-card, .value-card, .process-step, .step-card, .timeline-item,
+      .team-card, .faq-item, .stat-card, .job-card, .story-card,
+      .wc, .ai-card, .apc, .tcard, .bento-card, .apc-item
+    `));
+
+    if (!cards.length) return;
+
+    gsap.set(cards, { opacity: 0, y: 32, scale: 0.98 });
+
+    gsap.to(cards, {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.65,
+      ease: 'power3.out',
+      stagger: {
+        each: 0.08,
+        from: 'start'
+      },
+      scrollTrigger: {
+        trigger: grid,
+        start: 'top 85%',
+        once: true
+      }
+    });
+  });
+
+  // Individual cards not inside recognized grids
+  const standaloneCards = document.querySelectorAll('.standalone-card, .spotlight-card, .cta-banner, .cta-inner, .contact-card');
+  standaloneCards.forEach(card => {
+    gsap.set(card, { opacity: 0, y: 30 });
+    gsap.to(card, {
+      opacity: 1,
+      y: 0,
+      duration: 0.75,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: card,
+        start: 'top 85%',
+        once: true
+      }
+    });
+  });
+}
+
+// ─── 7. GENERIC REVEALS & UTILITY CLASSES ─────────────────
+function setupGenericReveals() {
+  if (typeof ScrollTrigger === 'undefined') return;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) return;
+
+  // .reveal and .reveal-fade
+  gsap.utils.toArray('.reveal, .reveal-fade').forEach(el => {
+    if (el.dataset.animBound) return;
+    el.dataset.animBound = 'true';
+    gsap.set(el, { opacity: 0, y: 28 });
+    gsap.to(el, {
+      opacity: 1,
+      y: 0,
+      duration: 0.75,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        once: true
+      }
+    });
+  });
+
+  // .reveal-left
+  gsap.utils.toArray('.reveal-left').forEach(el => {
+    if (el.dataset.animBound) return;
+    el.dataset.animBound = 'true';
+    gsap.set(el, { opacity: 0, x: -40 });
+    gsap.to(el, {
+      opacity: 1,
+      x: 0,
+      duration: 0.85,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        once: true
+      }
+    });
+  });
+
+  // .reveal-right
+  gsap.utils.toArray('.reveal-right').forEach(el => {
+    if (el.dataset.animBound) return;
+    el.dataset.animBound = 'true';
+    gsap.set(el, { opacity: 0, x: 40 });
+    gsap.to(el, {
+      opacity: 1,
+      x: 0,
+      duration: 0.85,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        once: true
+      }
+    });
+  });
+
+  // .reveal-scale
+  gsap.utils.toArray('.reveal-scale, .reveal-img').forEach(el => {
+    if (el.dataset.animBound) return;
+    el.dataset.animBound = 'true';
+    gsap.set(el, { opacity: 0, scale: 0.92, y: 20 });
+    gsap.to(el, {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 86%',
+        once: true
+      }
+    });
+  });
+
+  // Section rule draw lines
+  gsap.utils.toArray('.section-rule').forEach(rule => {
+    const lines = rule.querySelectorAll('.section-rule-line, hr, span');
+    if (lines.length) {
+      gsap.from(lines, {
+        scaleX: 0,
+        duration: 1.1,
+        ease: 'power3.inOut',
+        transformOrigin: 'left',
+        scrollTrigger: { trigger: rule, start: 'top 90%', once: true }
+      });
+    }
+  });
+}
+
+// ─── 8. STAT COUNTERS ANIMATION ──────────────────────────
+function setupStatCounters() {
+  if (typeof ScrollTrigger === 'undefined') return;
+
+  const statEls = document.querySelectorAll('.stat-num, [data-val], [data-target], [data-count], .num[data-target]');
+  statEls.forEach(el => {
+    if (el.dataset.counterBound) return;
+    el.dataset.counterBound = 'true';
+
+    const targetVal = parseFloat(el.dataset.val || el.dataset.target || el.dataset.count || el.textContent.replace(/[^\d.]/g, ''));
+    if (isNaN(targetVal)) return;
+
+    const suffix = el.textContent.replace(/[\d.,\s]/g, '') || (el.dataset.suffix || '');
+    const prefix = el.dataset.prefix || '';
+
+    const counterObj = { val: 0 };
+
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 88%',
+      once: true,
+      onEnter: () => {
+        gsap.to(counterObj, {
+          val: targetVal,
+          duration: 2.2,
           ease: 'power2.out',
-          delay: 1.2,
-          snap: { innerText: 1 },
-          onUpdate: function () {
-            el.innerText = Math.round(parseFloat(el.innerText));
+          onUpdate: () => {
+            el.textContent = prefix + Math.round(counterObj.val) + suffix;
           }
         });
       }
-    }
-  });
-}
-
-// ─── 5. NAV SCROLL EFFECT ────────────────────────────────
-(function initNav() {
-  const nav = document.getElementById('nav') || document.getElementById('navbar');
-  const megaMenus = document.querySelectorAll('.mega-menu');
-  if (nav) {
-    ScrollTrigger.create({
-      start: 'top -60px',
-      onEnter: () => {
-        nav.classList.add('scrolled');
-        megaMenus.forEach(menu => menu.classList.add('scrolled'));
-      },
-      onLeaveBack: () => {
-        nav.classList.remove('scrolled');
-        megaMenus.forEach(menu => menu.classList.remove('scrolled'));
-      }
-    });
-  }
-
-  // Mobile burger
-  const burger = document.getElementById('navBurger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const mobileClose = document.getElementById('mobileClose');
-  const mmLinks = document.querySelectorAll('.mm-link');
-  let menuOpen = false;
-
-  if (burger && mobileMenu) {
-    burger.addEventListener('click', () => {
-      menuOpen = !menuOpen;
-      burger.setAttribute('aria-expanded', String(menuOpen));
-      burger.setAttribute('aria-label', menuOpen ? 'Close menu' : 'Open menu');
-      mobileMenu.classList.toggle('open', menuOpen);
-      const spans = burger.querySelectorAll('span');
-      if (menuOpen) {
-        gsap.to(spans[0], { rotation: 45, y: 7, duration: 0.3 });
-        gsap.to(spans[1], { opacity: 0, duration: 0.2 });
-        gsap.to(spans[2], { rotation: -45, y: -7, duration: 0.3 });
-        gsap.fromTo(mmLinks,
-          { y: 50, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, delay: 0.2, ease: 'power3.out' }
-        );
-      } else {
-        gsap.to(spans[0], { rotation: 0, y: 0, duration: 0.3 });
-        gsap.to(spans[1], { opacity: 1, duration: 0.2 });
-        gsap.to(spans[2], { rotation: 0, y: 0, duration: 0.3 });
-        gsap.to(mmLinks, { y: 20, opacity: 0, duration: 0.3, ease: 'power3.in' });
-      }
-    });
-  }
-
-  document.querySelectorAll('.mm-link').forEach(link => {
-    link.addEventListener('click', () => {
-      menuOpen = false;
-      if (mobileMenu) mobileMenu.classList.remove('open');
-      if (burger) {
-        burger.setAttribute('aria-expanded', 'false');
-        burger.setAttribute('aria-label', 'Open menu');
-        const spans = burger.querySelectorAll('span');
-        gsap.to(spans[0], { rotation: 0, y: 0, duration: 0.3 });
-        gsap.to(spans[1], { opacity: 1, duration: 0.2 });
-        gsap.to(spans[2], { rotation: 0, y: 0, duration: 0.3 });
-      }
-    });
-  });
-
-  if (mobileClose) {
-    mobileClose.addEventListener('click', () => {
-      menuOpen = false;
-      if (mobileMenu) mobileMenu.classList.remove('open');
-      if (burger) {
-        burger.setAttribute('aria-expanded', 'false');
-        burger.setAttribute('aria-label', 'Open menu');
-        const spans = burger.querySelectorAll('span');
-        gsap.to(spans[0], { rotation: 0, y: 0, duration: 0.3 });
-        gsap.to(spans[1], { opacity: 1, duration: 0.2 });
-        gsap.to(spans[2], { rotation: 0, y: 0, duration: 0.3 });
-      }
-    });
-  }
-})();
-
-// ─── 5.5. SCROLL PROGRESS BAR ─────────────────────────
-(function initScrollProgress() {
-  const progressBar = document.getElementById('progressBar') || document.getElementById('scrollProgressBar');
-  if (progressBar) {
-    gsap.to(progressBar, {
-      scaleX: 1,
-      ease: 'none',
-      scrollTrigger: {
-        scrub: 0.3,
-        start: 'top top',
-        end: 'bottom bottom'
-      }
-    });
-  }
-})();
-
-// ─── 6. SCROLL-TRIGGERED REVEALS ─────────────────────────
-function setupScrollReveals() {
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Helper function to animate a group of elements
-  const animateGroup = (selector, props) => {
-    const elements = gsap.utils.toArray(selector);
-    if (!elements.length) return;
-    
-    if (prefersReducedMotion) {
-      gsap.set(elements, { opacity: 1, y: 0, x: 0, scale: 1 });
-      return;
-    }
-
-    // Group by closest container
-    const containers = new Map();
-    elements.forEach(el => {
-      const container = el.closest('section, .container, div') || document.body;
-      if (!containers.has(container)) {
-        containers.set(container, []);
-      }
-      containers.get(container).push(el);
-    });
-
-    containers.forEach((els, container) => {
-      gsap.to(els, {
-        ...props,
-        scrollTrigger: {
-          trigger: container,
-          start: 'top 85%',
-          toggleActions: props.toggleActions || 'play none none none', // Don't reverse
-          once: true
-        }
-      });
-    });
-  };
-
-  // Animate all groups
-  animateGroup('.reveal, .reveal-fade', {
-    opacity: 1, y: 0,
-    duration: 0.75,
-    ease: 'power3.out'
-  });
-
-  animateGroup('.reveal-split', {
-    opacity: 1, y: 0,
-    duration: 0.9,
-    ease: 'power3.out'
-  });
-
-  animateGroup('.reveal-img', {
-    opacity: 1, y: 0, scale: 1,
-    duration: 0.9,
-    ease: 'power3.out'
-  });
-
-  animateGroup('.reveal-left', {
-    opacity: 1, x: 0,
-    duration: 0.9,
-    ease: 'power3.out'
-  });
-
-  animateGroup('.reveal-right', {
-    opacity: 1, x: 0,
-    duration: 0.9,
-    ease: 'power3.out'
-  });
-
-  animateGroup('.reveal-scale', {
-    opacity: 1, scale: 1,
-    duration: 0.8,
-    ease: 'back.out(1.4)'
-  });
-
-  // Special cases with indexes
-  const revealServiceEls = gsap.utils.toArray('.reveal-service');
-  if (revealServiceEls.length && !prefersReducedMotion) {
-    gsap.to(revealServiceEls, {
-      opacity: 1, x: 0,
-      duration: 0.7,
-      ease: 'power3.out',
-      stagger: 0.07,
-      scrollTrigger: {
-        trigger: revealServiceEls[0].closest('section, .container') || document.body,
-        start: 'top 88%',
-        toggleActions: 'play none none none',
-        once: true
-      }
-    });
-  }
-
-  const revealStepEls = gsap.utils.toArray('.reveal-step');
-  if (revealStepEls.length && !prefersReducedMotion) {
-    gsap.to(revealStepEls, {
-      opacity: 1, y: 0,
-      duration: 0.8,
-      ease: 'back.out(1.5)',
-      stagger: 0.12,
-      scrollTrigger: {
-        trigger: '.process-steps',
-        start: 'top 80%',
-        toggleActions: 'play none none none',
-        once: true
-      }
-    });
-  }
-
-  const revealCardEls = gsap.utils.toArray('.reveal-card');
-  if (revealCardEls.length && !prefersReducedMotion) {
-    gsap.to(revealCardEls, {
-      opacity: 1, y: 0,
-      duration: 0.75,
-      ease: 'power3.out',
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: '.why-cards',
-        start: 'top 82%',
-        toggleActions: 'play none none none',
-        once: true
-      }
-    });
-  }
-
-  const revealPillEls = gsap.utils.toArray('.reveal-pill');
-  if (revealPillEls.length && !prefersReducedMotion) {
-    gsap.to(revealPillEls, {
-      opacity: 1, scale: 1,
-      duration: 0.5,
-      ease: 'back.out(2)',
-      stagger: 0.07,
-      scrollTrigger: {
-        trigger: '.benefits-grid',
-        start: 'top 85%',
-        toggleActions: 'play none none none',
-        once: true
-      }
-    });
-  }
-
-  const revealMissionEls = gsap.utils.toArray('.reveal-mission');
-  if (revealMissionEls.length && !prefersReducedMotion) {
-    gsap.to(revealMissionEls, {
-      opacity: 1, y: 0,
-      duration: 0.8,
-      ease: 'power3.out',
-      stagger: 0.15,
-      scrollTrigger: {
-        trigger: '.mission-grid',
-        start: 'top 80%',
-        toggleActions: 'play none none none',
-        once: true
-      }
-    });
-  }
-
-  const revealLiEls = gsap.utils.toArray('.reveal-li');
-  if (revealLiEls.length && !prefersReducedMotion) {
-    gsap.to(revealLiEls, {
-      opacity: 1, x: 0,
-      duration: 0.6,
-      ease: 'power3.out',
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: revealLiEls[0].closest('section, .container') || document.body,
-        start: 'top 88%',
-        toggleActions: 'play none none none',
-        once: true
-      }
-    });
-  }
-
-  // Section rule lines
-  const sectionRules = gsap.utils.toArray('.section-rule');
-  if (sectionRules.length && !prefersReducedMotion) {
-    sectionRules.forEach(rule => {
-      gsap.from(rule.querySelectorAll('.section-rule-line'), {
-        scaleX: 0, duration: 1.2, ease: 'power3.inOut', transformOrigin: 'left',
-        scrollTrigger: { trigger: rule, start: 'top 88%', once: true }
-      });
-    });
-  }
-}
-
-function setupGlobalTextScrollAnimation() {
-  const selectors = [
-    'h1:not(.Hero-heading)',
-    'h2',
-    'h3',
-    'h4',
-    'h5',
-    'h6',
-    'p',
-    
-    
-    '.mm-link',
-    '.btn-primary',
-    '.btn-ghost',
-    '.Hero-badge',
-    '.Hero-scroll-hint span',
-    '.stat-num',
-    '.stat-plus',
-    '.stat-label',
-    '.about-new-label',
-    '.about-new-heading',
-    '.about-new-subtitle',
-    '.about-new-card-title',
-    '.about-new-card-text',
-    '.about-new-tag',
-    '.s2-eyebrow',
-    '.s2-title',
-    '.s2-tab-label',
-    '.ticker-track span'
-  ];
-
-  const targets = gsap.utils.toArray(selectors.join(','));
-  if (!targets.length) return;
-
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReducedMotion) {
-    targets.forEach(el => {
-      if (!el.closest('.Hero, .cta-banner, .cta-inner, .cube-mission-wrap, .blog-section')) {
-        gsap.set(el, { opacity: 1, y: 0, skewY: 0 });
-      }
-    });
-    return;
-  }
-
-  // Group elements by their closest section/container
-  const containers = new Map();
-  targets.forEach(el => {
-    if (!el.offsetParent) return;
-    if (el.closest('.Hero, .cta-banner, .cta-inner, .cube-mission-wrap, .blog-section')) return;
-    
-    const container = el.closest('section, .container, div') || document.body;
-    if (!containers.has(container)) {
-      containers.set(container, []);
-    }
-    containers.get(container).push(el);
-  });
-
-  // Animate each container's elements with a single ScrollTrigger
-  containers.forEach((elements, container) => {
-    gsap.set(elements, { opacity: 0, y: 24, skewY: 2, transformOrigin: 'top center' });
-    gsap.to(elements, {
-      opacity: 1,
-      y: 0,
-      skewY: 0,
-      duration: 0.75,
-      ease: 'power3.out',
-      stagger: 0.05,
-      scrollTrigger: {
-        trigger: container,
-        start: 'top 85%',
-        once: true
-      }
     });
   });
 }
 
-// ─── 7. SECTION HEADING PARALLAX ─────────────────────────
+// ─── 9. PARALLAX EFFECTS ─────────────────────────────────
 function setupParallax() {
-  gsap.utils.toArray('.why-bg-text, .about-marquee').forEach(el => {
+  if (typeof ScrollTrigger === 'undefined') return;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) return;
+
+  // Background floating text
+  gsap.utils.toArray('.why-bg-text, .about-marquee, .bg-watermark').forEach(el => {
     gsap.to(el, {
       x: '-8%',
       ease: 'none',
       scrollTrigger: {
-        trigger: el.closest('section'),
+        trigger: el.closest('section') || el,
         start: 'top bottom',
         end: 'bottom top',
         scrub: 1
       }
     });
   });
+
+  // Spotlight video frame parallax
+  const spotlightFrame = document.querySelector('.spotlight-video-frame');
+  if (spotlightFrame) {
+    gsap.to(spotlightFrame, {
+      y: -35,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: spotlightFrame.closest('section') || spotlightFrame,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1.2
+      }
+    });
+  }
+
+  // AR Mosaic parallax
+  const arMosaic = document.querySelector('.ar-mosaic');
+  if (arMosaic) {
+    gsap.to(arMosaic, {
+      y: -25,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: arMosaic.closest('section') || arMosaic,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1.5
+      }
+    });
+  }
 }
 
-// ─── 8. MAGNETIC HOVER EFFECT ───────────────
+// ─── 10. MAGNETIC BUTTON INTERACTIONS ────────────────────
 function setupMagnetic() {
-  document.querySelectorAll('.service-item, .magnetic-btn').forEach(item => {
+  const magneticEls = document.querySelectorAll(`
+    .btn-primary, .btn-ghost, .nav-cta, .btn-see-all,
+    .magnetic-btn, .card-cta, .hero-cta-primary,
+    .hero-cta-secondary, .c2-submit-btn, .svc-link
+  `);
+
+  magneticEls.forEach(item => {
+    if (item.dataset.magneticBound) return;
+    item.dataset.magneticBound = 'true';
+
     let isAnimating = false;
     let requestId = null;
     let targetX = 0;
     let targetY = 0;
 
-    item.addEventListener('mousemove', (e) => {
+    item.addEventListener('mousemove', e => {
       const rect = item.getBoundingClientRect();
-      targetX = (e.clientX - rect.left - rect.width / 2) * 0.2;
-      targetY = (e.clientY - rect.top - rect.height / 2) * 0.2;
-      
+      targetX = (e.clientX - rect.left - rect.width / 2) * 0.22;
+      targetY = (e.clientY - rect.top - rect.height / 2) * 0.22;
+
       if (!isAnimating) {
         isAnimating = true;
         requestId = requestAnimationFrame(() => {
@@ -557,21 +587,26 @@ function setupMagnetic() {
         });
       }
     });
+
     item.addEventListener('mouseleave', () => {
       if (requestId) cancelAnimationFrame(requestId);
-      gsap.to(item, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)' });
+      gsap.to(item, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1.1, 0.45)' });
     });
   });
 }
 
-// ─── 9. TEXT SCRAMBLE HOVER EFFECT ───────────────
+// ─── 11. TEXT SCRAMBLE HOVER EFFECT ──────────────────────
 function setupTextScramble() {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
   const selectors = [
-    '.svc-card .svc-card-label', '.svc-card h3', '.svc-card .svc-card-tags small'
+    '.svc-card .svc-card-label', '.svc-card h3', '.svc-card .svc-card-tags small',
+    '.tech-card h3', '.solutions-card h3'
   ];
 
   document.querySelectorAll(selectors.join(',')).forEach(el => {
+    if (el.dataset.scrambleBound) return;
+    el.dataset.scrambleBound = 'true';
+
     const originalText = el.innerText.trim();
     if (originalText.length === 0) return;
 
@@ -618,7 +653,7 @@ function setupTextScramble() {
   });
 }
 
-// ─── 10. TICKER PAUSE ON HOVER ───────────────────────────
+// ─── 12. TICKER PAUSE ON HOVER ───────────────────────────
 (function tickerHover() {
   const track = document.getElementById('tickerTrack');
   if (!track) return;
@@ -677,9 +712,7 @@ function setupTextScramble() {
 
 // ─── 11.5 FETCH INSIGHTS DYNAMICALLY ──────
 let allBlogs = [];
-let allCaseStudies = [];
 let allClientStories = [];
-let allIndustryNews = [];
 let currentBlogIndex = 0;
 let touchStartX = 0;
 let touchEndX = 0;
@@ -1049,416 +1082,6 @@ function renderCaseStudiesSkeletons(container) {
   container.innerHTML = skeletonHtml;
 }
 
-async function fetchCaseStudies() {
-  const caseStudiesContainer = document.getElementById('caseStudiesContainer');
-  if (!caseStudiesContainer) return;
-
-  const API = window.VOLGA_API;
-  renderCaseStudiesSkeletons(caseStudiesContainer);
-
-  try {
-    const res = await fetch(`${API}/case-studies`);
-    const caseStudies = await res.json();
-
-    if (caseStudies.length === 0) {
-      caseStudiesContainer.innerHTML = '<p style="color: rgba(255,255,255,0.5); text-align: center; width: 100%; padding: 40px;">More case studies coming soon.</p>';
-      return;
-    }
-
-    allCaseStudies = caseStudies;
-    renderCaseStudies(caseStudiesContainer);
-
-  } catch (err) {
-    console.error("Failed to load case studies:", err);
-    caseStudiesContainer.innerHTML = '<p style="color: rgba(255,255,255,0.5); text-align: center; width: 100%; padding: 40px;">Failed to load case studies.</p>';
-  }
-}
-
-function renderCaseStudies(container) {
-  container.innerHTML = `<div class="blog-grid">${allCaseStudies.map((cs, i) => `
-    <a href="case-study-detail.html?id=${cs._id}" class="cs-card" style="text-decoration: none;">
-      <img class="cs-img" src="${window.getVolgaImageUrl(cs.image) || 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=500&q=80'}" alt="${cs.title}">
-      <div class="cs-body">
-        <div class="cs-industry">${cs.industry || 'Industry'}</div>
-        <div class="cs-title">${cs.title}</div>
-        <div class="cs-desc">${cs.description || ''}</div>
-        ${cs.metrics && cs.metrics.length > 0 ? `
-          <div class="cs-stats">
-            ${cs.metrics.slice(0, 3).map((metric) => `
-              <div>
-                <div class="cs-stat-num">${metric.value}</div>
-                <div class="cs-stat-label">${metric.label}</div>
-              </div>
-            `).join('')}
-          </div>
-        ` : ''}
-        <div class="cs-footer">
-          <span class="cs-meta">${cs.year || new Date(cs.createdAt).toLocaleDateString('en-US', { year: 'numeric' })} · ${cs.industry || 'Industry'}</span>
-          <div class="read-arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-    </a>
-  `).join('')}</div>`;
-}
-
-function renderClientStories(container) {
-  container.innerHTML = allClientStories.map((story, i) => `
-    <div class="story-card">
-      <div class="sc-img-wrap">
-        <img class="sc-img" src="${window.getVolgaImageUrl(story.image) || 'https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=800&q=80'}" alt="${story.clientName}">
-        <div class="sc-industry">${story.industry || 'Industry'}</div>
-      </div>
-      <div class="sc-body">
-        <blockquote class="sc-quote">${story.testimonial || ''}</blockquote>
-        <div class="sc-author">
-          <img class="sc-avatar" src="${window.getVolgaImageUrl(story.avatar) || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80'}" alt="">
-          <div>
-            <div class="sc-name">${story.clientName}</div>
-            <div class="sc-role">${story.clientRole || ''}</div>
-          </div>
-        </div>
-        ${story.impact && story.impact.length > 0 ? `
-          <div class="sc-impact">
-            ${story.impact.map((item) => `<span class="impact-chip">${item}</span>`).join('')}
-          </div>
-        ` : ''}
-      </div>
-    </div>
-  `).join('');
-}
-
-function renderClientStoriesSkeletons(container) {
-  let skeletonHtml = '';
-  for (let i = 0; i < 4; i++) {
-    skeletonHtml += `
-      <div class="skeleton-card">
-        <div class="sc-img-wrap">
-          <div class="skeleton skeleton-img"></div>
-          <div class="skeleton skeleton-industry"></div>
-        </div>
-        <div class="skeleton-body">
-          <div class="skeleton skeleton-quote"></div>
-          <div class="skeleton-author">
-            <div class="skeleton skeleton-avatar"></div>
-            <div class="skeleton-author-info">
-              <div class="skeleton skeleton-name"></div>
-              <div class="skeleton skeleton-role"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-  container.innerHTML = skeletonHtml;
-}
-
-// ─── FETCH CLIENT STORIES DYNAMICALLY ──────
-async function fetchClientStories() {
-  const storiesGrid = document.getElementById('storiesGrid');
-  if (!storiesGrid) return;
-
-  const API = window.VOLGA_API;
-  renderClientStoriesSkeletons(storiesGrid);
-
-  try {
-    const res = await fetch(`${API}/client-stories`);
-    if (!res.ok) throw new Error('API request failed');
-    const stories = await res.json();
-
-    if (stories.length === 0) {
-      storiesGrid.innerHTML = '<p style="color: var(--gray); text-align: center; width: 100%; padding: 40px;">More client stories coming soon.</p>';
-      return;
-    }
-
-    allClientStories = stories;
-    renderClientStories(storiesGrid);
-
-  } catch (err) {
-    console.error("Failed to load client stories, using fallback data:", err);
-    allClientStories = [
-      { industry: 'Manufacturing', testimonial: 'Volga XR turned our training into a measurable competitive advantage. Our field teams onboarded 50% faster.', clientName: 'Sarah Chen', clientRole: 'Head of Training, Tesla', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80', impact: ['VR Training', 'Safety', 'Efficiency'] },
-      { industry: 'Healthcare', testimonial: 'The VR simulations made training safer, faster, and more engaging. Staff practiced critical procedures risk-free.', clientName: 'Dr. Emily Rodriguez', clientRole: 'Medical Director, Mayo Clinic', image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&q=80', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80', impact: ['Healthcare', 'Simulation', 'Education'] },
-      { industry: 'Real Estate', testimonial: 'Remote buyers now feel like they are walking through the home in person. Virtual tours increased qualified leads by 30%.', clientName: 'Michael Torres', clientRole: 'CEO, Luxury Homes Inc.', image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80', impact: ['Virtual Tours', 'Lead Generation', 'AR/VR'] },
-      { industry: 'Retail', testimonial: 'The AR product configurator became a customer favorite overnight. Shoppers visualized products in their space.', clientName: 'Jessica Williams', clientRole: 'CMO, Fashion Forward', image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80', avatar: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100&q=80', impact: ['AR Configurator', 'E-Commerce', 'Customer Experience'] }
-    ];
-    renderClientStories(storiesGrid);
-  }
-}
-
-function renderIndustryNewsSkeletons(container) {
-  let skeletonHtml = '';
-  // Create a dummy date group for skeletons
-  const dateLabel = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-  skeletonHtml += `
-    <div class="date-group">
-      <div class="date-label">${dateLabel}</div>
-      <div class="blog-grid">
-  `;
-  for (let i = 0; i < 3; i++) {
-    skeletonHtml += `
-      <div class="blog-card skeleton-card">
-        <div class="skeleton skeleton-img"></div>
-        <div class="blog-card-body">
-          <div class="skeleton skeleton-tag"></div>
-          <div class="skeleton skeleton-title"></div>
-          <div class="skeleton skeleton-excerpt"></div>
-          <div class="skeleton-footer">
-            <div class="skeleton-meta">
-              <div class="skeleton skeleton-avatar"></div>
-              <div class="skeleton skeleton-meta-text"></div>
-            </div>
-            <div class="skeleton skeleton-arrow"></div>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-  skeletonHtml += `
-      </div>
-    </div>
-  `;
-  container.innerHTML = skeletonHtml;
-}
-
-// ─── FETCH INDUSTRY NEWS DYNAMICALLY ──────
-async function fetchIndustryNews() {
-  const newsContainer = document.getElementById('newsContainer');
-  if (!newsContainer) return;
-
-  const API = window.VOLGA_API;
-  renderIndustryNewsSkeletons(newsContainer);
-
-  try {
-    const res = await fetch(`${API}/industry-news`);
-    const news = await res.json();
-
-    if (news.length === 0) {
-      newsContainer.innerHTML = '<p style="color: rgba(255,255,255,0.5); text-align: center; width: 100%; padding: 40px;">More news coming soon.</p>';
-      return;
-    }
-
-    allIndustryNews = news;
-    renderIndustryNews(newsContainer);
-
-  } catch (err) {
-    console.error("Failed to load industry news:", err);
-    newsContainer.innerHTML = '<p style="color: rgba(255,255,255,0.5); text-align: center; width: 100%; padding: 40px;">Failed to load industry news.</p>';
-  }
-}
-
-function renderIndustryNews(container) {
-  const grouped = {};
-  allIndustryNews.forEach(item => {
-    const date = new Date(item.publishedAt || item.createdAt);
-    const key = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-    if (!grouped[key]) grouped[key] = [];
-    grouped[key].push(item);
-  });
-
-  container.innerHTML = Object.entries(grouped).map(([month, items]) => `
-    <div class="date-group">
-      <div class="date-label">${month}</div>
-      <div class="blog-grid">
-        ${items.map(item => `
-          <a href="industry-news-detail.html?id=${item._id}" class="blog-card" style="text-decoration: none;">
-            <img class="blog-card-img" src="${window.getVolgaImageUrl(item.image) || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=500&q=80'}" alt="${item.title}">
-            <div class="blog-card-body">
-              <div class="blog-tag">${item.topic || 'Industry News'}</div>
-              <h3 class="blog-card-title">${item.title}</h3>
-              <p class="blog-card-excerpt">${item.description || ''}</p>
-              <div class="blog-card-footer">
-                <div class="blog-meta">
-                  <div class="author-avatar">VI</div>
-                  <span class="blog-meta-text">${item.source || 'Volga Infosys'} · ${new Date(item.publishedAt || item.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
-                </div>
-                <div class="read-arrow">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </a>
-        `).join('')}
-      </div>
-    </div>
-  `).join('');
-}
-
-// ─── FETCH AND RENDER INSIGHTS OVERVIEW ────────
-async function fetchInsightsOverview() {
-  const container = document.getElementById('insights-overview-container');
-  if (!container) return;
-
-  const API = window.VOLGA_API;
-
-  try {
-    const [blogsRes, caseStudiesRes, clientStoriesRes, industryNewsRes] = await Promise.all([
-      fetch(`${API}/blogs`),
-      fetch(`${API}/case-studies`),
-      fetch(`${API}/client-stories`),
-      fetch(`${API}/industry-news`)
-    ]);
-
-    const blogsResult = await blogsRes.json();
-    const blogs = blogsResult.data || blogsResult;
-    const caseStudies = await caseStudiesRes.json();
-    const clientStories = await clientStoriesRes.json();
-    const industryNews = await industryNewsRes.json();
-
-    const latestBlogs = blogs.slice(0,5);
-    const latestCaseStudies = caseStudies.slice(0, 3);
-    const latestClientStories = clientStories.slice(0, 3);
-    const latestIndustryNews = industryNews.slice(0, 3);
-
-    updateInsightsOverviewSidebar(blogs, caseStudies, clientStories, industryNews);
-    renderInsightsOverview(latestBlogs, latestCaseStudies, latestClientStories, latestIndustryNews);
-  } catch (error) {
-    console.error('Failed to load insights overview:', error);
-    container.innerHTML = '<p style="color:rgba(255,255,255,0.7);text-align:center;padding:20px;">Failed to load insights</p>';
-  }
-}
-
-function renderInsightsOverview(blogs, caseStudies, clientStories, industryNews) {
-  const container = document.getElementById('insights-overview-container');
-  if (!container) return;
-
-  container.innerHTML = `
-    <div class="section-label">Recent Content</div>
-    <div class="insights-grid">
-      <div class="insight-section">
-        <h3 class="insight-title">Blogs</h3>
-        <div class="insight-cards">
-          ${blogs.map(blog => `
-            <a href="blog-detail.html?id=${blog._id}" class="insight-card">
-              <img src="${window.getVolgaImageUrl(blog.coverImage || blog.image) || 'blog-hero.jpg'}" alt="${blog.title}">
-              <div class="insight-card-content">
-                <span class="insight-tag">Blog</span>
-                <h4>${blog.title}</h4>
-                <span class="insight-date">${new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
-              </div>
-            </a>
-          `).join('')}
-        </div>
-      </div>
-      <div class="insight-section">
-        <h3 class="insight-title">Case Studies</h3>
-        <div class="insight-cards">
-          ${caseStudies.map(cs => `
-            <a href="case-study-detail.html?id=${cs._id}" class="insight-card">
-              <img src="${window.getVolgaImageUrl(cs.image)}" alt="${cs.title}">
-              <div class="insight-card-content">
-                <span class="insight-tag">Case Study</span>
-                <h4>${cs.title}</h4>
-                <span class="insight-date">${cs.year || new Date(cs.createdAt).toLocaleDateString('en-US', { year: 'numeric' })}</span>
-              </div>
-            </a>
-          `).join('')}
-        </div>
-      </div>
-      <div class="insight-section">
-        <h3 class="insight-title">Client Stories</h3>
-        <div class="insight-cards">
-          ${clientStories.map(story => `
-            <a href="client-stories.html" class="insight-card">
-              <img src="${window.getVolgaImageUrl(story.image)}" alt="${story.clientName}">
-              <div class="insight-card-content">
-                <span class="insight-tag">Client Story</span>
-                <h4>${story.clientName}</h4>
-                <span class="insight-date">${story.industry}</span>
-              </div>
-            </a>
-          `).join('')}
-        </div>
-      </div>
-      <div class="insight-section">
-        <h3 class="insight-title">Industry News</h3>
-        <div class="insight-cards">
-          ${industryNews.map(news => `
-            <a href="industry-news-detail.html?id=${news._id}" class="insight-card">
-              <img src="${window.getVolgaImageUrl(news.image)}" alt="${news.title}">
-              <div class="insight-card-content">
-                <span class="insight-tag">News</span>
-                <h4>${news.title}</h4>
-                <span class="insight-date">${new Date(news.publishedAt || news.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</span>
-              </div>
-            </a>
-          `).join('')}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function updateInsightsOverviewSidebar(blogs, caseStudies, clientStories, industryNews) {
-  const getById = id => document.getElementById(id);
-  const counts = {
-    articles: blogs.length,
-    caseStudies: caseStudies.length,
-    industryReports: industryNews.length
-  };
-
-  if (getById('stat-articles-published')) getById('stat-articles-published').textContent = counts.articles;
-  if (getById('stat-case-studies')) getById('stat-case-studies').textContent = counts.caseStudies;
-  if (getById('stat-industry-reports')) getById('stat-industry-reports').textContent = counts.industryReports;
-
-  const topicCounts = {};
-  const addTopic = raw => {
-    const topic = String(raw || '').trim();
-    if (!topic) return;
-    topicCounts[topic] = (topicCounts[topic] || 0) + 1;
-  };
-
-  blogs.forEach(blog => addTopic(blog.category));
-  caseStudies.forEach(cs => addTopic(cs.industry));
-  clientStories.forEach(story => addTopic(story.industry));
-  industryNews.forEach(news => addTopic(news.topic));
-
-  const browseTopicsList = getById('browse-topics-list');
-  if (browseTopicsList) {
-    browseTopicsList.innerHTML = Object.entries(topicCounts)
-      .sort(([, a], [, b]) => b - a)
-      .slice(0, 6)
-      .map(([topic, count]) => `
-        <div class="topic-row">
-          <span class="topic-name">${topic}</span>
-          <span class="topic-count">${count}</span>
-        </div>
-      `).join('') || '<div class="topic-row"><span class="topic-name">No topics available</span><span class="topic-count">0</span></div>';
-  }
-
-  const buildItem = (item, type, label, idField, dateField, urlTemplate) => ({
-    title: item[label] || 'Untitled',
-    date: item[dateField] || item.createdAt || new Date().toISOString(),
-    url: typeof urlTemplate === 'function' ? urlTemplate(item) : urlTemplate.replace('{id}', item[idField] || ''),
-    type
-  });
-
-  const allItems = [
-    ...blogs.map(item => buildItem(item, 'Blog', 'title', '_id', 'publishAt', item => `blog-detail.html?id=${item._id}`)),
-    ...caseStudies.map(item => buildItem(item, 'Case Study', 'title', '_id', 'createdAt', item => `case-study-detail.html?id=${item._id}`)),
-    ...clientStories.map(item => buildItem(item, 'Client Story', 'clientName', '_id', 'createdAt', () => 'client-stories.html')),
-    ...industryNews.map(item => buildItem(item, 'Industry News', 'title', '_id', 'publishedAt', item => `industry-news-detail.html?id=${item._id}`))
-  ];
-
-  const trendingList = getById('trending-list');
-  if (trendingList) {
-    trendingList.innerHTML = allItems
-      .sort((a, b) => new Date(b.date) - new Date(a.date))
-      .slice(0, 5)
-      .map((item, index) => `
-        <div class="trending-item">
-          <div class="trending-num">${String(index + 1).padStart(2, '0')}</div>
-          <div class="trending-title">${item.title}</div>
-          <div class="trending-date">${item.type} · ${new Date(item.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</div>
-        </div>
-      `).join('');
-  }
-}
 
 // ─── 12. ORBIT DOTS ANIMATION ────────
 function animateOrbit() {
@@ -1798,10 +1421,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchLatestBlogs();
     setupBlogRealtimeUpdates();
   }
-  if (document.getElementById('caseStudiesContainer')) fetchCaseStudies();
   if (document.getElementById('storiesGrid')) fetchClientStories();
-  if (document.getElementById('newsContainer')) fetchIndustryNews();
-  if (document.getElementById('insights-overview-container')) fetchInsightsOverview();
 
   animateOrbit();
   setupFooter(); // FIX: Three.js is now loaded before this runs
@@ -1901,9 +1521,9 @@ document.querySelectorAll('.nav-cta-orange').forEach(btn => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) return;
 
-  gsap.utils.toArray('.solutionss-section, .home-suite-section, .home-suite-about, .home-suite-cta, .home-suite-stats').forEach(section => {
+  gsap.utils.toArray('.solutionss-section, .home-suite-section, .home-suite-about, .home-suite-cta').forEach(section => {
     const headerBits = section.querySelectorAll('.solutionss-kicker, .solutionss-title, .solutionss-desc, .home-suite-label, .home-suite-title, .home-suite-sub, .home-suite-about-text > h2, .home-suite-about-text > p, .home-suite-cta > h2, .home-suite-cta > p');
-    const cards = section.querySelectorAll('.solutions-card, .home-suite-service-card, .home-suite-industry, .home-suite-work-card, .home-suite-tech, .home-suite-insight, .home-suite-about-stats > div, .home-suite-about-tile, .home-suite-stat');
+    const cards = section.querySelectorAll('.solutions-card, .home-suite-service-card, .home-suite-industry, .home-suite-work-card, .home-suite-tech, .home-suite-insight, .home-suite-about-stats > div, .home-suite-about-tile');
 
     if (headerBits.length) {
       gsap.fromTo(headerBits,
@@ -1920,24 +1540,7 @@ document.querySelectorAll('.nav-cta-orange').forEach(btn => {
     }
   });
 
-  document.querySelectorAll('.home-suite-stat-num').forEach(el => {
-    const raw = el.textContent || '';
-    const target = parseInt(raw, 10);
-    if (!target) return;
-    const hasPlus = raw.includes('+');
-    const hasPercent = raw.includes('%');
-    const counter = { value: 0 };
 
-    gsap.to(counter, {
-      value: target,
-      duration: 1.8,
-      ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 82%', once: true },
-      onUpdate: () => {
-        el.innerHTML = `${Math.round(counter.value)}${hasPercent ? '%' : ''}${hasPlus ? '<span>+</span>' : ''}`;
-      }
-    });
-  });
 
   const rail = document.querySelector('.home-suite-industry-rail');
   const track = document.querySelector('.home-suite-industry-track');
@@ -2058,11 +1661,6 @@ Object.entries(menus).forEach(([key, { item, menuEl }]) => {
 });
 
 document.getElementById('backdrop').addEventListener('click', () => closeMenu());
-
-window.addEventListener('scroll', () => {
-  const navbar = document.getElementById('navbar');
-  if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 10);
-}, { passive:true });
 
 // ─── BUTTON RIPPLE EFFECT (FIXED) ────────────────────────
 // FIX: Set ripple origin on mouseenter only (not mousemove) to prevent jitter

@@ -194,7 +194,7 @@
   let tgt = 0;
   let smooth = 0;
   let velocity = 0;
-  const easeFactor = 0.12;
+  const easeFactor = 0.25;
   const dynamicFriction = (v) => (Math.abs(v) > 200 ? 0.75 : 0.88);
   let lastTime = performance.now();
   let animationFrameId = null;

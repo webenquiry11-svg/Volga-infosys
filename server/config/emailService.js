@@ -271,16 +271,6 @@ export const sendConfirmationEmail = async (contactData, contactFormId) => {
                   </td>
                 </tr>` : ""}
 
-                ${contactData.budget ? `
-                <tr>
-                  <td width="34%" valign="top"
-                      style="padding:14px 0;border-top:1px solid #EFEAE0;font-family:Arial,Helvetica,sans-serif;
-                             font-size:11px;letter-spacing:0.8px;color:#9A9586;text-transform:uppercase;">Budget</td>
-                  <td valign="top"
-                      style="padding:14px 0;border-top:1px solid #EFEAE0;font-family:Arial,Helvetica,sans-serif;
-                             font-size:14px;color:#1E2B33;font-weight:bold;">${esc(contactData.budget)}</td>
-                </tr>` : ""}
-
               </table>
             </td></tr>
 
@@ -363,7 +353,7 @@ export const sendConfirmationEmail = async (contactData, contactFormId) => {
 Thanks for reaching out to VOLGA. We have received your inquiry and the team is reviewing it.
 
 --- YOUR SUBMISSION ---
-Email: ${contactData.email}${contactData.company ? `\nCompany: ${contactData.company}` : ""}${contactData.country ? `\nCountry: ${contactData.country}` : ""}${contactData.serviceInterested ? `\nService: ${contactData.serviceInterested}` : ""}${contactData.budget ? `\nBudget: ${contactData.budget}` : ""}
+Email: ${contactData.email}${contactData.company ? `\nCompany: ${contactData.company}` : ""}${contactData.country ? `\nCountry: ${contactData.country}` : ""}${contactData.serviceInterested ? `\nService: ${contactData.serviceInterested}` : ""}
 
 Message: ${contactData.message}
 -----------------------
@@ -389,7 +379,6 @@ export const sendAdminNotification = async (contactData, contactFormId) => {
     <p><strong>Company:</strong> ${contactData.company || "N/A"}</p>
     <p><strong>Country:</strong> ${contactData.country || "N/A"}</p>
     <p><strong>Service:</strong> ${contactData.serviceInterested || "N/A"}</p>
-    <p><strong>Budget:</strong> ${contactData.budget || "N/A"}</p>
     <p><strong>Message:</strong> ${contactData.message}</p>
     
   `;

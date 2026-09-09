@@ -1,559 +1,1764 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Technologies — Volga Infosys</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="stylesheet" href="volga.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Technologies — Volga Infosys</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="volga.css" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Bebas+Neue&display=swap');
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@300;400;500;600;700;800&display=swap');
 
-:root {
-  /* ---------- Backgrounds ---------- */
-  --bg: #F7F9FC;
-  --bg-alt: #d4e8f5;
-  --surface: #FFFFFF;
-  --surface2: #F5F8FC;
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-  /* ---------- Brand Colors ---------- */
-  --accent: #E8930A;          /* Primary CTA */
-  --accent2: #1B4F72;         /* Primary Blue */
-  --accent3: #0D2B3E;         /* Dark Navy */
-  --accent-red: #F26A3D;      /* Softer Orange */
+    :root {
+      /* ---------- Backgrounds ---------- */
+      --bg: #F7F9FC;
+      --bg-alt: #d4e8f5;
+      --surface: #FFFFFF;
+      --surface2: #F5F8FC;
 
-  /* ---------- Text ---------- */
-  --text: #0D2B3E;
-  --text-muted: #5F7288;
+      /* ---------- Brand Colors ---------- */
+      --accent: #E8930A;
+      /* Primary CTA */
+      --accent2: #1B4F72;
+      /* Primary Blue */
+      --accent3: #0D2B3E;
+      /* Dark Navy */
+      --accent-red: #F26A3D;
+      /* Softer Orange */
 
-  /* ---------- Borders ---------- */
-  --border: rgba(13, 43, 62, 0.08);
+      /* ---------- Text ---------- */
+      --text: #0D2B3E;
+      --text-muted: #5F7288;
 
-  /* ---------- Glow ---------- */
-  --glow: 0 12px 35px rgba(27, 79, 114, 0.15);
+      /* ---------- Borders ---------- */
+      --border: rgba(13, 43, 62, 0.08);
 
-  /* ---------- Light Neumorphism ---------- */
- 
-  /* ---------- Typography ---------- */
-    --font-display: "Bebas Neue", sans-serif;
-  --font-ui: "Inter", sans-serif;
-  --font-mono: "Inter", sans-serif;
+      /* ---------- Drop Shadows ---------- */
+      --neu-shadow-out: 0 4px 20px rgba(13, 43, 62, 0.08), 0 1px 3px rgba(13, 43, 62, 0.04);
+      --neu-shadow-in: 0 14px 34px rgba(13, 43, 62, 0.12), 0 3px 8px rgba(13, 43, 62, 0.05);
+      --neu-shadow-out-sm: 0 2px 8px rgba(13, 43, 62, 0.06), 0 1px 2px rgba(13, 43, 62, 0.03);
+      --neu-shadow-in-sm: 0 1px 4px rgba(13, 43, 62, 0.05);
+      --neu-dark: 0 8px 24px rgba(13, 43, 62, 0.12);
+      --neu-light: transparent;
 
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      /* ---------- Typography ---------- */
+      --font-display: "Sora", sans-serif;
+      --font-ui: "Inter", sans-serif;
+      --font-mono: "Inter", sans-serif;
 
-  /* ---------- Utility ---------- */
-  --primary-dark: #1B4F72;
-  --primary-light: #E8930A;
-  --white: #FFFFFF;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* ---------- Page Theme ---------- */
-  --navy: #0D2B3E;
-  --navy2: #1B4F72;
-  --amber: #E8930A;
-  --amber2: #F26A3D;
+      /* ---------- Utility ---------- */
+      --primary-dark: #1B4F72;
+      --primary-light: #E8930A;
+      --white: #FFFFFF;
 
-  --slate: #D9E4F0;
-  --muted: #70849A;
-  --light: #FFFFFF;
+      /* ---------- Page Theme ---------- */
+      --navy: #0D2B3E;
+      --navy2: #1B4F72;
+      --amber: #E8930A;
+      --amber2: #F26A3D;
 
-  --card-bg: #FFFFFF;
+      --slate: #D9E4F0;
+      --muted: #70849A;
+      --light: #FFFFFF;
 
-  --radius: 14px;
-}
-html{scroll-behavior:smooth}
-body{font-family:"Inter", sans-serif; background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+      --card-bg: #FFFFFF;
 
-/* Keep Navbar original styles from volga.css */
-#navbar, .mega-menu, .mobile-menu {
-  --bg: #ECF0F3;
-  --bg-alt: #D4E8F5;
-  --surface: #ffffff;
-  --surface2: #E8F1F8;
-  --accent: #E8930A;
-  --accent2: #1B4F72;
-  --accent3: #0D2B3E;
-  --text: #0D1F2D;
-  --text-muted: #4A6070;
-  --border: rgba(27, 79, 114, 0.12);
-  --neu-light: #ffffff;
-  --neu-dark: #d1d9e6;
-  --neu-shadow-out: 8px 8px 16px var(--neu-dark), -8px -8px 16px var(--neu-light);
-  --neu-shadow-in: inset 8px 8px 16px var(--neu-dark), inset -8px -8px 16px var(--neu-light);
-}
+      --radius: 14px;
+    }
 
-/* ── NAV (keep existing style) ── */
+    html {
+      scroll-behavior: smooth
+    }
 
-/* ══════════════════════════════
+    body {
+      font-family: "Inter", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden
+    }
+
+    /* Keep Navbar original styles from volga.css */
+    #navbar,
+    .mega-menu,
+    .mobile-menu {
+      --bg: #ECF0F3;
+      --bg-alt: #D4E8F5;
+      --surface: #ffffff;
+      --surface2: #E8F1F8;
+      --accent: #E8930A;
+      --accent2: #1B4F72;
+      --accent3: #0D2B3E;
+      --text: #0D1F2D;
+      --text-muted: #4A6070;
+      --border: rgba(27, 79, 114, 0.12);
+      --neu-light: #ffffff;
+      --neu-dark: #d1d9e6;
+      --neu-shadow-out: 8px 8px 16px var(--neu-dark), -8px -8px 16px var(--neu-light);
+      --neu-shadow-in: inset 8px 8px 16px var(--neu-dark), inset -8px -8px 16px var(--neu-light);
+    }
+
+    #navbar {
+      background: #ffffff !important;
+      border-bottom: 1px solid rgba(27, 79, 114, 0.1) !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+    }
+
+    #navbar .nav-link {
+      color: #0D1F2D !important;
+      transition: color 0.25s ease;
+    }
+
+    #navbar .nav-link:hover,
+    #navbar .nav-item:hover .nav-link,
+    #navbar .nav-item.active .nav-link,
+    #navbar .nav-item.open .nav-link {
+      color: #E8930A !important;
+    }
+
+    #navbar .nav-item:hover .nav-arrow,
+    #navbar .nav-item.active .nav-arrow,
+    #navbar .nav-item.open .nav-arrow {
+      border-color: #E8930A !important;
+    }
+
+    #navbar .nav-cta {
+      background: var(--accent) !important;
+      color: #ffffff !important;
+      border: 1px solid var(--accent) !important;
+      transition: all 0.25s ease;
+    }
+
+    #navbar .nav-cta:hover {
+      background: #d48208 !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 15px rgba(232, 147, 10, 0.35) !important;
+      transform: translateY(-1px);
+    }
+
+    /* ══════════════════════════════
    HERO — CINEMATIC FULL SCREEN
 ══════════════════════════════ */
-.hero-cinema{
-  position:relative;height:100vh;min-height:700px;
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;
-   background-color: #0d1b2e;
-}
-.hero-video-bg{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;opacity:.22;filter:saturate(1.4);
-}
+    .hero-cinema {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 130px 2rem 50px;
+      overflow: hidden;
+      background-color: #0d1b2e;
+    }
 
-/* Animated grid lines */
-.hero-grid{
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(232,150,26,.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(232,150,26,.04) 1px, transparent 1px);
-  background-size:80px 80px;
-  animation:gridDrift 20s linear infinite;
- 
-}
-@keyframes gridDrift{from{transform:translateY(0)}to{transform:translateY(80px)}}
+    .hero-video-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .22;
+      filter: saturate(1.4);
+    }
 
-.hero-content{
-  position:relative;z-index:2;text-align:center;max-width:1600px;padding:0 2rem;
-}
-.hero-pill{
-  display:inline-flex;align-items:center;gap:.5rem;
-  background:var(--bg);box-shadow: var(--neu-shadow-in-sm);
-  color:var(--accent);font-family: var(--font-ui);
-  font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
-  padding:.5rem 1.2rem;border-radius:12px;margin-bottom:2rem;
-  opacity:0;transform:translateY(20px);
-}
-.hero-pill span{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+    /* Animated grid lines */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(232, 150, 26, .04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(232, 150, 26, .04) 1px, transparent 1px);
+      background-size: 80px 80px;
+      animation: gridDrift 20s linear infinite;
 
-.hero-title{
-  font-family:var(--font-display);
-  font-size:clamp(9rem,6vw,8.5rem);font-weight:700;line-height:1.02;
-  color:var(--white);margin-bottom:1.8rem;overflow:hidden;
-  
-}
-.hero-title .word{display:inline-block;overflow:hidden;margin-right:.25em}
-.hero-title .word-inner{display:inline-block;transform:translateY(110%)}
-.hero-title em{font-style:normal;background:linear-gradient(90deg,var(--accent),#ffcd6e,var(--accent-red));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200%;animation:shimmer 4s linear infinite}
-@keyframes shimmer{0%{background-position:0%}100%{background-position:200%}}
+    }
 
-.hero-sub{font-size:1.1rem;color:whitesmoke;line-height:1.75;max-width:880px;margin:0 auto 3rem;opacity:0;transform:translateY(20px)}
+    @keyframes gridDrift {
+      from {
+        transform: translateY(0)
+      }
 
-/* Floating stat orbs */
-.hero-stats{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}
-.stat-orb{
-  background: #141e2b;box-shadow: var(--neu-dark);
-  border-radius:16px;padding:1.2rem 2rem;text-align:center;
-  opacity:0;transform:scale(.85) translateY(30px);
-}
-.stat-orb .num{font-family:var(--font-mono);font-size:1.8rem;font-weight:700;color:var(--accent)}
-.stat-orb .label{font-size:.72rem;color:whitesmoke;text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem}
+      to {
+        transform: translateY(80px)
+      }
+    }
 
-/* Scroll indicator */
-.scroll-hint{
-  position:absolute;bottom:-1rem;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:.6rem;
-  opacity:0;z-index:2;
- 
-}
-.scroll-hint span{font-size:.7rem;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase}
-.scroll-line{width:1px;height:50px;background:linear-gradient(180deg,var(--accent),transparent);animation:scrollLine 2s ease-in-out infinite}
-@keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 1200px;
+      padding: 0 1.5rem;
+    }
 
-/* ══════════════════════════════
-   MARQUEE
-══════════════════════════════ */
-.marquee-band{overflow:hidden;padding:1.2rem 0;background:var(--bg-alt)}
-.marquee-track{display:flex;gap:0;width:max-content;animation:marquee 30s linear infinite}
-.marquee-track:hover{animation-play-state:paused}
-.marquee-item{display:flex;align-items:center;gap:1.5rem;padding:0 2rem;font-family:var(--font-display);font-size:.9rem;font-weight:600;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
-.marquee-item span{display:inline-block;width:4px;height:4px;background:var(--accent);border-radius:50%}
-@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      background: var(--bg);
+      box-shadow: var(--neu-shadow-in-sm);
+      color: var(--accent);
+      font-family: var(--font-ui);
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: .6rem 1.4rem;
+      border-radius: 14px;
+      margin-bottom: 1.6rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
 
-/* ══════════════════════════════
+    .hero-pill span {
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: .4;
+        transform: scale(.7)
+      }
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.2rem, 5.8vw, 5.2rem);
+      font-weight: 700;
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 1.4rem;
+      overflow: hidden;
+    }
+
+    .hero-title .word {
+      display: inline-block;
+      overflow: hidden;
+      margin-right: .22em;
+      line-height: inherit;
+      vertical-align: top;
+    }
+
+    .hero-title .word-inner {
+      display: inline-block;
+      transform: translateY(110%)
+    }
+
+    .hero-title em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--accent), #ffcd6e, var(--accent-red));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200%;
+      animation: shimmer 4s linear infinite
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 0%
+      }
+
+      100% {
+        background-position: 200%
+      }
+    }
+
+    .hero-sub {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.88);
+      line-height: 1.65;
+      max-width: 840px;
+      margin: 0 auto 2.4rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    /* Hero CTA Buttons */
+    .hero-cta-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.3rem;
+      margin-bottom: 2.6rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-cta-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: .65rem;
+      background: linear-gradient(135deg, var(--accent), #ffaa2b);
+      color: #0d1b2e !important;
+      font-family: var(--font-ui);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: .02em;
+      padding: .95rem 2.2rem;
+      border-radius: 14px;
+      text-decoration: none;
+      transition: all .3s ease;
+      box-shadow: 0 8px 24px rgba(232, 150, 26, .4);
+    }
+
+    .hero-cta-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(232, 150, 26, .6);
+      color: #0d1b2e !important;
+    }
+
+    .hero-cta-primary svg {
+      transition: transform .3s ease;
+    }
+
+    .hero-cta-primary:hover svg {
+      transform: translateX(4px);
+    }
+
+    .hero-cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: .65rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #ffffff !important;
+      font-family: var(--font-ui);
+      font-weight: 600;
+      font-size: 1rem;
+      padding: .95rem 2rem;
+      border-radius: 14px;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      transition: all .3s ease;
+    }
+
+    .hero-cta-secondary:hover {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.4);
+      color: #ffffff !important;
+      transform: translateY(-3px);
+    }
+
+    /* Floating stat orbs */
+    .hero-stats {
+      display: flex;
+      gap: 1.6rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.6rem
+    }
+
+    .stat-orb {
+      background: #141e2b;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      border-radius: 18px;
+      padding: 1.1rem 2.2rem;
+      text-align: center;
+      opacity: 0;
+      transform: scale(.85) translateY(30px);
+    }
+
+    .stat-orb .num {
+      font-family: var(--font-mono);
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--accent)
+    }
+
+    .stat-orb .label {
+      font-size: .75rem;
+      color: whitesmoke;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-top: .25rem;
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      transform: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .4rem;
+      margin-top: .6rem;
+      opacity: 0;
+      z-index: 2;
+    }
+
+    .scroll-hint span {
+      font-size: .65rem;
+      color: var(--text-muted);
+      letter-spacing: .12em;
+      text-transform: uppercase
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(180deg, var(--accent), transparent);
+      animation: scrollLine 2s ease-in-out infinite
+    }
+
+    @keyframes scrollLine {
+      0% {
+        transform: scaleY(0);
+        transform-origin: top
+      }
+
+      50% {
+        transform: scaleY(1);
+        transform-origin: top
+      }
+
+      51% {
+        transform: scaleY(1);
+        transform-origin: bottom
+      }
+
+      100% {
+        transform: scaleY(0);
+        transform-origin: bottom
+      }
+    }
+
+    /* ══════════════════════════════
    SECTION COMMON
 ══════════════════════════════ */
-.section-wrap{max-width:1320px;margin:0 auto;padding:0 3rem}
-.section-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
-.eyebrow-line{width:40px;height:1px;background:var(--accent)}
-.eyebrow-text{font-family:var(--font-ui);font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent)}
-.section-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;color:var(--text);line-height:1.1;margin-bottom:1rem}
-.section-desc{font-size:.95rem;color:var(--text-muted);line-height:1.75;max-width:560px}
+    .section-wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 3rem
+    }
 
-/* ══════════════════════════════
+    .section-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem
+    }
+
+    .eyebrow-line {
+      width: 40px;
+      height: 1px;
+      background: var(--accent)
+    }
+
+    .eyebrow-text {
+      font-family: var(--font-ui);
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent)
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 1rem
+    }
+
+    .section-desc {
+      font-size: .95rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      max-width: 560px
+    }
+
+    /* ══════════════════════════════
    TECH UNIVERSE — HORIZONTAL SCROLL
 ══════════════════════════════ */
-.hscroll-section{padding:120px 0 0;overflow:hidden}
-.hscroll-intro{padding:0 3rem 60px;max-width:1320px;margin:0 auto}
-.hscroll-track-wrap{
-  overflow:hidden;position:relative;
-  padding:20px 0 60px;
-}
-.hscroll-track{
-  display:flex;gap:1.5rem;padding:0 3rem;
-  width:max-content;
-}
+    .hscroll-section {
+      padding: 120px 0 0;
+      overflow: hidden
+    }
 
-/* Tech card – Dark Neumorphic */
-.tcard{
-  width:320px;flex-shrink:0;
-  border-radius:20px;overflow:hidden;
-  background:var(--surface);
-  
-  position:relative;cursor:pointer;
-  transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .35s;
-}
-.tcard:hover{
-  transform:translateY(-8px) scale(1.02);
- 
-}
-.tcard-img{
-  width:100%;height:200px;object-fit:cover;
-  display:block;filter:saturate(.9) brightness(.85);
-  transition:filter .4s,transform .6s;
-}
-.tcard:hover .tcard-img{filter:saturate(1.2) brightness(.95);transform:scale(1.05)}
-.tcard-img-fallback{
-  width:100%;height:200px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:4rem;background:linear-gradient(135deg,rgba(232,147,10,.15),var(--surface2));
-}
+    .hscroll-intro {
+      padding: 0 3rem 60px;
+      max-width: 1320px;
+      margin: 0 auto
+    }
 
+    .hscroll-track-wrap {
+      overflow: hidden;
+      position: relative;
+      padding: 20px 0 60px;
+    }
 
-.tcard-tag{
-  position:absolute;top:14px;right:14px;
-  background:var(--bg);
-  box-shadow: var(--neu-shadow-in-sm);
-  color:var(--accent);font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  padding:.25rem .65rem;border-radius:20px;
-}
-.tcard-body{padding:1.4rem 1.6rem 1.8rem}
-.tcard-icon{
-  width:42px;height:42px;border-radius:10px;
-  background:var(--bg);
-  box-shadow: var(--neu-shadow-out-sm);
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.2rem;margin-bottom:1rem;
-  color: var(--accent);
-}
-.tcard h3{font-family:var(--font-display);font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:.6rem}
-.tcard p{font-size:.82rem;color:var(--text-muted);line-height:1.65;margin-bottom:1.1rem}
-.tcard-chips{display:flex;flex-wrap:wrap;gap:.4rem}
-.chip{
-  font-size:.68rem;
-  color:var(--text-muted);
-  background:var(--bg);
-  box-shadow: var(--neu-shadow-in-sm);
-  padding:.4rem .8rem;
-  border-radius:12px;
-}
+    .hscroll-track {
+      display: flex;
+      gap: 1.5rem;
+      padding: 0 3rem;
+      width: max-content;
+    }
 
-/* Progress bar at bottom of card */
-.tcard-bar{height:2px;background:rgba(255,255,255,.06);position:relative;overflow:hidden}
-.tcard-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-red));transform:scaleX(0);transform-origin:left;transition:transform 1.2s ease}
-.tcard:hover .tcard-bar-fill{transform:scaleX(1)}
+    /* Tech card – Drop Shadow */
+    .tcard {
+      width: 300px;
+      flex-shrink: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(13, 43, 62, 0.08), 0 1px 3px rgba(13, 43, 62, 0.04);
+      transition: transform .35s cubic-bezier(.34, 1.56, .64, 1), box-shadow .35s ease, border-color .3s ease;
+    }
 
-/* ══════════════════════════════
+    .tcard:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 16px 40px rgba(13, 43, 62, 0.14), 0 4px 12px rgba(13, 43, 62, 0.06);
+      border-color: rgba(232, 147, 10, 0.4);
+    }
+
+    .tcard-img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+      filter: saturate(.9) brightness(.85);
+      transition: filter .4s, transform .6s;
+    }
+
+    .tcard:hover .tcard-img {
+      filter: saturate(1.2) brightness(.95);
+      transform: scale(1.05)
+    }
+
+    .tcard-img-fallback {
+      width: 100%;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      background: linear-gradient(135deg, rgba(232, 147, 10, .15), var(--surface2));
+    }
+
+    .tcard-tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(232, 147, 10, 0.3);
+      box-shadow: 0 2px 8px rgba(13, 43, 62, 0.08);
+      color: var(--accent);
+      font-size: .62rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .2rem .55rem;
+      border-radius: 20px;
+    }
+
+    .tcard-body {
+      padding: 1.1rem 1.25rem 1.3rem
+    }
+
+    .tcard-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: #E8F1F8;
+      border: 1px solid rgba(27, 79, 114, 0.12);
+      box-shadow: 0 2px 6px rgba(13, 43, 62, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      margin-bottom: .65rem;
+      color: var(--accent);
+    }
+
+    .tcard h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: .35rem
+    }
+
+    .tcard p {
+      font-size: .8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: .8rem
+    }
+
+    .tcard-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .35rem
+    }
+
+    .chip {
+      font-size: .65rem;
+      color: var(--text-muted);
+      background: #E8F1F8;
+      border: 1px solid rgba(27, 79, 114, 0.12);
+      padding: .3rem .65rem;
+      border-radius: 10px;
+    }
+
+    /* Progress bar at bottom of card */
+    .tcard-bar {
+      height: 2px;
+      background: rgba(255, 255, 255, .06);
+      position: relative;
+      overflow: hidden
+    }
+
+    .tcard-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-red));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 1.2s ease
+    }
+
+    .tcard:hover .tcard-bar-fill {
+      transform: scaleX(1)
+    }
+
+    /* ══════════════════════════════
    FEATURED SPOTLIGHT SECTION
 ══════════════════════════════ */
-.spotlight{padding:140px 0;position:relative;overflow:hidden}
-.spotlight-bg{
-  position:absolute;inset:0;
-  background:var(--bg);
-  pointer-events:none;
-}
-.spotlight-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;max-width:1320px;margin:0 auto;padding:0 3rem}
+    .spotlight {
+      padding: 140px 0;
+      position: relative;
+      overflow: hidden
+    }
 
-/* Media side */
-.spotlight-media{position:relative}
-.spotlight-video-frame{
-  border-radius:24px;overflow:hidden;
-  background:var(--surface);
-  box-shadow: var(--neu-shadow-out);
-  position:relative;
-}
-.spotlight-video-frame video,
-.spotlight-video-frame img{width:100%;display:block;height:380px;object-fit:cover}
-.spotlight-float-card{
-  position:absolute;bottom:-24px;left:-24px;
-  background:var(--surface);
-  box-shadow: var(--neu-shadow-out);
-  border-radius:14px;padding:1.2rem 1.4rem;
-  min-width:200px;
-}
-.sfc-label{font-size:.67rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
-.sfc-value{font-family:var(--font-ui);font-size:1.5rem;font-weight:700;color:var(--accent)}
-.sfc-sub{font-size:.75rem;color:var(--text-muted);margin-top:.2rem}
+    .spotlight-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--bg);
+      pointer-events: none;
+    }
 
-.spotlight-float-badge{
-  position:absolute;top:-18px;right:-18px;
-  width:90px;height:90px;border-radius:50%;
-  background:linear-gradient(135deg,var(--accent),var(--accent-red));
-  display:flex;align-items:center;justify-content:center;flex-direction:column;
-  box-shadow: var(--neu-shadow-out);
-  animation:rotateBadge 8s linear infinite;
-}
-@keyframes rotateBadge{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-.sfl-inner{display:flex;align-items:center;justify-content:center;flex-direction:column;animation:rotateBadge 8s linear reverse infinite}
-.sfl-inner span:first-child{font-family:var(--font-ui);font-size:1.4rem;font-weight:700;color:var(--accent3)}
-.sfl-inner span:last-child{font-size:.55rem;font-weight:700;color:var(--accent3);letter-spacing:.08em;text-transform:uppercase}
+    .spotlight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 3rem
+    }
 
-/* Text side */
-.spotlight-text{}
-.spotlight-text .section-title{margin-bottom:.8rem}
-.spotlight-text .section-desc{margin-bottom:2rem}
-.feature-list{display:flex;flex-direction:column;gap:.8rem;margin-bottom:2.5rem}
-.fl-item{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.2rem;background:var(--surface);box-shadow: var(--neu-shadow-out);border-radius:12px;transition:all .3s}
-.fl-item:hover{background:var(--bg);box-shadow: var(--neu-shadow-in)}
-.fl-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px}
-.fl-text strong{display:block;font-family:var(--font-ui);font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
-.fl-text span{font-size:.8rem;color:var(--text-muted)}
-.btn-amber{display:inline-flex;align-items:center;gap:.6rem;background:var(--accent);color:var(--accent3);font-family:var(--font-ui);font-weight:700;font-size:.9rem;padding:.85rem 2rem;border-radius:12px;text-decoration:none;border:none;cursor:pointer;box-shadow: var(--neu-shadow-out-sm);transition:all .3s}
-.btn-amber:hover{background:var(--accent-red);transform:translateY(-2px);box-shadow: var(--neu-shadow-in-sm)}
-.btn-ghost{display:inline-flex;align-items:center;gap:.6rem;background:var(--surface);color:var(--text);font-family:var(--font-ui);font-weight:600;font-size:.9rem;padding:.85rem 2rem;border-radius:12px;text-decoration:none;cursor:pointer;box-shadow: var(--neu-shadow-out);transition:all .3s}
-.btn-ghost:hover{border-color:rgba(232,150,26,.5);color:var(--amber)}
-.spotlight-btns{display:flex;gap:1rem;flex-wrap:wrap}
+    /* Media side */
+    .spotlight-media {
+      position: relative
+    }
 
-/* ══════════════════════════════
+    .spotlight-video-frame {
+      border-radius: 24px;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 40px rgba(13, 43, 62, 0.12), 0 3px 10px rgba(13, 43, 62, 0.05);
+      position: relative;
+    }
+
+    .spotlight-video-frame video,
+    .spotlight-video-frame img {
+      width: 100%;
+      display: block;
+      height: 380px;
+      object-fit: cover
+    }
+
+    .spotlight-float-card {
+      position: absolute;
+      bottom: -24px;
+      left: -24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 14px 44px rgba(13, 43, 62, 0.16), 0 4px 12px rgba(13, 43, 62, 0.06);
+      border-radius: 14px;
+      padding: 1.2rem 1.4rem;
+      min-width: 200px;
+    }
+
+    .sfc-label {
+      font-size: .67rem;
+      color: var(--text-muted);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: .4rem
+    }
+
+    .sfc-value {
+      font-family: var(--font-ui);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent)
+    }
+
+    .sfc-sub {
+      font-size: .75rem;
+      color: var(--text-muted);
+      margin-top: .2rem
+    }
+
+    .spotlight-float-badge {
+      position: absolute;
+      top: -18px;
+      right: -18px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-red));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      box-shadow: var(--neu-shadow-out);
+      animation: rotateBadge 8s linear infinite;
+    }
+
+    @keyframes rotateBadge {
+      0% {
+        transform: rotate(0)
+      }
+
+      100% {
+        transform: rotate(360deg)
+      }
+    }
+
+    .sfl-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      animation: rotateBadge 8s linear reverse infinite
+    }
+
+    .sfl-inner span:first-child {
+      font-family: var(--font-ui);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent3)
+    }
+
+    .sfl-inner span:last-child {
+      font-size: .55rem;
+      font-weight: 700;
+      color: var(--accent3);
+      letter-spacing: .08em;
+      text-transform: uppercase
+    }
+
+    /* Text side */
+    .spotlight-text .section-title {
+      margin-bottom: .8rem
+    }
+
+    .spotlight-text .section-desc {
+      margin-bottom: 2rem
+    }
+
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: .8rem;
+      margin-bottom: 2.5rem
+    }
+
+    .fl-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(13, 43, 62, 0.06), 0 1px 3px rgba(13, 43, 62, 0.03);
+      border-radius: 12px;
+      transition: all .3s ease;
+    }
+
+    .fl-item:hover {
+      background: var(--surface);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(13, 43, 62, 0.12);
+      border-color: rgba(232, 147, 10, 0.35);
+    }
+
+    .fl-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 5px
+    }
+
+    .fl-text strong {
+      display: block;
+      font-family: var(--font-ui);
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: .2rem
+    }
+
+    .fl-text span {
+      font-size: .8rem;
+      color: var(--text-muted)
+    }
+
+    .btn-amber {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      background: var(--accent);
+      color: var(--accent3);
+      font-family: var(--font-ui);
+      font-weight: 700;
+      font-size: .9rem;
+      padding: .85rem 2rem;
+      border-radius: 12px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: var(--neu-shadow-out-sm);
+      transition: all .3s
+    }
+
+    .btn-amber:hover {
+      background: var(--accent-red);
+      transform: translateY(-2px);
+      box-shadow: var(--neu-shadow-in-sm)
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      background: var(--surface);
+      color: var(--text);
+      font-family: var(--font-ui);
+      font-weight: 600;
+      font-size: .9rem;
+      padding: .85rem 2rem;
+      border-radius: 12px;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: var(--neu-shadow-out);
+      transition: all .3s
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(232, 150, 26, .5);
+      color: var(--amber)
+    }
+
+    .spotlight-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap
+    }
+
+    /* ══════════════════════════════
    AR SECTION — IMAGE MOSAIC
 ══════════════════════════════ */
-.ar-section{padding:120px 0;background:var(--bg-alt);position:relative;overflow:hidden}
-.ar-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 50%,rgba(27,79,114,.15) 0%,transparent 70%);pointer-events:none}
+    .ar-section {
+      padding: 120px 0;
+      background: var(--bg-alt);
+      position: relative;
+      overflow: hidden
+    }
 
-.ar-inner{max-width:1320px;margin:0 auto;padding:0 3rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
-.ar-mosaic{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:1rem;position:relative}
-.mosaic-main{grid-column:span 2;border-radius:20px;overflow:hidden;position:relative;background:var(--surface);box-shadow: var(--neu-shadow-out)}
-.mosaic-main img,.mosaic-main video{width:100%;height:260px;object-fit:cover;display:block}
-.mosaic-sub{border-radius:16px;overflow:hidden;position:relative;background:var(--surface);box-shadow: var(--neu-shadow-out)}
-.mosaic-sub img{width:100%;height:160px;object-fit:cover;display:block}
-.mosaic-label{position:absolute;bottom:10px;left:10px;background:var(--bg);box-shadow: var(--neu-shadow-in-sm);color:var(--accent);font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .7rem;border-radius:8px}
+    .ar-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(27, 79, 114, .15) 0%, transparent 70%);
+      pointer-events: none
+    }
+
+    .ar-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center
+    }
+
+    .ar-mosaic {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1rem;
+      position: relative
+    }
+
+    .mosaic-main {
+      grid-column: span 2;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 30px rgba(13, 43, 62, 0.1), 0 2px 6px rgba(13, 43, 62, 0.04);
+    }
+
+    .mosaic-main img,
+    .mosaic-main video {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block
+    }
+
+    .mosaic-sub {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 6px 24px rgba(13, 43, 62, 0.09), 0 2px 5px rgba(13, 43, 62, 0.04);
+    }
+
+    .mosaic-sub img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block
+    }
+
+    .mosaic-label {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(13, 43, 62, 0.08);
+      color: var(--accent);
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .3rem .7rem;
+      border-radius: 8px
+    }
 
 
-.ar-platform-cards{display:flex;flex-direction:column;gap:1rem;margin-top:2.5rem}
-.apc{display:flex;align-items:center;gap:1.2rem;padding:1.1rem 1.3rem;border-radius:14px;background:var(--surface);box-shadow: var(--neu-shadow-out);cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
-.apc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);transform:scaleY(0);transform-origin:bottom;transition:transform .3s}
-.apc:hover::before,.apc.active::before{transform:scaleY(1)}
-.apc:hover,.apc.active{background:var(--bg);box-shadow: var(--neu-shadow-in)}
-.apc-icon{width:44px;height:44px;border-radius:10px;background:var(--bg);box-shadow: var(--neu-shadow-out-sm);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;color: var(--accent)}
-.apc-text strong{display:block;font-family:var(--font-ui);font-size:.9rem;font-weight:600;color:var(--text)}
-.apc-text span{font-size:.78rem;color:var(--text-muted)}
-.apc-arrow{margin-left:auto;color:var(--accent);opacity:0;transform:translateX(-8px);transition:opacity .2s,transform .2s}
-.apc:hover .apc-arrow,.apc.active .apc-arrow{opacity:1;transform:translateX(0)}
+    .ar-platform-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2.5rem
+    }
 
-/* ══════════════════════════════
+    .apc {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.1rem 1.3rem;
+      border-radius: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(13, 43, 62, 0.07), 0 1px 3px rgba(13, 43, 62, 0.03);
+      cursor: pointer;
+      transition: all .25s ease;
+      position: relative;
+      overflow: hidden
+    }
+
+    .apc::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform .3s
+    }
+
+    .apc:hover::before,
+    .apc.active::before {
+      transform: scaleY(1)
+    }
+
+    .apc:hover,
+    .apc.active {
+      background: var(--surface);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(13, 43, 62, 0.12), 0 3px 8px rgba(13, 43, 62, 0.04);
+      border-color: var(--accent);
+    }
+
+    .apc-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: #E8F1F8;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 6px rgba(13, 43, 62, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      color: var(--accent)
+    }
+
+    .apc-text strong {
+      display: block;
+      font-family: var(--font-ui);
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text)
+    }
+
+    .apc-text span {
+      font-size: .78rem;
+      color: var(--text-muted)
+    }
+
+    .apc-arrow {
+      margin-left: auto;
+      color: var(--accent);
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: opacity .2s, transform .2s
+    }
+
+    .apc:hover .apc-arrow,
+    .apc.active .apc-arrow {
+      opacity: 1;
+      transform: translateX(0)
+    }
+
+    /* ══════════════════════════════
    AI/CLOUD — DARK GRADIENT
 ══════════════════════════════ */
-.ai-section{padding:120px 0;background:var(--bg);position:relative;overflow:hidden}
-.ai-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 70% 40%,rgba(232,80,26,.08) 0%,transparent 65%),radial-gradient(ellipse 50% 50% at 30% 70%,rgba(232,147,10,.06) 0%,transparent 60%)}
+    .ai-section {
+      padding: 120px 0;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden
+    }
 
-.ai-inner{max-width:1320px;margin:0 auto;padding:0 3rem}
-.ai-header{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:4rem}
-.ai-video-strip{
-  display:grid;grid-template-columns:1fr 1fr;gap:1rem;
-}
-.ai-video-card{border-radius:16px;overflow:hidden;position:relative;background:var(--surface);box-shadow: var(--neu-shadow-out);aspect-ratio:16/9}
-.ai-video-card video,.ai-video-card img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.75) saturate(1.2)}
-.ai-video-card-label{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.2rem;background:linear-gradient(180deg,transparent 40%,var(--surface) 100%)}
-.ai-video-card-label h4{font-family:var(--font-ui);font-size:.95rem;font-weight:700;color:var(--text)}
-.ai-video-card-label p{font-size:.75rem;color:var(--text-muted);margin-top:.2rem}
+    .ai-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 70% 40%, rgba(232, 80, 26, .08) 0%, transparent 65%), radial-gradient(ellipse 50% 50% at 30% 70%, rgba(232, 147, 10, .06) 0%, transparent 60%)
+    }
 
-.ai-cards-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
-.ai-card{border-radius:18px;padding:1.8rem;background:var(--surface);box-shadow: var(--neu-shadow-out);transition:all .3s;position:relative;overflow:hidden}
-.ai-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(232,147,10,.04) 0%,transparent 60%);opacity:0;transition:opacity .3s}
-.ai-card:hover{transform:translateY(-6px);box-shadow: var(--neu-shadow-in)}
-.ai-card:hover::after{opacity:1}
-.ai-card-num{font-family:var(--font-ui);font-size:3rem;font-weight:700;color:rgba(232,147,10,.15);line-height:1;margin-bottom:.8rem}
-.ai-card h3{font-family:var(--font-ui);font-size:1rem;font-weight:600;color:var(--text);margin-bottom:.5rem}
-.ai-card p{font-family:var(--font-ui);font-size:.82rem;color:var(--text-muted);line-height:1.65}
+    .ai-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 3rem
+    }
 
-/* ══════════════════════════════
+    .ai-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 4rem
+    }
+
+    .ai-video-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .ai-video-card {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 30px rgba(13, 43, 62, 0.1), 0 2px 6px rgba(13, 43, 62, 0.04);
+      aspect-ratio: 16/9
+    }
+
+    .ai-video-card video,
+    .ai-video-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(.75) saturate(1.2)
+    }
+
+    .ai-video-card-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.2rem;
+      background: linear-gradient(180deg, transparent 40%, var(--surface) 100%)
+    }
+
+    .ai-video-card-label h4 {
+      font-family: var(--font-ui);
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--text)
+    }
+
+    .ai-video-card-label p {
+      font-size: .75rem;
+      color: var(--text-muted);
+      margin-top: .2rem
+    }
+
+    .ai-cards-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem
+    }
+
+    .ai-card {
+      border-radius: 18px;
+      padding: 1.8rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(13, 43, 62, 0.08), 0 1px 3px rgba(13, 43, 62, 0.04);
+      transition: all .3s ease;
+      position: relative;
+      overflow: hidden
+    }
+
+    .ai-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(232, 147, 10, .04) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity .3s
+    }
+
+    .ai-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(13, 43, 62, 0.14), 0 4px 12px rgba(13, 43, 62, 0.06);
+      border-color: rgba(232, 147, 10, 0.35);
+    }
+
+    .ai-card:hover::after {
+      opacity: 1
+    }
+
+    .ai-card-num {
+      font-family: var(--font-ui);
+      font-size: 3rem;
+      font-weight: 700;
+      color: rgba(232, 147, 10, .15);
+      line-height: 1;
+      margin-bottom: .8rem
+    }
+
+    .ai-card h3 {
+      font-family: var(--font-ui);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: .5rem
+    }
+
+    .ai-card p {
+      font-family: var(--font-ui);
+      font-size: .82rem;
+      color: var(--text-muted);
+      line-height: 1.65
+    }
+
+    /* ══════════════════════════════
    WHY — HORIZONTAL SCROLL CARDS
 ══════════════════════════════ */
-.why-section{padding:120px 0;background:var(--bg-alt)}
-.why-inner{max-width:1320px;margin:0 auto;padding:0 3rem}
-.why-header{margin-bottom:4rem}
-.why-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.wc{
-  padding:2rem;border-radius:18px;
-  background:var(--surface);
-  box-shadow: var(--neu-shadow-out);
-  position:relative;overflow:hidden;
-  transition:all .3s;
-}
-.wc:hover{transform:translateY(-5px);box-shadow: var(--neu-shadow-in)}
-.wc-num{font-family:var(--font-ui);font-size:4rem;font-weight:700;line-height:1;margin-bottom:.8rem;background:linear-gradient(135deg,rgba(232,147,10,.15),rgba(232,80,26,.1));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.wc h3{font-family:var(--font-ui);font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:.5rem}
-.wc p{font-family:var(--font-ui);font-size:.82rem;color:var(--text-muted);line-height:1.65}
-.wc-glow{position:absolute;bottom:-30px;right:-30px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(232,147,10,.15) 0%,transparent 70%);transition:transform .3s,opacity .3s;opacity:0}
-.wc:hover .wc-glow{opacity:1;transform:scale(1.5)}
+    .why-section {
+      padding: 120px 0;
+      background: var(--bg-alt)
+    }
 
-/* ══════════════════════════════
+    .why-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 3rem
+    }
+
+    .why-header {
+      margin-bottom: 4rem
+    }
+
+    .why-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem
+    }
+
+    .wc {
+      padding: 2rem;
+      border-radius: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(13, 43, 62, 0.08), 0 1px 3px rgba(13, 43, 62, 0.04);
+      position: relative;
+      overflow: hidden;
+      transition: all .3s ease;
+    }
+
+    .wc:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(13, 43, 62, 0.14), 0 4px 12px rgba(13, 43, 62, 0.06);
+      border-color: rgba(232, 147, 10, 0.35);
+    }
+
+    .wc-num {
+      font-family: var(--font-ui);
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: .8rem;
+      background: linear-gradient(135deg, rgba(232, 147, 10, .15), rgba(232, 80, 26, .1));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent
+    }
+
+    .wc h3 {
+      font-family: var(--font-ui);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: .5rem
+    }
+
+    .wc p {
+      font-family: var(--font-ui);
+      font-size: .82rem;
+      color: var(--text-muted);
+      line-height: 1.65
+    }
+
+    .wc-glow {
+      position: absolute;
+      bottom: -30px;
+      right: -30px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232, 147, 10, .15) 0%, transparent 70%);
+      transition: transform .3s, opacity .3s;
+      opacity: 0
+    }
+
+    .wc:hover .wc-glow {
+      opacity: 1;
+      transform: scale(1.5)
+    }
+
+    /* ══════════════════════════════
    CTA FINALE
 ══════════════════════════════ */
-.cta-finale{
-  padding:140px 0;position:relative;overflow:hidden;
-  background:var(--bg-alt);
-}
-.cta-finale-bg{position:absolute;inset:0}
-.cta-finale-bg video{width:100%;height:100%;object-fit:cover;opacity:.05;filter:saturate(1.2)}
-.cta-inner{max-width:800px;margin:0 auto;text-align:center;padding:0 3rem;position:relative;z-index:1}
-.cta-title{font-family:var(--font-ui);font-size:clamp(2.2rem,5vw,4rem);font-weight:700;color:var(--text);line-height:1.1;margin-bottom:1.5rem}
-.cta-title em{font-style:normal;color:var(--accent)}
-.cta-desc{font-family:var(--font-ui);font-size:1rem;color:var(--text-muted);line-height:1.75;margin-bottom:2.5rem}
-.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+    .cta-finale {
+      padding: 140px 0;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-alt);
+    }
+
+    .cta-finale-bg {
+      position: absolute;
+      inset: 0
+    }
+
+    .cta-finale-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .05;
+      filter: saturate(1.2)
+    }
+
+    .cta-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 3rem;
+      position: relative;
+      z-index: 1
+    }
+
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+
+    .cta-title em {
+      font-style: normal;
+      color: var(--accent)
+    }
+
+    .cta-desc {
+      font-family: var(--font-ui);
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 2.5rem
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap
+    }
 
 
 
 
-/* ══════════════════════════════
+    /* ══════════════════════════════
    SCROLL PROGRESS BAR
 ══════════════════════════════ */
-.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-red));transform-origin:left;z-index:9999;transform:scaleX(0)}
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-red));
+      transform-origin: left;
+      z-index: 9999;
+      transform: scaleX(0)
+    }
 
-/* ══════════════════════════════
+    /* ══════════════════════════════
    REVEAL ANIMATION DEFAULTS
 ══════════════════════════════ */
-.reveal{opacity:0;transform:translateY(40px)}
-.reveal-left{opacity:0;transform:translateX(-60px)}
-.reveal-right{opacity:0;transform:translateX(60px)}
-.reveal-scale{opacity:0;transform:scale(.9)}
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px)
+    }
 
-/* ══════════════════════════════
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-60px)
+    }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(60px)
+    }
+
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(.9)
+    }
+
+    /* ══════════════════════════════
    RESPONSIVE
 ══════════════════════════════ */
-@media(max-width:1024px){
-  .spotlight-grid,.ar-inner,.ai-header{grid-template-columns:1fr}
-  .spotlight-media{order:-1}
-  .why-cards,.ai-cards-row{grid-template-columns:1fr 1fr}
-}
-@media(max-width:768px){
-  nav{padding:1rem 1.5rem}
-  .nav-links{display:none}
-  .hero-title{font-size:2.5rem}
-  .section-wrap,.hscroll-intro,.spotlight-grid,.ar-inner,.ai-inner,.why-inner{padding:0 1.5rem}
-  .why-cards,.ai-cards-row{grid-template-columns:1fr}
-  .ar-mosaic{grid-template-columns:1fr}
-  .mosaic-main{grid-column:span 1}
-  .ai-video-strip{grid-template-columns:1fr}
-  .cta-actions{flex-direction:column;align-items:center}
-}
+    @media(max-width:1024px) {
 
-/* ══════════════════════════════
+      .spotlight-grid,
+      .ar-inner,
+      .ai-header {
+        grid-template-columns: 1fr
+      }
+
+      .spotlight-media {
+        order: -1
+      }
+
+      .why-cards,
+      .ai-cards-row {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media(max-width:768px) {
+      nav {
+        padding: 1rem 1.5rem
+      }
+
+      .nav-links {
+        display: none
+      }
+
+      .hero-title {
+        font-size: 2.5rem
+      }
+
+      .section-wrap,
+      .hscroll-intro,
+      .spotlight-grid,
+      .ar-inner,
+      .ai-inner,
+      .why-inner {
+        padding: 0 1.5rem
+      }
+
+      .why-cards,
+      .ai-cards-row {
+        grid-template-columns: 1fr
+      }
+
+      .ar-mosaic {
+        grid-template-columns: 1fr
+      }
+
+      .mosaic-main {
+        grid-column: span 1
+      }
+
+      .ai-video-strip {
+        grid-template-columns: 1fr
+      }
+
+      .cta-actions {
+        flex-direction: column;
+        align-items: center
+      }
+    }
+
+    /* ══════════════════════════════
    SECTION LABEL DIVIDER
 ══════════════════════════════ */
-.section-rule{
-  display:flex;align-items:center;gap:1.5rem;
-  max-width:1320px;margin:0 auto;padding:0 3rem 60px;
-}
-.section-rule-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(232,147,10,.3),transparent)}
-.section-rule-label{font-family:var(--font-ui);font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);padding:.4rem 1rem;border-radius:12px;background:var(--bg);box-shadow: var(--neu-shadow-in-sm);white-space:nowrap}
+    .section-rule {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 3rem 60px;
+    }
 
-/* ── TCARD animation states ── */
-.tcard{opacity:0;transform:translateY(50px)}
+    .section-rule-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(232, 147, 10, .3), transparent)
+    }
 
-/* ══════════════════════════════
+    .section-rule-label {
+      font-family: var(--font-ui);
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: .4rem 1rem;
+      border-radius: 12px;
+      background: var(--bg);
+      box-shadow: var(--neu-shadow-in-sm);
+      white-space: nowrap
+    }
+
+    /* ── TCARD animation states ── */
+    .tcard {
+      opacity: 0;
+      transform: translateY(50px)
+    }
+
+    /* ══════════════════════════════
    WHITE SECTION OVERRIDES
 ══════════════════════════════ */
-.section-light{
-  
-  color:#0d1b2e;
-}
-.section-light .section-title{color:#0d1b2e}
-.section-light .section-desc{color:#4a6380}
-.section-light .eyebrow-text{color:var(--amber2)}
-.section-light .eyebrow-line{background:var(--amber2)}
-.section-light .section-rule-label{color:var(--amber2);border-color:rgba(217,79,43,.25);background:rgba(217,79,43,.06)}
-.section-light .section-rule-line{background:linear-gradient(90deg,transparent,rgba(217,79,43,.3),transparent)}
+    .section-light {
 
-/* Spotlight on white */
-.section-light .spotlight-bg{background:radial-gradient(ellipse 80% 60% at 60% 50%,rgba(232,150,26,.08) 0%,transparent 70%)}
-.section-light .fl-item{background:rgba(13,27,46,.04);border-color:rgba(13,27,46,.1)}
-.section-light .fl-item:hover{background:rgba(232,150,26,.06);border-color:rgba(232,150,26,.3)}
-.section-light .fl-text strong{color:#0d1b2e}
-.section-light .fl-text span{color:#4a6380}
-.section-light .spotlight-float-card{background:rgba(255,255,255,.97);border-color:rgba(232,150,26,.25);box-shadow:0 8px 30px rgba(13,27,46,.12)}
-.section-light .sfc-label{color:#4a6380}
-.section-light .sfc-value{color:var(--amber)}
-.section-light .sfc-sub{color:#4a6380}
-.section-light .btn-ghost{color:#0d1b2e;border-color:rgba(13,27,46,.2)}
-.section-light .btn-ghost:hover{border-color:rgba(232,150,26,.5);color:var(--amber)}
+      color: #0d1b2e;
+    }
 
-/* AR section on white */
-.section-light.ar-section{background:#f0f5fc}
-.section-light.ar-section::before{background:radial-gradient(ellipse 60% 50% at 20% 50%,rgba(27,79,114,.06) 0%,transparent 70%)}
-.section-light .mosaic-main{border-color:rgba(13,27,46,.1)}
-.section-light .mosaic-sub{border-color:rgba(13,27,46,.1)}
-.section-light .mosaic-label{background:rgba(255,255,255,.95);color:var(--amber2);border-color:rgba(217,79,43,.25)}
-.section-light .apc{background:rgba(13,27,46,.03);border-color:rgba(13,27,46,.08)}
-.section-light .apc:hover,.section-light .apc.active{background:rgba(232,150,26,.05);border-color:rgba(232,150,26,.25)}
-.section-light .apc::before{background:var(--amber2)}
-.section-light .apc-text strong{color:#0d1b2e}
-.section-light .apc-text span{color:#4a6380}
-.section-light .apc-arrow{color:var(--amber2)}
+    .section-light .section-title {
+      color: #0d1b2e
+    }
 
-/* Why cards on white */
-.section-light.why-section{background:#f0f5fc}
-.section-light .wc{background:#ffffff;border-color:rgba(13,27,46,.09);box-shadow:0 2px 16px rgba(13,27,46,.06)}
-.section-light .wc:hover{box-shadow:0 16px 40px rgba(13,27,46,.12);border-color:rgba(232,150,26,.3)}
-.section-light .wc h3{color:#0d1b2e}
-.section-light .wc p{color:#4a6380}
-.section-light .wc-num{background:linear-gradient(135deg,rgba(217,79,43,.15),rgba(217,79,43,.04));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.section-light .wc-glow{background:radial-gradient(circle,rgba(217,79,43,.08) 0%,transparent 70%)}
+    .section-light .section-desc {
+      color: #4a6380
+    }
 
-/* Tcard on white immersive section */
-.section-light .tcard{background:#ffffff;border-color:rgba(13,27,46,.1);box-shadow:0 2px 12px rgba(13,27,46,.08)}
-.section-light .tcard:hover{border-color:rgba(232,150,26,.4);box-shadow:0 24px 60px rgba(13,27,46,.15)}
-.section-light .tcard h3{color:#0d1b2e}
-.section-light .tcard p{color:#4a6380}
-.section-light .tcard-glow{background:linear-gradient(180deg,transparent 40%,#ff0000 100%)}
-.section-light .tcard-bar{background:rgba(13,27,46,.06)}
-.section-light .chip{color:#1e3a5f;background:rgba(30,58,95,.07);border-color:rgba(30,58,95,.12)}
-.section-light .tcard-tag{background:rgba(255,255,255,.95);border-color:rgba(232,150,26,.3);}
+    .section-light .eyebrow-text {
+      color: var(--amber2)
+    }
 
-/* ══════════════════════════════
+    .section-light .eyebrow-line {
+      background: var(--amber2)
+    }
+
+    .section-light .section-rule-label {
+      color: var(--amber2);
+      border-color: rgba(217, 79, 43, .25);
+      background: rgba(217, 79, 43, .06)
+    }
+
+    .section-light .section-rule-line {
+      background: linear-gradient(90deg, transparent, rgba(217, 79, 43, .3), transparent)
+    }
+
+    /* Spotlight on white */
+    .section-light .spotlight-bg {
+      background: radial-gradient(ellipse 80% 60% at 60% 50%, rgba(232, 150, 26, .08) 0%, transparent 70%)
+    }
+
+    .section-light .fl-item {
+      background: rgba(13, 27, 46, .04);
+      border-color: rgba(13, 27, 46, .1)
+    }
+
+    .section-light .fl-item:hover {
+      background: rgba(232, 150, 26, .06);
+      border-color: rgba(232, 150, 26, .3)
+    }
+
+    .section-light .fl-text strong {
+      color: #0d1b2e
+    }
+
+    .section-light .fl-text span {
+      color: #4a6380
+    }
+
+    .section-light .spotlight-float-card {
+      background: rgba(255, 255, 255, .97);
+      border-color: rgba(232, 150, 26, .25);
+      box-shadow: 0 8px 30px rgba(13, 27, 46, .12)
+    }
+
+    .section-light .sfc-label {
+      color: #4a6380
+    }
+
+    .section-light .sfc-value {
+      color: var(--amber)
+    }
+
+    .section-light .sfc-sub {
+      color: #4a6380
+    }
+
+    .section-light .btn-ghost {
+      color: #0d1b2e;
+      border-color: rgba(13, 27, 46, .2)
+    }
+
+    .section-light .btn-ghost:hover {
+      border-color: rgba(232, 150, 26, .5);
+      color: var(--amber)
+    }
+
+    /* AR section on white */
+    .section-light.ar-section {
+      background: #f0f5fc
+    }
+
+    .section-light.ar-section::before {
+      background: radial-gradient(ellipse 60% 50% at 20% 50%, rgba(27, 79, 114, .06) 0%, transparent 70%)
+    }
+
+    .section-light .mosaic-main {
+      border-color: rgba(13, 27, 46, .1)
+    }
+
+    .section-light .mosaic-sub {
+      border-color: rgba(13, 27, 46, .1)
+    }
+
+    .section-light .mosaic-label {
+      background: rgba(255, 255, 255, .95);
+      color: var(--amber2);
+      border-color: rgba(217, 79, 43, .25)
+    }
+
+    .section-light .apc {
+      background: rgba(13, 27, 46, .03);
+      border-color: rgba(13, 27, 46, .08)
+    }
+
+    .section-light .apc:hover,
+    .section-light .apc.active {
+      background: rgba(232, 150, 26, .05);
+      border-color: rgba(232, 150, 26, .25)
+    }
+
+    .section-light .apc::before {
+      background: var(--amber2)
+    }
+
+    .section-light .apc-text strong {
+      color: #0d1b2e
+    }
+
+    .section-light .apc-text span {
+      color: #4a6380
+    }
+
+    .section-light .apc-arrow {
+      color: var(--amber2)
+    }
+
+    /* Why cards on white */
+    .section-light.why-section {
+      background: #f0f5fc
+    }
+
+    .section-light .wc {
+      background: #ffffff;
+      border-color: rgba(13, 27, 46, .09);
+      box-shadow: 0 2px 16px rgba(13, 27, 46, .06)
+    }
+
+    .section-light .wc:hover {
+      box-shadow: 0 16px 40px rgba(13, 27, 46, .12);
+      border-color: rgba(232, 150, 26, .3)
+    }
+
+    .section-light .wc h3 {
+      color: #0d1b2e
+    }
+
+    .section-light .wc p {
+      color: #4a6380
+    }
+
+    .section-light .wc-num {
+      background: linear-gradient(135deg, rgba(217, 79, 43, .15), rgba(217, 79, 43, .04));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent
+    }
+
+    .section-light .wc-glow {
+      background: radial-gradient(circle, rgba(217, 79, 43, .08) 0%, transparent 70%)
+    }
+
+    /* Tcard on white immersive section */
+    .section-light .tcard {
+      background: #ffffff;
+      border-color: rgba(13, 27, 46, .1);
+      box-shadow: 0 2px 12px rgba(13, 27, 46, .08)
+    }
+
+    .section-light .tcard:hover {
+      border-color: rgba(232, 150, 26, .4);
+      box-shadow: 0 24px 60px rgba(13, 27, 46, .15)
+    }
+
+    .section-light .tcard h3 {
+      color: #0d1b2e
+    }
+
+    .section-light .tcard p {
+      color: #4a6380
+    }
+
+    .section-light .tcard-glow {
+      background: linear-gradient(180deg, transparent 40%, #ff0000 100%)
+    }
+
+    .section-light .tcard-bar {
+      background: rgba(13, 27, 46, .06)
+    }
+
+    .section-light .chip {
+      color: #1e3a5f;
+      background: rgba(30, 58, 95, .07);
+      border-color: rgba(30, 58, 95, .12)
+    }
+
+    .section-light .tcard-tag {
+      background: rgba(255, 255, 255, .95);
+      border-color: rgba(232, 150, 26, .3);
+    }
+
+    /* ══════════════════════════════
    SEAMLESS AUTO-SCROLL LOOP
 ══════════════════════════════ */
-/* Remove old hscroll-track-wrap overflow/padding */
-.hscroll-section{padding:120px 0 80px;background:var(--bg-alt);overflow:hidden}
+    /* Remove old hscroll-track-wrap overflow/padding */
+    .hscroll-section {
+      padding: 120px 0 80px;
+      background: var(--bg-alt);
+      overflow: hidden
+    }
 
-.cards-loop-wrap{
-  position:relative;
-  overflow:hidden;
-  /* fade edges */
-  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);
-  mask-image:linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);
-}
-.cards-loop-track{
-  display:flex;
-  gap:1.5rem;
-  width:max-content;
-  /* default: animates via JS/GSAP, fallback CSS */
-  will-change:transform;
-}
-/* Static tcard opacity override for loop (no entrance anim inside loop) */
-.cards-loop-track .tcard{
-  opacity:1 !important;
-  transform:none !important;
-  flex-shrink:0;
-}
-.cards-loop-track .tcard:hover{
-  transform:translateY(-8px) scale(1.02) !important;
-}
+    .cards-loop-wrap {
+      position: relative;
+      overflow: hidden;
+      /* fade edges */
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    }
 
-</style>
+    .cards-loop-track {
+      display: flex;
+      gap: 1.5rem;
+      width: max-content;
+      /* default: animates via JS/GSAP, fallback CSS */
+      will-change: transform;
+    }
+
+    /* Static tcard opacity override for loop (no entrance anim inside loop) */
+    .cards-loop-track .tcard {
+      opacity: 1 !important;
+      transform: none !important;
+      flex-shrink: 0;
+    }
+
+    .cards-loop-track .tcard:hover {
+      transform: translateY(-8px) scale(1.02) !important;
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- Scroll progress -->
-<div class="progress-bar" id="progressBar"></div>
+  <!-- Scroll progress -->
+  <div class="progress-bar" id="progressBar"></div>
 
-<!-- NAV -->
+  <!-- NAV -->
   <!-- ═══════════════════════════════════════════ NAV -->
-   <!-- ═══════════════════════════════════════════ NAV -->
+  <!-- ═══════════════════════════════════════════ NAV -->
   <nav id="navbar">
     <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
       <img src="favicon.png" alt="VOLGA Infosys logo" />
@@ -575,8 +1780,8 @@ body{font-family:"Inter", sans-serif; background:var(--bg);color:var(--text);min
       <li class="nav-item" data-menu="technologies">
         <a class="nav-link" href="technologies (2).html">Technologies</a>
       </li>
-      <li class="nav-item" data-menu="insights">
-        <a class="nav-link" href="insights-overview-new.html">Insights </a>
+      <li class="nav-item">
+        <a class="nav-link" href="insights-overview-new.html">Blogs</a>
       </li>
       <li class="nav-item" data-menu="company">
         <button class="nav-link">Company <span class="nav-arrow"></span></button>
@@ -598,13 +1803,13 @@ body{font-family:"Inter", sans-serif; background:var(--bg);color:var(--text);min
       <li><a href="industries.html" class="mm-link">Industries</a></li>
       <li><a href="services.html" class="mm-link">Services</a></li>
       <li><a href="portfolio.html" class="mm-link">Work</a></li>
-      <li><a href="technologies(2).html" class="mm-link">Technologies</a></li>
-      <li><a href="blog.html" class="mm-link">Insights</a></li>
+      <li><a href="technologies (2).html" class="mm-link">Technologies</a></li>
+      <li><a href="insights-overview-new.html" class="mm-link">Blogs</a></li>
       <li><a href="company.html" class="mm-link">Company</a></li>
       <li><a href="contact.html" class="mm-link">Contact</a></li>
     </ul>
   </div>
-  
+
 
   <!-- MEGA MENUS -->
   <div class="mega-menu" id="menu-solutions">
@@ -613,95 +1818,138 @@ body{font-family:"Inter", sans-serif; background:var(--bg);color:var(--text);min
       <div class="mega-cols">
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="solutions.html#ar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality-2">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M10 21h-2a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v3.5" />
-	<path d="M17 17l-4 -2.5l4 -2.5l4 2.5v4.5l-4 2.5l0 -4.5" />
-	<path d="M13 14.5v4.5l4 2.5" />
-	<path d="M17 17l4 -2.5" />
-	<path d="M11 4h2" />
-</svg> AR Solutions</a></li>
-            <li><a class="mega-item" href="solutions.html#vr"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cardboards">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 8v8.5a2.5 2.5 0 0 0 2.5 2.5h1.06a3 3 0 0 0 2.34 -1.13l1.54 -1.92a2 2 0 0 1 3.12 0l1.54 1.92a3 3 0 0 0 2.34 1.13h1.06a2.5 2.5 0 0 0 2.5 -2.5v-8.5a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2" />
-	<path d="M7 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-	<path d="M15 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-</svg>VR Solutions</a></li>
-            <li><a class="mega-item" href="solutions.html#xr"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
-	<path d="M4 16v2a2 2 0 0 0 2 2h2" />
-	<path d="M16 4h2a2 2 0 0 1 2 2v2" />
-	<path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
-	<path d="M12 12.5l4 -2.5" />
-	<path d="M8 10l4 2.5v4.5l4 -2.5v-4.5l-4 -2.5l-4 2.5" />
-	<path d="M8 10v4.5l4 2.5" />
-</svg>MR / XR Applications</a></li>
-            <li><a class="mega-item" href="solutions.html#twin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-box-multiple">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M7 5a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2l0 -10" />
-	<path d="M17 17v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" />
-</svg>Digital Twin</a></li>
-            <li><a class="mega-item" href="solutions.html#ai"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brain">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M15.5 13a3.5 3.5 0 0 0 -3.5 3.5v1a3.5 3.5 0 0 0 7 0v-1.8" />
-	<path d="M8.5 13a3.5 3.5 0 0 1 3.5 3.5v1a3.5 3.5 0 0 1 -7 0v-1.8" />
-	<path d="M17.5 16a3.5 3.5 0 0 0 0 -7h-.5" />
-	<path d="M19 9.3v-2.8a3.5 3.5 0 0 0 -7 0" />
-	<path d="M6.5 16a3.5 3.5 0 0 1 0 -7h.5" />
-	<path d="M5 9.3v-2.8a3.5 3.5 0 0 1 7 0v10" />
-</svg>AI Integration</a></li>
+            <li><a class="mega-item" href="solutions.html#ar"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality-2">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M10 21h-2a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v3.5" />
+                  <path d="M17 17l-4 -2.5l4 -2.5l4 2.5v4.5l-4 2.5l0 -4.5" />
+                  <path d="M13 14.5v4.5l4 2.5" />
+                  <path d="M17 17l4 -2.5" />
+                  <path d="M11 4h2" />
+                </svg> AR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html#vr"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-cardboards">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M3 8v8.5a2.5 2.5 0 0 0 2.5 2.5h1.06a3 3 0 0 0 2.34 -1.13l1.54 -1.92a2 2 0 0 1 3.12 0l1.54 1.92a3 3 0 0 0 2.34 1.13h1.06a2.5 2.5 0 0 0 2.5 -2.5v-8.5a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2" />
+                  <path d="M7 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                  <path d="M15 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                </svg>VR Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html#xr"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
+                  <path d="M4 16v2a2 2 0 0 0 2 2h2" />
+                  <path d="M16 4h2a2 2 0 0 1 2 2v2" />
+                  <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
+                  <path d="M12 12.5l4 -2.5" />
+                  <path d="M8 10l4 2.5v4.5l4 -2.5v-4.5l-4 -2.5l-4 2.5" />
+                  <path d="M8 10v4.5l4 2.5" />
+                </svg>MR / XR Applications</a></li>
+            <li><a class="mega-item" href="solutions.html#twin"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-box-multiple">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M7 5a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2l0 -10" />
+                  <path d="M17 17v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" />
+                </svg>Digital Twin</a></li>
+            <li><a class="mega-item" href="solutions.html#ai"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-brain">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M15.5 13a3.5 3.5 0 0 0 -3.5 3.5v1a3.5 3.5 0 0 0 7 0v-1.8" />
+                  <path d="M8.5 13a3.5 3.5 0 0 1 3.5 3.5v1a3.5 3.5 0 0 1 -7 0v-1.8" />
+                  <path d="M17.5 16a3.5 3.5 0 0 0 0 -7h-.5" />
+                  <path d="M19 9.3v-2.8a3.5 3.5 0 0 0 -7 0" />
+                  <path d="M6.5 16a3.5 3.5 0 0 1 0 -7h.5" />
+                  <path d="M5 9.3v-2.8a3.5 3.5 0 0 1 7 0v10" />
+                </svg>AI Integration</a></li>
           </ul>
         </div>
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="solutions.html#cfg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cube">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M21 16.008v-8.018a1.98 1.98 0 0 0 -1 -1.717l-7 -4.008a2.016 2.016 0 0 0 -2 0l-7 4.008c-.619 .355 -1 1.01 -1 1.718v8.018c0 .709 .381 1.363 1 1.717l7 4.008a2.016 2.016 0 0 0 2 0l7 -4.008c.619 -.355 1 -1.01 1 -1.718" />
-	<path d="M12 22v-10" />
-	<path d="M12 12l8.73 -5.04" />
-	<path d="M3.27 6.96l8.73 5.04" />
-</svg>3D Configurators</a></li>
-            <li><a class="mega-item" href="solutions.html#vs"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-store">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 21l18 0" />
-	<path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
-	<path d="M5 21l0 -10.15" />
-	<path d="M19 21l0 -10.15" />
-	<path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
-</svg>Virtual Showrooms</a></li>
-            <li><a class="mega-item" href="solutions.html#sim"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-atom-2">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-	<path d="M12 21l0 .01" />
-	<path d="M3 9l0 .01" />
-	<path d="M21 9l0 .01" />
-	<path d="M8 20.1a9 9 0 0 1 -5 -7.1" />
-	<path d="M16 20.1a9 9 0 0 0 5 -7.1" />
-	<path d="M6.2 5a9 9 0 0 1 11.4 0" />
-</svg>Simulation Systems</a></li>
-            <li><a class="mega-item" href="solutions.html#trn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-school">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
-	<path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
-</svg>Interactive Training</a></li>
-            <li><a class="mega-item" href="solutions.html#meta"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-react-native">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M6.357 9c-2.637 .68 -4.357 1.845 -4.357 3.175c0 2.107 4.405 3.825 9.85 3.825c.74 0 1.26 -.039 1.95 -.097" />
-	<path d="M9.837 15.9c-.413 -.596 -.806 -1.133 -1.18 -1.8c-2.751 -4.9 -3.488 -9.77 -1.63 -10.873c1.15 -.697 3.047 .253 4.974 2.254" />
-	<path d="M6.429 15.387c-.702 2.688 -.56 4.716 .56 5.395c1.783 1.08 5.387 -1.958 8.043 -6.804c.36 -.67 .683 -1.329 .968 -1.978" />
-	<path d="M12 18.52c1.928 2 3.817 2.95 4.978 2.253c1.85 -1.102 1.121 -5.972 -1.633 -10.873c-.384 -.677 -.777 -1.204 -1.18 -1.8" />
-	<path d="M17.66 15c2.612 -.687 4.34 -1.85 4.34 -3.176c0 -2.11 -4.408 -3.824 -9.845 -3.824c-.747 0 -1.266 .029 -1.955 .087" />
-	<path d="M8 12c.285 -.66 .607 -1.308 .968 -1.978c2.647 -4.844 6.253 -7.89 8.046 -6.801c1.11 .679 1.262 2.706 .56 5.393" />
-	<path d="M12.26 12.015h-.01c-.01 .13 -.12 .24 -.26 .24a.263 .263 0 0 1 -.25 -.26c0 -.14 .11 -.25 .24 -.25h-.01c.13 -.01 .25 .11 .25 .24" />
-</svg>Metaverse Solutions</a></li>
+            <li><a class="mega-item" href="solutions.html#cfg"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-cube">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M21 16.008v-8.018a1.98 1.98 0 0 0 -1 -1.717l-7 -4.008a2.016 2.016 0 0 0 -2 0l-7 4.008c-.619 .355 -1 1.01 -1 1.718v8.018c0 .709 .381 1.363 1 1.717l7 4.008a2.016 2.016 0 0 0 2 0l7 -4.008c.619 -.355 1 -1.01 1 -1.718" />
+                  <path d="M12 22v-10" />
+                  <path d="M12 12l8.73 -5.04" />
+                  <path d="M3.27 6.96l8.73 5.04" />
+                </svg>3D Configurators</a></li>
+            <li><a class="mega-item" href="solutions.html#vs"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-building-store">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M3 21l18 0" />
+                  <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
+                  <path d="M5 21l0 -10.15" />
+                  <path d="M19 21l0 -10.15" />
+                  <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
+                </svg>Virtual Showrooms</a></li>
+            <li><a class="mega-item" href="solutions.html#sim"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-atom-2">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                  <path d="M12 21l0 .01" />
+                  <path d="M3 9l0 .01" />
+                  <path d="M21 9l0 .01" />
+                  <path d="M8 20.1a9 9 0 0 1 -5 -7.1" />
+                  <path d="M16 20.1a9 9 0 0 0 5 -7.1" />
+                  <path d="M6.2 5a9 9 0 0 1 11.4 0" />
+                </svg>Simulation Systems</a></li>
+            <li><a class="mega-item" href="solutions.html#trn"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-school">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+                  <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
+                </svg>Interactive Training</a></li>
+            <li><a class="mega-item" href="solutions.html#meta"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-react-native">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M6.357 9c-2.637 .68 -4.357 1.845 -4.357 3.175c0 2.107 4.405 3.825 9.85 3.825c.74 0 1.26 -.039 1.95 -.097" />
+                  <path
+                    d="M9.837 15.9c-.413 -.596 -.806 -1.133 -1.18 -1.8c-2.751 -4.9 -3.488 -9.77 -1.63 -10.873c1.15 -.697 3.047 .253 4.974 2.254" />
+                  <path
+                    d="M6.429 15.387c-.702 2.688 -.56 4.716 .56 5.395c1.783 1.08 5.387 -1.958 8.043 -6.804c.36 -.67 .683 -1.329 .968 -1.978" />
+                  <path
+                    d="M12 18.52c1.928 2 3.817 2.95 4.978 2.253c1.85 -1.102 1.121 -5.972 -1.633 -10.873c-.384 -.677 -.777 -1.204 -1.18 -1.8" />
+                  <path
+                    d="M17.66 15c2.612 -.687 4.34 -1.85 4.34 -3.176c0 -2.11 -4.408 -3.824 -9.845 -3.824c-.747 0 -1.266 .029 -1.955 .087" />
+                  <path
+                    d="M8 12c.285 -.66 .607 -1.308 .968 -1.978c2.647 -4.844 6.253 -7.89 8.046 -6.801c1.11 .679 1.262 2.706 .56 5.393" />
+                  <path
+                    d="M12.26 12.015h-.01c-.01 .13 -.12 .24 -.26 .24a.263 .263 0 0 1 -.25 -.26c0 -.14 .11 -.25 .24 -.25h-.01c.13 -.01 .25 .11 .25 .24" />
+                </svg>Metaverse Solutions</a></li>
           </ul>
         </div>
       </div>
       <div class="mega-highlight">
         <div class="mega-highlight-title">New: AI-Powered XR</div>
-        <div class="mega-highlight-sub">Combining spatial computing with generative AI for next-gen enterprise experiences.</div>
-        <a href="#" class="mega-highlight-btn">Explore <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="mega-highlight-sub">Combining spatial computing with generative AI for next-gen enterprise
+          experiences.</div>
+        <a href="#" class="mega-highlight-btn">Explore <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
       </div>
     </div>
   </div>
@@ -712,91 +1960,129 @@ body{font-family:"Inter", sans-serif; background:var(--bg);color:var(--text);min
       <div class="mega-cols">
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="industries.html#healthcare"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-activity-heartbeat">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 12h4.5l1.5 -6l4 12l2 -9l1.5 3h4.5" />
-</svg>Healthcare</a></li>
-            <li><a class="mega-item" href="industries.html#manufacturing"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-factory-2">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 21h18" />
-	<path d="M5 21v-12l5 4v-4l5 4h4" />
-	<path d="M19 21v-8l-1.436 -9.574a.5 .5 0 0 0 -.495 -.426h-1.145a.5 .5 0 0 0 -.494 .418l-1.43 8.582" />
-	<path d="M9 17h1" />
-	<path d="M14 17h1" />
-</svg>Manufacturing</a></li>
-            <li><a class="mega-item" href="industries.html#realestate"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-home">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-	<path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-	<path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-</svg>Real Estate</a></li>
-            <li><a class="mega-item" href="industries.html#education"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-school">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
-	<path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
-</svg>Education</a></li>
-            <li><a class="mega-item" href="industries.html#automotive"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-car-suv">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M5 17a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-	<path d="M16 17a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-	<path d="M5 9l2 -4h7.438a2 2 0 0 1 1.94 1.515l.622 2.485h3a2 2 0 0 1 2 2v3" />
-	<path d="M10 9v-4" />
-	<path d="M2 7v4" />
-	<path d="M22.001 14.001a4.992 4.992 0 0 0 -4.001 -2.001a4.992 4.992 0 0 0 -4 2h-3a4.998 4.998 0 0 0 -8.003 .003" />
-	<path d="M5 12v-3h13" />
-</svg>Automotive</a></li>
+            <li><a class="mega-item" href="industries.html#healthcare"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-activity-heartbeat">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M3 12h4.5l1.5 -6l4 12l2 -9l1.5 3h4.5" />
+                </svg>Healthcare</a></li>
+            <li><a class="mega-item" href="industries.html#manufacturing"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-building-factory-2">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M3 21h18" />
+                  <path d="M5 21v-12l5 4v-4l5 4h4" />
+                  <path d="M19 21v-8l-1.436 -9.574a.5 .5 0 0 0 -.495 -.426h-1.145a.5 .5 0 0 0 -.494 .418l-1.43 8.582" />
+                  <path d="M9 17h1" />
+                  <path d="M14 17h1" />
+                </svg>Manufacturing</a></li>
+            <li><a class="mega-item" href="industries.html#realestate"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-home">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                </svg>Real Estate</a></li>
+            <li><a class="mega-item" href="industries.html#education"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-school">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+                  <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
+                </svg>Education</a></li>
+            <li><a class="mega-item" href="industries.html#automotive"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-car-suv">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M5 17a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M16 17a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M5 9l2 -4h7.438a2 2 0 0 1 1.94 1.515l.622 2.485h3a2 2 0 0 1 2 2v3" />
+                  <path d="M10 9v-4" />
+                  <path d="M2 7v4" />
+                  <path
+                    d="M22.001 14.001a4.992 4.992 0 0 0 -4.001 -2.001a4.992 4.992 0 0 0 -4 2h-3a4.998 4.998 0 0 0 -8.003 .003" />
+                  <path d="M5 12v-3h13" />
+                </svg>Automotive</a></li>
           </ul>
         </div>
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="industries.html#retail"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M4 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-	<path d="M15 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-	<path d="M17 17h-11v-14h-2" />
-	<path d="M6 5l14 1l-1 7h-13" />
-</svg>Retail</a></li>
-            <li><a class="mega-item" href="industries.html#architecture"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-buildings">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M4 21v-15c0 -1 1 -2 2 -2h5c1 0 2 1 2 2v15" />
-	<path d="M16 8h2c1 0 2 1 2 2v11" />
-	<path d="M3 21h18" />
-	<path d="M10 12v.01" />
-	<path d="M10 16v.01" />
-	<path d="M10 8v.01" />
-	<path d="M7 12v.01" />
-	<path d="M7 16v.01" />
-	<path d="M7 8v.01" />
-	<path d="M17 12v.01" />
-	<path d="M17 16v.01" />
-</svg></span>Architecture</a></li>
-            <li><a class="mega-item" href="industries.html#defense"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-shield-chevron">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
-	<path d="M4 14l8 -3l8 3" />
-</svg>  Defense</a></li>
-            <li><a class="mega-item" href="industries.html#tourism"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
-	<path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" />
-</svg>Tourism</a></li>
-            <li><a class="mega-item" href="industries.html#energy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-wind-turbine">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M10 11a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-	<path d="M10 11v-2.573c0 -.18 .013 -.358 .04 -.536l.716 -4.828c.064 -.597 .597 -1.063 1.244 -1.063s1.18 .466 1.244 1.063l.716 4.828c.027 .178 .04 .357 .04 .536v2.573" />
-	<path d="M13.01 9.28l2.235 1.276c.156 .09 .305 .19 .446 .3l3.836 2.911c.487 .352 .624 1.04 .3 1.596c-.325 .556 -1 .782 -1.548 .541l-4.555 -1.68a3.624 3.624 0 0 1 -.486 -.231l-2.235 -1.277" />
-	<path d="M13 12.716l-2.236 1.277a3.624 3.624 0 0 1 -.485 .23l-4.555 1.681c-.551 .241 -1.223 .015 -1.548 -.54c-.324 -.557 -.187 -1.245 .3 -1.597l3.836 -2.91a3.41 3.41 0 0 1 .446 -.3l2.235 -1.277" />
-	<path d="M7 21h10" />
-	<path d="M10 21l1 -7" />
-	<path d="M13 14l1 7" />
-</svg>Energy</a></li>
+            <li><a class="mega-item" href="industries.html#retail"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                  <path d="M15 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                  <path d="M17 17h-11v-14h-2" />
+                  <path d="M6 5l14 1l-1 7h-13" />
+                </svg>Retail</a></li>
+            <li><a class="mega-item" href="industries.html#architecture"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-buildings">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 21v-15c0 -1 1 -2 2 -2h5c1 0 2 1 2 2v15" />
+                  <path d="M16 8h2c1 0 2 1 2 2v11" />
+                  <path d="M3 21h18" />
+                  <path d="M10 12v.01" />
+                  <path d="M10 16v.01" />
+                  <path d="M10 8v.01" />
+                  <path d="M7 12v.01" />
+                  <path d="M7 16v.01" />
+                  <path d="M7 8v.01" />
+                  <path d="M17 12v.01" />
+                  <path d="M17 16v.01" />
+                </svg></span>Architecture</a></li>
+            <li><a class="mega-item" href="industries.html#defense"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-shield-chevron">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
+                  <path d="M4 14l8 -3l8 3" />
+                </svg> Defense</a></li>
+            <li><a class="mega-item" href="industries.html#tourism"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                  <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" />
+                </svg>Tourism</a></li>
+            <li><a class="mega-item" href="industries.html#energy"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-building-wind-turbine">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M10 11a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                  <path
+                    d="M10 11v-2.573c0 -.18 .013 -.358 .04 -.536l.716 -4.828c.064 -.597 .597 -1.063 1.244 -1.063s1.18 .466 1.244 1.063l.716 4.828c.027 .178 .04 .357 .04 .536v2.573" />
+                  <path
+                    d="M13.01 9.28l2.235 1.276c.156 .09 .305 .19 .446 .3l3.836 2.911c.487 .352 .624 1.04 .3 1.596c-.325 .556 -1 .782 -1.548 .541l-4.555 -1.68a3.624 3.624 0 0 1 -.486 -.231l-2.235 -1.277" />
+                  <path
+                    d="M13 12.716l-2.236 1.277a3.624 3.624 0 0 1 -.485 .23l-4.555 1.681c-.551 .241 -1.223 .015 -1.548 -.54c-.324 -.557 -.187 -1.245 .3 -1.597l3.836 -2.91a3.41 3.41 0 0 1 .446 -.3l2.235 -1.277" />
+                  <path d="M7 21h10" />
+                  <path d="M10 21l1 -7" />
+                  <path d="M13 14l1 7" />
+                </svg>Energy</a></li>
           </ul>
         </div>
       </div>
       <div class="mega-highlight">
         <div class="mega-highlight-title">Industry Solutions</div>
         <div class="mega-highlight-sub">Tailored immersive experiences built for your sector's unique challenges.</div>
-        <a href="industries.html" class="mega-highlight-btn">View All <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="industries.html" class="mega-highlight-btn">View All <svg width="12" height="12" viewBox="0 0 12 12"
+            fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
       </div>
     </div>
   </div>
@@ -807,76 +2093,105 @@ body{font-family:"Inter", sans-serif; background:var(--bg);color:var(--text);min
       <div class="mega-cols">
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="services.html#custom-ar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality-2">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M10 21h-2a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v3.5" />
-	<path d="M17 17l-4 -2.5l4 -2.5l4 2.5v4.5l-4 2.5l0 -4.5" />
-	<path d="M13 14.5v4.5l4 2.5" />
-	<path d="M17 17l4 -2.5" />
-	<path d="M11 4h2" />
-</svg>Custom AR App Development</a></li>
-            <li><a class="mega-item" href="services.html#vr-training"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cardboards">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 8v8.5a2.5 2.5 0 0 0 2.5 2.5h1.06a3 3 0 0 0 2.34 -1.13l1.54 -1.92a2 2 0 0 1 3.12 0l1.54 1.92a3 3 0 0 0 2.34 1.13h1.06a2.5 2.5 0 0 0 2.5 -2.5v-8.5a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2" />
-	<path d="M7 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-	<path d="M15 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-</svg>VR Training Platforms</a></li>
-            <li><a class="mega-item" href="services.html#unity-dev"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-unity">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M14 3l6 4v7" />
-	<path d="M18 17l-6 4l-6 -4" />
-	<path d="M4 14v-7l6 -4" />
-	<path d="M4 7l8 5v9" />
-	<path d="M20 7l-8 5" />
-</svg>Unity Development</a></li>
-            <li><a class="mega-item" href="services.html#webgl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cube-3d-sphere">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M6 17.6l-2 -1.1v-2.5" />
-	<path d="M4 10v-2.5l2 -1.1" />
-	<path d="M10 4.1l2 -1.1l2 1.1" />
-	<path d="M18 6.4l2 1.1v2.5" />
-	<path d="M20 14v2.5l-2 1.12" />
-	<path d="M14 19.9l-2 1.1l-2 -1.1" />
-	<path d="M12 12l2 -1.1" />
-	<path d="M18 8.6l2 -1.1" />
-	<path d="M12 12l0 2.5" />
-	<path d="M12 18.5l0 2.5" />
-	<path d="M12 12l-2 -1.12" />
-	<path d="M6 8.6l-2 -1.1" />
-</svg>WebGL Experiences</a></li>
+            <li><a class="mega-item" href="services.html#custom-ar"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality-2">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M10 21h-2a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v3.5" />
+                  <path d="M17 17l-4 -2.5l4 -2.5l4 2.5v4.5l-4 2.5l0 -4.5" />
+                  <path d="M13 14.5v4.5l4 2.5" />
+                  <path d="M17 17l4 -2.5" />
+                  <path d="M11 4h2" />
+                </svg>Custom AR App Development</a></li>
+            <li><a class="mega-item" href="services.html#vr-training"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-cardboards">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M3 8v8.5a2.5 2.5 0 0 0 2.5 2.5h1.06a3 3 0 0 0 2.34 -1.13l1.54 -1.92a2 2 0 0 1 3.12 0l1.54 1.92a3 3 0 0 0 2.34 1.13h1.06a2.5 2.5 0 0 0 2.5 -2.5v-8.5a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2" />
+                  <path d="M7 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                  <path d="M15 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                </svg>VR Training Platforms</a></li>
+            <li><a class="mega-item" href="services.html#unity-dev"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-unity">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M14 3l6 4v7" />
+                  <path d="M18 17l-6 4l-6 -4" />
+                  <path d="M4 14v-7l6 -4" />
+                  <path d="M4 7l8 5v9" />
+                  <path d="M20 7l-8 5" />
+                </svg>Unity Development</a></li>
+            <li><a class="mega-item" href="services.html#webgl"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-cube-3d-sphere">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M6 17.6l-2 -1.1v-2.5" />
+                  <path d="M4 10v-2.5l2 -1.1" />
+                  <path d="M10 4.1l2 -1.1l2 1.1" />
+                  <path d="M18 6.4l2 1.1v2.5" />
+                  <path d="M20 14v2.5l-2 1.12" />
+                  <path d="M14 19.9l-2 1.1l-2 -1.1" />
+                  <path d="M12 12l2 -1.1" />
+                  <path d="M18 8.6l2 -1.1" />
+                  <path d="M12 12l0 2.5" />
+                  <path d="M12 18.5l0 2.5" />
+                  <path d="M12 12l-2 -1.12" />
+                  <path d="M6 8.6l-2 -1.1" />
+                </svg>WebGL Experiences</a></li>
           </ul>
         </div>
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="services.html#3d-modeling"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-3d">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M14 3v4a1 1 0 0 0 1 1h4" />
-	<path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
-	<path d="M12 13.5l4 -1.5" />
-	<path d="M8 11.846l4 1.654v4.5l4 -1.846v-4.308l-4 -1.846l-4 1.846" />
-	<path d="M8 12v4.2l4 1.8" />
-</svg>3D Modeling & Animation</a></li>
-            <li><a class="mega-item" href="services.html#uiux"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-layout">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M4 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -1" />
-	<path d="M4 15a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -3" />
-	<path d="M14 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -12" />
-</svg>UI/UX Design</a></li>
-            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cloud">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M6.657 18c-2.572 0 -4.657 -2.007 -4.657 -4.483c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486c0 1.927 -1.551 3.487 -3.465 3.487h-11.878" />
-</svg>Cloud Deployment</a></li>
-            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-tool">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" />
-</svg>Maintenance & Support</a></li>
+            <li><a class="mega-item" href="services.html#3d-modeling"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-file-3d">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+                  <path d="M12 13.5l4 -1.5" />
+                  <path d="M8 11.846l4 1.654v4.5l4 -1.846v-4.308l-4 -1.846l-4 1.846" />
+                  <path d="M8 12v4.2l4 1.8" />
+                </svg>3D Modeling & Animation</a></li>
+            <li><a class="mega-item" href="services.html#uiux"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-layout">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -1" />
+                  <path d="M4 15a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -3" />
+                  <path d="M14 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -12" />
+                </svg>UI/UX Design</a></li>
+            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-cloud">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M6.657 18c-2.572 0 -4.657 -2.007 -4.657 -4.483c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486c0 1.927 -1.551 3.487 -3.465 3.487h-11.878" />
+                </svg>Cloud Deployment</a></li>
+            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-tool">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" />
+                </svg>Maintenance & Support</a></li>
           </ul>
         </div>
       </div>
       <div class="mega-highlight">
         <div class="mega-highlight-title">Full-Cycle Delivery</div>
         <div class="mega-highlight-sub">From concept to deployment — we handle every stage of your XR project.</div>
-        <a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
       </div>
     </div>
   </div>
@@ -887,32 +2202,45 @@ body{font-family:"Inter", sans-serif; background:var(--bg);color:var(--text);min
       <div class="mega-cols">
         <div class="mega-col">
           <ul class="mega-items">
-            
-            <li><a class="mega-item" href="portfolio.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9" />
-	<path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
-	<path d="M12 12l0 .01" />
-	<path d="M3 13a20 20 0 0 0 18 0" />
-</svg>Portfolio</a></li>
-            <li><a class="mega-item" href="client-stories.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-users">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-	<path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-	<path d="M16 3.13a4 4 0 0 1 0 7.75" />
-	<path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
-</svg>Client Stories</a></li>
-            <li><a class="mega-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-player-play">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M7 4v16l13 -8l-13 -8" />
-</svg></span>Product Demos</a></li>
+
+            <li><a class="mega-item" href="portfolio.html"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9" />
+                  <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+                  <path d="M12 12l0 .01" />
+                  <path d="M3 13a20 20 0 0 0 18 0" />
+                </svg>Portfolio</a></li>
+            <li><a class="mega-item" href="client-stories.html"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-users">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                  <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
+                </svg>Client Stories</a></li>
+            <li><a class="mega-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-player-play">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M7 4v16l13 -8l-13 -8" />
+                </svg></span>Product Demos</a></li>
           </ul>
         </div>
       </div>
       <div class="mega-highlight">
         <div class="mega-highlight-title">Featured Project</div>
-        <div class="mega-highlight-sub">See how we transformed a global manufacturer's training program with immersive VR.</div>
-        <a href="#" class="mega-highlight-btn">View Case Study <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="mega-highlight-sub">See how we transformed a global manufacturer's training program with immersive
+          VR.</div>
+        <a href="#" class="mega-highlight-btn">View Case Study <svg width="12" height="12" viewBox="0 0 12 12"
+            fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
       </div>
     </div>
   </div>
@@ -923,765 +2251,861 @@ body{font-family:"Inter", sans-serif; background:var(--bg);color:var(--text);min
       <div class="mega-cols">
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="about.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-users-group">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-	<path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
-	<path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-	<path d="M17 10h2a2 2 0 0 1 2 2v1" />
-	<path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-	<path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
-</svg>About Us</a></li>
-            <li><a class="mega-item" href="careers-page (1).html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase-2">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9" />
-	<path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
-</svg>Careers</a></li>
-            <li><a class="mega-item" href=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-heart-handshake">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-	<path d="M12 6l-3.293 3.293a1 1 0 0 0 0 1.414l.543 .543c.69 .69 1.81 .69 2.5 0l1 -1a3.182 3.182 0 0 1 4.5 0l2.25 2.25" />
-	<path d="M12.5 15.5l2 2" />
-	<path d="M15 13l2 2" />
-</svg>Partnerships</a></li>
+            <li><a class="mega-item" href="about.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-users-group">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
+                  <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M17 10h2a2 2 0 0 1 2 2v1" />
+                  <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
+                </svg>About Us</a></li>
+            <li><a class="mega-item" href="careers-page (1).html"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase-2">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9" />
+                  <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+                </svg>Careers</a></li>
+            <li><a class="mega-item" href=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-heart-handshake">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                  <path
+                    d="M12 6l-3.293 3.293a1 1 0 0 0 0 1.414l.543 .543c.69 .69 1.81 .69 2.5 0l1 -1a3.182 3.182 0 0 1 4.5 0l2.25 2.25" />
+                  <path d="M12.5 15.5l2 2" />
+                  <path d="M15 13l2 2" />
+                </svg>Partnerships</a></li>
           </ul>
         </div>
       </div>
       <div class="mega-highlight">
         <div class="mega-highlight-title">We're Hiring</div>
-        <div class="mega-highlight-sub">Join a team building the future of spatial computing and enterprise immersive tech.</div>
-        <a href="#" class="mega-highlight-btn">See Openings <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="mega-highlight-sub">Join a team building the future of spatial computing and enterprise immersive
+          tech.</div>
+        <a href="#" class="mega-highlight-btn">See Openings <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
       </div>
     </div>
   </div>
 
   <div id="backdrop" aria-hidden="true"></div>
 
-<!-- ════════════════════════════
+  <!-- ════════════════════════════
      HERO — CINEMATIC
 ════════════════════════════ -->
-<section class="hero-cinema">
-  <!-- Background: 3D tech video from Pexels (royalty-free) -->
-  <video class="hero-video-bg" autoplay muted loop playsinline
-    src="hompage.mp4">
-  </video>
-  <!-- Fallback gradient if video fails -->
-  <div class="hero-grid"></div>
+  <section class="hero-cinema">
+    <!-- Background: 3D tech video from Pexels (royalty-free) -->
+    <video class="hero-video-bg" autoplay muted loop playsinline src="hompage.mp4">
+    </video>
+    <!-- Fallback gradient if video fails -->
+    <div class="hero-grid"></div>
 
-  <div class="hero-content">
-    <div class="hero-pill"><span></span>ENGINEERING THE FUTURE OF ENTERPRISE XR</div>
-    <h1 class="hero-title">
-      <span class="word"><span class="word-inner">Enterprise</span></span>
-      <span class="word"><span class="word-inner">tools</span></span>
-      <span class="word"><span class="word-inner">for</span></span>
-      <br>
-      <span class="word"><span class="word-inner"><em>immersive</em></span></span>
-      <span class="word"><span class="word-inner"><em>realities</em></span></span>
-    </h1>
-    <p class="hero-sub">Volga Infosys helps organizations transform complex workflows into immersive digital experiences. From Digital Twins and AI-powered training to AR-assisted maintenance and WebXR applications, we build enterprise-grade solutions that improve productivity, accelerate learning, and unlock new business opportunities.</p>
-    <div class="hero-stats">
-      <div class="stat-orb"><div class="num" data-target="9">0</div><div class="label">Core Technologies</div></div>
-      <div class="stat-orb"><div class="num" data-target="5">0</div><div class="label">Target Platforms</div></div>
-      <div class="stat-orb"><div class="num" data-target="100">0</div><div class="label">% Production Ready</div></div>
+    <div class="hero-content">
+      <div class="hero-pill"><span></span>ENGINEERING THE FUTURE OF ENTERPRISE XR</div>
+      <h1 class="hero-title">
+        <span class="word"><span class="word-inner">Enterprise</span></span>
+        <span class="word"><span class="word-inner">tools</span></span>
+        <span class="word"><span class="word-inner">for</span></span>
+        <br>
+        <span class="word"><span class="word-inner"><em>immersive</em></span></span>
+        <span class="word"><span class="word-inner"><em>realities</em></span></span>
+      </h1>
+      <p class="hero-sub">Explore the technologies we use to build scalable VR, AR, AI, Digital Twin, and WebXR
+        solutions for modern enterprises.</p>
+      <div class="hero-cta-wrap">
+        <a href="#immersive" class="hero-cta-primary">
+          Explore Technologies
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </a>
+        <a href="#unity-spotlight" class="hero-cta-secondary">
+          View Technology Stack →
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-orb">
+          <div class="num" data-target="9">0</div>
+          <div class="label">Core Technologies</div>
+        </div>
+        <div class="stat-orb">
+          <div class="num" data-target="5">0</div>
+          <div class="label">Target Platforms</div>
+        </div>
+        <div class="stat-orb">
+          <div class="num" data-target="100">0</div>
+          <div class="label">% Production Ready</div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-track" id="techTicker">
+      <span>Unity</span><span class="ticker-dot">✦</span>
+      <span>Unreal Engine</span><span class="ticker-dot">✦</span>
+      <span>Three.js</span><span class="ticker-dot">✦</span>
+      <span>WebGL</span><span class="ticker-dot">✦</span>
+      <span>ARKit</span><span class="ticker-dot">✦</span>
+      <span>ARCore</span><span class="ticker-dot">✦</span>
+      <span>OpenXR</span><span class="ticker-dot">✦</span>
+      <span>AI & ML</span><span class="ticker-dot">✦</span>
+      <span>AWS & Azure</span><span class="ticker-dot">✦</span>
+      <span>Blender</span><span class="ticker-dot">✦</span>
+      <span>Digital Twins</span><span class="ticker-dot">✦</span>
+      <span>Real-Time 3D</span><span class="ticker-dot">✦</span>
+      <span>Unity</span><span class="ticker-dot">✦</span>
+      <span>Unreal Engine</span><span class="ticker-dot">✦</span>
+      <span>Three.js</span><span class="ticker-dot">✦</span>
+      <span>WebGL</span><span class="ticker-dot">✦</span>
+      <span>ARKit</span><span class="ticker-dot">✦</span>
+      <span>ARCore</span><span class="ticker-dot">✦</span>
+      <span>OpenXR</span><span class="ticker-dot">✦</span>
+      <span>AI & ML</span><span class="ticker-dot">✦</span>
+      <span>AWS & Azure</span><span class="ticker-dot">✦</span>
+      <span>Blender</span><span class="ticker-dot">✦</span>
+      <span>Digital Twins</span><span class="ticker-dot">✦</span>
+      <span>Real-Time 3D</span><span class="ticker-dot">✦</span>
     </div>
   </div>
-  <div class="scroll-hint">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
+
+  <!-- wave into light -->
+  <div style="display:block;width:100%;line-height:0;overflow:hidden">
+
   </div>
-</section>
 
-<!-- MARQUEE -->
-<div class="marquee-band">
-  <div class="marquee-track">
-    <div class="marquee-item">Unity<span></span></div>
-    <div class="marquee-item">Unreal Engine<span></span></div>
-    <div class="marquee-item">Three.js<span></span></div>
-    <div class="marquee-item">WebGL<span></span></div>
-    <div class="marquee-item">ARKit<span></span></div>
-    <div class="marquee-item">ARCore<span></span></div>
-    <div class="marquee-item">OpenXR<span></span></div>
-    <div class="marquee-item">AI & ML<span></span></div>
-    <div class="marquee-item">AWS & Azure<span></span></div>
-    <div class="marquee-item">Blender<span></span></div>
-    <div class="marquee-item">Digital Twins<span></span></div>
-    <div class="marquee-item">Real-Time 3D<span></span></div>
-    <!-- duplicate -->
-    <div class="marquee-item">Unity<span></span></div>
-    <div class="marquee-item">Unreal Engine<span></span></div>
-    <div class="marquee-item">Three.js<span></span></div>
-    <div class="marquee-item">WebGL<span></span></div>
-    <div class="marquee-item">ARKit<span></span></div>
-    <div class="marquee-item">ARCore<span></span></div>
-    <div class="marquee-item">OpenXR<span></span></div>
-    <div class="marquee-item">AI & ML<span></span></div>
-    <div class="marquee-item">AWS & Azure<span></span></div>
-    <div class="marquee-item">Blender<span></span></div>
-    <div class="marquee-item">Digital Twins<span></span></div>
-    <div class="marquee-item">Real-Time 3D<span></span></div>
-  </div>
-</div>
-
-<!-- wave into light -->
-<div style="display:block;width:100%;line-height:0;overflow:hidden">
- 
-</div>
-
-<!-- ════════════════════════════
+  <!-- ════════════════════════════
      IMMERSIVE TECH — SEAMLESS LOOP
 ════════════════════════════ -->
-<section class="hscroll-section" id="immersive">
-  <div class="hscroll-intro" style="padding:0 3rem 60px;max-width:1320px;margin:0 auto">
-    <div class="section-eyebrow reveal">
-      <div class="eyebrow-line"></div>
-      <div class="eyebrow-text">Trusted Technologies</div>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem">
-      <h2 class="section-title reveal" style="max-width:480px">Technologies We Build With</h2>
-      <p class="section-desc reveal-right" style="max-width:380px">We combine industry-leading platforms with custom engineering to deliver scalable, future-ready immersive solutions across enterprise environments.</p>
-    </div>
-  </div>
-
-  <!-- Seamless infinite loop rail — duplicated set for perfect loop -->
-  <div class="cards-loop-wrap">
-    <div class="cards-loop-track" id="loopTrack">
-
-      <!-- SET A -->
-      <div class="tcard">
-        <img class="tcard-img" src="https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=640&q=80" alt="Unity 3D"/>
-        <div class="tcard-glow"></div>
-        <span class="tcard-tag">3D / XR</span>
-        <div class="tcard-body">
-          <div class="tcard-icon">⬡</div>
-          <h3>Unity</h3>
-          <p>The world's most versatile real-time 3D platform for AR/VR apps, digital twins, and enterprise simulations — deployable from a single codebase.</p>
-          <div class="tcard-chips"><span class="chip">AR / VR / MR</span><span class="chip">Digital Twins</span><span class="chip">Cross-Platform</span><span class="chip">IoT</span></div>
-        </div>
-        <div class="tcard-bar"><div class="tcard-bar-fill"></div></div>
-      </div>
-
-      <div class="tcard">
-        <img class="tcard-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=640&q=80" alt="Unreal Engine"/>
-        <div class="tcard-glow"></div>
-        <span class="tcard-tag">3D / VR</span>
-        <div class="tcard-body">
-          <div class="tcard-icon">🎬</div>
-          <h3>Unreal Engine</h3>
-          <p>Cinematic-quality real-time rendering for architectural viz, industrial simulation, and VR where visual fidelity is non-negotiable.</p>
-          <div class="tcard-chips"><span class="chip">Photorealistic</span><span class="chip">Arch. Viz</span><span class="chip">Virtual Production</span></div>
-        </div>
-        <div class="tcard-bar"><div class="tcard-bar-fill"></div></div>
-      </div>
-
-      <div class="tcard">
-        <img class="tcard-img" src="https://images.unsplash.com/photo-1563089145-599997674d42?w=640&q=80" alt="Three.js Web 3D"/>
-        <div class="tcard-glow"></div>
-        <span class="tcard-tag">Web 3D</span>
-        <div class="tcard-body">
-          <div class="tcard-icon">△</div>
-          <h3>Three.js</h3>
-          <p>Browser-native 3D built on WebGL. Product configurators, virtual showrooms, and interactive data viz — zero installation required.</p>
-          <div class="tcard-chips"><span class="chip">Browser-Based</span><span class="chip">Configurators</span><span class="chip">Showrooms</span></div>
-        </div>
-        <div class="tcard-bar"><div class="tcard-bar-fill"></div></div>
-      </div>
-
-      <div class="tcard">
-        <img class="tcard-img" src="https://images.unsplash.com/photo-1518432031352-d6fc5734fa8c?w=640&q=80" alt="WebGL GPU"/>
-        <div class="tcard-glow"></div>
-        <span class="tcard-tag">Graphics</span>
-        <div class="tcard-body">
-          <div class="tcard-icon">⊞</div>
-          <h3>WebGL</h3>
-          <p>GPU-accelerated browser graphics powering engineering dashboards, scientific simulations, and enterprise analytics platforms.</p>
-          <div class="tcard-chips"><span class="chip">GPU-Accelerated</span><span class="chip">Dashboards</span><span class="chip">No Plugins</span></div>
-        </div>
-        <div class="tcard-bar"><div class="tcard-bar-fill"></div></div>
-      </div>
-
-      <div class="tcard">
-        <img class="tcard-img" src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=640&q=80" alt="Blender 3D"/>
-        <div class="tcard-glow"></div>
-        <span class="tcard-tag">3D Art</span>
-        <div class="tcard-body">
-          <div class="tcard-icon">◇</div>
-          <h3>Blender</h3>
-          <p>Open-source 3D powering our modeling, rigging, and animation pipeline — producing production-ready assets for Unity, Unreal, and WebGL.</p>
-          <div class="tcard-chips"><span class="chip">3D Modeling</span><span class="chip">Animation</span><span class="chip">Asset Pipeline</span></div>
-        </div>
-        <div class="tcard-bar"><div class="tcard-bar-fill"></div></div>
-      </div>
-
-      <!-- SET B — exact duplicate for seamless loop -->
-      <div class="tcard">
-        <img class="tcard-img" src="https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=640&q=80" alt="Unity 3D"/>
-        <div class="tcard-glow"></div>
-        <span class="tcard-tag">3D / XR</span>
-        <div class="tcard-body">
-          <div class="tcard-icon">⬡</div>
-          <h3>Unity</h3>
-          <p>The world's most versatile real-time 3D platform for AR/VR apps, digital twins, and enterprise simulations — deployable from a single codebase.</p>
-          <div class="tcard-chips"><span class="chip">AR / VR / MR</span><span class="chip">Digital Twins</span><span class="chip">Cross-Platform</span><span class="chip">IoT</span></div>
-        </div>
-        <div class="tcard-bar"><div class="tcard-bar-fill"></div></div>
-      </div>
-
-      <div class="tcard">
-        <img class="tcard-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=640&q=80" alt="Unreal Engine"/>
-        <div class="tcard-glow"></div>
-        <span class="tcard-tag">3D / VR</span>
-        <div class="tcard-body">
-          <div class="tcard-icon">🎬</div>
-          <h3>Unreal Engine</h3>
-          <p>Cinematic-quality real-time rendering for architectural viz, industrial simulation, and VR where visual fidelity is non-negotiable.</p>
-          <div class="tcard-chips"><span class="chip">Photorealistic</span><span class="chip">Arch. Viz</span><span class="chip">Virtual Production</span></div>
-        </div>
-        <div class="tcard-bar"><div class="tcard-bar-fill"></div></div>
-      </div>
-
-      <div class="tcard">
-        <img class="tcard-img" src="https://images.unsplash.com/photo-1563089145-599997674d42?w=640&q=80" alt="Three.js Web 3D"/>
-        <div class="tcard-glow"></div>
-        <span class="tcard-tag">Web 3D</span>
-        <div class="tcard-body">
-          <div class="tcard-icon">△</div>
-          <h3>Three.js</h3>
-          <p>Browser-native 3D built on WebGL. Product configurators, virtual showrooms, and interactive data viz — zero installation required.</p>
-          <div class="tcard-chips"><span class="chip">Browser-Based</span><span class="chip">Configurators</span><span class="chip">Showrooms</span></div>
-        </div>
-        <div class="tcard-bar"><div class="tcard-bar-fill"></div></div>
-      </div>
-
-      <div class="tcard">
-        <img class="tcard-img" src="https://images.unsplash.com/photo-1518432031352-d6fc5734fa8c?w=640&q=80" alt="WebGL GPU"/>
-        <div class="tcard-glow"></div>
-        <span class="tcard-tag">Graphics</span>
-        <div class="tcard-body">
-          <div class="tcard-icon">⊞</div>
-          <h3>WebGL</h3>
-          <p>GPU-accelerated browser graphics powering engineering dashboards, scientific simulations, and enterprise analytics platforms.</p>
-          <div class="tcard-chips"><span class="chip">GPU-Accelerated</span><span class="chip">Dashboards</span><span class="chip">No Plugins</span></div>
-        </div>
-        <div class="tcard-bar"><div class="tcard-bar-fill"></div></div>
-      </div>
-
-      <div class="tcard">
-        <img class="tcard-img" src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=640&q=80" alt="Blender 3D"/>
-        <div class="tcard-glow"></div>
-        <span class="tcard-tag">3D Art</span>
-        <div class="tcard-body">
-          <div class="tcard-icon">◇</div>
-          <h3>Blender</h3>
-          <p>Open-source 3D powering our modeling, rigging, and animation pipeline — producing production-ready assets for Unity, Unreal, and WebGL.</p>
-          <div class="tcard-chips"><span class="chip">3D Modeling</span><span class="chip">Animation</span><span class="chip">Asset Pipeline</span></div>
-        </div>
-        <div class="tcard-bar"><div class="tcard-bar-fill"></div></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- wave back to dark -->
-
-</div>
-
-<!-- wave into light for spotlight -->
-<div style="display:block;width:100%;line-height:0;overflow:hidden">
-  
-</div>
-<div class="section-rule reveal" style="margin:0 auto;padding-top:40px">
-  <div class="section-rule-line"></div>
-  <div class="section-rule-label">Unity Spotlight</div>
-  <div class="section-rule-line"></div>
-</div>
-<!-- ════════════════════════════
-     UNITY SPOTLIGHT
-════════════════════════════ -->
-<section class="spotlight" id="unity-spotlight">
-  <div class="spotlight-bg"></div>
-  <div class="spotlight-grid">
-    <!-- Media side -->
-    <div class="spotlight-media reveal-left">
-      <div class="spotlight-video-frame">
-        <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=900&q=80" alt="Unity XR development"/>
-        <div class="spotlight-float-card">
-          <div class="sfc-label">Real-time render</div>
-          <div class="sfc-value">60 fps</div>
-          <div class="sfc-sub">Across all target devices</div>
-        </div>
-        <div class="spotlight-float-badge">
-          <div class="sfl-inner">
-            <span>#1</span>
-            <span>Engine</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Text side -->
-    <div class="spotlight-text reveal-right">
-      <div class="section-eyebrow">
-        <div class="eyebrow-line"></div>
-        <div class="eyebrow-text">Featured Platform</div>
-      </div>
-      <h2 class="section-title">Unity — Our<br><em style="font-style:normal;color:var(--accent)">primary XR engine</em></h2>
-      <p class="section-desc">The world's most versatile real-time 3D platform. We leverage Unity to build enterprise AR/VR apps, digital twins, and immersive training simulations — deployable across any device from a single codebase.</p>
-      <div class="feature-list">
-        <div class="fl-item">
-          <div class="fl-dot"></div>
-          <div class="fl-text">
-            <strong>Single Codebase, Every Platform</strong>
-            <span>One build targets iOS, Android, Web, PC, and XR headsets simultaneously.</span>
-          </div>
-        </div>
-        <div class="fl-item">
-          <div class="fl-dot"></div>
-          <div class="fl-text">
-            <strong>AI, Cloud & IoT Integration</strong>
-            <span>Connect real-time 3D scenes to live data feeds, edge devices, and ML models.</span>
-          </div>
-        </div>
-        <div class="fl-item">
-          <div class="fl-dot"></div>
-          <div class="fl-text">
-            <strong>Scalable Enterprise Architecture</strong>
-            <span>Built for operations teams — not just demos. Maintainable, extensible, auditable.</span>
-          </div>
-        </div>
-        <div class="fl-item">
-          <div class="fl-dot"></div>
-          <div class="fl-text">
-            <strong>Digital Twins at Scale</strong>
-            <span>Live-synced 3D replicas of physical assets, facilities, and supply chains.</span>
-          </div>
-        </div>
-      </div>
-      <div class="spotlight-btns">
-        <a href="solutions.html" class="btn-amber">Explore XR Solutions <i class="fas fa-arrow-right"></i></a>
-        <a href="portfolio.html" class="btn-ghost">View Our Work</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- wave back to dark -->
-<div style="display:block;width:100%;line-height:0;overflow:hidden">
-
-</div>
-
-
-</div>
-<div class="section-rule reveal" style="margin:0 auto;padding-top:20px">
-  <div class="section-rule-line"></div>
-  <div class="section-rule-label">Augmented Reality</div>
-  <div class="section-rule-line"></div>
-</div>
-<!-- ════════════════════════════
-     AR PLATFORMS — MOSAIC
-════════════════════════════ -->
-<section class="ar-section" id="ar">
-  <div class="ar-inner">
-    <!-- Image mosaic -->
-    <div class="ar-mosaic reveal-left">
-      <div class="mosaic-main">
-        <img src="https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=900&q=80" alt="AR augmented reality headset"/>
-        <span class="mosaic-label">Real-world AR overlay</span>
-      </div>
-      <div class="mosaic-sub">
-        <img src="https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=480&q=80" alt="ARKit iOS development"/>
-        <span class="mosaic-label">ARKit — iOS</span>
-      </div>
-      <div class="mosaic-sub">
-        <img src="https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?w=480&q=80" alt="ARCore Android AR"/>
-        <span class="mosaic-label">ARCore — Android</span>
-      </div>
-    </div>
-
-    <!-- Platform cards -->
-    <div class="ar-text reveal-right">
-      <div class="section-eyebrow">
-        <div class="eyebrow-line"></div>
-        <div class="eyebrow-text">Augmented Reality</div>
-      </div>
-      <h2 class="section-title">Native AR on every device</h2>
-      <p class="section-desc">We build on the same AR frameworks Apple and Google ship inside their operating systems — giving users zero-friction, hardware-optimized experiences at scale.</p>
-      <div class="ar-platform-cards">
-        <div class="apc active">
-          <div class="apc-icon"><img src="assets/images/tech/arkit.png" alt="ARKit"></div>
-          <div class="apc-text">
-            <strong>ARKit — iOS</strong>
-            <span>Motion tracking · Object recognition · Industrial AR · AR training on iPhone & iPad</span>
-          </div>
-          <i class="fas fa-arrow-right apc-arrow"></i>
-        </div>
-        <div class="apc">
-          <div class="apc-icon"><img src="assets/images/tech/arcore.png" alt="ARCore"></div>
-          <div class="apc-text">
-            <strong>ARCore — Android</strong>
-            <span>Virtual try-on · Remote assistance · Smart maintenance · Product placement</span>
-          </div>
-          
-        </div>
-        <div class="apc">
-          <div class="apc-icon"><img src="assets/images/tech/openxr.png" alt="OpenXR"></div>
-          <div class="apc-text">
-            <strong>OpenXR — Cross-Device Standard</strong>
-            <span>Hardware-independent XR across headsets, smart glasses, and enterprise devices</span>
-          </div>
-        
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- wave back to dark after AR -->
-
-<div class="section-rule reveal" style="margin:0 auto;padding-top:40px">
-  <div class="section-rule-line"></div>
-  <div class="section-rule-label">AI &amp; Cloud Infrastructure</div>
-  <div class="section-rule-line"></div>
-</div>
-
-<!-- ════════════════════════════
-     AI / CLOUD
-════════════════════════════ -->
-<section class="ai-section" id="ai-cloud">
-  <div class="ai-bg"></div>
-  <div class="ai-inner">
-    <div class="ai-header">
-      <div class="reveal-left">
-        <div class="section-eyebrow">
-          <div class="eyebrow-line"></div>
-          <div class="eyebrow-text">Intelligence & Scale</div>
-        </div>
-        <h2 class="section-title">AI, ML &amp;<br>Cloud Infrastructure</h2>
-      </div>
-      <p class="section-desc reveal-right">Custom intelligent automation and enterprise-grade cloud infrastructure that turn your data and digital experiences into measurable business outcomes.</p>
-    </div>
-
-    <!-- Video/image strip -->
-    <div class="ai-video-strip">
-      <div class="ai-video-card reveal" style="transition-delay:.0s">
-        <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=640&q=80" alt="AI machine learning neural network"/>
-        <div class="ai-video-card-label">
-          <h4>AI & Machine Learning</h4>
-          <p>Generative AI · Computer Vision · NLP · Predictive Analytics</p>
-        </div>
-      </div>
-      <div class="ai-video-card reveal" style="transition-delay:.1s">
-        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=640&q=80" alt="Cloud infrastructure AWS Azure"/>
-        <div class="ai-video-card-label">
-          <h4>AWS & Microsoft Azure</h4>
-          <p>Cloud Migration · Digital Twin Infrastructure · IoT Platforms</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3 capability cards -->
-    <div class="ai-cards-row">
-      <div class="ai-card reveal" style="transition-delay:.0s">
-        <div class="ai-card-num">01</div>
-        <h3>Generative AI Integration</h3>
-        <p>Embed LLMs, diffusion models, and custom AI into your immersive experiences for dynamic content, intelligent assistants, and adaptive training.</p>
-      </div>
-      <div class="ai-card reveal" style="transition-delay:.12s">
-        <div class="ai-card-num">02</div>
-        <h3>Cloud-Native Architecture</h3>
-        <p>Containerized, auto-scaling infrastructure on AWS and Azure. Built with security, redundancy, and long-term maintainability from day one.</p>
-      </div>
-      <div class="ai-card reveal" style="transition-delay:.24s">
-        <div class="ai-card-num">03</div>
-        <h3>Digital Twin Ecosystems</h3>
-        <p>Live-synced cloud environments connecting physical assets, IoT sensors, and 3D representations into unified operational intelligence platforms.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- wave into light for Why -->
-
-<div class="section-rule reveal" style="margin:0 auto;padding-top:20px">
-  <div class="section-rule-line"></div>
-  <div class="section-rule-label">Why Volga Infosys</div>
-  <div class="section-rule-line"></div>
-</div>
-<!-- ════════════════════════════
-     WHY VOLGA
-════════════════════════════ -->
-<section class="why-section" id="why">
-  <div class="why-inner">
-    <div class="why-header">
+  <section class="hscroll-section" id="immersive">
+    <div class="hscroll-intro" style="padding:0 3rem 60px;max-width:1320px;margin:0 auto">
       <div class="section-eyebrow reveal">
         <div class="eyebrow-line"></div>
-        <div class="eyebrow-text">Our Advantage</div>
+        <div class="eyebrow-text">Trusted Technologies</div>
       </div>
-      <h2 class="section-title reveal">Why enterprises choose<br><em style="font-style:normal;color:var(--accent)">Volga Infosys</em></h2>
-    </div>
-    <div class="why-cards">
-      <div class="wc reveal" style="transition-delay:.0s">
-        <div class="wc-num">01</div>
-        <h3>Specialized Teams</h3>
-        <p>Dedicated Unity, Unreal, AR/VR, and cloud specialists — practitioners who have shipped production applications, not generalists.</p>
-        <div class="wc-glow"></div>
-      </div>
-      <div class="wc reveal" style="transition-delay:.08s">
-        <div class="wc-num">02</div>
-        <h3>Enterprise Focus</h3>
-        <p>Every architecture decision is made with scalability, security, and long-term maintainability in mind. We build for operations teams.</p>
-        <div class="wc-glow"></div>
-      </div>
-      <div class="wc reveal" style="transition-delay:.16s">
-        <div class="wc-num">03</div>
-        <h3>End-to-End Ownership</h3>
-        <p>Discovery through deployment and beyond. Design, development, QA, integration, and ongoing support — one accountable partner.</p>
-        <div class="wc-glow"></div>
-      </div>
-      <div class="wc reveal" style="transition-delay:.24s">
-        <div class="wc-num">04</div>
-        <h3>Cross-Tech Integration</h3>
-        <p>We connect immersive experiences to your existing ERP, IoT, cloud data platforms, and AI models into cohesive solutions.</p>
-        <div class="wc-glow"></div>
-      </div>
-      <div class="wc reveal" style="transition-delay:.32s">
-        <div class="wc-num">05</div>
-        <h3>Agile Delivery</h3>
-        <p>Iterative sprints with regular demos and clear milestones. Course-correct early, not at launch.</p>
-        <div class="wc-glow"></div>
-      </div>
-      <div class="wc reveal" style="transition-delay:.4s">
-        <div class="wc-num">06</div>
-        <h3>Future-Ready Architecture</h3>
-        <p>OpenXR and cloud-native infrastructure ensure your investment scales with new hardware, new platforms, and new requirements.</p>
-        <div class="wc-glow"></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem">
+        <h2 class="section-title reveal" style="max-width:480px">Technologies We Build With</h2>
+        <p class="section-desc reveal-right" style="max-width:380px">We combine industry-leading platforms with custom
+          engineering to deliver scalable, future-ready immersive solutions across enterprise environments.</p>
       </div>
     </div>
+
+    <!-- Seamless infinite loop rail — duplicated set for perfect loop -->
+    <div class="cards-loop-wrap">
+      <div class="cards-loop-track" id="loopTrack">
+
+        <!-- SET A -->
+        <div class="tcard">
+          <img class="tcard-img" src="https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=640&q=80"
+            alt="Unity 3D" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-glow"></div>
+          <span class="tcard-tag">3D / XR</span>
+          <div class="tcard-body">
+            <div class="tcard-icon">⬡</div>
+            <h3>Unity</h3>
+            <p>Real-time 3D development for AR/VR, digital twins, and enterprise simulations.</p>
+            <div class="tcard-chips"><span class="chip">AR / VR / MR</span><span class="chip">Digital Twins</span><span
+                class="chip">Cross-Platform</span></div>
+          </div>
+          <div class="tcard-bar">
+            <div class="tcard-bar-fill"></div>
+          </div>
+        </div>
+
+        <div class="tcard">
+          <img class="tcard-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=640&q=80"
+            alt="Unreal Engine" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-glow"></div>
+          <span class="tcard-tag">3D / VR</span>
+          <div class="tcard-body">
+            <div class="tcard-icon">🎬</div>
+            <h3>Unreal Engine</h3>
+            <p>Cinematic-quality real-time rendering and high-fidelity visual simulations for industry.</p>
+            <div class="tcard-chips"><span class="chip">Photorealistic</span><span class="chip">Arch. Viz</span><span
+                class="chip">Virtual Production</span></div>
+          </div>
+          <div class="tcard-bar">
+            <div class="tcard-bar-fill"></div>
+          </div>
+        </div>
+
+        <div class="tcard">
+          <img class="tcard-img" src="https://images.unsplash.com/photo-1563089145-599997674d42?w=640&q=80"
+            alt="Three.js Web 3D" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-glow"></div>
+          <span class="tcard-tag">Web 3D</span>
+          <div class="tcard-body">
+            <div class="tcard-icon">△</div>
+            <h3>Three.js</h3>
+            <p>Browser-native 3D graphics for interactive product configurators and web showcases.</p>
+            <div class="tcard-chips"><span class="chip">WebGL 3D</span><span class="chip">Configurators</span><span
+                class="chip">Zero-Install</span></div>
+          </div>
+          <div class="tcard-bar">
+            <div class="tcard-bar-fill"></div>
+          </div>
+        </div>
+
+        <div class="tcard">
+          <img class="tcard-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=640&q=80"
+            alt="WebGL GPU Graphics" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-glow"></div>
+          <span class="tcard-tag">Graphics</span>
+          <div class="tcard-body">
+            <div class="tcard-icon">⊞</div>
+            <h3>WebGL</h3>
+            <p>Hardware-accelerated graphics rendering in modern web browsers without plugins.</p>
+            <div class="tcard-chips"><span class="chip">GPU-Accelerated</span><span class="chip">Dashboards</span><span
+                class="chip">Web Standards</span></div>
+          </div>
+          <div class="tcard-bar">
+            <div class="tcard-bar-fill"></div>
+          </div>
+        </div>
+
+        <div class="tcard">
+          <img class="tcard-img" src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=640&q=80"
+            alt="Blender 3D" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-glow"></div>
+          <span class="tcard-tag">3D Art</span>
+          <div class="tcard-body">
+            <div class="tcard-icon">◇</div>
+            <h3>Blender</h3>
+            <p>Comprehensive 3D asset modeling, rigging, and animation pipeline for real-time engines.</p>
+            <div class="tcard-chips"><span class="chip">3D Modeling</span><span class="chip">Rigging</span><span
+                class="chip">Asset Pipeline</span></div>
+          </div>
+          <div class="tcard-bar">
+            <div class="tcard-bar-fill"></div>
+          </div>
+        </div>
+
+        <!-- SET B — exact duplicate for seamless loop -->
+        <div class="tcard">
+          <img class="tcard-img" src="https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=640&q=80"
+            alt="Unity 3D" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-glow"></div>
+          <span class="tcard-tag">3D / XR</span>
+          <div class="tcard-body">
+            <div class="tcard-icon">⬡</div>
+            <h3>Unity</h3>
+            <p>Real-time 3D development for AR/VR, digital twins, and enterprise simulations.</p>
+            <div class="tcard-chips"><span class="chip">AR / VR / MR</span><span class="chip">Digital Twins</span><span
+                class="chip">Cross-Platform</span></div>
+          </div>
+          <div class="tcard-bar">
+            <div class="tcard-bar-fill"></div>
+          </div>
+        </div>
+
+        <div class="tcard">
+          <img class="tcard-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=640&q=80"
+            alt="Unreal Engine" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-glow"></div>
+          <span class="tcard-tag">3D / VR</span>
+          <div class="tcard-body">
+            <div class="tcard-icon">🎬</div>
+            <h3>Unreal Engine</h3>
+            <p>Cinematic-quality real-time rendering and high-fidelity visual simulations for industry.</p>
+            <div class="tcard-chips"><span class="chip">Photorealistic</span><span class="chip">Arch. Viz</span><span
+                class="chip">Virtual Production</span></div>
+          </div>
+          <div class="tcard-bar">
+            <div class="tcard-bar-fill"></div>
+          </div>
+        </div>
+
+        <div class="tcard">
+          <img class="tcard-img" src="https://images.unsplash.com/photo-1563089145-599997674d42?w=640&q=80"
+            alt="Three.js Web 3D" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-glow"></div>
+          <span class="tcard-tag">Web 3D</span>
+          <div class="tcard-body">
+            <div class="tcard-icon">△</div>
+            <h3>Three.js</h3>
+            <p>Browser-native 3D graphics for interactive product configurators and web showcases.</p>
+            <div class="tcard-chips"><span class="chip">WebGL 3D</span><span class="chip">Configurators</span><span
+                class="chip">Zero-Install</span></div>
+          </div>
+          <div class="tcard-bar">
+            <div class="tcard-bar-fill"></div>
+          </div>
+        </div>
+
+        <div class="tcard">
+          <img class="tcard-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=640&q=80"
+            alt="WebGL GPU Graphics" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-glow"></div>
+          <span class="tcard-tag">Graphics</span>
+          <div class="tcard-body">
+            <div class="tcard-icon">⊞</div>
+            <h3>WebGL</h3>
+            <p>Hardware-accelerated graphics rendering in modern web browsers without plugins.</p>
+            <div class="tcard-chips"><span class="chip">GPU-Accelerated</span><span class="chip">Dashboards</span><span
+                class="chip">Web Standards</span></div>
+          </div>
+          <div class="tcard-bar">
+            <div class="tcard-bar-fill"></div>
+          </div>
+        </div>
+
+        <div class="tcard">
+          <img class="tcard-img" src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=640&q=80"
+            alt="Blender 3D" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-glow"></div>
+          <span class="tcard-tag">3D Art</span>
+          <div class="tcard-body">
+            <div class="tcard-icon">◇</div>
+            <h3>Blender</h3>
+            <p>Comprehensive 3D asset modeling, rigging, and animation pipeline for real-time engines.</p>
+            <div class="tcard-chips"><span class="chip">3D Modeling</span><span class="chip">Rigging</span><span
+                class="chip">Asset Pipeline</span></div>
+          </div>
+          <div class="tcard-bar">
+            <div class="tcard-bar-fill"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- wave back to dark -->
+
   </div>
-</section>
 
-<!-- wave back to dark before CTA -->
+  <!-- wave into light for spotlight -->
+  <div style="display:block;width:100%;line-height:0;overflow:hidden">
 
-<!-- ════════════════════════════
+  </div>
+  <div class="section-rule reveal" style="margin:0 auto;padding-top:40px">
+    <div class="section-rule-line"></div>
+    <div class="section-rule-label">Unity Spotlight</div>
+    <div class="section-rule-line"></div>
+  </div>
+  <!-- ════════════════════════════
+     UNITY SPOTLIGHT
+════════════════════════════ -->
+  <section class="spotlight" id="unity-spotlight">
+    <div class="spotlight-bg"></div>
+    <div class="spotlight-grid">
+      <!-- Media side -->
+      <div class="spotlight-media reveal-left">
+        <div class="spotlight-video-frame">
+          <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=900&q=80"
+            alt="Unity XR development" />
+          <div class="spotlight-float-card">
+            <div class="sfc-label">Real-time render</div>
+            <div class="sfc-value">60 fps</div>
+            <div class="sfc-sub">Across all target devices</div>
+          </div>
+          <div class="spotlight-float-badge">
+            <div class="sfl-inner">
+              <span>#1</span>
+              <span>Engine</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Text side -->
+      <div class="spotlight-text reveal-right">
+        <div class="section-eyebrow">
+          <div class="eyebrow-line"></div>
+          <div class="eyebrow-text">Featured Platform</div>
+        </div>
+        <h2 class="section-title">Unity — Our<br><em style="font-style:normal;color:var(--accent)">primary XR
+            engine</em></h2>
+        <p class="section-desc">The world's most versatile real-time 3D platform. We leverage Unity to build enterprise
+          AR/VR apps, digital twins, and immersive training simulations — deployable across any device from a single
+          codebase.</p>
+        <div class="feature-list">
+          <div class="fl-item">
+            <div class="fl-dot"></div>
+            <div class="fl-text">
+              <strong>Single Codebase, Every Platform</strong>
+              <span>One build targets iOS, Android, Web, PC, and XR headsets simultaneously.</span>
+            </div>
+          </div>
+          <div class="fl-item">
+            <div class="fl-dot"></div>
+            <div class="fl-text">
+              <strong>AI, Cloud & IoT Integration</strong>
+              <span>Connect real-time 3D scenes to live data feeds, edge devices, and ML models.</span>
+            </div>
+          </div>
+          <div class="fl-item">
+            <div class="fl-dot"></div>
+            <div class="fl-text">
+              <strong>Scalable Enterprise Architecture</strong>
+              <span>Built for operations teams — not just demos. Maintainable, extensible, auditable.</span>
+            </div>
+          </div>
+          <div class="fl-item">
+            <div class="fl-dot"></div>
+            <div class="fl-text">
+              <strong>Digital Twins at Scale</strong>
+              <span>Live-synced 3D replicas of physical assets, facilities, and supply chains.</span>
+            </div>
+          </div>
+        </div>
+        <div class="spotlight-btns">
+          <a href="solutions.html" class="btn-amber">Explore XR Solutions <i class="fas fa-arrow-right"></i></a>
+          <a href="portfolio.html" class="btn-ghost">View Our Work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- wave back to dark -->
+  <div style="display:block;width:100%;line-height:0;overflow:hidden">
+
+  </div>
+
+
+  </div>
+  <div class="section-rule reveal" style="margin:0 auto;padding-top:20px">
+    <div class="section-rule-line"></div>
+    <div class="section-rule-label">Augmented Reality</div>
+    <div class="section-rule-line"></div>
+  </div>
+  <!-- ════════════════════════════
+     AR PLATFORMS — MOSAIC
+════════════════════════════ -->
+  <section class="ar-section" id="ar">
+    <div class="ar-inner">
+      <!-- Image mosaic -->
+      <div class="ar-mosaic reveal-left">
+        <div class="mosaic-main">
+          <img src="https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=900&q=80"
+            alt="AR augmented reality headset" />
+          <span class="mosaic-label">Real-world AR overlay</span>
+        </div>
+        <div class="mosaic-sub">
+          <img src="https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=480&q=80"
+            alt="ARKit iOS development" />
+          <span class="mosaic-label">ARKit — iOS</span>
+        </div>
+        <div class="mosaic-sub">
+          <img src="https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?w=480&q=80" alt="ARCore Android AR" />
+          <span class="mosaic-label">ARCore — Android</span>
+        </div>
+      </div>
+
+      <!-- Platform cards -->
+      <div class="ar-text reveal-right">
+        <div class="section-eyebrow">
+          <div class="eyebrow-line"></div>
+          <div class="eyebrow-text">Augmented Reality</div>
+        </div>
+        <h2 class="section-title">Native AR on every device</h2>
+        <p class="section-desc">We build on the same AR frameworks Apple and Google ship inside their operating systems
+          — giving users zero-friction, hardware-optimized experiences at scale.</p>
+        <div class="ar-platform-cards">
+          <div class="apc active">
+            <div class="apc-icon"><img src="assets/images/tech/arkit.png" alt="ARKit"></div>
+            <div class="apc-text">
+              <strong>ARKit — iOS</strong>
+              <span>Motion tracking · Object recognition · Industrial AR · AR training on iPhone & iPad</span>
+            </div>
+            <i class="fas fa-arrow-right apc-arrow"></i>
+          </div>
+          <div class="apc">
+            <div class="apc-icon"><img src="assets/images/tech/arcore.png" alt="ARCore"></div>
+            <div class="apc-text">
+              <strong>ARCore — Android</strong>
+              <span>Virtual try-on · Remote assistance · Smart maintenance · Product placement</span>
+            </div>
+
+          </div>
+          <div class="apc">
+            <div class="apc-icon"><img src="assets/images/tech/openxr.png" alt="OpenXR"></div>
+            <div class="apc-text">
+              <strong>OpenXR — Cross-Device Standard</strong>
+              <span>Hardware-independent XR across headsets, smart glasses, and enterprise devices</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- wave back to dark after AR -->
+
+  <div class="section-rule reveal" style="margin:0 auto;padding-top:40px">
+    <div class="section-rule-line"></div>
+    <div class="section-rule-label">AI &amp; Cloud Infrastructure</div>
+    <div class="section-rule-line"></div>
+  </div>
+
+  <!-- ════════════════════════════
+     AI / CLOUD
+════════════════════════════ -->
+  <section class="ai-section" id="ai-cloud">
+    <div class="ai-bg"></div>
+    <div class="ai-inner">
+      <div class="ai-header">
+        <div class="reveal-left">
+          <div class="section-eyebrow">
+            <div class="eyebrow-line"></div>
+            <div class="eyebrow-text">Intelligence & Scale</div>
+          </div>
+          <h2 class="section-title">AI, ML &amp;<br>Cloud Infrastructure</h2>
+        </div>
+        <p class="section-desc reveal-right">Custom intelligent automation and enterprise-grade cloud infrastructure
+          that turn your data and digital experiences into measurable business outcomes.</p>
+      </div>
+
+      <!-- Video/image strip -->
+      <div class="ai-video-strip">
+        <div class="ai-video-card reveal" style="transition-delay:.0s">
+          <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=640&q=80"
+            alt="AI machine learning neural network" />
+          <div class="ai-video-card-label">
+            <h4>AI & Machine Learning</h4>
+            <p>Generative AI · Computer Vision · NLP · Predictive Analytics</p>
+          </div>
+        </div>
+        <div class="ai-video-card reveal" style="transition-delay:.1s">
+          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=640&q=80"
+            alt="Cloud infrastructure AWS Azure" />
+          <div class="ai-video-card-label">
+            <h4>AWS & Microsoft Azure</h4>
+            <p>Cloud Migration · Digital Twin Infrastructure · IoT Platforms</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 capability cards -->
+      <div class="ai-cards-row">
+        <div class="ai-card reveal" style="transition-delay:.0s">
+          <div class="ai-card-num">01</div>
+          <h3>Generative AI Integration</h3>
+          <p>Embed LLMs, diffusion models, and custom AI into your immersive experiences for dynamic content,
+            intelligent assistants, and adaptive training.</p>
+        </div>
+        <div class="ai-card reveal" style="transition-delay:.12s">
+          <div class="ai-card-num">02</div>
+          <h3>Cloud-Native Architecture</h3>
+          <p>Containerized, auto-scaling infrastructure on AWS and Azure. Built with security, redundancy, and long-term
+            maintainability from day one.</p>
+        </div>
+        <div class="ai-card reveal" style="transition-delay:.24s">
+          <div class="ai-card-num">03</div>
+          <h3>Digital Twin Ecosystems</h3>
+          <p>Live-synced cloud environments connecting physical assets, IoT sensors, and 3D representations into unified
+            operational intelligence platforms.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- wave into light for Why -->
+
+  <div class="section-rule reveal" style="margin:0 auto;padding-top:20px">
+    <div class="section-rule-line"></div>
+    <div class="section-rule-label">Why Volga Infosys</div>
+    <div class="section-rule-line"></div>
+  </div>
+  <!-- ════════════════════════════
+     WHY VOLGA
+════════════════════════════ -->
+  <section class="why-section" id="why">
+    <div class="why-inner">
+      <div class="why-header">
+        <div class="section-eyebrow reveal">
+          <div class="eyebrow-line"></div>
+          <div class="eyebrow-text">Our Advantage</div>
+        </div>
+        <h2 class="section-title reveal">Why enterprises choose<br><em
+            style="font-style:normal;color:var(--accent)">Volga Infosys</em></h2>
+      </div>
+      <div class="why-cards">
+        <div class="wc reveal" style="transition-delay:.0s">
+          <div class="wc-num">01</div>
+          <h3>Specialized Teams</h3>
+          <p>Dedicated Unity, Unreal, AR/VR, and cloud specialists — practitioners who have shipped production
+            applications, not generalists.</p>
+          <div class="wc-glow"></div>
+        </div>
+        <div class="wc reveal" style="transition-delay:.08s">
+          <div class="wc-num">02</div>
+          <h3>Enterprise Focus</h3>
+          <p>Every architecture decision is made with scalability, security, and long-term maintainability in mind. We
+            build for operations teams.</p>
+          <div class="wc-glow"></div>
+        </div>
+        <div class="wc reveal" style="transition-delay:.16s">
+          <div class="wc-num">03</div>
+          <h3>End-to-End Ownership</h3>
+          <p>Discovery through deployment and beyond. Design, development, QA, integration, and ongoing support — one
+            accountable partner.</p>
+          <div class="wc-glow"></div>
+        </div>
+        <div class="wc reveal" style="transition-delay:.24s">
+          <div class="wc-num">04</div>
+          <h3>Cross-Tech Integration</h3>
+          <p>We connect immersive experiences to your existing ERP, IoT, cloud data platforms, and AI models into
+            cohesive solutions.</p>
+          <div class="wc-glow"></div>
+        </div>
+        <div class="wc reveal" style="transition-delay:.32s">
+          <div class="wc-num">05</div>
+          <h3>Agile Delivery</h3>
+          <p>Iterative sprints with regular demos and clear milestones. Course-correct early, not at launch.</p>
+          <div class="wc-glow"></div>
+        </div>
+        <div class="wc reveal" style="transition-delay:.4s">
+          <div class="wc-num">06</div>
+          <h3>Future-Ready Architecture</h3>
+          <p>OpenXR and cloud-native infrastructure ensure your investment scales with new hardware, new platforms, and
+            new requirements.</p>
+          <div class="wc-glow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- wave back to dark before CTA -->
+
+  <!-- ════════════════════════════
      CTA FINALE
 ════════════════════════════ -->
-<section class="cta-finale">
-  <div class="cta-finale-bg">
-    <img src="https://images.unsplash.com/photo-1639762681057-408e52192e55?w=1600&q=70" alt="" style="width:100%;height:100%;object-fit:cover;opacity:.12"/>
-  </div>
-  <div class="cta-inner">
-    <div class="section-eyebrow reveal" style="justify-content:center">
-      <div class="eyebrow-line"></div>
-      <div class="eyebrow-text">Start a Project</div>
-      <div class="eyebrow-line"></div>
+  <section class="cta-finale">
+    <div class="cta-finale-bg">
+      <img src="https://images.unsplash.com/photo-1639762681057-408e52192e55?w=1600&q=70" alt=""
+        style="width:100%;height:100%;object-fit:cover;opacity:.12" />
     </div>
-    <h2 class="cta-title reveal" style="font-family:var(--font-display); font-size:90px; min-width: 800px;">Ready to build something <em>extraordinary?</em></h2>
-    <p class="cta-desc reveal">Tell us about your challenge. We'll tell you exactly how Unity, Unreal, ARKit, or our cloud stack can solve it — and give you a clear path to production.</p>
-    <div class="cta-actions reveal">
-      <a href="contact.html" class="btn-amber">Start a Conversation <i class="fas fa-arrow-right"></i></a>
-      <a href="portfolio.html" class="btn-ghost">See Our Work</a>
+    <div class="cta-inner">
+      <div class="section-eyebrow reveal" style="justify-content:center">
+        <div class="eyebrow-line"></div>
+        <div class="eyebrow-text">Start a Project</div>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h2 class="cta-title reveal">Ready to build something <em>extraordinary?</em></h2>
+      <p class="cta-desc reveal">Tell us about your challenge. We'll tell you exactly how Unity, Unreal, ARKit, or our
+        cloud stack can solve it — and give you a clear path to production.</p>
+      <div class="cta-actions reveal">
+        <a href="contact.html" class="btn-amber">Start a Conversation <i class="fas fa-arrow-right"></i></a>
+        <a href="portfolio.html" class="btn-ghost">See Our Work</a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FOOTER -->
- <div id="site-footer-mount"></div>
-<script src="footer-include.js"></script>
+  <!-- FOOTER -->
+  <div id="site-footer-mount"></div>
+  <script src="footer-include.js"></script>
 
-<!-- SCRIPTS -->
-<script src="volga.js"></script>
-<script>
-gsap.registerPlugin(ScrollTrigger);
+  <!-- SCRIPTS -->
+  <script src="volga.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
 
-/* ── SCROLL PROGRESS ── */
-gsap.to('#progressBar', {
-  scaleX: 1,
-  ease: 'none',
-  scrollTrigger: { scrub: 0.3, start: 'top top', end: 'bottom bottom' }
-});
-
-/* ── HERO ANIMATIONS ── */
-const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-heroTl
-  .to('.hero-pill', { opacity:1, y:0, duration:.8, delay:.3 })
-  .to('.hero-title .word-inner', { y:0, opacity:1, duration:.9, stagger:.1, ease:'power4.out' }, '-=.4')
-  .to('.hero-sub', { opacity:1, y:0, duration:.8 }, '-=.5')
-  .to('.stat-orb', { opacity:1, y:0, scale:1, duration:.7, stagger:.1, ease:'back.out(1.6)' }, '-=.4')
-  .to('.scroll-hint', { opacity:1, duration:.6 }, '-=.2');
-
-/* ── HERO STAT COUNTERS ── */
-document.querySelectorAll('.stat-orb .num[data-target]').forEach(el => {
-  const target = +el.dataset.target;
-  const suffix = el.textContent.replace(/\d/g,'');
-  gsap.to({ val: 0 }, {
-    val: target, duration: 2, ease: 'power2.out', delay: 1.2,
-    onUpdate: function() { el.textContent = Math.round(this.targets()[0].val) + suffix; }
-  });
-});
-
-/* ── NAV SCROLL STYLE ── */
-ScrollTrigger.create({
-  start: 'top -60',
-  onUpdate: self => {
-    document.querySelector('nav').style.boxShadow =
-      self.progress > 0 ? '0 4px 30px rgba(0,0,0,.4)' : 'none';
-  }
-});
-
-/* ── SEAMLESS LOOP RAIL — scroll-linked ── */
-(function(){
-  const track = document.getElementById('loopTrack');
-  if (!track) return;
-
-  // Measure one set (half of track since we duplicated)
-  function getHalfWidth() {
-    const allCards = track.querySelectorAll('.tcard');
-    let w = 0;
-    const gap = 24; // 1.5rem gap
-    allCards.forEach((c, i) => {
-      if (i < allCards.length / 2) w += c.offsetWidth + gap;
+    /* ── SCROLL PROGRESS ── */
+    gsap.to('#progressBar', {
+      scaleX: 1,
+      ease: 'none',
+      scrollTrigger: { scrub: 0.3, start: 'top top', end: 'bottom bottom' }
     });
-    return w;
-  }
 
-  let halfW = 0;
-  let x = 0;
-  let autoSpeed = 0.6; // px per frame — base auto speed
-  let isHovered = false;
-  let lastScroll = window.scrollY;
-  let scrollVelocity = 0;
-  let rafId;
+    /* ── HERO ANIMATIONS ── */
+    const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    heroTl
+      .to('.hero-pill', { opacity: 1, y: 0, duration: .8, delay: .3 })
+      .to('.hero-title .word-inner', { y: 0, opacity: 1, duration: .9, stagger: .1, ease: 'power4.out' }, '-=.4')
+      .to('.hero-sub', { opacity: 1, y: 0, duration: .8 }, '-=.5')
+      .to('.hero-cta-wrap', { opacity: 1, y: 0, duration: .7 }, '-=.5')
+      .to('.stat-orb', { opacity: 1, y: 0, scale: 1, duration: .7, stagger: .1, ease: 'back.out(1.6)' }, '-=.4')
+      .to('.scroll-hint', { opacity: 1, duration: .6 }, '-=.2');
 
-  function loop() {
-    // Blend scroll velocity into speed
-    const currentScroll = window.scrollY;
-    scrollVelocity = (currentScroll - lastScroll) * 0.5;
-    lastScroll = currentScroll;
+    /* ── HERO STAT COUNTERS ── */
+    document.querySelectorAll('.stat-orb .num[data-target]').forEach(el => {
+      const target = +el.dataset.target;
+      const suffix = el.textContent.replace(/\d/g, '');
+      gsap.to({ val: 0 }, {
+        val: target, duration: 2, ease: 'power2.out', delay: 1.2,
+        onUpdate: function () { el.textContent = Math.round(this.targets()[0].val) + suffix; }
+      });
+    });
 
-    const speed = isHovered ? 0 : autoSpeed + scrollVelocity;
-    x -= speed;
+    /* ── NAV SCROLL STYLE ── */
+    ScrollTrigger.create({
+      start: 'top -60',
+      onUpdate: self => {
+        document.querySelector('nav').style.boxShadow =
+          self.progress > 0 ? '0 4px 30px rgba(0,0,0,.4)' : 'none';
+      }
+    });
 
-    if (!halfW) halfW = getHalfWidth();
-    if (halfW > 0 && x <= -halfW) x += halfW;
-    if (x > 0) x = 0;
+    /* ── SEAMLESS LOOP RAIL — scroll-linked ── */
+    (function () {
+      const track = document.getElementById('loopTrack');
+      if (!track) return;
 
-    track.style.transform = `translateX(${x}px)`;
-    rafId = requestAnimationFrame(loop);
-  }
+      // Measure one set (half of track since we duplicated)
+      function getHalfWidth() {
+        const allCards = track.querySelectorAll('.tcard');
+        let w = 0;
+        const gap = 24; // 1.5rem gap
+        allCards.forEach((c, i) => {
+          if (i < allCards.length / 2) w += c.offsetWidth + gap;
+        });
+        return w;
+      }
 
-  // Pause on hover
-  track.addEventListener('mouseenter', () => { isHovered = true; });
-  track.addEventListener('mouseleave', () => { isHovered = false; });
+      let halfW = 0;
+      let x = 0;
+      let autoSpeed = 0.6; // px per frame — base auto speed
+      let isHovered = false;
+      let lastScroll = window.scrollY;
+      let scrollVelocity = 0;
+      let rafId;
 
-  // Recalculate on resize
-  window.addEventListener('resize', () => { halfW = getHalfWidth(); });
+      function loop() {
+        // Blend scroll velocity into speed
+        const currentScroll = window.scrollY;
+        scrollVelocity = (currentScroll - lastScroll) * 0.5;
+        lastScroll = currentScroll;
 
-  loop();
-})();
+        const speed = isHovered ? 0 : autoSpeed + scrollVelocity;
+        x -= speed;
 
-/* ── GENERIC REVEAL CLASSES ── */
-gsap.utils.toArray('.reveal').forEach(el => {
-  const delay = parseFloat(el.style.transitionDelay || 0);
-  gsap.to(el, {
-    opacity:1, y:0, duration:.75, ease:'power3.out', delay,
-    scrollTrigger: { trigger: el, start:'top 88%', toggleActions:'play none none reverse' }
-  });
-});
-gsap.utils.toArray('.reveal-left').forEach(el => {
-  gsap.to(el, {
-    opacity:1, x:0, duration:.9, ease:'power3.out',
-    scrollTrigger: { trigger: el, start:'top 85%', toggleActions:'play none none reverse' }
-  });
-});
-gsap.utils.toArray('.reveal-right').forEach(el => {
-  gsap.to(el, {
-    opacity:1, x:0, duration:.9, ease:'power3.out',
-    scrollTrigger: { trigger: el, start:'top 85%', toggleActions:'play none none reverse' }
-  });
-});
-gsap.utils.toArray('.reveal-scale').forEach(el => {
-  gsap.to(el, {
-    opacity:1, scale:1, duration:.8, ease:'back.out(1.4)',
-    scrollTrigger: { trigger: el, start:'top 88%', toggleActions:'play none none reverse' }
-  });
-});
+        if (!halfW) halfW = getHalfWidth();
+        if (halfW > 0 && x <= -halfW) x += halfW;
+        if (x > 0) x = 0;
 
-/* ── SPOTLIGHT MEDIA PARALLAX ── */
-gsap.to('.spotlight-video-frame', {
-  y: -40,
-  ease: 'none',
-  scrollTrigger: {
-    trigger: '.spotlight',
-    start: 'top bottom',
-    end: 'bottom top',
-    scrub: 1.5
-  }
-});
+        track.style.transform = `translateX(${x}px)`;
+        rafId = requestAnimationFrame(loop);
+      }
 
-/* ── AR MOSAIC PARALLAX ── */
-gsap.to('.ar-mosaic', {
-  y: -30,
-  ease: 'none',
-  scrollTrigger: {
-    trigger: '.ar-section',
-    start: 'top bottom',
-    end: 'bottom top',
-    scrub: 2
-  }
-});
+      // Pause on hover
+      track.addEventListener('mouseenter', () => { isHovered = true; });
+      track.addEventListener('mouseleave', () => { isHovered = false; });
 
-/* ── SECTION RULES DRAW ── */
-gsap.utils.toArray('.section-rule').forEach(rule => {
-  gsap.from(rule.querySelectorAll('.section-rule-line'), {
-    scaleX: 0, duration: 1.2, ease: 'power3.inOut', transformOrigin: 'left',
-    scrollTrigger: { trigger: rule, start: 'top 88%' }
-  });
-});
+      // Recalculate on resize
+      window.addEventListener('resize', () => { halfW = getHalfWidth(); });
 
-/* ── AR PLATFORM CARD HOVER ── */
-document.querySelectorAll('.apc').forEach(card => {
-  card.addEventListener('mouseenter', () => {
-    document.querySelectorAll('.apc').forEach(c => c.classList.remove('active'));
-    card.classList.add('active');
-  });
-});
+      loop();
+    })();
 
-/* ── WHY CARDS STAGGER ── */
-gsap.utils.toArray('.wc').forEach(card => {
-  gsap.to(card, {
-    opacity:1, y:0, duration:.7, ease:'power3.out',
-    scrollTrigger: { trigger: card, start:'top 88%', toggleActions:'play none none reverse' }
-  });
-});
+    /* ── GENERIC REVEAL CLASSES ── */
+    gsap.utils.toArray('.reveal').forEach(el => {
+      const delay = parseFloat(el.style.transitionDelay || 0);
+      gsap.to(el, {
+        opacity: 1, y: 0, duration: .75, ease: 'power3.out', delay,
+        scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none reverse' }
+      });
+    });
+    gsap.utils.toArray('.reveal-left').forEach(el => {
+      gsap.to(el, {
+        opacity: 1, x: 0, duration: .9, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' }
+      });
+    });
+    gsap.utils.toArray('.reveal-right').forEach(el => {
+      gsap.to(el, {
+        opacity: 1, x: 0, duration: .9, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' }
+      });
+    });
+    gsap.utils.toArray('.reveal-scale').forEach(el => {
+      gsap.to(el, {
+        opacity: 1, scale: 1, duration: .8, ease: 'back.out(1.4)',
+        scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none reverse' }
+      });
+    });
 
-/* ── AI CARDS STAGGER ── */
-gsap.utils.toArray('.ai-card').forEach(card => {
-  gsap.to(card, {
-    opacity:1, y:0, duration:.7, ease:'power3.out',
-    scrollTrigger: { trigger: card, start:'top 88%', toggleActions:'play none none reverse' }
-  });
-});
+    /* ── SPOTLIGHT MEDIA PARALLAX ── */
+    gsap.to('.spotlight-video-frame', {
+      y: -40,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.spotlight',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1.5
+      }
+    });
 
-/* ── HERO PARALLAX on scroll ── */
-gsap.to('.hero-video-bg', {
-  y: 150,
-  ease: 'none',
-  scrollTrigger: {
-    trigger: '.hero-cinema',
-    start: 'top top',
-    end: 'bottom top',
-    scrub: 1
-  }
-});
+    /* ── AR MOSAIC PARALLAX ── */
+    gsap.to('.ar-mosaic', {
+      y: -30,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.ar-section',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 2
+      }
+    });
 
-/* ── SPOTLIGHT BADGE rotation is via CSS, add entrance ── */
-gsap.from('.spotlight-float-badge', {
-  opacity:0, scale:0, duration:.8, ease:'back.out(2)',
-  scrollTrigger: { trigger: '.spotlight', start:'top 70%' }
-});
-gsap.from('.spotlight-float-card', {
-  opacity:0, x:-40, y:20, duration:.8, ease:'power3.out', delay:.2,
-  scrollTrigger: { trigger: '.spotlight', start:'top 70%' }
-});
-</script>
+    /* ── SECTION RULES DRAW ── */
+    gsap.utils.toArray('.section-rule').forEach(rule => {
+      gsap.from(rule.querySelectorAll('.section-rule-line'), {
+        scaleX: 0, duration: 1.2, ease: 'power3.inOut', transformOrigin: 'left',
+        scrollTrigger: { trigger: rule, start: 'top 88%' }
+      });
+    });
+
+    /* ── AR PLATFORM CARD HOVER ── */
+    document.querySelectorAll('.apc').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        document.querySelectorAll('.apc').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+      });
+    });
+
+    /* ── WHY CARDS STAGGER ── */
+    gsap.utils.toArray('.wc').forEach(card => {
+      gsap.to(card, {
+        opacity: 1, y: 0, duration: .7, ease: 'power3.out',
+        scrollTrigger: { trigger: card, start: 'top 88%', toggleActions: 'play none none reverse' }
+      });
+    });
+
+    /* ── AI CARDS STAGGER ── */
+    gsap.utils.toArray('.ai-card').forEach(card => {
+      gsap.to(card, {
+        opacity: 1, y: 0, duration: .7, ease: 'power3.out',
+        scrollTrigger: { trigger: card, start: 'top 88%', toggleActions: 'play none none reverse' }
+      });
+    });
+
+    /* ── HERO PARALLAX on scroll ── */
+    gsap.to('.hero-video-bg', {
+      y: 150,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero-cinema',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1
+      }
+    });
+
+    /* ── SPOTLIGHT BADGE rotation is via CSS, add entrance ── */
+    gsap.from('.spotlight-float-badge', {
+      opacity: 0, scale: 0, duration: .8, ease: 'back.out(2)',
+      scrollTrigger: { trigger: '.spotlight', start: 'top 70%' }
+    });
+    gsap.from('.spotlight-float-card', {
+      opacity: 0, x: -40, y: 20, duration: .8, ease: 'power3.out', delay: .2,
+      scrollTrigger: { trigger: '.spotlight', start: 'top 70%' }
+    });
+  </script>
 </body>
+
 </html>

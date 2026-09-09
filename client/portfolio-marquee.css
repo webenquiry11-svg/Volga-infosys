@@ -4,7 +4,7 @@
    Scripts needed: GSAP 3 + ScrollTrigger
    ══════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@400;600;700;800&display=swap');
 
 /* ── section shell ── */
 .section-intro {
@@ -32,7 +32,7 @@
 
 /* ── section header ── */
 .intro-content > h1 {
-  font-family: "Bebas Neue", sans-serif;
+  font-family: 'Sora', sans-serif;
   font-size: clamp(2.2rem, 4vw, 4rem);
   font-weight: 800;
   letter-spacing: -0.04em;
@@ -232,7 +232,7 @@
   padding: 20px 22px 22px;
 }
 .pf-body-m h3 {
-  font-family:"Bebas Neue", sans-serif; 
+  font-family: 'Sora', sans-serif; 
   font-size: 1.35rem;
   font-weight: 800;
   color: #11325f;

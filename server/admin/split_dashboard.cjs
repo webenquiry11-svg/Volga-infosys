@@ -1,0 +1,371 @@
+const fs = require('fs');
+const path = require('path');
+
+const adminDir = __dirname;
+const dashHtml = fs.readFileSync(path.join(adminDir, 'dashboard.html'), 'utf8');
+
+// Extract common head
+const headContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{TITLE}} — Volga Admin</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="dashboard.css?v=9" />
+  <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body class="dash-page">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+`;
+
+function getSidebar(activeView) {
+  const isOverview = activeView === 'overview';
+  const isAnalytics = activeView === 'analytics';
+  const isLeads = activeView === 'leads';
+  const isPortfolio = activeView === 'portfolio';
+  const isClientStories = activeView === 'clientstories';
+  const isBlog = activeView === 'blog';
+  const isJobs = activeView === 'jobs';
+  const isJobApps = activeView === 'jobapplications';
+  const isMedia = activeView === 'medialibrary';
+  const isEmailLogs = activeView === 'emaillogs';
+  const isSettings = activeView === 'settings';
+
+  const expContent = (isPortfolio || isClientStories || isBlog) ? 'expanded' : '';
+  const expCareers = (isJobs || isJobApps) ? 'expanded' : '';
+  const expSystem = (isMedia || isEmailLogs || isSettings) ? 'expanded' : '';
+
+  return `
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-dot">
+        <img src="logo.png" alt="Volga Admin Logo" class="sidebar-logo-image">
+      </div>
+      <span>ADMIN</span>
+    </div>
+    
+    <!-- Profile Widget -->
+    <div class="profile-widget" id="profileWidget">
+      <div class="profile-avatar" id="profileAvatar">
+        <img id="profileAvatarImg" src="" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:none;">
+        <span id="profileAvatarText">A</span>
+      </div>
+      <div class="profile-info">
+        <div class="profile-name" id="profileName">Loading...</div>
+        <div class="profile-role" id="profileRole">Admin</div>
+        <div class="profile-email" id="profileEmail" style="display:none;"></div>
+      </div>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a href="dashboard.html" class="nav-item ${isOverview ? 'active' : ''}" data-view="overview">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Overview
+      </a>
+      <a href="analytics.html" class="nav-item ${isAnalytics ? 'active' : ''}" data-view="analytics">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Analytics
+      </a>
+      <a href="leads.html" class="nav-item ${isLeads ? 'active' : ''}" data-view="leads">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Leads
+      </a>
+
+      <div class="nav-group ${expContent}">
+        <button class="nav-group-toggle" onclick="this.parentElement.classList.toggle('expanded')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          <span>Content &amp; Pages</span>
+          <svg class="chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <div class="nav-group-items">
+          <a href="portfolio.html" class="nav-item ${isPortfolio ? 'active' : ''}" data-view="portfolio">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            Portfolio
+          </a>
+          <a href="client-stories.html" class="nav-item ${isClientStories ? 'active' : ''}" data-view="clientstories">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Client Stories
+          </a>
+          <a href="blog.html" class="nav-item ${isBlog ? 'active' : ''}" data-view="blog">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            Blog Posts
+          </a>
+        </div>
+      </div>
+
+      <div class="nav-group ${expCareers}">
+        <button class="nav-group-toggle" onclick="this.parentElement.classList.toggle('expanded')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20 7h-3V4a2 2 0 00-2-2H9a2 2 0 00-2 2v3H4a2 2 0 00-2 2v11a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM9 4h6v3H9V4zM12 12h6v2h-6v-2z"/></svg>
+          <span>Careers</span>
+          <svg class="chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <div class="nav-group-items">
+          <a href="jobs.html" class="nav-item ${isJobs ? 'active' : ''}" data-view="jobs">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 7h-3V4a2 2 0 00-2-2H9a2 2 0 00-2 2v3H4a2 2 0 00-2 2v11a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM9 4h6v3H9V4zM12 12h6v2h-6v-2z"/></svg>
+            Jobs
+          </a>
+          <a href="job-applications.html" class="nav-item ${isJobApps ? 'active' : ''}" data-view="jobapplications">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6M9 16h6M7 2h10a2 2 0 012 2v16a2 2 0 01-2 2H7a2 2 0 01-2-2V4a2 2 0 012-2z"/></svg>
+            Job Applications
+          </a>
+        </div>
+      </div>
+
+      <div class="nav-group ${expSystem}">
+        <button class="nav-group-toggle" onclick="this.parentElement.classList.toggle('expanded')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>System</span>
+          <svg class="chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <div class="nav-group-items">
+          <a href="media-library.html" class="nav-item ${isMedia ? 'active' : ''}" data-view="medialibrary">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            Media Library
+          </a>
+          <a href="email-logs.html" class="nav-item ${isEmailLogs ? 'active' : ''}" data-view="emaillogs">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l9 6 9-6" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 8v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            Email Logs
+          </a>
+          <a href="settings.html" class="nav-item ${isSettings ? 'active' : ''}" data-view="settings">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
+            Settings
+          </a>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="theme-toggle" id="themeToggle">
+        <span class="theme-label" id="themeLabel">Light Mode</span>
+        <div class="toggle-track" id="toggleTrack">
+          <div class="toggle-thumb"></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  `;
+}
+
+const footContent = `
+  <div id="toastContainer" class="toast-container"></div>
+  <script src="dashboard.js"></script>
+  <script>
+    // Ensure authentication
+    window.addEventListener('pageshow', function (event) {
+      if (event.persisted && !localStorage.getItem('volgaToken')) {
+        window.location.href = 'index.html';
+      }
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+      if (!localStorage.getItem('volgaToken')) {
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
+</body>
+</html>
+`;
+
+// Define page extractions from dashboard.html
+function extractSection(id) {
+  const regex = new RegExp(`<section class="view[^"]*" id="${id}">([\\s\\S]*?)<\\/section>`);
+  const match = dashHtml.match(regex);
+  return match ? match[1] : '';
+}
+
+function extractModal(id) {
+  const regex = new RegExp(`<div class="modal-overlay" id="${id}">([\\s\\S]*?)<\\/div>\\s*(?=<div class="modal-overlay"|<div id="toastContainer"|<!--|$)`);
+  const match = dashHtml.match(regex);
+  return match ? `<div class="modal-overlay" id="${id}">${match[1]}</div>` : '';
+}
+
+const pages = [
+  {
+    file: 'overview.html',
+    title: 'Overview',
+    view: 'overview',
+    content: `
+    <main class="dash-main">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <section class="view active" id="view-overview">
+        ${extractSection('view-overview')}
+      </section>
+    </main>
+    ${extractModal('modalOverlay')}
+    `
+  },
+  {
+    file: 'analytics.html',
+    title: 'Analytics & Traffic',
+    view: 'analytics',
+    content: `
+    <main class="dash-main">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <section class="view active" id="view-analytics">
+        ${extractSection('view-analytics')}
+      </section>
+    </main>
+    `
+  },
+  {
+    file: 'leads.html',
+    title: 'Leads & Inquiries',
+    view: 'leads',
+    content: `
+    <main class="dash-main">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <section class="view active" id="view-leads">
+        ${extractSection('view-leads')}
+      </section>
+    </main>
+    ${extractModal('modalOverlay')}
+    `
+  },
+  {
+    file: 'portfolio.html',
+    title: 'Portfolio Projects',
+    view: 'portfolio',
+    content: `
+    <main class="dash-main">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <section class="view active" id="view-portfolio">
+        ${extractSection('view-portfolio')}
+      </section>
+    </main>
+    ${extractModal('projectModalOverlay')}
+    `
+  },
+  {
+    file: 'client-stories.html',
+    title: 'Client Stories',
+    view: 'clientstories',
+    content: `
+    <main class="dash-main">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <section class="view active" id="view-clientstories">
+        ${extractSection('view-clientstories')}
+      </section>
+    </main>
+    ${extractModal('storyModalOverlay')}
+    `
+  },
+  {
+    file: 'blog.html',
+    title: 'Blog Posts',
+    view: 'blog',
+    content: `
+    <main class="dash-main">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <section class="view active" id="view-blog">
+        ${extractSection('view-blog')}
+      </section>
+    </main>
+    ${extractModal('blogModalOverlay')}
+    `
+  },
+  {
+    file: 'jobs.html',
+    title: 'Job Openings',
+    view: 'jobs',
+    content: `
+    <main class="dash-main">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <section class="view active" id="view-jobs">
+        ${extractSection('view-jobs')}
+      </section>
+    </main>
+    ${extractModal('jobModalOverlay')}
+    `
+  },
+  {
+    file: 'job-applications.html',
+    title: 'Job Applications',
+    view: 'jobapplications',
+    content: `
+    <main class="dash-main">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <section class="view active" id="view-jobapplications">
+        ${extractSection('view-jobapplications')}
+      </section>
+    </main>
+    ${extractModal('jobApplicationModalOverlay')}
+    `
+  },
+  {
+    file: 'media-library.html',
+    title: 'Media Library',
+    view: 'medialibrary',
+    content: `
+    <main class="dash-main">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <section class="view active" id="view-medialibrary">
+        ${extractSection('view-medialibrary')}
+      </section>
+    </main>
+    ${extractModal('mediaModalOverlay')}
+    `
+  },
+  {
+    file: 'email-logs.html',
+    title: 'Email Logs',
+    view: 'emaillogs',
+    content: `
+    <main class="dash-main">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <section class="view active" id="view-emaillogs">
+        ${extractSection('view-emaillogs')}
+      </section>
+    </main>
+    `
+  },
+  {
+    file: 'settings.html',
+    title: 'Settings & Users',
+    view: 'settings',
+    content: `
+    <main class="dash-main">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <section class="view active" id="view-settings">
+        ${extractSection('view-settings')}
+      </section>
+    </main>
+    ${extractModal('userModalOverlay')}
+    `
+  }
+];
+
+// Write all pages
+pages.forEach(p => {
+  const fullHtml = headContent.replace('{{TITLE}}', p.title) + getSidebar(p.view) + p.content + footContent;
+  fs.writeFileSync(path.join(adminDir, p.file), fullHtml, 'utf8');
+  console.log(`Generated standalone page: ${p.file}`);
+});

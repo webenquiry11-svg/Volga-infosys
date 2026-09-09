@@ -103,7 +103,6 @@
       <div class="col-far-left" id="col-far-left">
         <div class="col-label">Resources</div>
         <div class="divider"></div>
-        <a href="case-studies.html">Case Studies</a>
         <a href="blog.html">Blogs</a>
         <a href="#">Support Center</a>
         <a href="#">FAQ</a>

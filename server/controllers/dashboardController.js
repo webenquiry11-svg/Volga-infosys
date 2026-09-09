@@ -2,8 +2,6 @@ import Contact from "../models/Contact.js";
 import Blog from "../models/Blog.js";
 import Project from "../models/Project.js";
 import EmailLog from "../models/EmailLog.js";
-import CaseStudy from "../models/CaseStudy.js";
-import IndustryNews from "../models/IndustryNews.js";
 import ClientStory from "../models/ClientStory.js";
 import Note from "../models/Note.js";
 import ActivityLog from "../models/ActivityLog.js";
@@ -30,8 +28,6 @@ export const getStats = async (req, res) => {
     publishedBlogsCount,
     draftBlogsCount,
     archivedBlogsCount,
-    caseStudiesCount, 
-    industryNewsCount, 
     emailCount, 
     incomingCount, 
     outgoingCount, 
@@ -47,8 +43,6 @@ export const getStats = async (req, res) => {
     Blog.countDocuments({ status: "published" }),
     Blog.countDocuments({ status: "draft" }),
     Blog.countDocuments({ status: "archived" }),
-    CaseStudy.countDocuments(),
-    IndustryNews.countDocuments(),
     EmailLog.countDocuments(),
     EmailLog.countDocuments({ type: "incoming" }),
     EmailLog.countDocuments({ type: "outgoing" }),
@@ -66,8 +60,6 @@ export const getStats = async (req, res) => {
     publishedBlogsCount,
     draftBlogsCount,
     archivedBlogsCount,
-    caseStudiesCount,
-    industryNewsCount,
     emailStats: {
       total: emailCount,
       incoming: incomingCount,
@@ -81,15 +73,11 @@ export const getStats = async (req, res) => {
 
 export const getPublicStats = async (req, res) => {
   const [
-    projectsCount, 
-    caseStudiesCount, 
-    industryNewsCount, 
+    projectsCount,
     blogsCount,
     clientStoriesCount
   ] = await Promise.all([
     Project.countDocuments(),
-    CaseStudy.countDocuments(),
-    IndustryNews.countDocuments(),
     Blog.countDocuments({ status: "published" }),
     ClientStory.countDocuments()
   ]);
@@ -99,8 +87,6 @@ export const getPublicStats = async (req, res) => {
     industriesServed: 15,
     projectsDelivered: projectsCount,
     blogsCount,
-    caseStudiesCount,
-    industryNewsCount,
     clientStoriesCount
   });
 };
@@ -304,7 +290,7 @@ export const exportLeads = async (req, res) => {
     const contacts = await Contact.find().sort({ createdAt: -1 });
     const headers = [
       "Name", "Email", "Company", "Country", "Service Interested",
-      "Budget", "Status", "Source", "Follow-up Date", "Created At"
+      "Status", "Source", "Follow-up Date", "Created At"
     ];
     const csvRows = [headers.join(",")];
 
@@ -315,7 +301,6 @@ export const exportLeads = async (req, res) => {
         `"${(contact.company || "").replace(/"/g, '""')}"`,
         `"${(contact.country || "").replace(/"/g, '""')}"`,
         `"${(contact.serviceInterested || "").replace(/"/g, '""')}"`,
-        `"${(contact.budget || "").replace(/"/g, '""')}"`,
         `"${(contact.status || "").replace(/"/g, '""')}"`,
         `"${(contact.source || "").replace(/"/g, '""')}"`,
         `"${contact.followUpDate ? contact.followUpDate.toISOString().slice(0,10) : ""}"`,

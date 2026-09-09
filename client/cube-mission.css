@@ -14,7 +14,7 @@
   --cm-card-bg: #ffffff;
   --cm-card-border: rgba(1, 51, 80, 0.18);
   --cm-hairline: 0.0625rem;
-  --cm-font-display:  "Bebas Neue", sans-serif;  
+  --cm-font-display:  "Sora", sans-serif;  
   --cm-font-body:'Inter', sans-serif;
   --cm-reveal-offset: 0.625rem;
   --cm-reveal-dur: 0.5s;
@@ -36,11 +36,6 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Add spacing between homepage sections */
-section, .home-suite-section, .home-suite-stats, .blog-section {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-}
 
 @keyframes cm-grid-move {
   from {
@@ -354,7 +349,9 @@ section, .home-suite-section, .home-suite-stats, .blog-section {
   font-family: var(--cm-font-body);
   position: relative;
   box-shadow: 
-    0 30px 80px rgba(1, 51, 80, 0.12),
+    0 8px 16px rgba(1, 51, 80, 0.15),
+    0 20px 40px rgba(1, 51, 80, 0.2),
+    0 40px 80px rgba(1, 51, 80, 0.18),
     inset 0 1px 0 rgba(255, 255, 255, 0.6),
     inset 0 0 40px rgba(1, 51, 80, 0.03);
   transform: translateZ(0) perspective(1000px);
@@ -399,9 +396,9 @@ section, .home-suite-section, .home-suite-stats, .blog-section {
 }
 .cm-card h1 {
   font-family: var(--cm-font-display) !important;
-  font-weight: 400 !important;
+  font-weight: 600 !important;
   font-size: clamp(2.4rem, 5vw, 3.8rem) !important;
-  letter-spacing: 0.03em !important;
+  letter-spacing: 1px !important;
   line-height: 0.92 !important;
   color: var(--cm-fg) !important;
   margin: 0 !important;

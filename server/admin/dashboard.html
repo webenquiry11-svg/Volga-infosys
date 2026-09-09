@@ -3,11 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Volga Dashboard</title>
-  <link rel="stylesheet" href="dashboard.css?v=6" />
-<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+  <title>Volga Admin Portal</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="dashboard.css?v=9" />
+  <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 </head>
 <body class="dash-page">
   <!-- Mobile Sidebar Overlay -->
@@ -33,117 +38,94 @@
         <div class="profile-email" id="profileEmail">—</div>
       </div>
     </div>
-    
-    <nav class="sidebar-nav">
+      <nav class="sidebar-nav">
       <div class="nav-section-label">Main</div>
       <a href="#" class="nav-item" data-view="analytics">
-<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 48 48">
-  <path d="M0 0h48v48H0z" fill="none" />
-  <g fill="none" stroke="currentColor" stroke-width="4">
-    <path stroke-linejoin="round" d="M44 5H4v12h40z" />
-    <path stroke-linecap="round" stroke-linejoin="round" d="m4 41.03l12.176-12.3l6.579 6.3L30.798 27l4.48 4.368" />
-    <path stroke-linecap="round" d="M44 16.172v26m-40-26v14M13.016 43H44M17 11h21m-28-.003h1" />
-  </g>
-</svg>        Analytics
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Analytics</span>
       </a>
       <a href="#" class="nav-item active" data-view="overview">
-       <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 72 72">
-  <path d="M0 0h72v72H0z" fill="none" />
-  <path fill="#d0cfce" d="M24 18h36v7H24zm0 15h36v7H24zm0 15h36v7H24z" />
-  <path fill="#9b9b9a" d="M12 48h7v7h-7zm0-15h7v7h-7zm0-15h7v7h-7z" />
-  <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M59 25H25a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1h34a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1m0 15H25a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1h34a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1m0 15H25a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1h34a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1M18 25h-5a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1m0 15h-5a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1m0 15h-5a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1" />
-</svg>
-        Overview
+        <i class="fa-solid fa-gauge-high"></i>
+        <span>Overview</span>
       </a>
       <a href="#" class="nav-item" data-view="leads">
-        <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 2048 2048">
-  <path d="M0 0h2048v2048H0z" fill="none" />
-  <path fill="currentColor" d="M1330 1203q136 47 245 131t186 196t118 243t41 275h-128q0-164-58-304t-162-244t-243-161t-305-59q-107 0-206 27t-184 76t-155 119t-119 155t-77 185t-27 206H128q0-144 42-275t119-242t186-194t245-133q-78-42-140-102T475 969t-67-157t-24-172q0-133 50-249t137-204T774 50t250-50q133 0 249 50t204 137t137 203t50 250q0 88-23 171t-67 156t-105 133t-139 103M512 640q0 106 40 199t110 162t163 110t199 41t199-40t162-110t110-163t41-199t-40-199t-110-162t-163-110t-199-41t-199 40t-162 110t-110 163t-41 199" />
-</svg>
-        Leads
+        <i class="fa-solid fa-envelope-open-text"></i>
+        <span>Leads &amp; Inquiries</span>
       </a>
-      <div class="nav-group">
+
+      <div class="nav-section-label">Content Hub</div>
+      <div class="nav-group expanded">
         <button class="nav-group-toggle" onclick="this.parentElement.classList.toggle('expanded')">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-          <span>Pages</span>
-          <svg class="chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          <i class="fa-solid fa-layer-group"></i>
+          <span>Pages &amp; Work</span>
+          <i class="fa-solid fa-chevron-right chevron"></i>
         </button>
         <div class="nav-group-items">
           <a href="#" class="nav-item" data-view="portfolio">
-            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 32 32">
-      <path d="M0 0h32v32H0z" fill="none" />
-      <path fill="currentColor" d="M28 10h-6V6a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2M12 6h8v4h-8ZM4 26V12h24v14Z" />
-    </svg>
-            Portfolio
+            <i class="fa-solid fa-briefcase"></i>
+            <span>Portfolio</span>
           </a>
           <a href="#" class="nav-item" data-view="clientstories">
-           <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
-      <path d="M0 0h24v24H0z" fill="none" />
-      <path fill="currentColor" d="M11.463 19.475q-.263-.075-.488-.2q-1.025-.625-2.15-.95T6.5 18q-1.05 0-2.063.275T2.5 19.05q-.525.275-1.012-.025T1 18.15V6.1q0-.275.138-.525T1.55 5.2q1.15-.6 2.4-.9T6.5 4q1.45 0 2.838.375T12 5.5v12.1q1.275-.8 2.675-1.2T17.5 16q.9 0 1.763.15T21 16.6v-12q.375.125.738.263t.712.337q.275.125.413.375T23 6.1v12.05q0 .575-.487.875t-1.013.025q-.925-.5-1.937-.775T17.5 18q-1.2 0-2.325.325t-2.15.95q-.225.125-.488.2T12 19.55t-.537-.075m3.362-5.225q-.25.225-.537.088T14 13.875V5.7q0-.1.038-.188t.112-.162l4-4q.25-.25.55-.125t.3.475v8.575q0 .125-.05.213t-.125.162z" />
-    </svg>
-            Client Stories
+            <i class="fa-solid fa-book-open"></i>
+            <span>Client Stories</span>
           </a>
           <a href="#" class="nav-item" data-view="blog">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-            Blog
-          </a>
-          <a href="#" class="nav-item" data-view="casestudies">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h11.5L20 5.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-1.5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
-            Case Studies
-          </a>
-          <a href="#" class="nav-item" data-view="industrynews">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
-            Industry News
+            <i class="fa-solid fa-newspaper"></i>
+            <span>Blog Posts</span>
           </a>
         </div>
       </div>
+
+      <div class="nav-section-label">Recruitment</div>
       <div class="nav-group">
         <button class="nav-group-toggle" onclick="this.parentElement.classList.toggle('expanded')">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20 7h-3V4a2 2 0 00-2-2H9a2 2 0 00-2 2v3H4a2 2 0 00-2 2v11a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM9 4h6v3H9V4zM12 12h6v2h-6v-2z"/></svg>
+          <i class="fa-solid fa-users"></i>
           <span>Careers</span>
-          <svg class="chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          <i class="fa-solid fa-chevron-right chevron"></i>
         </button>
         <div class="nav-group-items">
           <a href="#" class="nav-item" data-view="jobs">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20 7h-3V4a2 2 0 00-2-2H9a2 2 0 00-2 2v3H4a2 2 0 00-2 2v11a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM9 4h6v3H9V4zM12 12h6v2h-6v-2z"/></svg>
-            Jobs
+            <i class="fa-solid fa-id-badge"></i>
+            <span>Job Openings</span>
           </a>
           <a href="#" class="nav-item" data-view="jobapplications">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 12h6M9 16h6M7 2h10a2 2 0 012 2v16a2 2 0 01-2 2H7a2 2 0 01-2-2V4a2 2 0 012-2z"/></svg>
-            Job Applications
+            <i class="fa-solid fa-file-lines"></i>
+            <span>Applications</span>
           </a>
         </div>
       </div>
+
+      <div class="nav-section-label">System</div>
       <div class="nav-group">
         <button class="nav-group-toggle" onclick="this.parentElement.classList.toggle('expanded')">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
-          <span>System</span>
-          <svg class="chevron" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          <i class="fa-solid fa-sliders"></i>
+          <span>Management</span>
+          <i class="fa-solid fa-chevron-right chevron"></i>
         </button>
         <div class="nav-group-items">
           <a href="#" class="nav-item" data-view="medialibrary">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            Media Library
+            <i class="fa-solid fa-images"></i>
+            <span>Media Library</span>
           </a>
           <a href="#" class="nav-item" data-view="emaillogs">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 8l9 6 9-6" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 8v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-            Email Logs
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Email Logs</span>
           </a>
           <a href="#" class="nav-item" data-view="settings">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
-            Settings
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
           </a>
         </div>
       </div>
     </nav>
     <div class="sidebar-footer">
       <div class="theme-toggle" id="themeToggle">
-        <svg class="theme-icon icon-sun" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-        <span class="theme-label" id="themeLabel">Light Mode</span>
+        <div class="theme-label">
+          <i class="fa-solid fa-circle-half-stroke"></i> Theme
+        </div>
         <div class="toggle-track" id="toggleTrack">
           <div class="toggle-thumb"></div>
         </div>
-        <svg class="theme-icon icon-moon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>
       </div>
     </div>
   </aside>
@@ -359,98 +341,98 @@
   <!-- SETTINGS -->
   <section class="view" id="view-settings">
     <div class="page-header">
-      <h1>Settings</h1>
+      <h1>Portal Settings</h1>
     </div>
 
     <!-- Profile Settings -->
-    <div class="section-title">Profile Settings</div>
+    <div class="section-title"><i class="fa-solid fa-user-gear"></i> Profile Information</div>
     <div class="proj-form">
-      <div class="field" style="display:flex; align-items:center; gap:20px;">
-        <div id="profilePicturePreview" style="width:80px; height:80px; border-radius:50%; background:#ddd; display:flex; align-items:center; justify-content:center; font-size:24px; color:#666; overflow:hidden;">
-          <img id="profileAvatarImg" src="" style="width:100%; height:100%; object-fit:cover; display:none;" />
+      <div class="settings-avatar-row">
+        <div id="profilePicturePreview" class="settings-avatar-preview">
+          <img id="profileAvatarImgSettings" src="" style="width:100%; height:100%; object-fit:cover; display:none;" />
+          <span id="profileAvatarTextSettings"><i class="fa-solid fa-user"></i></span>
         </div>
-        <div style="flex:1;">
-          <label for="profilePictureUpload">Profile Picture</label>
-          <input type="file" id="profilePictureUpload" accept="image/*" style="margin-top:8px;" />
-          <button class="btn-save" id="uploadProfilePictureBtn" style="margin-top:8px;">Upload Picture</button>
+        <div class="settings-avatar-controls">
+          <label for="profilePictureUpload"><i class="fa-solid fa-camera"></i> Avatar Image</label>
+          <div class="settings-file-row">
+            <input type="file" id="profilePictureUpload" accept="image/*" class="custom-file-input" />
+            <button class="btn-save" id="uploadProfilePictureBtn" type="button"><i class="fa-solid fa-upload"></i> Upload</button>
+          </div>
+          <span class="field-hint">Supports PNG, JPG, or WEBP up to 5MB</span>
         </div>
       </div>
-      <div class="field"><label for="settings-name">Name</label><input id="settings-name" placeholder="Your name" /></div>
-      <div class="field"><label for="settings-email">Email</label><input id="settings-email" placeholder="Your email" /></div>
-      <button class="btn-save" id="updateProfileBtn">Update Profile</button>
+
+      <div class="form-grid-2">
+        <div class="field">
+          <label for="settings-name"><i class="fa-solid fa-signature"></i> Full Name</label>
+          <input id="settings-name" placeholder="Your full name" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="settings-email"><i class="fa-solid fa-envelope"></i> Email Address</label>
+          <input id="settings-email" type="email" placeholder="Your email address" autocomplete="email" />
+        </div>
+      </div>
+
+      <div class="form-actions-row">
+        <button class="btn-save" id="updateProfileBtn" type="button"><i class="fa-solid fa-check"></i> Save Changes</button>
+      </div>
     </div>
 
     <!-- Change Password -->
-    <div class="section-title" style="margin-top: 2rem;" id="changePasswordTitle">Change Password</div>
+    <div class="section-title" id="changePasswordTitle"><i class="fa-solid fa-key"></i> Security &amp; Password</div>
     <div class="proj-form" id="changePasswordSection">
-      <div class="field">
-        <label for="currentPassword">Current Password</label>
-        <div style="position: relative;">
-          <input id="currentPassword" type="password" placeholder="Enter current password" style="padding-right: 40px;" />
-          <button type="button" onclick="togglePasswordVisibility('currentPassword', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 18px;">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-              <circle cx="12" cy="12" r="3"/>
-            </svg>
-          </button>
+      <div class="form-grid-3">
+        <div class="field">
+          <label for="currentPassword"><i class="fa-solid fa-lock"></i> Current Password</label>
+          <input id="currentPassword" type="password" placeholder="Enter current password" autocomplete="current-password" />
+        </div>
+        <div class="field">
+          <label for="newPassword"><i class="fa-solid fa-key"></i> New Password</label>
+          <input id="newPassword" type="password" placeholder="Enter new password" autocomplete="new-password" />
+        </div>
+        <div class="field">
+          <label for="confirmPassword"><i class="fa-solid fa-shield-halved"></i> Confirm Password</label>
+          <input id="confirmPassword" type="password" placeholder="Confirm new password" autocomplete="new-password" />
         </div>
       </div>
-      <div class="field">
-        <label for="newPassword">New Password</label>
-        <div style="position: relative;">
-          <input id="newPassword" type="password" placeholder="Enter new password" style="padding-right: 40px;" />
-          <button type="button" onclick="togglePasswordVisibility('newPassword', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 18px;">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-              <circle cx="12" cy="12" r="3"/>
-            </svg>
-          </button>
-        </div>
+
+      <div class="form-actions-row">
+        <button class="btn-save" id="changePasswordBtn" type="button"><i class="fa-solid fa-shield-halved"></i> Update Password</button>
       </div>
-      <div class="field">
-        <label for="confirmPassword">Confirm Password</label>
-        <div style="position: relative;">
-          <input id="confirmPassword" type="password" placeholder="Confirm new password" style="padding-right: 40px;" />
-          <button type="button" onclick="togglePasswordVisibility('confirmPassword', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 18px;">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-              <circle cx="12" cy="12" r="3"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-      <button class="btn-save" id="changePasswordBtn">Change Password</button>
     </div>
 
     <!-- User Management (Admin Only) -->
-    <div class="section-title" style="margin-top: 2rem;" id="userManagementTitle">User Management</div>
+    <div class="section-title" id="userManagementTitle"><i class="fa-solid fa-users-gear"></i> User Accounts</div>
     <div class="proj-form" id="userManagementSection">
-      <button class="btn-save" id="addUserBtn">+ Add User</button>
-      <div class="table-wrap" style="margin-top: 1rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <button class="btn-save" id="addUserBtn" type="button"><i class="fa-solid fa-user-plus"></i> Add User</button>
+      </div>
+      <div class="table-wrap">
         <table class="leads-table" id="usersTable">
-          <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Created At</th><th></th></tr></thead>
+          <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Created At</th><th>Actions</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
     </div>
 
     <!-- Role Applications (Admin Only) -->
-    <div class="section-title" style="margin-top: 2rem;" id="roleApplicationsTitle">Role Applications</div>
+    <div class="section-title" id="roleApplicationsTitle"><i class="fa-solid fa-user-check"></i> Role Upgrade Requests</div>
     <div class="proj-form" id="roleApplicationsSection">
-      <div class="table-wrap" style="margin-top: 1rem;">
+      <div class="table-wrap">
         <table class="leads-table" id="roleApplicationsTable">
-          <thead><tr><th>Name</th><th>Email</th><th>Requested Role</th><th>Reason</th><th>Status</th><th>Date</th><th></th></tr></thead>
+          <thead><tr><th>Name</th><th>Email</th><th>Requested Role</th><th>Reason</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
     </div>
 
-
-
     <!-- Sign Out -->
-    <div class="section-title" style="margin-top: 2rem;">Account</div>
+    <div class="section-title"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</div>
     <div class="proj-form">
-      <button class="btn-delete" id="logoutBtn">Sign Out</button>
+      <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">Terminate your current administrative session securely.</p>
+      <div>
+        <button class="btn-delete" id="logoutBtn" type="button"><i class="fa-solid fa-power-off"></i> End Session</button>
+      </div>
     </div>
   </section>
 
