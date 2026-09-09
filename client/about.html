@@ -310,30 +310,47 @@
 
 .stat {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 4px;
+  gap: 0;
+}
+
+.stat-value,
+.stat-num-row {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
 }
 
 .stat-num {
   font-family: 'Sora', sans-serif;
   font-size: 2.5rem;
   font-weight: 700;
-  color: white;
+  color: var(--accent);
+  line-height: 1;
+  display: inline-block;
 }
 
 .stat-plus {
   font-family: var(--font-display);
   font-size: 1.5rem;
+  font-weight: 800;
   color: var(--accent);
+  display: inline-block;
+  line-height: 1;
+  margin-left: 2px;
 }
 
 .stat-label {
+  flex: 0 0 100%;
+  width: 100%;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: white;
-  margin-left: 8px;
+  color: rgb(27, 79, 114);
+  margin-top: 0.4rem;
+  margin-left: 0;
 }
 
 .Hero-stat-divider {
@@ -2020,20 +2037,26 @@
     <!-- Stat counters -->
     <div class="Hero-stats">
       <div class="stat">
-        <div class="stat-num" data-val="60">0</div>
-        <div class="stat-plus">+</div>
+        <div class="stat-value">
+          <span class="stat-num" data-val="60">0</span>
+          <span class="stat-plus">+</span>
+        </div>
         <div class="stat-label">Projects Delivered</div>
       </div>
       <div class="stat Hero-stat-divider"></div>
       <div class="stat">
-        <div class="stat-num" data-val="10">0</div>
-        <div class="stat-plus">+</div>
+        <div class="stat-value">
+          <span class="stat-num" data-val="10">0</span>
+          <span class="stat-plus">+</span>
+        </div>
         <div class="stat-label">Industries Served</div>
       </div>
       <div class="stat Hero-stat-divider"></div>
       <div class="stat">
-        <div class="stat-num" data-val="8">0</div>
-        <div class="stat-plus">+</div>
+        <div class="stat-value">
+          <span class="stat-num" data-val="8">0</span>
+          <span class="stat-plus">+</span>
+        </div>
         <div class="stat-label">Years Experience</div>
       </div>
     </div>

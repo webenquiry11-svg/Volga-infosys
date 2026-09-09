@@ -211,7 +211,8 @@ function boot(data) {
       gsap.set(card(i), { x: oL + idx * (CARD_W + CARD_GAP), y: oT });
       gsap.set(cc(i),   { x: oL + idx * (CARD_W + CARD_GAP), y: oT });
     });
-    gsap.set('#pf-pagination', { left: 60, bottom: 28, top: 'auto' });
+    const isMobile = window.innerWidth <= 900;
+    gsap.set('#pf-pagination', { left: isMobile ? 20 : 60, bottom: isMobile ? 20 : 28, top: 'auto' });
   });
 
   // stat counters

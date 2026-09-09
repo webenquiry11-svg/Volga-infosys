@@ -422,6 +422,9 @@
   font-size: 2rem;
   color: var(--cm-accent);
   line-height: 1;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
 }
 .cm-stat-label {
   font-size: 0.55rem;

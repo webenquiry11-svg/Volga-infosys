@@ -1660,7 +1660,77 @@ Object.entries(menus).forEach(([key, { item, menuEl }]) => {
   item.addEventListener('click', () => activeMenu === key ? closeMenu() : openMenu(key));
 });
 
-document.getElementById('backdrop').addEventListener('click', () => closeMenu());
+document.getElementById('backdrop')?.addEventListener('click', () => closeMenu());
+
+// ─── MOBILE MENU CONTROLLER ──────────────────────────────
+(function initMobileMenu() {
+  function bindMenu() {
+    const burger = document.getElementById('navBurger') || document.querySelector('.nav-burger');
+    const mobileMenu = document.getElementById('mobileMenu') || document.querySelector('.mobile-menu');
+    const closeBtn = document.getElementById('mobileClose') || (mobileMenu ? mobileMenu.querySelector('.mobile-close') : null);
+
+    if (!burger || !mobileMenu) return;
+
+    function openMobileMenu() {
+      mobileMenu.classList.add('open');
+      burger.classList.add('open');
+      burger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    function toggleMobileMenu(e) {
+      if (e) e.stopPropagation();
+      if (mobileMenu.classList.contains('open')) {
+        closeMobileMenu();
+      } else {
+        openMobileMenu();
+      }
+    }
+
+    burger.addEventListener('click', toggleMobileMenu);
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeMobileMenu();
+      });
+    }
+
+    // Close when clicking any menu link
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        closeMobileMenu();
+      });
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+        closeMobileMenu();
+      }
+    });
+
+    // Auto close on window resize beyond 992px
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 992 && mobileMenu.classList.contains('open')) {
+        closeMobileMenu();
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindMenu);
+  } else {
+    bindMenu();
+  }
+})();
 
 // ─── BUTTON RIPPLE EFFECT (FIXED) ────────────────────────
 // FIX: Set ripple origin on mouseenter only (not mousemove) to prevent jitter
