@@ -19,6 +19,9 @@
   <!-- ▶ Cube Mission styles — scoped, no conflict with volga.css -->
   <link rel="stylesheet" href="cube-mission.css" />
 
+  <!-- ▶ 3D Fluted Glass & Optical Refraction Hero styles -->
+  <link rel="stylesheet" href="hero-refraction.css" />
+
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
@@ -50,14 +53,11 @@
     </a>
 
     <ul class="nav-links">
-      <li class="nav-item" data-menu="solutions">
-        <button class="nav-link">Solutions <span class="nav-arrow"></span></button>
+      <li class="nav-item" data-menu="services">
+        <button class="nav-link">Services <span class="nav-arrow"></span></button>
       </li>
       <li class="nav-item" data-menu="industries">
         <button class="nav-link">Industries <span class="nav-arrow"></span></button>
-      </li>
-      <li class="nav-item" data-menu="services">
-        <button class="nav-link">Services <span class="nav-arrow"></span></button>
       </li>
       <li class="nav-item" data-menu="work">
         <button class="nav-link">Work <span class="nav-arrow"></span></button>
@@ -84,9 +84,8 @@
     <button class="mobile-close" id="mobileClose" aria-label="Close mobile menu">X</button>
     <ul>
       <li><a href="index.html" class="mm-link">Home</a></li>
-      <li><a href="solutions.html" class="mm-link">Solutions</a></li>
-      <li><a href="industries.html" class="mm-link">Industries</a></li>
       <li><a href="services.html" class="mm-link">Services</a></li>
+      <li><a href="industries.html" class="mm-link">Industries</a></li>
       <li><a href="portfolio.html" class="mm-link">Work</a></li>
       <li><a href="technologies (2).html" class="mm-link">Technologies</a></li>
       <li><a href="insights-overview-new.html" class="mm-link">Blogs</a></li>
@@ -97,104 +96,6 @@
   
 
   <!-- MEGA MENUS -->
-  <div class="mega-menu" id="menu-solutions">
-    <div class="mega-inner">
-      <div class="mega-label">Solutions</div>
-      <div class="mega-cols">
-        <div class="mega-col">
-          <ul class="mega-items">
-            <li><a class="mega-item" href="solutions.html#ar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality-2">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M10 21h-2a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v3.5" />
-	<path d="M17 17l-4 -2.5l4 -2.5l4 2.5v4.5l-4 2.5l0 -4.5" />
-	<path d="M13 14.5v4.5l4 2.5" />
-	<path d="M17 17l4 -2.5" />
-	<path d="M11 4h2" />
-</svg> AR Solutions</a></li>
-            <li><a class="mega-item" href="solutions.html#vr"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cardboards">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 8v8.5a2.5 2.5 0 0 0 2.5 2.5h1.06a3 3 0 0 0 2.34 -1.13l1.54 -1.92a2 2 0 0 1 3.12 0l1.54 1.92a3 3 0 0 0 2.34 1.13h1.06a2.5 2.5 0 0 0 2.5 -2.5v-8.5a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2" />
-	<path d="M7 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-	<path d="M15 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-</svg>VR Solutions</a></li>
-            <li><a class="mega-item" href="solutions.html#xr"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
-	<path d="M4 16v2a2 2 0 0 0 2 2h2" />
-	<path d="M16 4h2a2 2 0 0 1 2 2v2" />
-	<path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
-	<path d="M12 12.5l4 -2.5" />
-	<path d="M8 10l4 2.5v4.5l4 -2.5v-4.5l-4 -2.5l-4 2.5" />
-	<path d="M8 10v4.5l4 2.5" />
-</svg>MR / XR Applications</a></li>
-            <li><a class="mega-item" href="solutions.html#twin"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-box-multiple">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M7 5a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2l0 -10" />
-	<path d="M17 17v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" />
-</svg>Digital Twin</a></li>
-            <li><a class="mega-item" href="solutions.html#ai"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brain">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M15.5 13a3.5 3.5 0 0 0 -3.5 3.5v1a3.5 3.5 0 0 0 7 0v-1.8" />
-	<path d="M8.5 13a3.5 3.5 0 0 1 3.5 3.5v1a3.5 3.5 0 0 1 -7 0v-1.8" />
-	<path d="M17.5 16a3.5 3.5 0 0 0 0 -7h-.5" />
-	<path d="M19 9.3v-2.8a3.5 3.5 0 0 0 -7 0" />
-	<path d="M6.5 16a3.5 3.5 0 0 1 0 -7h.5" />
-	<path d="M5 9.3v-2.8a3.5 3.5 0 0 1 7 0v10" />
-</svg>AI Integration</a></li>
-          </ul>
-        </div>
-        <div class="mega-col">
-          <ul class="mega-items">
-            <li><a class="mega-item" href="solutions.html#cfg"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cube">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M21 16.008v-8.018a1.98 1.98 0 0 0 -1 -1.717l-7 -4.008a2.016 2.016 0 0 0 -2 0l-7 4.008c-.619 .355 -1 1.01 -1 1.718v8.018c0 .709 .381 1.363 1 1.717l7 4.008a2.016 2.016 0 0 0 2 0l7 -4.008c.619 -.355 1 -1.01 1 -1.718" />
-	<path d="M12 22v-10" />
-	<path d="M12 12l8.73 -5.04" />
-	<path d="M3.27 6.96l8.73 5.04" />
-</svg>3D Configurators</a></li>
-            <li><a class="mega-item" href="solutions.html#vs"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-store">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 21l18 0" />
-	<path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
-	<path d="M5 21l0 -10.15" />
-	<path d="M19 21l0 -10.15" />
-	<path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
-</svg>Virtual Showrooms</a></li>
-            <li><a class="mega-item" href="solutions.html#sim"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-atom-2">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-	<path d="M12 21l0 .01" />
-	<path d="M3 9l0 .01" />
-	<path d="M21 9l0 .01" />
-	<path d="M8 20.1a9 9 0 0 1 -5 -7.1" />
-	<path d="M16 20.1a9 9 0 0 0 5 -7.1" />
-	<path d="M6.2 5a9 9 0 0 1 11.4 0" />
-</svg>Simulation Systems</a></li>
-            <li><a class="mega-item" href="solutions.html#trn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-school">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
-	<path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
-</svg>Interactive Training</a></li>
-            <li><a class="mega-item" href="solutions.html#meta"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-react-native">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M6.357 9c-2.637 .68 -4.357 1.845 -4.357 3.175c0 2.107 4.405 3.825 9.85 3.825c.74 0 1.26 -.039 1.95 -.097" />
-	<path d="M9.837 15.9c-.413 -.596 -.806 -1.133 -1.18 -1.8c-2.751 -4.9 -3.488 -9.77 -1.63 -10.873c1.15 -.697 3.047 .253 4.974 2.254" />
-	<path d="M6.429 15.387c-.702 2.688 -.56 4.716 .56 5.395c1.783 1.08 5.387 -1.958 8.043 -6.804c.36 -.67 .683 -1.329 .968 -1.978" />
-	<path d="M12 18.52c1.928 2 3.817 2.95 4.978 2.253c1.85 -1.102 1.121 -5.972 -1.633 -10.873c-.384 -.677 -.777 -1.204 -1.18 -1.8" />
-	<path d="M17.66 15c2.612 -.687 4.34 -1.85 4.34 -3.176c0 -2.11 -4.408 -3.824 -9.845 -3.824c-.747 0 -1.266 .029 -1.955 .087" />
-	<path d="M8 12c.285 -.66 .607 -1.308 .968 -1.978c2.647 -4.844 6.253 -7.89 8.046 -6.801c1.11 .679 1.262 2.706 .56 5.393" />
-	<path d="M12.26 12.015h-.01c-.01 .13 -.12 .24 -.26 .24a.263 .263 0 0 1 -.25 -.26c0 -.14 .11 -.25 .24 -.25h-.01c.13 -.01 .25 .11 .25 .24" />
-</svg>Metaverse Solutions</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="mega-highlight">
-        <div class="mega-highlight-title">New: AI-Powered XR</div>
-        <div class="mega-highlight-sub">Combining spatial computing with generative AI for next-gen enterprise experiences.</div>
-        <a href="#" class="mega-highlight-btn">Explore <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      </div>
-    </div>
-  </div>
 
   <div class="mega-menu" id="menu-industries">
     <div class="mega-inner">
@@ -447,79 +348,87 @@
 
   <div id="backdrop" aria-hidden="true"></div>
 
-  <!-- ═══════════════════════════════════════════ HERO -->
+  <!-- ═══════════════════════════════════════════ HERO ═══════════════════════════════════════════ -->
   <section class="Hero" id="Hero">
-    <img
-      class="Hero-image"
-      src="hero-visual.png"
-      fetchpriority="high"
-      decoding="async"
-      alt="Engineer using an XR headset beside a digital twin visualization" />
+    
+    <!-- ═══════════ FULL-WIDTH 3D FLUTED GLASS REFRACTION BACKGROUND ═══════════ -->
+    <div class="hero-refraction-bg" aria-hidden="true">
+      <!-- 1. Deep Atmospheric Dark Base -->
+      <div class="refraction-base-ambient"></div>
 
-    <div class="Hero-noise"></div>
-
-    <!-- Ambient glow orbs -->
-    <div class="Hero-orb Hero-orb-1" aria-hidden="true"></div>
-    <div class="Hero-orb Hero-orb-2" aria-hidden="true"></div>
-    <div class="Hero-orb Hero-orb-3" aria-hidden="true"></div>
-
-    <!-- Grid overlay -->
-    <div class="Hero-grid" aria-hidden="true"></div>
-
-    <div class="Hero-content">
-
-      <!-- Badge -->
-      <div class="Hero-badge">
-        <span class="Hero-badge-dot"></span>
-        Enterprise XR & AI Solutions · Ludhiana, India
+      <!-- 2. Autonomous Dynamic Liquid Flow Stream (Behind Glass) -->
+      <div class="refraction-emitter-container">
+        <canvas id="liquidFlowCanvas" class="liquid-flow-canvas"></canvas>
+        <div class="liquid-blob liquid-blob-1"></div>
+        <div class="liquid-blob liquid-blob-2"></div>
+        <div class="liquid-blob liquid-blob-3"></div>
       </div>
 
-      <!-- Headline — each line wrapped for split animation -->
-      <h1 class="Hero-heading" aria-label="Engineering Immersive Intelligent Systems for Enterprise Growth">
-        <span class="Hero-line">Engineering <em>Immersive</em></span>
-        <span class="Hero-line"><em>Intelligent Systems</em></span>
-        <span class="Hero-line">for Enterprise Growth</span>
+      <!-- 3. Vertical 3D Fluted / Reeded Glass Columns -->
+      <div class="fluted-glass-backdrop"></div>
+
+      <!-- 4. Specular Caustics & Highlight Ribs -->
+      <div class="fluted-caustics"></div>
+
+      <!-- 5. Interactive Refraction Light Beams -->
+      <div class="refraction-beams"></div>
+
+      <!-- 6. Luminous Horizon Arc -->
+      <div class="refraction-horizon-arc"></div>
+    </div>
+
+    <!-- ═══════════ HERO FOREGROUND CONTENT ═══════════ -->
+    <div class="hero-main-container">
+      
+      <!-- Top Status Pill -->
+      <div class="hero-status-pill">
+        <span class="pulse-dot"></span>
+        <span class="pill-text">Spatial Computing &amp; XR Labs · Live</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="hero-title" aria-label="Engineering Immersive &amp; Intelligent Systems for Enterprise Growth">
+        Engineering <span class="gradient-text">Immersive</span> &amp;<br />
+        <em>Intelligent Systems</em><br />
+        for Enterprise Growth
       </h1>
 
-      <p class="Hero-sub">We build AR, VR, AI, and Digital Twin platforms that improve training, reduce operational risk, and accelerate enterprise decision-making.</p>
+      <!-- Subtitle -->
+      <p class="hero-subtitle">
+        We build AR, VR, AI, and Digital Twin platforms that elevate workforce training, reduce operational risk, and accelerate enterprise decision-making.
+      </p>
 
-      <div class="Hero-cta-row">
-        <a href="portfolio.html" class="btn-primary magnetic-btn">
+      <!-- CTA Row -->
+      <div class="hero-cta-group">
+        <a href="portfolio.html" class="hero-btn-primary magnetic-btn">
           Explore Portfolio
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="contact.html" class="btn-ghost btn-ghost-light magnetic-btn">Start a Project</a>
+        <a href="contact.html" class="hero-btn-secondary magnetic-btn">
+          Start a Project
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
 
-      <!-- Stat counters -->
-      <div class="Hero-stats">
-        <div class="stat">
-          <div class="stat-value">
-            <span class="stat-num" data-val="60">0</span>
-            <span class="stat-plus">+</span>
-          </div>
-          <div class="stat-label">Projects Delivered</div>
+      <!-- Live KPI Strip -->
+      <div class="hero-kpi-strip">
+        <div class="hero-kpi-item">
+          <div class="hero-kpi-number"><span class="stat-num" data-val="60">0</span><span class="plus">+</span></div>
+          <div class="hero-kpi-label">Projects Delivered</div>
         </div>
-        <div class="stat Hero-stat-divider"></div>
-        <div class="stat">
-          <div class="stat-value">
-            <span class="stat-num" data-val="10">0</span>
-            <span class="stat-plus">+</span>
-          </div>
-          <div class="stat-label">Industries Served</div>
+        <div class="hero-kpi-divider"></div>
+        <div class="hero-kpi-item">
+          <div class="hero-kpi-number"><span class="stat-num" data-val="10">0</span><span class="plus">+</span></div>
+          <div class="hero-kpi-label">Industries Served</div>
         </div>
-        <div class="stat Hero-stat-divider"></div>
-        <div class="stat">
-          <div class="stat-value">
-            <span class="stat-num" data-val="8">0</span>
-            <span class="stat-plus">+</span>
-          </div>
-          <div class="stat-label">Years Experience</div>
+        <div class="hero-kpi-divider"></div>
+        <div class="hero-kpi-item">
+          <div class="hero-kpi-number"><span class="stat-num" data-val="8">0</span><span class="plus">+</span></div>
+          <div class="hero-kpi-label">Years Experience</div>
         </div>
       </div>
+
     </div>
-
-    <!-- Scroll hint -->
 
   </section>
 
@@ -537,246 +446,15 @@
       <span>3D Visualization</span><span class="ticker-dot">✦</span>
       <span>Immersive Tech</span><span class="ticker-dot">✦</span>
       <span>XR Development</span><span class="ticker-dot">✦</span>
-      <span>Innovation Lab</span><span class="ticker-dot">✦</span>
     </div>
   </div>
-    <div class="cube-mission-wrap">
-    <!-- Section header -->
-    <div class="cube-mission-header">
-      <p class="cube-mission-kicker">Our Process</p>
-      <h2 class="cube-mission-title" style="color: var(--cm-fg);">Transforming Ideas into Immersive Experiences</h2>
-      <p class="cube-mission-desc">We build immersive, intelligent systems that help enterprises educate, innovate, build, deploy, scale, and evolve with cutting-edge VR/AR technology.</p>
-    </div>
-    <div class="cube-mission-viewport">
-
-      <!-- Cube scene (absolutely positioned, pointer-events:none) -->
-      <div class="cube-mission-scene" aria-hidden="true">
-        <!-- Ambient Light Effect -->
-        <div class="cm-ambient-light"></div>
-        <!-- Ground Plane -->
-        <div class="cm-ground-plane"></div>
-        <!-- 3D Particles Container -->
-        <div id="cm-particles"></div>
-        
-        <div id="cm-cube">
-          <div class="cm-face" data-face="top">    <span class="cm-face-ph">TOP</span></div>
-          <div class="cm-face" data-face="front">  <span class="cm-face-ph">FRONT</span></div>
-          <div class="cm-face" data-face="right">  <span class="cm-face-ph">RIGHT</span></div>
-          <div class="cm-face" data-face="back">   <span class="cm-face-ph">BACK</span></div>
-          <div class="cm-face" data-face="left">   <span class="cm-face-ph">LEFT</span></div>
-          <div class="cm-face" data-face="bottom"> <span class="cm-face-ph">BOTTOM</span></div>
-        </div>
-        <!-- HUD -->
-        <div id="cm-hud">
-          <span id="cm-hud-pct">000%</span>
-          <div class="cm-progress-bar"><div id="cm-prog-fill" class="cm-progress-fill"></div></div>
-          <div class="cm-scene-label" id="cm-scene-name">INTRO</div>
-        </div>
-      </div>
-
-      <!-- Side nav dots -->
-      <div id="cm-scene-strip" aria-hidden="true">
-        <button class="cm-dot active" aria-label="Go to slide 1"></button>
-        <button class="cm-dot" aria-label="Go to slide 2"></button>
-        <button class="cm-dot" aria-label="Go to slide 3"></button>
-        <button class="cm-dot" aria-label="Go to slide 4"></button>
-        <button class="cm-dot" aria-label="Go to slide 5"></button>
-        <button class="cm-dot" aria-label="Go to slide 6"></button>
-      </div>
-
-      <!-- Caption -->
-      <div id="cm-face-caption" aria-hidden="true">
-        <div id="cm-caption-num">00</div>
-        <div id="cm-caption-name">Intro</div>
-      </div>
-
-      <!-- Inner scroller — GSAP/ScrollTrigger never touch this div -->
-      <div class="cube-mission-scroll" role="region" aria-label="Our mission slides">
-
-        <div class="cm-slide" id="cms0">
-          <div class="cm-card">
-            <div class="cm-tag">OUR PROCESS</div>
-            <h1>From Vision <br>to Virtual<br> Reality</h1>
-            <p class="cm-body">We are shaping the next generation of immersive experiences by connecting technology, creativity, and industry expertise. Through education, innovation, and collaboration, we are expanding the possibilities of VR and AR across industries.</p>
-            <div class="cm-cta-row">
-              <a class="cm-cta" href="#cms1" data-cm-slide="1">Explore <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="cm-slide" id="cms1">
-          <div class="cm-card right">
-            <div class="cm-h-line"></div>
-            <h2> Define the Opportunity</h2>
-            <p class="cm-body">Every successful digital experience begins with a clear understanding of the vision behind it. We work closely with your team to explore business goals, user expectations, existing workflows, and operational challenges. By identifying opportunities where immersive technology can create meaningful impact, we build a strong foundation for a solution that aligns with your objectives.</p>
-            <div class="cm-cta-row">
-              <a class="cm-cta-back" href="#cms0" data-cm-slide="0"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
-              <a class="cm-cta" href="#cms2" data-cm-slide="2">Next <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="cm-slide" id="cms2">
-          <div class="cm-card">
-            <div class="cm-h-line"></div>
-          
-            <h2>Shape the Experience</h2>
-            <p class="cm-body">We transform ideas into engaging, intuitive experiences designed around real-world needs. Our team creates immersive concepts, user journeys, and interactive environments that combine creativity with functionality. Whether it’s VR training, AR experiences, AI-powered solutions, or digital twins, we design experiences that are purposeful, memorable, and built for your audience.</p>
-            <div class="cm-cta-row">
-              <a class="cm-cta-back" href="#cms1" data-cm-slide="1"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
-              <a class="cm-cta" href="#cms3" data-cm-slide="3">Next <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="cm-slide" id="cms3">
-          <div class="cm-card right">
-            <div class="cm-h-line"></div>
-           
-            <h2>Build the Future</h2>
-            <p class="cm-body">Using advanced technologies such as AR, VR, AI, and digital twins, we turn concepts into scalable digital solutions. Our development process focuses on performance, security, usability, and seamless integration to ensure every solution is reliable and ready to support your business growth. We build technology that goes beyond innovation — delivering practical value and measurable results.</p>
-            
-            <div class="cm-cta-row">
-              <a class="cm-cta-back" href="#cms2" data-cm-slide="2"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
-              <a class="cm-cta" href="#cms4" data-cm-slide="4">Next <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="cm-slide" id="cms4">
-          <div class="cm-card">
-            <div class="cm-h-line"></div>
-            
-            <h2>Bring Innovation to Life</h2>
-            <p class="cm-body">A great solution needs a smooth transition from development to real-world implementation. We handle the deployment process with a focus on reliability, accessibility, and user adoption. From enterprise platforms to immersive applications, we ensure your technology is delivered securely and prepared for successful use across your organization.</p>
-            <div class="cm-cta-row">
-              <a class="cm-cta-back" href="#cms3" data-cm-slide="3"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
-              <a class="cm-cta" href="#cms5" data-cm-slide="5">Next <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="cm-slide" id="cms5">
-          <div class="cm-card center">
-            <div class="cm-h-line"></div>
-           
-            <h2>Evolve Continuously</h2>
-            <p class="cm-body">Technology continues to evolve, and so should your digital experiences. Through analytics, performance monitoring, and user feedback, we identify opportunities to improve and enhance your solution over time. Our continuous optimization approach helps maximize impact, maintain performance, and keep your immersive experiences future-ready.</p>
-            <div class="cm-cta-row" style="justify-content:center">
-              <a class="cm-cta-back" href="#cms4" data-cm-slide="4"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
-              <a class="cm-cta" href="contact.html">Start a project <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- /cube-mission-scroll -->
-    </div><!-- /cube-mission-viewport -->
-  </div><!-- /cube-mission-wrap -->
-
-  <!-- ═══════════════════════════════════════════ SOLUTIONS -->
-  <section class="solutionss-section" id="solutions-showcase">
-    <h2 class="sr-only">Immersive solutions with hover visual cards</h2>
-    <div class="solutionss-header">
-      <div>
-        <div class="solutionss-kicker">Solutions</div>
-        <p class="solutionss-title">Enterprise Solutions Built Around Business Outcomes</p>
-      </div>
-      <div class="solutionss-pills">
-        <span class="solutionss-pill">AR, VR &amp; XR</span>
-        <span class="solutionss-pill">AI &amp; Digital Twins</span>
-        <span class="solutionss-pill">Training &amp; Visualization</span>
-      </div>
-      <p class="solutionss-desc">Create immersive experiences that improve training, collaboration, product visualization, and operational readiness.</p>
-    </div>
-    <div class="solutionss-grid">
-      <div class="solutions-card">
-        <div class="card-default">
-          <img class="icon" src="assets/images/homepage/AR SOLUTIONS.png" loading="lazy" decoding="async" alt="AR solutions"/>
-          <h3 style="color: #0f3e74;">AR Solutions</h3>
-          <p style="color: #0f3e74;" >Interactive overlays, visualization tools, and real-world product or training experiences.</p>
-        </div>
-        <div class="card-hover">
-          <div class="hover-bg-title"><span>AR Solutions</span></div>
-          <img class="hover-icon" src="assets/images/homepage/AR SOLUTIONS.png" loading="lazy" decoding="async" alt=""/>
-          <p class="hover-desc">Interactive overlays, visualization tools, and real-world product or training experiences.</p>
-        </div>
-      </div>
-      <div class="solutions-card">
-        <div class="card-default">
-          <img class="icon" src="assets/images/homepage/VR-solutions.png" loading="lazy" decoding="async" alt="VR solutions"/>
-          <h3 style="color: #0f3e74;">VR Solutions</h3>
-          <p style="color: #0f3e74;">Immersive environments for training, simulation, demos, and branded experiences.</p>
-        </div>
-        <div class="card-hover">
-          <div class="hover-bg-title"><span>VR Solutions</span></div>
-          <img class="hover-icon" src="assets/images/homepage/VR-solutions.png" loading="lazy" decoding="async" alt=""/>
-          <p class="hover-desc">Immersive environments for training, simulation, demos, and branded experiences.</p>
-        </div>
-      </div>
-      <div class="solutions-card">
-        <div class="card-default">
-          <img class="icon" src="assets/images/homepage/MRsolutions.png" loading="lazy" decoding="async" alt="MR and XR"/>
-          <h3 style="color: #0f3e74;">MR / XR Applications</h3>
-          <p style="color: #0f3e74;">Mixed reality applications that connect physical workflows with digital interfaces.</p>
-        </div>
-        <div class="card-hover">
-          <div class="hover-bg-title"><span>MR / XR</span></div>
-          <img class="hover-icon" src="assets/images/homepage/MRsolutions.png" loading="lazy" decoding="async" alt=""/>
-          <p class="hover-desc">Mixed reality applications that connect physical workflows with digital interfaces.</p>
-        </div>
-      </div>
-      <div class="solutions-card">
-        <div class="card-default">
-          <img class="icon" src="assets/images/homepage/twin.png" loading="lazy" decoding="async" alt="Digital twin"/>
-          <h3 style="color: #0f3e74;">Digital Twin</h3>
-          <p style="color: #0f3e74;">Connected replicas for facilities, systems, products, and operational views.</p>
-        </div>
-        <div class="card-hover">
-          <div class="hover-bg-title"><span>Digital Twin</span></div>
-          <img class="hover-icon" src="assets/images/homepage/twin.png" loading="lazy" decoding="async" alt=""/>
-          <p class="hover-desc">Connected replicas for facilities, systems, products, and operational views.</p>
-        </div>
-      </div>
-      <div class="solutions-card">
-        <div class="card-default">
-          <img class="icon" src="assets/images/homepage/traning.png" loading="lazy" decoding="async" alt="Interactive training"/>
-          <h3 style="color: #0f3e74;">Interactive Training</h3>
-          <p style="color: #0f3e74;">Guided learning modules with repeatable practice, feedback, and measurable outcomes.</p>
-        </div>
-        <div class="card-hover">
-          <div class="hover-bg-title"><span>Training</span></div>
-          <img class="hover-icon" src="assets/images/homepage/traning.png" loading="lazy" decoding="async" alt=""/>
-          <p class="hover-desc">Guided learning modules with repeatable practice, feedback, and measurable outcomes.</p>
-        </div>
-      </div>
-      <div class="solutions-card">
-        <div class="card-default">
-          <img class="icon" src="assets/images/homepage/integration.png" loading="lazy" decoding="async" alt="AI integration"/>
-          <h3 style="color: #0f3e74;">AI Integration</h3>
-          <p style="color: #0f3e74;">AI-powered automation, intelligent interfaces, and smarter immersive workflows.</p>
-        </div>
-        <div class="card-hover">
-          <div class="hover-bg-title"><span>AI Integration</span></div>
-          <img class="hover-icon" src="assets/images/homepage/integration.png" loading="lazy" decoding="async" alt=""/>
-          <p class="hover-desc">AI-powered automation, intelligent interfaces, and smarter immersive workflows.</p>
-        </div>
-      </div>
-    </div>
-    <div class="solutionss-footer">
-      
-      <a class="btn-see-all" href="solutions.html">See all Solutions</a>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════ STATS -->
-
 
   <!-- ═══════════════════════════════════════════ SERVICES -->
   <section class="svc-section" id="software-services">
     <div class="svc-header">
       <div class="svc-header-left">
         <div class="svc-kicker">Services</div>
-        <h2 class="svc-title">Execution capabilities</h2>
+        <h2 class="svc-title">Enterprise Services Built Around Business Outcomes</h2>
       </div>
       <div class="svc-header-right">
         <p class="svc-desc">We build AR, VR, AI and Digital Twin platforms that improve training, reduce operational risk, and accelerate enterprise decision-making.</p>
@@ -910,25 +588,139 @@
   <!-- ═══════════════════════════════════════════ TECH STACK -->
  
 
-  <!-- ═══════════════════════════════════════════ BLOG -->
-  <section class="blog-section" id="blog">
-    <div class="blog-section-heading">
-      <p class="blog-heading-label">Latest blogs</p>
-      <h2>Explore stories, ideas and real work from the volga team.</h2>
-      <p class="blog-heading-subline">From VR case studies to industry trends, stay ahead with expert analysis and creative thinking.</p>
+  <!-- ═══════════════════════════════════════════ OUR PROCESS / 3D CUBE MISSION -->
+  <div class="cube-mission-wrap">
+    <!-- Section header -->
+    <div class="cube-mission-header">
+      <p class="cube-mission-kicker">Our Process</p>
+      <h2 class="cube-mission-title" style="color: var(--cm-fg);">Transforming Ideas into Immersive Experiences</h2>
+      <p class="cube-mission-desc">We build immersive, intelligent systems that help enterprises educate, innovate, build, deploy, scale, and evolve with cutting-edge VR/AR technology.</p>
     </div>
-    <div class="blog-cards-row">
-      <div class="card"><div class="card-bg" style="background-color:#fcfcfc;"></div><div class="color-overlay" style="background:#c8541a;"></div><div class="dark-overlay"></div><div class="scan-lines"></div><div class="card-number">01</div><div class="card-genre-pill">connect server</div><div class="card-content"><div class="card-avatar">SL</div><div class="card-tag"></div><div class="card-name">Server lose</div><div class="card-bio"></div><a class="card-cta" href="blog.html">Read more <i class="fas fa-arrow-right" style="font-size:12px" aria-hidden="true"></i></a></div></div>
-      <div class="card"><div class="card-bg" style="background-color:#2c4a6e;"></div><div class="color-overlay" style="background:#1a3a5c;"></div><div class="dark-overlay"></div><div class="scan-lines"></div><div class="card-number">02</div><div class="card-genre-pill">connect server</div><div class="card-content"><div class="card-avatar">SL</div><div class="card-tag"></div><div class="card-name">Server lose</div><div class="card-bio"></div><a class="card-cta" href="blog.html">Read more <i class="fas fa-arrow-right" style="font-size:12px" aria-hidden="true"></i></a></div></div>
-      <div class="card"><div class="card-bg" style="background-color:#000000;"></div><div class="color-overlay" style="background:#203b86;"></div><div class="dark-overlay"></div><div class="scan-lines"></div><div class="card-number">03</div><div class="card-genre-pill">connect server</div><div class="card-content"><div class="card-avatar">SL</div><div class="card-tag"></div><div class="card-name">Server lose</div><div class="card-bio"></div><a class="card-cta" href="blog.html">Read more <i class="fas fa-arrow-right" style="font-size:12px" aria-hidden="true"></i></a></div></div>
-      <div class="card"><div class="card-bg" style="background-color:#126cc0;"></div><div class="color-overlay" style="background:#0f3e74;"></div><div class="scan-lines"></div><div class="card-number">04</div><div class="card-genre-pill">connect server</div><div class="card-content"><div class="card-avatar">SL</div><div class="card-tag"></div><div class="card-name">Server lose</div><div class="card-bio"></div><a class="card-cta" href="blog.html">Read more <i class="fas fa-arrow-right" style="font-size:12px" aria-hidden="true"></i></a></div></div>
-      <div class="card"><div class="card-bg" style="background-color:#ffffff;"></div><div class="color-overlay" style="background:rgb(245,145,32);"></div><div class="scan-lines"></div><div class="card-number">05</div><div class="card-genre-pill">connect server</div><div class="card-content"><div class="card-avatar">SL</div><div class="card-tag"></div><div class="card-name">Server lose</div><div class="card-bio"></div><a class="card-cta" href="blog.html">Read more <i class="fas fa-arrow-right" style="font-size:12px" aria-hidden="true"></i></a></div></div>
-    </div>
-    <div class="blog-section-footer">
-      <a href="blog.html" class="btn-see-all">VIEW ALL BLOGS
-         <i class="fas fa-arrow-right"></i></a>
-    </div>
-  </section>
+    <div class="cube-mission-viewport">
+
+      <!-- Cube scene (absolutely positioned, pointer-events:none) -->
+      <div class="cube-mission-scene" aria-hidden="true">
+        <!-- Ambient Light Effect -->
+        <div class="cm-ambient-light"></div>
+        <!-- Ground Plane -->
+        <div class="cm-ground-plane"></div>
+        <!-- 3D Particles Container -->
+        <div id="cm-particles"></div>
+        
+        <div id="cm-cube">
+          <div class="cm-face" data-face="top">    <span class="cm-face-ph">TOP</span></div>
+          <div class="cm-face" data-face="front">  <span class="cm-face-ph">FRONT</span></div>
+          <div class="cm-face" data-face="right">  <span class="cm-face-ph">RIGHT</span></div>
+          <div class="cm-face" data-face="back">   <span class="cm-face-ph">BACK</span></div>
+          <div class="cm-face" data-face="left">   <span class="cm-face-ph">LEFT</span></div>
+          <div class="cm-face" data-face="bottom"> <span class="cm-face-ph">BOTTOM</span></div>
+        </div>
+        <!-- HUD -->
+        <div id="cm-hud">
+          <span id="cm-hud-pct">000%</span>
+          <div class="cm-progress-bar"><div id="cm-prog-fill" class="cm-progress-fill"></div></div>
+          <div class="cm-scene-label" id="cm-scene-name">INTRO</div>
+        </div>
+      </div>
+
+      <!-- Side nav dots -->
+      <div id="cm-scene-strip" aria-hidden="true">
+        <button class="cm-dot active" aria-label="Go to slide 1"></button>
+        <button class="cm-dot" aria-label="Go to slide 2"></button>
+        <button class="cm-dot" aria-label="Go to slide 3"></button>
+        <button class="cm-dot" aria-label="Go to slide 4"></button>
+        <button class="cm-dot" aria-label="Go to slide 5"></button>
+        <button class="cm-dot" aria-label="Go to slide 6"></button>
+      </div>
+
+      <!-- Caption -->
+      <div id="cm-face-caption" aria-hidden="true">
+        <div id="cm-caption-num">00</div>
+        <div id="cm-caption-name">Intro</div>
+      </div>
+
+      <!-- Inner scroller — GSAP/ScrollTrigger never touch this div -->
+      <div class="cube-mission-scroll" role="region" aria-label="Our mission slides">
+
+        <div class="cm-slide" id="cms0">
+          <div class="cm-card">
+            <div class="cm-tag">OUR PROCESS</div>
+            <h1>From Vision <br>to Virtual<br> Reality</h1>
+            <p class="cm-body">We are shaping the next generation of immersive experiences by connecting technology, creativity, and industry expertise. Through education, innovation, and collaboration, we are expanding the possibilities of VR and AR across industries.</p>
+            <div class="cm-cta-row">
+              <a class="cm-cta" href="#cms1" data-cm-slide="1">Explore <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cm-slide" id="cms1">
+          <div class="cm-card right">
+            <div class="cm-h-line"></div>
+            <h2> Define the Opportunity</h2>
+            <p class="cm-body">Every successful digital experience begins with a clear understanding of the vision behind it. We work closely with your team to explore business goals, user expectations, existing workflows, and operational challenges. By identifying opportunities where immersive technology can create meaningful impact, we build a strong foundation for a solution that aligns with your objectives.</p>
+            <div class="cm-cta-row">
+              <a class="cm-cta-back" href="#cms0" data-cm-slide="0"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
+              <a class="cm-cta" href="#cms2" data-cm-slide="2">Next <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cm-slide" id="cms2">
+          <div class="cm-card">
+            <div class="cm-h-line"></div>
+          
+            <h2>Shape the Experience</h2>
+            <p class="cm-body">We transform ideas into engaging, intuitive experiences designed around real-world needs. Our team creates immersive concepts, user journeys, and interactive environments that combine creativity with functionality. Whether it’s VR training, AR experiences, AI-powered solutions, or digital twins, we design experiences that are purposeful, memorable, and built for your audience.</p>
+            <div class="cm-cta-row">
+              <a class="cm-cta-back" href="#cms1" data-cm-slide="1"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
+              <a class="cm-cta" href="#cms3" data-cm-slide="3">Next <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cm-slide" id="cms3">
+          <div class="cm-card right">
+            <div class="cm-h-line"></div>
+           
+            <h2>Build the Future</h2>
+            <p class="cm-body">Using advanced technologies such as AR, VR, AI, and digital twins, we turn concepts into scalable digital solutions. Our development process focuses on performance, security, usability, and seamless integration to ensure every solution is reliable and ready to support your business growth. We build technology that goes beyond innovation — delivering practical value and measurable results.</p>
+            
+            <div class="cm-cta-row">
+              <a class="cm-cta-back" href="#cms2" data-cm-slide="2"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
+              <a class="cm-cta" href="#cms4" data-cm-slide="4">Next <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cm-slide" id="cms4">
+          <div class="cm-card">
+            <div class="cm-h-line"></div>
+            
+            <h2>Bring Innovation to Life</h2>
+            <p class="cm-body">A great solution needs a smooth transition from development to real-world implementation. We handle the deployment process with a focus on reliability, accessibility, and user adoption. From enterprise platforms to immersive applications, we ensure your technology is delivered securely and prepared for successful use across your organization.</p>
+            <div class="cm-cta-row">
+              <a class="cm-cta-back" href="#cms3" data-cm-slide="3"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
+              <a class="cm-cta" href="#cms5" data-cm-slide="5">Next <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cm-slide" id="cms5">
+          <div class="cm-card center">
+            <div class="cm-h-line"></div>
+           
+            <h2>Evolve Continuously</h2>
+            <p class="cm-body">Technology continues to evolve, and so should your digital experiences. Through analytics, performance monitoring, and user feedback, we identify opportunities to improve and enhance your solution over time. Our continuous optimization approach helps maximize impact, maintain performance, and keep your immersive experiences future-ready.</p>
+            <div class="cm-cta-row" style="justify-content:center">
+              <a class="cm-cta-back" href="#cms4" data-cm-slide="4"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
+              <a class="cm-cta" href="contact.html">Start a project <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /cube-mission-scroll -->
+    </div><!-- /cube-mission-viewport -->
+  </div><!-- /cube-mission-wrap -->
 
   <!-- ═══════════════════════════════════════════ CTA BANNER -->
   <section class="cta-banner">
@@ -1209,56 +1001,6 @@
 
   <!-- ═══════════════════════════════════════════ SCRIPTS -->
   <script src="api-config.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const homeBlogCards = document.querySelectorAll('.blog-section .card');
-      const getInitials = (name = '') => {
-        const parts = name.trim().split(/\s+/).filter(Boolean);
-        if (!parts.length) return 'VO';
-        return parts.length === 1 ? parts[0].slice(0, 2).toUpperCase() : (parts[0][0] + parts[1][0]).toUpperCase();
-      };
-
-      async function loadHomeBlogCards() {
-        const API = window.VOLGA_API;
-
-        try {
-          const res = await fetch(`${API}/blogs`);
-          if (!res.ok) throw new Error('Blog fetch failed');
-          const result = await res.json();
-          const posts = result.data || result;
-          if (!Array.isArray(posts) || !posts.length) return;
-          posts.slice(0, 5).forEach((post, index) => {
-            const card = homeBlogCards[index];
-            if (!card) return;
-            const bg = card.querySelector('.card-bg');
-            const number = card.querySelector('.card-number');
-            const genre = card.querySelector('.card-genre-pill');
-            const avatar = card.querySelector('.card-avatar');
-            const tag = card.querySelector('.card-tag');
-            const name = card.querySelector('.card-name');
-            const bio = card.querySelector('.card-bio');
-            const cta = card.querySelector('.card-cta');
-            const url = `blog-detail.html?id=${post._id}`;
-            if (bg) bg.style.backgroundImage = `url('${window.getVolgaImageUrl(post.coverImage || post.image) || 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&q=80'}')`;
-            if (number) number.textContent = String(index + 1).padStart(2, '0');
-            if (genre) genre.textContent = post.category || 'Blog';
-            if (avatar) avatar.textContent = getInitials(post.author || 'Volga');
-            if (tag) tag.textContent = post.category ? post.category : 'Featured Post';
-            if (name) name.innerHTML = post.title ? post.title.replace(/\s+/, '<br>') : 'New Post';
-            if (bio) bio.textContent = post.excerpt || post.description || '';
-            if (cta) { cta.href = url; cta.setAttribute('aria-label', `Read more about ${post.title || 'this article'}`); }
-            card.addEventListener('click', (event) => {
-              if (!event.target.closest('.card-cta')) window.location.href = url;
-            });
-          });
-        } catch (err) {
-          console.warn('Unable to load homepage blog cards:', err);
-        }
-      }
-      loadHomeBlogCards();
-    });
-  </script>
-
   <script src="volga.js"></script>
   <script>
     // ══════════════════════════════════════════════════════
@@ -1425,8 +1167,7 @@
   <script src="portfolio-marquee.js"></script>
   <!-- ▶ Cube Mission — loads after volga.js, fully isolated -->
   <script src="cube-mission.js" defer></script>
- 
-
-
+  <!-- ▶ 3D Fluted Glass & Optical Refraction Hero script -->
+  <script src="hero-refraction.js" defer></script>
 </body>
 </html>

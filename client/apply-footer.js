@@ -10,7 +10,6 @@ const files = [
   'blog-detail.html',
   'contact.html',
   'portfolio.html',
-  'solutions.html',
   'services.html',
   'industries.html',
   'case-studies.html',

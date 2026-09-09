@@ -91,13 +91,13 @@
       <div class="col-extra-right" id="col-extra-right">
         <div class="col-label">Services</div>
         <div class="divider"></div>
-        <a href="solutions.html">AR / VR Solutions</a>
-        <a href="services.html">Motion Graphics</a>
-        <a href="services.html">Product Visualisation</a>
-        <a href="services.html">Game Development</a>
-        <a href="solutions.html#twin">Digital Twins</a>
-        <a href="services.html">3D Modeling</a>
-        <a href="services.html">Cloud Rendering</a>
+        <a href="services.html#ar-dev">AR / VR Services</a>
+        <a href="services.html#3d-modeling">3D Modeling &amp; Animation</a>
+        <a href="services.html#unity">Unity &amp; Digital Twins</a>
+        <a href="services.html#unreal">Unreal Engine 5</a>
+        <a href="services.html#webxr">WebXR Experiences</a>
+        <a href="services.html#uiux">Spatial UI/UX</a>
+        <a href="services.html#cloud">Cloud &amp; Pixel Streaming</a>
       </div>
 
       <div class="col-far-left" id="col-far-left">

@@ -6,7 +6,6 @@ const htmlFiles = [
   'about.html',
   'blog.html',
   'technologies (2).html',
-  'solutions.html',
   'portfolio.html',
   'insights-overview.html',
   'industry-news.html',
