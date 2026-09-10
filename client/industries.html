@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,125 +12,227 @@
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
     rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Figtree:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="portfolio-marquee.css" />
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script crossorigin="anonymous"
+    src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
-    html, body {
+    html,
+    body {
       overflow-x: hidden;
     }
 
     /* Industry page specific styles that match Volga Infosys design */
-    :root{
-      --navy:#1B4F72;--navy2:#2E86C1;--navy3:#0D2B3E;
-      --cream:#F4F7FB;--white:#ffffff;--off:#E8F1F8;
-      --accent:#E8930A;--gold:#E8930A;
-      --text:#0D1F2D;--muted:#4A6070;--border:rgba(27,79,114,0.12);
-      --card:#ffffff;
+    :root {
+      --navy: #1B4F72;
+      --navy2: #2E86C1;
+      --navy3: #0D2B3E;
+      --cream: #F4F7FB;
+      --white: #ffffff;
+      --off: #E8F1F8;
+      --accent: #E8930A;
+      --gold: #E8930A;
+      --text: #0D1F2D;
+      --muted: #4A6070;
+      --border: rgba(27, 79, 114, 0.12);
+      --card: #ffffff;
     }
-    
+
     /* ═══════════════════════════════════════
        HERO — full-width centered (same as services.html)
     ═══════════════════════════════════════ */
     .hero-industries {
-      position:relative;
-      background:var(--navy);
-      padding:calc(var(--navbar-height, 110px) + 20px) 6vw 40px;
-      overflow:hidden;
-      text-align:center;
-      min-height:auto;
+      position: relative;
+      background: var(--navy);
+      padding: calc(var(--navbar-height, 110px) + 20px) 6vw 40px;
+      overflow: hidden;
+      text-align: center;
+      min-height: auto;
     }
+
     /* background image layer */
-    .hero-bg-img{
-      position:absolute;
-      inset:0;
-      background-image:url('industries-hero.png');
-      background-size:cover;
-      background-position:center center;
-      opacity:0.4;
-      z-index:0;
-      filter:saturate(0.9);
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      background-image: url('industries-hero.png');
+      background-size: cover;
+      background-position: center center;
+      opacity: 0.4;
+      z-index: 0;
+      filter: saturate(0.9);
     }
+
     /* grid pattern */
-    .hero-industries::before{
-      content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
+    .hero-industries::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
       background-image:
-        linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
-      background-size:56px 56px;
+        linear-gradient(rgba(255, 255, 255, .04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .04) 1px, transparent 1px);
+      background-size: 56px 56px;
     }
+
     /* radial glow behind title */
-    .hero-glow{
-      position:absolute;top:-80px;left:50%;transform:translateX(-50%);
-      width:900px;height:600px;pointer-events:none;
-      background:radial-gradient(ellipse at 50% 40%,rgba(232,147,10,.2) 0%,rgba(200,66,26,.05) 40%,transparent 70%);
+    .hero-glow {
+      position: absolute;
+      top: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 600px;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 50% 40%, rgba(232, 147, 10, .2) 0%, rgba(200, 66, 26, .05) 40%, transparent 70%);
     }
-    .hero-content{position:relative;z-index:2;max-width:1220px;margin:0 auto}
 
-    .eyebrow-sm{
-      display:inline-flex;align-items:center;gap:8px;
-      font-size:.90rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;
-      color:var(--gold);background:rgba(200,217,230,.1);
-      border:1px solid rgba(200,217,230,.25);
-      padding:5px 16px;border-radius:99px;margin-bottom:28px;
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1220px;
+      margin: 0 auto
     }
-    .eyebrow-sm::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s ease-in-out infinite}
-    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
 
-    .hero-title{
-      font-family:var(--font-display);
-      font-size:clamp(2.8rem,5.5vw,4.6rem);
-      font-weight:700;line-height:1.5;
-      color:#fff;letter-spacing:-.8px;
-      margin-bottom:22px;
-    
+    .eyebrow-sm {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .90rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(200, 217, 230, .1);
+      border: 1px solid rgba(200, 217, 230, .25);
+      padding: 5px 16px;
+      border-radius: 99px;
+      margin-bottom: 28px;
     }
-    .hero-title em{font-style:normal;color:var(--gold);}
 
-    .hero-desc{
-      color:rgba(255,255,255,.75);
-      font-size:1.1rem;line-height:1.85;font-weight:300;
-      max-width:550px;margin:0 auto 42px;
+    .eyebrow-sm::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 2s ease-in-out infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: .4;
+        transform: scale(1.5)
+      }
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5.5vw, 4.6rem);
+      font-weight: 700;
+      line-height: 1.5;
+      color: #fff;
+      letter-spacing: -.8px;
+      margin-bottom: 22px;
+
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero-desc {
+      color: rgba(255, 255, 255, .75);
+      font-size: 1.1rem;
+      line-height: 1.85;
+      font-weight: 300;
+      max-width: 550px;
+      margin: 0 auto 42px;
     }
 
     /* stats bar */
-    .hero-stats-bar{
-      display:flex;justify-content:center;
-      border-top:1px solid rgba(255,255,255,.07);
-      background:rgba(0,0,0,.25);
-      position:relative;z-index:2;
+    .hero-stats-bar {
+      display: flex;
+      justify-content: center;
+      border-top: 1px solid rgba(255, 255, 255, .07);
+      background: rgba(0, 0, 0, .25);
+      position: relative;
+      z-index: 2;
     }
-    .hero-stat{
-      flex:1;max-width:220px;
-      padding:24px 18px;text-align:center;
-      border-right:1px solid rgba(255,255,255,.06);
-    }
-    .hero-stat:last-child{border-right:none}
-    .h-stat-num{
-      font-family:'Cormorant Garamond',serif;
-      font-size:2.2rem;font-weight:700;color:#fff;line-height:1;
-    }
-    .h-stat-num span{color:var(--gold)}
-    .h-stat-label{font-size:.67rem;color:rgba(255,255,255,.36);margin-top:5px;text-transform:uppercase;letter-spacing:1.2px}
 
-    
+    .hero-stat {
+      flex: 1;
+      max-width: 220px;
+      padding: 24px 18px;
+      text-align: center;
+      border-right: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    .hero-stat:last-child {
+      border-right: none
+    }
+
+    .h-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .h-stat-num span {
+      color: var(--gold)
+    }
+
+    .h-stat-label {
+      font-size: .67rem;
+      color: rgba(255, 255, 255, .36);
+      margin-top: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px
+    }
+
+
 
     /* Fix hero overlap on mobile */
-    @media(max-width:960px){
-      .hero-industries{padding-top: 150px !important;}
+    @media(max-width:960px) {
+      .hero-industries {
+        padding-top: 150px !important;
+      }
     }
-    @media(max-width:640px){
-      .hero-industries{padding:140px 5vw 0}
-      .hero-stats-bar{flex-wrap:wrap}
-      .hero-stat{min-width:50%}
+
+    @media(max-width:640px) {
+      .hero-industries {
+        padding: 140px 5vw 0
+      }
+
+      .hero-stats-bar {
+        flex-wrap: wrap
+      }
+
+      .hero-stat {
+        min-width: 50%
+      }
     }
-    
+
     /* ── Desktop industry tab bar — PREMIUM ── */
-    .industry-nav-section { display: none; }
+    .industry-nav-section {
+      display: none;
+    }
 
     @media (min-width: 901px) {
       .industry-nav-section {
@@ -138,17 +241,15 @@
         top: var(--navbar-height, 110px);
         z-index: 100;
         background:
-          repeating-linear-gradient(
-            180deg,
+          repeating-linear-gradient(180deg,
             transparent, transparent 2px,
-            rgba(255,255,255,0.016) 2px,
-            rgba(255,255,255,0.016) 3px
-          ),
+            rgba(255, 255, 255, 0.016) 2px,
+            rgba(255, 255, 255, 0.016) 3px),
           linear-gradient(180deg, #1c2f44 0%, #142436 55%, #0f1d2e 100%);
-        border-bottom: 1px solid rgba(0,0,0,0.55);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.55);
         box-shadow:
-          inset 0 1px 0 rgba(255,255,255,0.07),
-          0 6px 32px rgba(0,0,0,0.4);
+          inset 0 1px 0 rgba(255, 255, 255, 0.07),
+          0 6px 32px rgba(0, 0, 0, 0.4);
       }
 
       /* Nav scroll wrapper — plain, no scroll */
@@ -163,8 +264,15 @@
         flex-wrap: wrap;
         gap: 0;
       }
-      .industry-btn:first-child { border-left: 1px solid rgba(255,255,255,0.05); padding-left: 14px; }
-      .industry-btn:last-child { padding-right: 14px; }
+
+      .industry-btn:first-child {
+        border-left: 1px solid rgba(255, 255, 255, 0.05);
+        padding-left: 14px;
+      }
+
+      .industry-btn:last-child {
+        padding-right: 14px;
+      }
 
       .industry-btn {
         all: unset;
@@ -176,7 +284,7 @@
         padding: 0 14px;
         height: 52px;
         position: relative;
-        color: rgba(180,210,230,0.45);
+        color: rgba(180, 210, 230, 0.45);
         font-family: var(--font-ui, 'Inter', sans-serif);
         font-size: 0.64rem;
         font-weight: 600;
@@ -185,17 +293,24 @@
         cursor: pointer;
         white-space: nowrap;
         flex-shrink: 0;
-        border-right: 1px solid rgba(255,255,255,0.05);
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
         transition: color 0.2s ease, background 0.2s ease;
       }
-      .industry-btn:first-child { border-left: 1px solid rgba(255,255,255,0.05); }
 
-      .industry-btn::before { display: none; }
+      .industry-btn:first-child {
+        border-left: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .industry-btn::before {
+        display: none;
+      }
+
       .industry-btn::after {
         content: '';
         position: absolute;
         bottom: 0;
-        left: 50%; right: 50%;
+        left: 50%;
+        right: 50%;
         height: 2px;
         background: linear-gradient(90deg, transparent, #E8930A 40%, #E8930A 60%, transparent);
         border-radius: 2px 2px 0 0;
@@ -210,49 +325,59 @@
         width: 17px;
         height: 17px;
         border-radius: 4px;
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.09);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.09);
         font-size: 0.58rem;
         font-weight: 700;
-        color: rgba(180,210,230,0.3);
+        color: rgba(180, 210, 230, 0.3);
         flex-shrink: 0;
         transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
       }
 
       .industry-btn:hover {
-        color: rgba(210,235,250,0.85);
-        background: rgba(255,255,255,0.04);
+        color: rgba(210, 235, 250, 0.85);
+        background: rgba(255, 255, 255, 0.04);
       }
+
       .industry-btn:hover .industry-btn-num {
-        background: rgba(255,255,255,0.1);
-        color: rgba(210,235,250,0.65);
+        background: rgba(255, 255, 255, 0.1);
+        color: rgba(210, 235, 250, 0.65);
       }
 
       .industry-btn.active {
         color: #E8930A;
-        background: rgba(232,147,10,0.06);
-        text-shadow: 0 0 14px rgba(232,147,10,0.45);
-      }
-      .industry-btn.active::after {
-        left: 10%; right: 10%;
-        opacity: 1;
-        box-shadow: 0 0 10px rgba(232,147,10,0.7);
-      }
-      .industry-btn.active .industry-btn-num {
-        background: rgba(232,147,10,0.18);
-        border-color: rgba(232,147,10,0.45);
-        color: #E8930A;
-        box-shadow: 0 0 8px rgba(232,147,10,0.35);
+        background: rgba(232, 147, 10, 0.06);
+        text-shadow: 0 0 14px rgba(232, 147, 10, 0.45);
       }
 
-      .industry-btn-icon { display: none; }
-      .industry-btn-label { display: inline; }
+      .industry-btn.active::after {
+        left: 10%;
+        right: 10%;
+        opacity: 1;
+        box-shadow: 0 0 10px rgba(232, 147, 10, 0.7);
+      }
+
+      .industry-btn.active .industry-btn-num {
+        background: rgba(232, 147, 10, 0.18);
+        border-color: rgba(232, 147, 10, 0.45);
+        color: #E8930A;
+        box-shadow: 0 0 8px rgba(232, 147, 10, 0.35);
+      }
+
+      .industry-btn-icon {
+        display: none;
+      }
+
+      .industry-btn-label {
+        display: inline;
+      }
     }
 
     .home-suite-section {
       background: var(--bg-alt);
       padding: 80px 5%;
     }
+
     /* global fallback for icon (mobile dock uses it) */
     .industry-btn-icon {
       display: flex;
@@ -260,6 +385,7 @@
       justify-content: center;
       flex-shrink: 0;
     }
+
     .industry-btn-icon svg {
       width: 16px;
       height: 16px;
@@ -267,46 +393,69 @@
       fill: none;
       flex-shrink: 0;
     }
-    
+
     .industry-content-section {
       background: var(--bg);
       border-bottom: 1px solid var(--border);
       padding: 70px 5%;
     }
+
     .industry-content-section .industry-panel {
       max-width: 1440px;
       margin: 0 auto;
     }
+
     .industry-panel {
       display: none;
       animation: fadeUp 0.5s ease forwards;
     }
+
     .industry-panel.active {
       display: block;
     }
+
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-    
+
     .panel-hero-wrap {
       position: relative;
       border-radius: 1.5rem;
       overflow: hidden;
       margin-bottom: 3rem;
+      box-shadow: 0 16px 40px -12px rgba(10, 25, 45, 0.15);
     }
+
     .panel-hero-img {
       width: 100%;
-      height: 350px;
-      object-fit:cover;
-      filter: brightness(0.7) saturate(1.1);
+      height: clamp(440px, 48vh, 580px);
+      object-fit: cover;
+      object-position: center 25%;
+      filter: brightness(0.8) saturate(1.1);
       transition: transform 0.5s ease, filter 0.5s ease;
+      display: block;
     }
+
+    @media (max-width: 768px) {
+      .panel-hero-img {
+        height: 320px;
+        object-position: center 20%;
+      }
+    }
+
     .panel-hero-wrap:hover .panel-hero-img {
       transform: scale(1.03);
       filter: brightness(0.8) saturate(1.2);
     }
-    
+
     .panel-hero-label {
       position: absolute;
       bottom: 1.5rem;
@@ -316,8 +465,8 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.4rem 1rem;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.25);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       border-radius: 999px;
       color: #fff;
       font-size: 0.75rem;
@@ -325,24 +474,27 @@
       text-transform: uppercase;
       backdrop-filter: blur(6px);
     }
+
     .panel-hero-label svg {
       width: 14px;
       height: 14px;
       stroke: #fff;
       flex-shrink: 0;
     }
-    
+
     .panel-main {
       display: grid;
       grid-template-columns: 1.2fr 1fr;
       gap: 3rem;
       margin-bottom: 4rem;
     }
+
     @media (max-width: 968px) {
       .panel-main {
         grid-template-columns: 1fr;
       }
     }
+
     .panel-tagline {
       font-family: var(--font-ui);
       font-size: 0.75rem;
@@ -351,6 +503,7 @@
       color: var(--accent);
       margin-bottom: 0.75rem;
     }
+
     .panel-title {
       font-family: var(--font-display);
       font-size: clamp(1.4rem, 2.5vw, 2rem);
@@ -358,12 +511,14 @@
       margin-bottom: 1rem;
       line-height: 1.2;
     }
+
     .panel-desc {
       color: var(--text-muted);
       font-size: 0.95rem;
       line-height: 1.7;
       margin-bottom: 0.75rem;
     }
+
     .panel-desc-bullets {
       margin: 0.5rem 0 1.5rem 0;
       padding: 0;
@@ -372,6 +527,7 @@
       flex-direction: column;
       gap: 0.4rem;
     }
+
     .panel-desc-bullets li {
       display: flex;
       align-items: flex-start;
@@ -380,6 +536,7 @@
       color: var(--text-muted);
       line-height: 1.5;
     }
+
     .panel-desc-bullets li::before {
       content: '';
       display: inline-block;
@@ -390,9 +547,11 @@
       flex-shrink: 0;
       margin-top: 0.45rem;
     }
+
     .panel-cta {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.75rem;
       padding: 0.9rem 1.8rem;
       background: #1B4F72;
@@ -406,13 +565,18 @@
       text-decoration: none;
       transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
       box-shadow: 0 10px 30px rgba(27, 79, 114, 0.3);
+      width: fit-content;
+      max-width: max-content;
+      align-self: flex-start;
+      white-space: nowrap;
     }
+
     .panel-cta:hover {
       background: #154060;
       transform: translateY(-2px);
       box-shadow: 0 14px 40px rgba(27, 79, 114, 0.45);
     }
-    
+
     .panel-stats {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -429,10 +593,10 @@
       overflow: hidden;
       /* Recessed inset well */
       box-shadow:
-        inset 2px 2px 6px rgba(0,0,0,0.65),
-        inset -1px -1px 3px rgba(255,255,255,0.04),
-        0 0 0 1px rgba(0,0,0,0.35),
-        0 1px 0 rgba(255,255,255,0.05);
+        inset 2px 2px 6px rgba(0, 0, 0, 0.65),
+        inset -1px -1px 3px rgba(255, 255, 255, 0.04),
+        0 0 0 1px rgba(0, 0, 0, 0.35),
+        0 1px 0 rgba(255, 255, 255, 0.05);
       transition: box-shadow 0.3s ease;
     }
 
@@ -440,22 +604,26 @@
     .stat-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(232,147,10,0.6), transparent);
+      background: linear-gradient(90deg, transparent, rgba(232, 147, 10, 0.6), transparent);
       opacity: 0;
       transition: opacity 0.35s ease;
     }
 
     .stat-card:hover {
       box-shadow:
-        inset 2px 2px 6px rgba(0,0,0,0.65),
-        inset -1px -1px 3px rgba(255,255,255,0.05),
-        0 0 0 1px rgba(232,147,10,0.3),
-        0 0 14px rgba(232,147,10,0.1);
+        inset 2px 2px 6px rgba(0, 0, 0, 0.65),
+        inset -1px -1px 3px rgba(255, 255, 255, 0.05),
+        0 0 0 1px rgba(232, 147, 10, 0.3),
+        0 0 14px rgba(232, 147, 10, 0.1);
     }
 
-    .stat-card:hover::before { opacity: 1; }
+    .stat-card:hover::before {
+      opacity: 1;
+    }
 
     /* LED-style number readout */
     .stat-number {
@@ -463,34 +631,35 @@
       font-size: 1.8rem;
       color: #e8930a;
       line-height: 1;
-      text-shadow: 0 0 10px rgba(232,147,10,0.5), 0 0 22px rgba(232,147,10,0.2);
+      text-shadow: 0 0 10px rgba(232, 147, 10, 0.5), 0 0 22px rgba(232, 147, 10, 0.2);
     }
 
     /* Engraved label */
     .stat-label {
       font-family: var(--font-mono);
       font-size: 0.78rem;
-      color: rgba(180,210,230,0.45);
+      color: rgba(180, 210, 230, 0.45);
       margin-top: 0.5rem;
       line-height: 1.4;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.05), 0 -1px 0 rgba(0,0,0,0.4);
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.05), 0 -1px 0 rgba(0, 0, 0, 0.4);
     }
-    
+
     .panel-section-heading {
       font-family: var(--font-display);
       font-size: 1.4rem;
       color: var(--text);
       margin-bottom: 1.5rem;
     }
-    
+
     .use-cases-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1.5rem;
       margin-bottom: 3rem;
     }
+
     .use-case-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -499,11 +668,13 @@
       transition: all 0.3s ease;
       position: relative;
     }
+
     .use-case-card:hover {
       border-color: var(--accent);
       transform: translateY(-4px);
       box-shadow: 0 12px 35px rgba(47, 65, 86, 0.15);
     }
+
     .use-case-card::before {
       content: '';
       position: absolute;
@@ -515,37 +686,48 @@
       opacity: 0;
       transition: opacity 0.3s ease;
     }
+
     .use-case-card:hover::before {
       opacity: 1;
     }
+
     .use-case-img-wrap {
       overflow: hidden;
+      border-radius: 1.25rem 1.25rem 0 0;
     }
+
     .use-case-img {
       width: 100%;
-      height: 180px;
+      height: 200px;
+      aspect-ratio: 16 / 10;
       object-fit: cover;
-      filter: brightness(0.75);
+      object-position: center 25%;
+      filter: brightness(0.98);
       transition: transform 0.5s ease, filter 0.5s ease;
     }
+
     .use-case-card:hover .use-case-img {
       transform: scale(1.05);
-      filter: brightness(0.85);
+      filter: brightness(1.04);
     }
+
     .use-case-body {
       padding: 1.5rem;
     }
+
     .use-case-icon {
       display: flex;
       align-items: center;
       margin-bottom: 0.75rem;
       color: var(--accent);
     }
+
     .use-case-icon svg {
       width: 28px;
       height: 28px;
       stroke: var(--accent);
     }
+
     .use-case-title {
       font-family: var(--font-ui);
       font-size: 1.1rem;
@@ -553,6 +735,7 @@
       color: var(--text);
       margin-bottom: 0.5rem;
     }
+
     .use-case-desc {
       font-family: var(--font-ui);
       font-size: 0.875rem;
@@ -564,13 +747,14 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
-    
+
     .challenges-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 1rem;
       margin-bottom: 3rem;
     }
+
     .challenge-item {
       display: flex;
       align-items: flex-start;
@@ -581,31 +765,36 @@
       border: 1px solid var(--border);
       transition: border-color 0.2s, box-shadow 0.2s;
     }
+
     .challenge-item:hover {
-      border-color: rgba(232,147,10,0.3);
-      box-shadow: 0 4px 18px rgba(232,147,10,0.07);
+      border-color: rgba(232, 147, 10, 0.3);
+      box-shadow: 0 4px 18px rgba(232, 147, 10, 0.07);
     }
+
     .challenge-dot {
       display: none;
     }
+
     .challenge-icon {
       flex-shrink: 0;
       width: 32px;
       height: 32px;
       border-radius: 8px;
-      background: rgba(232,147,10,0.1);
+      background: rgba(232, 147, 10, 0.1);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--accent);
       margin-top: 0.05rem;
     }
+
     .challenge-icon svg {
       width: 16px;
       height: 16px;
       stroke: var(--accent);
       flex-shrink: 0;
     }
+
     .challenge-text {
       font-family: var(--font-ui);
       font-size: 0.88rem;
@@ -613,24 +802,26 @@
       line-height: 1.5;
       font-weight: 500;
     }
-    
+
     .demo-banner {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 2rem;
       padding: 2.5rem 2rem;
-      background: linear-gradient(135deg, rgba(27,79,114,0.08), rgba(15,29,46,0.08));
+      background: linear-gradient(135deg, rgba(27, 79, 114, 0.08), rgba(15, 29, 46, 0.08));
       border: 1px solid var(--border);
       border-radius: 1.5rem;
       flex-wrap: wrap;
     }
+
     .demo-banner-text h3 {
       font-family: var(--font-display);
       font-size: 1.4rem;
       color: var(--text);
       margin-bottom: 0.5rem;
     }
+
     .demo-banner-text p {
       font-family: var(--font-ui);
       font-size: 0.95rem;
@@ -645,16 +836,36 @@
       margin-bottom: 2rem;
       align-items: stretch;
     }
-    @media (max-width: 900px) { .pl1-intro { grid-template-columns: 1fr; } }
-    .pl1-img-col { min-height: 340px; }
-    .pl1-text-col { display: flex; flex-direction: column; justify-content: center; }
+
+    @media (max-width: 900px) {
+      .pl1-intro {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pl1-img-col {
+      min-height: 340px;
+    }
+
+    .pl1-text-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
     .pl1-stats-strip {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
       margin-bottom: 3rem;
     }
-    @media (max-width: 768px) { .pl1-stats-strip { grid-template-columns: repeat(2,1fr); } }
+
+    @media (max-width: 768px) {
+      .pl1-stats-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
 
     /* Horizontal scroll use cases for layout 1 */
     .use-cases-scroll {
@@ -666,6 +877,7 @@
       scrollbar-width: thin;
       scrollbar-color: var(--border) transparent;
     }
+
     .use-cases-scroll .use-case-card {
       flex: 0 0 260px;
     }
@@ -677,7 +889,13 @@
       gap: 1rem;
       margin-bottom: 2.5rem;
     }
-    @media (max-width: 768px) { .pl2-stats-row { grid-template-columns: repeat(2,1fr); } }
+
+    @media (max-width: 768px) {
+      .pl2-stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     .pl2-body {
       display: grid;
       grid-template-columns: 1fr 1.1fr;
@@ -685,11 +903,29 @@
       margin-bottom: 3rem;
       align-items: start;
     }
-    @media (max-width: 900px) { .pl2-body { grid-template-columns: 1fr; } }
-    .use-cases-2col {
-      grid-template-columns: repeat(2, 1fr) !important;
+
+    @media (max-width: 900px) {
+      .pl2-body {
+        grid-template-columns: 1fr;
+      }
     }
-    @media (max-width: 640px) { .use-cases-2col { grid-template-columns: 1fr !important; } }
+
+    .use-cases-2col {
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 1100px) {
+      .use-cases-2col {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .use-cases-2col {
+        grid-template-columns: 1fr !important;
+      }
+    }
 
     /* ── Layout 3 styles ─────────────────────────────────── */
     .pl3-hero-text {
@@ -701,46 +937,79 @@
       margin-bottom: 2rem;
       padding: 3.5rem 3rem;
     }
+
     .pl3-hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(10,20,35,0.88) 0%, rgba(10,20,35,0.6) 100%);
+      background: linear-gradient(135deg, rgba(10, 20, 35, 0.88) 0%, rgba(10, 20, 35, 0.6) 100%);
     }
+
     .pl3-hero-inner {
       position: relative;
       z-index: 2;
       max-width: 680px;
     }
+
     .pl3-stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
       margin-bottom: 3rem;
     }
-    @media (max-width: 768px) { .pl3-stats-grid { grid-template-columns: repeat(2,1fr); } }
+
+    @media (max-width: 768px) {
+      .pl3-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     .pl3-use-cases-list {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
       margin-bottom: 3rem;
     }
+
+    @media (max-width: 900px) {
+      .pl3-use-cases-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .pl3-uc-item {
       display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 1.5rem;
+      grid-template-columns: 180px 1fr;
+      gap: 1.25rem;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 1rem;
       overflow: hidden;
       transition: border-color 0.25s, box-shadow 0.25s;
     }
+
     .pl3-uc-item:hover {
-      border-color: rgba(27,79,114,0.35);
-      box-shadow: 0 8px 24px rgba(27,79,114,0.1);
+      border-color: rgba(27, 79, 114, 0.35);
+      box-shadow: 0 8px 24px rgba(27, 79, 114, 0.1);
     }
-    @media (max-width: 640px) { .pl3-uc-item { grid-template-columns: 1fr; } }
-    .pl3-uc-img { height: 100%; min-height: 160px; }
-    .pl3-uc-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); }
+
+    @media (max-width: 640px) {
+      .pl3-uc-item {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pl3-uc-img {
+      height: 100%;
+      min-height: 160px;
+    }
+
+    .pl3-uc-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.8);
+    }
+
     .pl3-uc-body {
       padding: 1.25rem 1.5rem 1.25rem 0.5rem;
       display: flex;
@@ -748,34 +1017,43 @@
       justify-content: center;
       gap: 0.35rem;
     }
-    @media (max-width: 640px) { .pl3-uc-body { padding: 1.25rem; } }
+
+    @media (max-width: 640px) {
+      .pl3-uc-body {
+        padding: 1.25rem;
+      }
+    }
 
     /* ── Why Choose Volga — bento grid ───────────────────── */
     .wc-section {
       background: #0b1820;
       padding: 90px 5%;
     }
+
     .wc-inner {
-      max-width: 1200px;
+      max-width: 1280px;
       margin: 0 auto;
     }
+
     .wc-header {
       text-align: center;
       margin-bottom: 3.5rem;
     }
+
     .wc-eyebrow {
       display: inline-block;
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: #1B4F72;
-      background: rgba(27,79,114,0.12);
-      border: 1px solid rgba(27,79,114,0.25);
+      color: #e8930a;
+      background: rgba(232, 147, 10, 0.12);
+      border: 1px solid rgba(232, 147, 10, 0.3);
       padding: 4px 14px;
       border-radius: 99px;
       margin-bottom: 1rem;
     }
+
     .wc-title {
       font-family: var(--font-display);
       font-size: clamp(1.8rem, 3.5vw, 2.6rem);
@@ -783,93 +1061,123 @@
       margin-bottom: 0.75rem;
       line-height: 1.2;
     }
-    .wc-title em { font-style: normal; color: #1B4F72; }
+
+    .wc-title em {
+      font-style: normal;
+      color: #e8930a;
+    }
+
     .wc-sub {
       font-size: 1rem;
-      color: rgba(180,210,230,0.55);
+      color: rgba(180, 210, 230, 0.55);
       max-width: 520px;
       margin: 0 auto;
       line-height: 1.7;
     }
+
     .wc-grid {
       display: grid;
-      grid-template-columns: 1.6fr 1fr 1fr;
-      grid-template-rows: auto auto;
+      grid-template-columns: repeat(4, 1fr);
       gap: 1.25rem;
+      align-items: stretch;
     }
-    @media (max-width: 900px) { .wc-grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 580px) { .wc-grid { grid-template-columns: 1fr; } }
+
+    @media (max-width: 1024px) {
+      .wc-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 580px) {
+      .wc-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .wc-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
       border-radius: 1.25rem;
-      padding: 2rem 1.75rem;
+      padding: 1.75rem 1.5rem;
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
       position: relative;
       overflow: hidden;
-      transition: border-color 0.25s, box-shadow 0.25s;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
     }
+
     .wc-card:hover {
-      border-color: rgba(27,79,114,0.45);
-      box-shadow: 0 8px 32px rgba(27,79,114,0.12);
+      border-color: rgba(232, 147, 10, 0.45);
+      box-shadow: 0 8px 32px rgba(232, 147, 10, 0.12);
+      transform: translateY(-3px);
     }
-    .wc-card--wide {
-      grid-column: 1;
-      grid-row: 1 / 3;
-    }
-    @media (max-width: 900px) { .wc-card--wide { grid-column: 1 / 3; grid-row: auto; } }
-    @media (max-width: 580px) { .wc-card--wide { grid-column: 1; } }
+
     .wc-card--accent {
-      background: rgba(27,79,114,0.12);
-      border-color: rgba(27,79,114,0.3);
+      background: rgba(232, 147, 10, 0.06);
+      border-color: rgba(232, 147, 10, 0.25);
     }
+
     .wc-card-icon {
-      width: 44px; height: 44px;
-      background: rgba(27,79,114,0.18);
+      width: 44px;
+      height: 44px;
+      background: rgba(232, 147, 10, 0.12);
+      border: 1px solid rgba(232, 147, 10, 0.25);
       border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      color: #4a9fd4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e8930a;
       margin-bottom: 0.5rem;
     }
-    .wc-card-icon svg { width: 22px; height: 22px; stroke: currentColor; }
+
+    .wc-card-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+    }
+
     .wc-card-num {
       font-size: 0.65rem;
       font-weight: 700;
       letter-spacing: 0.15em;
-      color: rgba(255,255,255,0.2);
+      color: rgba(232, 147, 10, 0.5);
       text-transform: uppercase;
     }
+
     .wc-card-title {
       font-family: var(--font-display);
       font-size: 1.15rem;
       color: #fff;
       margin: 0;
+      line-height: 1.3;
     }
-    .wc-card--wide .wc-card-title { font-size: 1.4rem; }
+
     .wc-card-desc {
-      font-size: 0.88rem;
-      color: rgba(180,210,230,0.55);
-      line-height: 1.65;
+      font-size: 0.86rem;
+      color: rgba(180, 210, 230, 0.55);
+      line-height: 1.6;
       margin: 0;
       flex: 1;
     }
+
     .wc-card-tag {
-      margin-top: auto;
+      margin-top: 1rem;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       font-size: 0.72rem;
       font-weight: 600;
-      color: #4a9fd4;
+      color: #e8930a;
       letter-spacing: 0.05em;
     }
+
     .wc-card-tag::before {
       content: '';
-      width: 18px; height: 1px;
-      background: #4a9fd4;
-      opacity: 0.5;
+      width: 18px;
+      height: 1px;
+      background: #e8930a;
+      opacity: 0.6;
     }
 
     /* ── FAQ ─────────────────────────────────────────────── */
@@ -877,16 +1185,25 @@
       background: var(--bg, #f4f7fb);
       padding: 90px 5%;
     }
+
     .faq-inner {
       max-width: 860px;
       margin: 0 auto;
     }
+
     .faq-header {
       text-align: center;
       margin-bottom: 3rem;
     }
-    .faq-header .wc-title { color: var(--text, #0d1f2d); }
-    .faq-header .wc-sub   { color: var(--text-muted, #4a6070); }
+
+    .faq-header .wc-title {
+      color: var(--text, #0d1f2d);
+    }
+
+    .faq-header .wc-sub {
+      color: var(--text-muted, #4a6070);
+    }
+
     .faq-list {
       display: flex;
       flex-direction: column;
@@ -895,10 +1212,15 @@
       border-radius: 1.25rem;
       overflow: hidden;
     }
+
     .faq-item-new {
       border-bottom: 1px solid var(--border);
     }
-    .faq-item-new:last-child { border-bottom: none; }
+
+    .faq-item-new:last-child {
+      border-bottom: none;
+    }
+
     .faq-q {
       all: unset;
       box-sizing: border-box;
@@ -916,18 +1238,29 @@
       background: var(--surface, #fff);
       transition: background 0.2s;
     }
-    .faq-q:hover { background: var(--off, #e8f1f8); }
-    .faq-q[aria-expanded="true"] { color: #1B4F72; background: rgba(27,79,114,0.04); }
+
+    .faq-q:hover {
+      background: var(--off, #e8f1f8);
+    }
+
+    .faq-q[aria-expanded="true"] {
+      color: #1B4F72;
+      background: rgba(27, 79, 114, 0.04);
+    }
+
     .faq-chevron {
-      width: 18px; height: 18px;
+      width: 18px;
+      height: 18px;
       flex-shrink: 0;
       stroke: var(--text-muted, #4a6070);
       transition: transform 0.28s ease;
     }
+
     .faq-q[aria-expanded="true"] .faq-chevron {
       transform: rotate(180deg);
       stroke: #1B4F72;
     }
+
     .faq-a {
       max-height: 0;
       overflow: hidden;
@@ -935,10 +1268,12 @@
       background: var(--surface, #fff);
       padding: 0 1.75rem;
     }
+
     .faq-a.open {
       max-height: 300px;
       padding: 0 1.75rem 1.35rem;
     }
+
     .faq-a p {
       margin: 0;
       font-size: 0.92rem;
@@ -969,6 +1304,7 @@
       margin-left: 0.75rem;
       flex-shrink: 0;
     }
+
     .nav-burger span {
       display: block;
       width: 22px;
@@ -980,9 +1316,18 @@
       transform: translateX(-50%);
       transition: transform 0.3s ease, opacity 0.2s ease;
     }
-    .nav-burger span:nth-child(1) { top: 10px; }
-    .nav-burger span:nth-child(2) { top: 18px; }
-    .nav-burger span:nth-child(3) { top: 26px; }
+
+    .nav-burger span:nth-child(1) {
+      top: 10px;
+    }
+
+    .nav-burger span:nth-child(2) {
+      top: 18px;
+    }
+
+    .nav-burger span:nth-child(3) {
+      top: 26px;
+    }
 
     .mobile-menu {
       position: fixed;
@@ -1000,11 +1345,13 @@
       padding-top: 5rem;
       overflow-y: auto;
     }
+
     .mobile-menu.open {
       transform: translateY(0);
       opacity: 1;
       visibility: visible;
     }
+
     .mobile-menu ul {
       list-style: none;
       margin: 0;
@@ -1012,6 +1359,7 @@
       display: grid;
       gap: 1rem;
     }
+
     .mobile-menu .mm-link {
       display: block;
       color: #fff;
@@ -1019,8 +1367,9 @@
       font-size: 1.1rem;
       text-decoration: none;
       padding: 1rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
+
     .mobile-menu .mm-link:hover {
       color: var(--accent);
     }
@@ -1030,29 +1379,17 @@
         padding: 0 1rem;
         min-width: 0;
       }
+
       .nav-links {
         display: none;
       }
+
       .nav-cta {
         display: none;
       }
+
       .nav-burger {
         display: flex;
-      }
-      
-      /* Hide dock by default */
-      .industry-dock-section {
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(30px);
-        transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-      }
-      
-      /* Show dock when visible */
-      .industry-dock-section.visible {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
       }
     }
 
@@ -1061,9 +1398,9 @@
         background: #ffffff !important;
         backdrop-filter: none !important;
         border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
-        box-shadow: inset 0 -1px 0 rgba(255,255,255,0.04) !important;
+        box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.04) !important;
       }
-      
+
       #navbar .nav-links a {
         color: #1B4F72 !important;
       }
@@ -1071,7 +1408,7 @@
       #navbar .nav-burger {
         color: #1B4F72 !important;
       }
-      
+
       #navbar .burger-bar {
         background: #1B4F72 !important;
       }
@@ -1079,12 +1416,14 @@
       .industry-content-section {
         padding-bottom: calc(13rem + env(safe-area-inset-bottom, 0));
       }
+
       .hero-industries {
         padding-bottom: 4rem;
       }
     }
   </style>
 </head>
+
 <body>
   <!-- Scroll Progress -->
   <div class="scroll-progress-container">
@@ -1098,7 +1437,7 @@
   <!-- Navigation -->
   <nav id="navbar">
     <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
-      <img src="favicon.png" alt="VOLGA Infosys logo" />
+      <img src="logo.png" alt="VOLGA Infosys logo" />
     </a>
 
     <ul class="nav-links">
@@ -1107,9 +1446,6 @@
       </li>
       <li class="nav-item" data-menu="industries">
         <button class="nav-link">Industries <span class="nav-arrow"></span></button>
-      </li>
-      <li class="nav-item" data-menu="work">
-        <button class="nav-link">Work <span class="nav-arrow"></span></button>
       </li>
       <li class="nav-item" data-menu="technologies">
         <a class="nav-link" href="technologies (2).html">Technologies</a>
@@ -1135,14 +1471,25 @@
       <li><a href="index.html" class="mm-link">Home</a></li>
       <li><a href="services.html" class="mm-link">Services</a></li>
       <li><a href="industries.html" class="mm-link">Industries</a></li>
-      <li><a href="portfolio.html" class="mm-link">Work</a></li>
       <li><a href="technologies (2).html" class="mm-link">Technologies</a></li>
       <li><a href="insights-overview-new.html" class="mm-link">Blogs</a></li>
-      <li><a href="company.html" class="mm-link">Company</a></li>
+      <li class="mm-has-sub open">
+        <div class="mm-sub-header">
+          <a href="javascript:void(0)" class="mm-link mm-parent-link">Company</a>
+          <button class="mm-toggle-btn" aria-label="Toggle Company submenu">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </div>
+        <ul class="mm-sub-menu">
+          <li><a href="about.html" class="mm-sub-link"><span class="mm-sub-dot"></span>About Us</a></li>
+          <li><a href="portfolio.html" class="mm-sub-link"><span class="mm-sub-dot"></span>Work</a></li>
+          <li><a href="careers-page (1).html" class="mm-sub-link"><span class="mm-sub-dot"></span>Careers</a></li>
+        </ul>
+      </li>
       <li><a href="contact.html" class="mm-link">Contact</a></li>
     </ul>
   </div>
-  
+
 
   <!-- MEGA MENUS -->
 
@@ -1152,91 +1499,129 @@
       <div class="mega-cols">
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="industries.html#healthcare"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-activity-heartbeat">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 12h4.5l1.5 -6l4 12l2 -9l1.5 3h4.5" />
-</svg>Healthcare</a></li>
-            <li><a class="mega-item" href="industries.html#manufacturing"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-factory-2">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 21h18" />
-	<path d="M5 21v-12l5 4v-4l5 4h4" />
-	<path d="M19 21v-8l-1.436 -9.574a.5 .5 0 0 0 -.495 -.426h-1.145a.5 .5 0 0 0 -.494 .418l-1.43 8.582" />
-	<path d="M9 17h1" />
-	<path d="M14 17h1" />
-</svg>Manufacturing</a></li>
-            <li><a class="mega-item" href="industries.html#realestate"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-home">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-	<path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-	<path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-</svg>Real Estate</a></li>
-            <li><a class="mega-item" href="industries.html#education"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-school">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
-	<path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
-</svg>Education</a></li>
-            <li><a class="mega-item" href="industries.html#automotive"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-car-suv">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M5 17a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-	<path d="M16 17a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-	<path d="M5 9l2 -4h7.438a2 2 0 0 1 1.94 1.515l.622 2.485h3a2 2 0 0 1 2 2v3" />
-	<path d="M10 9v-4" />
-	<path d="M2 7v4" />
-	<path d="M22.001 14.001a4.992 4.992 0 0 0 -4.001 -2.001a4.992 4.992 0 0 0 -4 2h-3a4.998 4.998 0 0 0 -8.003 .003" />
-	<path d="M5 12v-3h13" />
-</svg>Automotive</a></li>
+            <li><a class="mega-item" href="industries.html#healthcare"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-activity-heartbeat">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M3 12h4.5l1.5 -6l4 12l2 -9l1.5 3h4.5" />
+                </svg>Healthcare</a></li>
+            <li><a class="mega-item" href="industries.html#manufacturing"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-building-factory-2">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M3 21h18" />
+                  <path d="M5 21v-12l5 4v-4l5 4h4" />
+                  <path d="M19 21v-8l-1.436 -9.574a.5 .5 0 0 0 -.495 -.426h-1.145a.5 .5 0 0 0 -.494 .418l-1.43 8.582" />
+                  <path d="M9 17h1" />
+                  <path d="M14 17h1" />
+                </svg>Manufacturing</a></li>
+            <li><a class="mega-item" href="industries.html#realestate"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-home">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                </svg>Real Estate</a></li>
+            <li><a class="mega-item" href="industries.html#education"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-school">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+                  <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
+                </svg>Education</a></li>
+            <li><a class="mega-item" href="industries.html#automotive"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-car-suv">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M5 17a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M16 17a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M5 9l2 -4h7.438a2 2 0 0 1 1.94 1.515l.622 2.485h3a2 2 0 0 1 2 2v3" />
+                  <path d="M10 9v-4" />
+                  <path d="M2 7v4" />
+                  <path
+                    d="M22.001 14.001a4.992 4.992 0 0 0 -4.001 -2.001a4.992 4.992 0 0 0 -4 2h-3a4.998 4.998 0 0 0 -8.003 .003" />
+                  <path d="M5 12v-3h13" />
+                </svg>Automotive</a></li>
           </ul>
         </div>
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="industries.html#retail"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M4 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-	<path d="M15 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-	<path d="M17 17h-11v-14h-2" />
-	<path d="M6 5l14 1l-1 7h-13" />
-</svg>Retail</a></li>
-            <li><a class="mega-item" href="industries.html#architecture"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-buildings">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M4 21v-15c0 -1 1 -2 2 -2h5c1 0 2 1 2 2v15" />
-	<path d="M16 8h2c1 0 2 1 2 2v11" />
-	<path d="M3 21h18" />
-	<path d="M10 12v.01" />
-	<path d="M10 16v.01" />
-	<path d="M10 8v.01" />
-	<path d="M7 12v.01" />
-	<path d="M7 16v.01" />
-	<path d="M7 8v.01" />
-	<path d="M17 12v.01" />
-	<path d="M17 16v.01" />
-</svg></span>Architecture</a></li>
-            <li><a class="mega-item" href="industries.html#defense"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-shield-chevron">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
-	<path d="M4 14l8 -3l8 3" />
-</svg>  Defense</a></li>
-            <li><a class="mega-item" href="industries.html#tourism"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
-	<path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" />
-</svg>Tourism</a></li>
-            <li><a class="mega-item" href="industries.html#energy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-wind-turbine">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M10 11a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-	<path d="M10 11v-2.573c0 -.18 .013 -.358 .04 -.536l.716 -4.828c.064 -.597 .597 -1.063 1.244 -1.063s1.18 .466 1.244 1.063l.716 4.828c.027 .178 .04 .357 .04 .536v2.573" />
-	<path d="M13.01 9.28l2.235 1.276c.156 .09 .305 .19 .446 .3l3.836 2.911c.487 .352 .624 1.04 .3 1.596c-.325 .556 -1 .782 -1.548 .541l-4.555 -1.68a3.624 3.624 0 0 1 -.486 -.231l-2.235 -1.277" />
-	<path d="M13 12.716l-2.236 1.277a3.624 3.624 0 0 1 -.485 .23l-4.555 1.681c-.551 .241 -1.223 .015 -1.548 -.54c-.324 -.557 -.187 -1.245 .3 -1.597l3.836 -2.91a3.41 3.41 0 0 1 .446 -.3l2.235 -1.277" />
-	<path d="M7 21h10" />
-	<path d="M10 21l1 -7" />
-	<path d="M13 14l1 7" />
-</svg>Energy</a></li>
+            <li><a class="mega-item" href="industries.html#retail"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                  <path d="M15 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                  <path d="M17 17h-11v-14h-2" />
+                  <path d="M6 5l14 1l-1 7h-13" />
+                </svg>Retail</a></li>
+            <li><a class="mega-item" href="industries.html#architecture"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-buildings">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 21v-15c0 -1 1 -2 2 -2h5c1 0 2 1 2 2v15" />
+                  <path d="M16 8h2c1 0 2 1 2 2v11" />
+                  <path d="M3 21h18" />
+                  <path d="M10 12v.01" />
+                  <path d="M10 16v.01" />
+                  <path d="M10 8v.01" />
+                  <path d="M7 12v.01" />
+                  <path d="M7 16v.01" />
+                  <path d="M7 8v.01" />
+                  <path d="M17 12v.01" />
+                  <path d="M17 16v.01" />
+                </svg></span>Architecture</a></li>
+            <li><a class="mega-item" href="industries.html#defense"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-shield-chevron">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
+                  <path d="M4 14l8 -3l8 3" />
+                </svg> Defense</a></li>
+            <li><a class="mega-item" href="industries.html#tourism"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                  <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" />
+                </svg>Tourism</a></li>
+            <li><a class="mega-item" href="industries.html#energy"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-building-wind-turbine">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M10 11a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                  <path
+                    d="M10 11v-2.573c0 -.18 .013 -.358 .04 -.536l.716 -4.828c.064 -.597 .597 -1.063 1.244 -1.063s1.18 .466 1.244 1.063l.716 4.828c.027 .178 .04 .357 .04 .536v2.573" />
+                  <path
+                    d="M13.01 9.28l2.235 1.276c.156 .09 .305 .19 .446 .3l3.836 2.911c.487 .352 .624 1.04 .3 1.596c-.325 .556 -1 .782 -1.548 .541l-4.555 -1.68a3.624 3.624 0 0 1 -.486 -.231l-2.235 -1.277" />
+                  <path
+                    d="M13 12.716l-2.236 1.277a3.624 3.624 0 0 1 -.485 .23l-4.555 1.681c-.551 .241 -1.223 .015 -1.548 -.54c-.324 -.557 -.187 -1.245 .3 -1.597l3.836 -2.91a3.41 3.41 0 0 1 .446 -.3l2.235 -1.277" />
+                  <path d="M7 21h10" />
+                  <path d="M10 21l1 -7" />
+                  <path d="M13 14l1 7" />
+                </svg>Energy</a></li>
           </ul>
         </div>
       </div>
       <div class="mega-highlight">
         <div class="mega-highlight-title">Industry Solutions</div>
         <div class="mega-highlight-sub">Tailored immersive experiences built for your sector's unique challenges.</div>
-        <a href="industries.html" class="mega-highlight-btn">View All <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="industries.html" class="mega-highlight-btn">View All <svg width="12" height="12" viewBox="0 0 12 12"
+            fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
       </div>
     </div>
   </div>
@@ -1247,112 +1632,105 @@
       <div class="mega-cols">
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="services.html#custom-ar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality-2">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M10 21h-2a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v3.5" />
-	<path d="M17 17l-4 -2.5l4 -2.5l4 2.5v4.5l-4 2.5l0 -4.5" />
-	<path d="M13 14.5v4.5l4 2.5" />
-	<path d="M17 17l4 -2.5" />
-	<path d="M11 4h2" />
-</svg>Custom AR App Development</a></li>
-            <li><a class="mega-item" href="services.html#vr-training"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cardboards">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 8v8.5a2.5 2.5 0 0 0 2.5 2.5h1.06a3 3 0 0 0 2.34 -1.13l1.54 -1.92a2 2 0 0 1 3.12 0l1.54 1.92a3 3 0 0 0 2.34 1.13h1.06a2.5 2.5 0 0 0 2.5 -2.5v-8.5a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2" />
-	<path d="M7 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-	<path d="M15 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-</svg>VR Training Platforms</a></li>
-            <li><a class="mega-item" href="services.html#unity-dev"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-unity">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M14 3l6 4v7" />
-	<path d="M18 17l-6 4l-6 -4" />
-	<path d="M4 14v-7l6 -4" />
-	<path d="M4 7l8 5v9" />
-	<path d="M20 7l-8 5" />
-</svg>Unity Development</a></li>
-            <li><a class="mega-item" href="services.html#webgl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cube-3d-sphere">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M6 17.6l-2 -1.1v-2.5" />
-	<path d="M4 10v-2.5l2 -1.1" />
-	<path d="M10 4.1l2 -1.1l2 1.1" />
-	<path d="M18 6.4l2 1.1v2.5" />
-	<path d="M20 14v2.5l-2 1.12" />
-	<path d="M14 19.9l-2 1.1l-2 -1.1" />
-	<path d="M12 12l2 -1.1" />
-	<path d="M18 8.6l2 -1.1" />
-	<path d="M12 12l0 2.5" />
-	<path d="M12 18.5l0 2.5" />
-	<path d="M12 12l-2 -1.12" />
-	<path d="M6 8.6l-2 -1.1" />
-</svg>WebGL Experiences</a></li>
+            <li><a class="mega-item" href="services.html#custom-ar"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality-2">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M10 21h-2a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v3.5" />
+                  <path d="M17 17l-4 -2.5l4 -2.5l4 2.5v4.5l-4 2.5l0 -4.5" />
+                  <path d="M13 14.5v4.5l4 2.5" />
+                  <path d="M17 17l4 -2.5" />
+                  <path d="M11 4h2" />
+                </svg>Custom AR App Development</a></li>
+            <li><a class="mega-item" href="services.html#vr-training"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-cardboards">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M3 8v8.5a2.5 2.5 0 0 0 2.5 2.5h1.06a3 3 0 0 0 2.34 -1.13l1.54 -1.92a2 2 0 0 1 3.12 0l1.54 1.92a3 3 0 0 0 2.34 1.13h1.06a2.5 2.5 0 0 0 2.5 -2.5v-8.5a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2" />
+                  <path d="M7 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                  <path d="M15 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                </svg>VR Training Platforms</a></li>
+            <li><a class="mega-item" href="services.html#unity-dev"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-unity">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M14 3l6 4v7" />
+                  <path d="M18 17l-6 4l-6 -4" />
+                  <path d="M4 14v-7l6 -4" />
+                  <path d="M4 7l8 5v9" />
+                  <path d="M20 7l-8 5" />
+                </svg>Unity Development</a></li>
+            <li><a class="mega-item" href="services.html#webgl"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-cube-3d-sphere">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M6 17.6l-2 -1.1v-2.5" />
+                  <path d="M4 10v-2.5l2 -1.1" />
+                  <path d="M10 4.1l2 -1.1l2 1.1" />
+                  <path d="M18 6.4l2 1.1v2.5" />
+                  <path d="M20 14v2.5l-2 1.12" />
+                  <path d="M14 19.9l-2 1.1l-2 -1.1" />
+                  <path d="M12 12l2 -1.1" />
+                  <path d="M18 8.6l2 -1.1" />
+                  <path d="M12 12l0 2.5" />
+                  <path d="M12 18.5l0 2.5" />
+                  <path d="M12 12l-2 -1.12" />
+                  <path d="M6 8.6l-2 -1.1" />
+                </svg>WebGL Experiences</a></li>
           </ul>
         </div>
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="services.html#3d-modeling"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-3d">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M14 3v4a1 1 0 0 0 1 1h4" />
-	<path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
-	<path d="M12 13.5l4 -1.5" />
-	<path d="M8 11.846l4 1.654v4.5l4 -1.846v-4.308l-4 -1.846l-4 1.846" />
-	<path d="M8 12v4.2l4 1.8" />
-</svg>3D Modeling & Animation</a></li>
-            <li><a class="mega-item" href="services.html#uiux"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-layout">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M4 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -1" />
-	<path d="M4 15a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -3" />
-	<path d="M14 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -12" />
-</svg>UI/UX Design</a></li>
-            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cloud">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M6.657 18c-2.572 0 -4.657 -2.007 -4.657 -4.483c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486c0 1.927 -1.551 3.487 -3.465 3.487h-11.878" />
-</svg>Cloud Deployment</a></li>
-            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-tool">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" />
-</svg>Maintenance & Support</a></li>
+            <li><a class="mega-item" href="services.html#3d-modeling"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-file-3d">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+                  <path d="M12 13.5l4 -1.5" />
+                  <path d="M8 11.846l4 1.654v4.5l4 -1.846v-4.308l-4 -1.846l-4 1.846" />
+                  <path d="M8 12v4.2l4 1.8" />
+                </svg>3D Modeling & Animation</a></li>
+            <li><a class="mega-item" href="services.html#uiux"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-layout">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -1" />
+                  <path d="M4 15a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -3" />
+                  <path d="M14 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -12" />
+                </svg>UI/UX Design</a></li>
+            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-cloud">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M6.657 18c-2.572 0 -4.657 -2.007 -4.657 -4.483c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486c0 1.927 -1.551 3.487 -3.465 3.487h-11.878" />
+                </svg>Cloud Deployment</a></li>
+            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-tool">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" />
+                </svg>Maintenance & Support</a></li>
           </ul>
         </div>
       </div>
       <div class="mega-highlight">
         <div class="mega-highlight-title">Full-Cycle Delivery</div>
         <div class="mega-highlight-sub">From concept to deployment — we handle every stage of your XR project.</div>
-        <a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      </div>
-    </div>
-  </div>
-
-  <div class="mega-menu" id="menu-work">
-    <div class="mega-inner">
-      <div class="mega-label">Work</div>
-      <div class="mega-cols">
-        <div class="mega-col">
-          <ul class="mega-items">
-            
-            <li><a class="mega-item" href="portfolio.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9" />
-	<path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
-	<path d="M12 12l0 .01" />
-	<path d="M3 13a20 20 0 0 0 18 0" />
-</svg>Portfolio</a></li>
-            <li><a class="mega-item" href="client-stories.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-users">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-	<path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-	<path d="M16 3.13a4 4 0 0 1 0 7.75" />
-	<path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
-</svg>Client Stories</a></li>
-            <li><a class="mega-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-player-play">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M7 4v16l13 -8l-13 -8" />
-</svg></span>Product Demos</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="mega-highlight">
-        <div class="mega-highlight-title">Featured Project</div>
-        <div class="mega-highlight-sub">See how we transformed a global manufacturer's training program with immersive VR.</div>
-        <a href="#" class="mega-highlight-btn">View Case Study <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
       </div>
     </div>
   </div>
@@ -1363,34 +1741,46 @@
       <div class="mega-cols">
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="about.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-users-group">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-	<path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
-	<path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-	<path d="M17 10h2a2 2 0 0 1 2 2v1" />
-	<path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-	<path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
-</svg>About Us</a></li>
-            <li><a class="mega-item" href="careers-page (1).html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase-2">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9" />
-	<path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
-</svg>Careers</a></li>
-            <li><a class="mega-item" href=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-heart-handshake">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-	<path d="M12 6l-3.293 3.293a1 1 0 0 0 0 1.414l.543 .543c.69 .69 1.81 .69 2.5 0l1 -1a3.182 3.182 0 0 1 4.5 0l2.25 2.25" />
-	<path d="M12.5 15.5l2 2" />
-	<path d="M15 13l2 2" />
-</svg>Partnerships</a></li>
+            <li><a class="mega-item" href="about.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-users-group">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
+                  <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M17 10h2a2 2 0 0 1 2 2v1" />
+                  <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
+                </svg>About Us</a></li>
+            <li><a class="mega-item" href="portfolio.html"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9" />
+                  <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+                  <path d="M12 12l0 .01" />
+                  <path d="M3 13a20 20 0 0 0 18 0" />
+                </svg>Work</a></li>
+            <li><a class="mega-item" href="careers-page (1).html"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase-2">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9" />
+                  <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+                </svg>Careers</a></li>
           </ul>
         </div>
       </div>
       <div class="mega-highlight">
         <div class="mega-highlight-title">We're Hiring</div>
-        <div class="mega-highlight-sub">Join a team building the future of spatial computing and enterprise immersive tech.</div>
-        <a href="#" class="mega-highlight-btn">See Openings <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="mega-highlight-sub">Join a team building the future of spatial computing and enterprise immersive
+          tech.</div>
+        <a href="#" class="mega-highlight-btn">See Openings <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
       </div>
     </div>
   </div>
@@ -1406,7 +1796,8 @@
     <div class="hero-content">
       <div class="eyebrow-sm">Volga Infosys · Industry Solutions</div>
       <h1 class="hero-title">Immersive Tech Built for <em>Your Industry</em></h1>
-      <p class="hero-desc">We tailor VR & AR experiences to the exact workflows, challenges, and goals of your sector — not a generic template.</p>
+      <p class="hero-desc">We tailor VR & AR experiences to the exact workflows, challenges, and goals of your sector —
+        not a generic template.</p>
     </div>
     <!-- Stats bar (optional, but we'll skip it for now to keep it focused) -->
   </section>
@@ -1434,43 +1825,68 @@
       <div class="wc-header">
         <span class="wc-eyebrow">Why Choose Volga</span>
         <h2 class="wc-title">Built Different, <em>By Design</em></h2>
-        <p class="wc-sub">We don't apply generic templates to hard problems. Every solution is engineered from the ground up around your industry's real constraints.</p>
+        <p class="wc-sub">We don't apply generic templates to hard problems. Every solution is engineered from the
+          ground up around your industry's real constraints.</p>
       </div>
       <div class="wc-grid">
-        <div class="wc-card wc-card--wide">
+        <div class="wc-card">
           <div class="wc-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <circle cx="12" cy="12" r="3" />
+              <line x1="12" y1="2" x2="12" y2="5" />
+              <line x1="12" y1="19" x2="12" y2="22" />
+              <line x1="2" y1="12" x2="5" y2="12" />
+              <line x1="19" y1="12" x2="22" y2="12" />
+            </svg>
           </div>
           <div class="wc-card-num">01</div>
           <h3 class="wc-card-title">Industry-First Approach</h3>
-          <p class="wc-card-desc">Every solution is built from the ground up for your sector's specific workflows, regulations, and user needs — never a recycled template.</p>
+          <p class="wc-card-desc">Every solution is built from the ground up for your sector's specific workflows,
+            regulations, and user needs — never a recycled template.</p>
           <div class="wc-card-tag">Custom-scoped from day one</div>
         </div>
         <div class="wc-card">
           <div class="wc-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </svg>
           </div>
           <div class="wc-card-num">02</div>
           <h3 class="wc-card-title">Enterprise-Grade Performance</h3>
-          <p class="wc-card-desc">Built for scale, security, and reliability — whether deploying to 10 users or 10,000 across multiple sites.</p>
+          <p class="wc-card-desc">Built for scale, security, and reliability — whether deploying to 10 users or 10,000
+            across multiple sites.</p>
           <div class="wc-card-tag">Production-ready infrastructure</div>
         </div>
         <div class="wc-card">
           <div class="wc-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.121 2.121 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.121 2.121 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z" />
+            </svg>
           </div>
           <div class="wc-card-num">03</div>
           <h3 class="wc-card-title">End-to-End Delivery</h3>
-          <p class="wc-card-desc">One team handles concept, build, deployment, and ongoing maintenance. No handoff friction, no dropped context.</p>
+          <p class="wc-card-desc">One team handles concept, build, deployment, and ongoing maintenance. No handoff
+            friction, no dropped context.</p>
           <div class="wc-card-tag">Concept &rarr; Live &rarr; Maintained</div>
         </div>
         <div class="wc-card wc-card--accent">
           <div class="wc-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10" />
+              <line x1="12" y1="20" x2="12" y2="4" />
+              <line x1="6" y1="20" x2="6" y2="14" />
+            </svg>
           </div>
           <div class="wc-card-num">04</div>
           <h3 class="wc-card-title">Measurable Results</h3>
-          <p class="wc-card-desc">Track training outcomes, engagement rates, and ROI with built-in analytics dashboards your stakeholders can read at a glance.</p>
+          <p class="wc-card-desc">Track training outcomes, engagement rates, and ROI with built-in analytics dashboards
+            your stakeholders can read at a glance.</p>
           <div class="wc-card-tag">Data-backed outcomes</div>
         </div>
       </div>
@@ -1492,46 +1908,66 @@
         <div class="faq-item-new">
           <button class="faq-q" aria-expanded="false">
             <span>How long does it take to build a custom industry solution?</span>
-            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
           </button>
           <div class="faq-a">
-            <p>Most projects run 8&ndash;16 weeks from concept to launch depending on scope. We provide a detailed phased timeline during the free initial consultation so there are no surprises.</p>
+            <p>Most projects run 8&ndash;16 weeks from concept to launch depending on scope. We provide a detailed
+              phased timeline during the free initial consultation so there are no surprises.</p>
           </div>
         </div>
         <div class="faq-item-new">
           <button class="faq-q" aria-expanded="false">
             <span>Do you integrate with our existing systems?</span>
-            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
           </button>
           <div class="faq-a">
-            <p>Yes &mdash; we design every solution to connect with your current LMS, CRM, ERP, and other enterprise platforms. We've integrated with Salesforce, SAP, Workday, and custom-built systems.</p>
+            <p>Yes &mdash; we design every solution to connect with your current LMS, CRM, ERP, and other enterprise
+              platforms. We've integrated with Salesforce, SAP, Workday, and custom-built systems.</p>
           </div>
         </div>
         <div class="faq-item-new">
           <button class="faq-q" aria-expanded="false">
             <span>What hardware do your solutions require?</span>
-            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
           </button>
           <div class="faq-a">
-            <p>We build for all major headsets (Meta Quest, HoloLens, Apple Vision Pro) as well as fully browser-based WebXR experiences that work on any device with no special hardware required.</p>
+            <p>We build for all major headsets (Meta Quest, HoloLens, Apple Vision Pro) as well as fully browser-based
+              WebXR experiences that work on any device with no special hardware required.</p>
           </div>
         </div>
         <div class="faq-item-new">
           <button class="faq-q" aria-expanded="false">
             <span>Can you help train our team to use the solution?</span>
-            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
           </button>
           <div class="faq-a">
-            <p>Every delivery includes onboarding sessions, admin training, and documentation. We also offer ongoing support and maintenance retainers so your team is never left on their own.</p>
+            <p>Every delivery includes onboarding sessions, admin training, and documentation. We also offer ongoing
+              support and maintenance retainers so your team is never left on their own.</p>
           </div>
         </div>
         <div class="faq-item-new">
           <button class="faq-q" aria-expanded="false">
             <span>Can we start with a pilot before a full rollout?</span>
-            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
           </button>
           <div class="faq-a">
-            <p>Yes &mdash; and we recommend it. A focused pilot with one use case lets you prove ROI internally before scaling. We structure engagements specifically to make this easy.</p>
+            <p>Yes &mdash; and we recommend it. A focused pilot with one use case lets you prove ROI internally before
+              scaling. We structure engagements specifically to make this easy.</p>
           </div>
         </div>
       </div>
@@ -1548,30 +1984,30 @@
   <script>
     // ─── Common challenge icon library ───────────────────────────────────────
     const ICONS = {
-      cost:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
-      safety:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
-      access:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
-      training:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`,
-      error:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
-      engage:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
-      return_:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.71"/></svg>`,
-      scale:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>`,
-      remote:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
-      onboard:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+      cost: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+      safety: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+      access: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+      training: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`,
+      error: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+      engage: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+      return_: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.71"/></svg>`,
+      scale: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>`,
+      remote: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+      onboard: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
       visualize: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`,
-      revision:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`,
-      conversion:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,
-      complexity:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/></svg>`,
-      data:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>`,
-      global:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+      revision: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`,
+      conversion: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,
+      complexity: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/></svg>`,
+      data: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>`,
+      global: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
       prototype: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
-      coord:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
-      offplan:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>`,
-      heritage:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
-      classified:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
-      repeat:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>`,
-      infra:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
-      transfer:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>`,
+      coord: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+      offplan: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>`,
+      heritage: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+      classified: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
+      repeat: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>`,
+      infra: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`,
+      transfer: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>`,
     };
 
     const industries = [
@@ -1584,7 +2020,7 @@
         desc: "Traditional clinical training is constrained by limited cases and high costs. Volga delivers medical-grade immersive environments where professionals master procedures safely before entering the real clinical setting.",
         bullets: ["Risk-free surgical simulation with real anatomical accuracy", "AR-guided patient pathways that reduce pre-procedure anxiety", "Scalable training for residents, nurses, and clinical staff"],
         cta: "Discuss Your Healthcare Project",
-        heroImg: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1600&q=80&fit=crop",
+        heroImg: "assets/images/industries/Medical & Clinical.jpeg",
         stats: [
           { num: "40%", label: "Faster surgical training retention" },
           { num: "65%", label: "Reduction in patient anxiety pre-procedure" },
@@ -1592,15 +2028,15 @@
           { num: "90%", label: "Trainee satisfaction score" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`, title: "Surgical Simulation", desc: "Practice complex procedures in a risk-free VR environment to build muscle memory before the operating theater.", img: "https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l3 3 5-5"/><circle cx="12" cy="12" r="10"/></svg>`, title: "3D Anatomical Visualization", desc: "Convert patient scans into spatial models teams can explore and plan around collaboratively.", img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`, title: "Clinical Scenario Training", desc: "Replicate ICU emergencies and nursing protocols to build decision-making confidence in a safe space.", img: "https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`, title: "VR Physiotherapy", desc: "Gamified rehab sessions in VR increase patient engagement and accelerate recovery adherence.", img: "https://images.unsplash.com/photo-1576669801775-ff43c5ab079d?w=800&q=75&fit=crop" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`, title: "Surgical Simulation", desc: "Practice complex procedures in a risk-free VR environment to build muscle memory before the operating theater.", img: "assets/images/industries/Surgical Simulation.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l3 3 5-5"/><circle cx="12" cy="12" r="10"/></svg>`, title: "3D Anatomical Visualization", desc: "Convert patient scans into spatial models teams can explore and plan around collaboratively.", img: "assets/images/industries/3D Anatomical Visualization.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`, title: "Clinical Scenario Training", desc: "Replicate ICU emergencies and nursing protocols to build decision-making confidence in a safe space.", img: "assets/images/industries/Clinical Scenario Training.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`, title: "VR Physiotherapy", desc: "Gamified rehab sessions in VR increase patient engagement and accelerate recovery adherence.", img: "assets/images/industries/virtual therpy.png" }
         ],
         challenges: [
-          { icon: ICONS.cost,     text: "High-stakes training costs" },
-          { icon: ICONS.access,   text: "Limited access to live surgical cases" },
-          { icon: ICONS.visualize,text: "Complex anatomy comprehension" },
+          { icon: ICONS.cost, text: "High-stakes training costs" },
+          { icon: ICONS.access, text: "Limited access to live surgical cases" },
+          { icon: ICONS.visualize, text: "Complex anatomy comprehension" },
           { icon: ICONS.training, text: "Standardizing patient care protocols" }
         ]
       },
@@ -1621,16 +2057,16 @@
           { num: "82%", label: "Customers prefer AR try-on" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`, title: "AR Virtual Try-On", desc: "Let customers place furniture, clothes, or accessories directly in their space using their phone camera.", img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`, title: "3D Virtual Showroom", desc: "Fully navigable digital store accessible from any browser — no app or headset required.", img: "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M20 12h2M2 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg>`, title: "AI Personalised Journeys", desc: "Recommend products in real-time using AI combined with AR context from the customer's environment.", img: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>`, title: "Real-Time 3D Configurator", desc: "Customers customise colour, size, and materials on a live 3D model before adding to cart.", img: "https://images.unsplash.com/photo-1586880244386-8b3e34c8382c?w=800&q=75&fit=crop" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`, title: "AR Virtual Try-On", desc: "Let customers place furniture, clothes, or accessories directly in their space using their phone camera.", img: "assets/images/industries/AR Virtual Try-On.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`, title: "3D Virtual Showroom", desc: "Fully navigable digital store accessible from any browser — no app or headset required.", img: "assets/images/industries/3D Virtual Showroom.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M20 12h2M2 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg>`, title: "AI Personalised Journeys", desc: "Recommend products in real-time using AI combined with AR context from the customer's environment.", img: "assets/images/industries/AI Personalised Journeys.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>`, title: "Real-Time 3D Configurator", desc: "Customers customise colour, size, and materials on a live 3D model before adding to cart.", img: "assets/images/industries/Real-Time 3D Configurator.jpeg" }
         ],
         challenges: [
-          { icon: ICONS.return_,   text: "High product return rates" },
-          { icon: ICONS.engage,    text: "Low engagement without physical touch" },
-          { icon: ICONS.cost,      text: "Physical store overhead" },
-          { icon: ICONS.scale,     text: "Personalisation at scale" }
+          { icon: ICONS.return_, text: "High product return rates" },
+          { icon: ICONS.engage, text: "Low engagement without physical touch" },
+          { icon: ICONS.cost, text: "Physical store overhead" },
+          { icon: ICONS.scale, text: "Personalisation at scale" }
         ]
       },
       {
@@ -1650,16 +2086,16 @@
           { num: "2×", label: "Increase in maintenance speed with AR" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.121 2.121 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>`, title: "Assembly Line Training", desc: "Trainees practice intricate sequences and machine operations in a safe simulated environment, cutting onboarding time.", img: "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`, title: "VR Safety Drills", desc: "Simulate chemical spills and electrical failures to build rapid-response habits before workers enter the real environment.", img: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/></svg>`, title: "Predictive Maintenance Twins", desc: "Identify machine bottlenecks and train maintenance crews on breakdown protocols before failures occur.", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`, title: "AR Remote Expert Guidance", desc: "Experts annotate what a field worker sees in real-time, eliminating the cost of on-site specialist travel.", img: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=75&fit=crop" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.121 2.121 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>`, title: "Assembly Line Training", desc: "Trainees practice intricate sequences and machine operations in a safe simulated environment, cutting onboarding time.", img: "assets/images/industries/Assembly Line Training.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`, title: "VR Safety Drills", desc: "Simulate chemical spills and electrical failures to build rapid-response habits before workers enter the real environment.", img: "assets/images/industries/VR Safety Drills.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/></svg>`, title: "Predictive Maintenance Twins", desc: "Identify machine bottlenecks and train maintenance crews on breakdown protocols before failures occur.", img: "assets/images/industries/Predictive Maintenance Twins.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`, title: "AR Remote Expert Guidance", desc: "Experts annotate what a field worker sees in real-time, eliminating the cost of on-site specialist travel.", img: "assets/images/industries/AR Remote Expert Guidance.jpeg" }
         ],
         challenges: [
-          { icon: ICONS.error,    text: "Assembly errors and rework costs" },
-          { icon: ICONS.safety,   text: "Worker safety on live production lines" },
-          { icon: ICONS.onboard,  text: "Complex machinery onboarding" },
-          { icon: ICONS.remote,   text: "Remote site support and maintenance" }
+          { icon: ICONS.error, text: "Assembly errors and rework costs" },
+          { icon: ICONS.safety, text: "Worker safety on live production lines" },
+          { icon: ICONS.onboard, text: "Complex machinery onboarding" },
+          { icon: ICONS.remote, text: "Remote site support and maintenance" }
         ]
       },
       {
@@ -1679,16 +2115,16 @@
           { num: "80%", label: "Client satisfaction with immersive reviews" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M12 8v13M8 21h8"/></svg>`, title: "1:1 Scale VR Walkthroughs", desc: "Evaluate spatial flow, ceiling heights, and sightlines at human scale before producing construction drawings.", img: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`, title: "Dynamic Light Studies", desc: "Simulate sun paths and seasonal variation to show how light interacts with facade materials throughout the day.", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>`, title: "On-Site AR BIM Overlay", desc: "AR headsets display BIM models aligned to the physical site, preventing costly construction errors before they happen.", img: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`, title: "Immersive Client Portals", desc: "Let clients step directly into the design to simplify approvals and prevent costly late-stage change orders.", img: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=75&fit=crop" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M12 8v13M8 21h8"/></svg>`, title: "1:1 Scale VR Walkthroughs", desc: "Evaluate spatial flow, ceiling heights, and sightlines at human scale before producing construction drawings.", img: "assets/images/industries/1-1 Scale VR Walkthroughs.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`, title: "Dynamic Light Studies", desc: "Simulate sun paths and seasonal variation to show how light interacts with facade materials throughout the day.", img: "assets/images/industries/Dynamic Light Studies.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>`, title: "On-Site AR BIM Overlay", desc: "AR headsets display BIM models aligned to the physical site, preventing costly construction errors before they happen.", img: "assets/images/industries/On-Site AR BIM Overlay.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`, title: "Immersive Client Portals", desc: "Let clients step directly into the design to simplify approvals and prevent costly late-stage change orders.", img: "assets/images/industries/Immersive Client Portals.jpeg" }
         ],
         challenges: [
           { icon: ICONS.visualize, text: "Client visualization gap with 2D renders" },
-          { icon: ICONS.revision,  text: "Late-stage costly design revisions" },
-          { icon: ICONS.coord,     text: "Multi-stakeholder alignment" },
-          { icon: ICONS.error,     text: "On-site construction accuracy" }
+          { icon: ICONS.revision, text: "Late-stage costly design revisions" },
+          { icon: ICONS.coord, text: "Multi-stakeholder alignment" },
+          { icon: ICONS.error, text: "On-site construction accuracy" }
         ]
       },
       {
@@ -1714,10 +2150,10 @@
           { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`, title: "Neighbourhood Context", desc: "Merge drone imagery with 3D models to show buyers the exact views from their floor and the wider community.", img: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&q=75&fit=crop" }
         ],
         challenges: [
-          { icon: ICONS.global,   text: "Engaging overseas buyers without travel" },
-          { icon: ICONS.engage,   text: "Emotional appeal for empty properties" },
-          { icon: ICONS.offplan,  text: "Off-plan pre-sales conversion" },
-          { icon: ICONS.cost,     text: "High physical presentation centre costs" }
+          { icon: ICONS.global, text: "Engaging overseas buyers without travel" },
+          { icon: ICONS.engage, text: "Emotional appeal for empty properties" },
+          { icon: ICONS.offplan, text: "Off-plan pre-sales conversion" },
+          { icon: ICONS.cost, text: "High physical presentation centre costs" }
         ]
       },
       {
@@ -1729,7 +2165,7 @@
         desc: "High-stakes defense training demands precision without risk. We build secure, high-fidelity synthetic environments for multi-domain training that can't be safely replicated in the field.",
         bullets: ["Geospatial terrain imports for mission rehearsal", "Incident command and coordination protocols", "Naval, aerial, and ground-force simulation platforms"],
         cta: "Request a Defense Demo",
-        heroImg: "https://images.unsplash.com/photo-1508444845599-5c89863b1c44?w=1600&q=80&fit=crop",
+        heroImg: "assets/images/industries/Military & Security.jpeg",
         stats: [
           { num: "55%", label: "Reduction in live-fire training costs" },
           { num: "80%", label: "Scenario retention vs classroom training" },
@@ -1737,16 +2173,16 @@
           { num: "95%", label: "Mission rehearsal accuracy improvement" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>`, title: "Naval Navigation Training", desc: "Simulate bridge controls and sensor systems in a maritime environment responding accurately to weather and emergencies.", img: "https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>`, title: "Tactical Mission Rehearsal", desc: "Import real geospatial data for precise 3D terrain where command structures coordinate and iterate mission plans.", img: "https://images.unsplash.com/photo-1569982175971-d92b01cf8694?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`, title: "Incident Command Training", desc: "Train leadership on emergency management and crisis communication protocols across complex simulated operations.", img: "https://images.unsplash.com/photo-1585842378054-ee2e52f94ba2?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l16 0"/><path d="M4 10l16 0"/><path d="M4 14l16 0"/><path d="M4 18l16 0"/></svg>`, title: "AR Battlefield Overlay", desc: "Real-time tactical data and navigation overlaid in the field of view, built to rigorous security standards.", img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=75&fit=crop" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>`, title: "Naval Navigation Training", desc: "Simulate bridge controls and sensor systems in a maritime environment responding accurately to weather and emergencies.", img: "assets/images/industries/Naval Navigation Training.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>`, title: "Tactical Mission Rehearsal", desc: "Import real geospatial data for precise 3D terrain where command structures coordinate and iterate mission plans.", img: "assets/images/industries/Tactical Mission Rehearsal.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`, title: "Incident Command Training", desc: "Train leadership on emergency management and crisis communication protocols across complex simulated operations.", img: "assets/images/industries/Incident Command Training.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l16 0"/><path d="M4 10l16 0"/><path d="M4 14l16 0"/><path d="M4 18l16 0"/></svg>`, title: "AR Battlefield Overlay", desc: "Real-time tactical data and navigation overlaid in the field of view, built to rigorous security standards.", img: "assets/images/industries/AR Battlefield Overlay.jpeg" }
         ],
         challenges: [
-          { icon: ICONS.cost,      text: "Live training costs and safety risks" },
-          { icon: ICONS.repeat,    text: "Scenario repeatability across units" },
-          { icon: ICONS.complexity,text: "Multi-domain coordination complexity" },
-          { icon: ICONS.classified,text: "Classified environment access limitations" }
+          { icon: ICONS.cost, text: "Live training costs and safety risks" },
+          { icon: ICONS.repeat, text: "Scenario repeatability across units" },
+          { icon: ICONS.complexity, text: "Multi-domain coordination complexity" },
+          { icon: ICONS.classified, text: "Classified environment access limitations" }
         ]
       },
       {
@@ -1758,7 +2194,7 @@
         desc: "Passive learning is losing to immersive experience. We partner with institutions to build interactive digital labs, virtual field trips, and collaborative spaces that make complex subjects tangible.",
         bullets: ["VR field trips to historical sites, space, and the deep sea", "Safe interactive labs for chemistry, biology, and engineering", "Global collaborative classrooms with no geographic limits"],
         cta: "Build Your Learning Experience",
-        heroImg: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=800&q=75&fit=crop",
+        heroImg: "assets/images/industries/Learning & Training.jpeg",
         stats: [
           { num: "76%", label: "Better knowledge retention vs textbook" },
           { num: "4×", label: "Faster learning in complex STEM subjects" },
@@ -1766,16 +2202,16 @@
           { num: "60%", label: "Reduction in lab costs via AR simulation" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`, title: "Virtual Field Trips", desc: "Explore ancient Rome, the ocean floor, or Mars — students experience history and science rather than just reading about it.", img: "https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v11m0 0H5a2 2 0 0 1-2-2V9m6 5h10a2 2 0 0 0 2-2V9m0 0H3"/></svg>`, title: "Interactive STEM Labs", desc: "Students manipulate atomic structures or run chemical reactions safely inside a controlled digital lab environment.", img: "https://images.unsplash.com/photo-1532094349884-543559059e5e?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`, title: "Immersive History Lessons", desc: "Walk through historical events at 1:1 scale — spatial models make abstract concepts tangible and memorable.", img: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`, title: "Global Collaborative Classrooms", desc: "Students and faculty from different continents gather in shared digital spaces to collaborate on research and design challenges.", img: "https://images.unsplash.com/photo-1588072432836-e10032774350?w=800&q=75&fit=crop" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`, title: "Virtual Field Trips", desc: "Explore ancient Rome, the ocean floor, or Mars — students experience history and science rather than just reading about it.", img: "assets/images/industries/Virtual Field Trips.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v11m0 0H5a2 2 0 0 1-2-2V9m6 5h10a2 2 0 0 0 2-2V9m0 0H3"/></svg>`, title: "Interactive STEM Labs", desc: "Students manipulate atomic structures or run chemical reactions safely inside a controlled digital lab environment.", img: "assets/images/industries/Interactive STEM Labs.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`, title: "Immersive History Lessons", desc: "Walk through historical events at 1:1 scale — spatial models make abstract concepts tangible and memorable.", img: "assets/images/industries/Immersive History Lessons.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`, title: "Global Collaborative Classrooms", desc: "Students and faculty from different continents gather in shared digital spaces to collaborate on research and design challenges.", img: "assets/images/industries/Global Collaborative Classrooms.jpeg" }
         ],
         challenges: [
-          { icon: ICONS.engage,    text: "Student disengagement in passive learning" },
-          { icon: ICONS.cost,      text: "Lab equipment costs and safety risks" },
+          { icon: ICONS.engage, text: "Student disengagement in passive learning" },
+          { icon: ICONS.cost, text: "Lab equipment costs and safety risks" },
           { icon: ICONS.visualize, text: "Abstract concept comprehension" },
-          { icon: ICONS.global,    text: "Geographic barriers to collaboration" }
+          { icon: ICONS.global, text: "Geographic barriers to collaboration" }
         ]
       },
       {
@@ -1801,10 +2237,10 @@
           { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>`, title: "Virtual Guided Excursions", desc: "Curated digital journeys led by virtual guides, opening up revenue for educational and global tourism brands.", img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=75&fit=crop" }
         ],
         challenges: [
-          { icon: ICONS.engage,    text: "Booking uncertainty without physical preview" },
-          { icon: ICONS.conversion,text: "Competition from OTAs and aggregators" },
-          { icon: ICONS.global,    text: "Communicating destination value remotely" },
-          { icon: ICONS.heritage,  text: "Heritage preservation and accessibility" }
+          { icon: ICONS.engage, text: "Booking uncertainty without physical preview" },
+          { icon: ICONS.conversion, text: "Competition from OTAs and aggregators" },
+          { icon: ICONS.global, text: "Communicating destination value remotely" },
+          { icon: ICONS.heritage, text: "Heritage preservation and accessibility" }
         ]
       },
       {
@@ -1826,14 +2262,14 @@
         useCases: [
           { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>`, title: "Virtual Design Review", desc: "Global engineering teams step inside full-scale models to review ergonomics and component placement before physical builds.", img: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=75&fit=crop" },
           { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M6.34 17.66l-1.41 1.41M20 12h2M2 12h2M17.66 17.66l1.41 1.41M5.34 6.34L3.93 4.93M12 20v2M12 2v2"/></svg>`, title: "Dealership Configurator", desc: "Customers configure paint, interior, and wheels under dynamic studio lighting — all before leaving the showroom.", img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`, title: "HMI Safety Simulation", desc: "Test dashboard layouts in a safe virtual road environment to measure driver response times before production sign-off.", img: "https://images.unsplash.com/photo-1547194935-b5f0ef5aff48?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.121 2.121 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>`, title: "AR Technician Guidance", desc: "Step-by-step repair guides overlaid on the actual engine in AR, reducing service time and upskilling technicians.", img: "https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=800&q=75&fit=crop" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`, title: "HMI Safety Simulation", desc: "Test dashboard layouts in a safe virtual road environment to measure driver response times before production sign-off.", img: "assets/images/industries/HMI Safety Simulation.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.121 2.121 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>`, title: "AR Technician Guidance", desc: "Step-by-step repair guides overlaid on the actual engine in AR, reducing service time and upskilling technicians.", img: "assets/images/industries/AR Technician Guidance.jpeg" }
         ],
         challenges: [
           { icon: ICONS.prototype, text: "High physical prototyping overhead" },
-          { icon: ICONS.revision,  text: "Long design iteration cycles" },
-          { icon: ICONS.engage,    text: "Showroom engagement in digital-first market" },
-          { icon: ICONS.training,  text: "Technician upskilling on complex systems" }
+          { icon: ICONS.revision, text: "Long design iteration cycles" },
+          { icon: ICONS.engage, text: "Showroom engagement in digital-first market" },
+          { icon: ICONS.training, text: "Technician upskilling on complex systems" }
         ]
       },
       {
@@ -1853,15 +2289,15 @@
           { num: "2×", label: "Improvement in remote site inspection" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`, title: "Offshore Plant Training", desc: "Train engineers on offshore platforms or substations, building familiarity with controls before first arrival on-site.", img: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>`, title: "Wind Turbine AR Maintenance", desc: "AR overlays guide technicians through maintenance steps hands-free at height, eliminating manual documentation lookups.", img: "https://images.unsplash.com/photo-1548337138-e87d889cc369?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`, title: "Grid Infrastructure Digital Twins", desc: "Visualise complex power grids and solar fields interactively to streamline maintenance routing and asset management.", img: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`, title: "Renewable Site Planning", desc: "Validate solar and wind layouts in VR before physical construction, optimising infrastructure placement for efficiency.", img: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=75&fit=crop" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`, title: "Offshore Plant Training", desc: "Train engineers on offshore platforms or substations, building familiarity with controls before first arrival on-site.", img: "assets/images/industries/Offshore Plant Training.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>`, title: "Wind Turbine AR Maintenance", desc: "AR overlays guide technicians through maintenance steps hands-free at height, eliminating manual documentation lookups.", img: "assets/images/industries/Wind Turbine AR Maintenance.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`, title: "Grid Infrastructure Digital Twins", desc: "Visualise complex power grids and solar fields interactively to streamline maintenance routing and asset management.", img: "assets/images/industries/Grid Infrastructure Digital Twins.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`, title: "Renewable Site Planning", desc: "Validate solar and wind layouts in VR before physical construction, optimising infrastructure placement for efficiency.", img: "assets/images/industries/Renewable Site Planning.jpeg" }
         ],
         challenges: [
-          { icon: ICONS.safety,   text: "Dangerous high-voltage training environments" },
-          { icon: ICONS.remote,   text: "Remote and offshore infrastructure access" },
-          { icon: ICONS.error,    text: "Complex maintenance procedure compliance" },
+          { icon: ICONS.safety, text: "Dangerous high-voltage training environments" },
+          { icon: ICONS.remote, text: "Remote and offshore infrastructure access" },
+          { icon: ICONS.error, text: "Complex maintenance procedure compliance" },
           { icon: ICONS.transfer, text: "Aging workforce knowledge transfer" }
         ]
       }
@@ -1874,7 +2310,7 @@
         btn.className = `industry-btn ${idx === 0 ? 'active' : ''}`;
         btn.dataset.id = ind.id;
         const cleanIcon = ind.icon.replace(/\s(width|height)="\d+"/g, '');
-        btn.innerHTML = `<span class="industry-btn-num">${String(idx + 1).padStart(2,'0')}</span><span class="industry-btn-label">${ind.label}</span><span class="industry-btn-icon" style="display:none">${cleanIcon}</span>`;
+        btn.innerHTML = `<span class="industry-btn-num">${String(idx + 1).padStart(2, '0')}</span><span class="industry-btn-label">${ind.label}</span><span class="industry-btn-icon" style="display:none">${cleanIcon}</span>`;
         btn.addEventListener('click', () => setActiveIndustry(ind.id));
         nav.appendChild(btn);
       });
@@ -1935,7 +2371,7 @@
             <div class="panel-tagline">${ind.tag}</div>
             <h2 class="panel-title">${ind.title}</h2>
             <p class="panel-desc">${ind.desc}</p>
-            <ul class="panel-desc-bullets">${ind.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+            <ul class="panel-desc-bullets">${ind.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
             <a href="contact.html" class="panel-cta">${ind.cta} <i class="fas fa-arrow-right"></i></a>
           </div>
           <div class="panel-stats">${statsHtml(ind.stats)}</div>
@@ -1952,8 +2388,8 @@
       return `
         <div class="pl1-intro">
           <div class="pl1-img-col">
-            <div class="panel-hero-wrap" style="margin-bottom:0;border-radius:1.25rem;overflow:hidden;height:100%;min-height:340px;">
-              <img class="panel-hero-img" src="${ind.heroImg}" alt="${ind.label}" style="height:100%;min-height:340px;">
+            <div class="panel-hero-wrap" style="margin-bottom:0;border-radius:1.25rem;overflow:hidden;height:100%;min-height:380px;">
+              <img class="panel-hero-img" src="${ind.heroImg}" alt="${ind.label}" style="height:100%;min-height:380px;">
               <div class="panel-hero-label">${ind.icon} ${ind.tag}</div>
             </div>
           </div>
@@ -1961,7 +2397,7 @@
             <div class="panel-tagline">${ind.tag}</div>
             <h2 class="panel-title">${ind.title}</h2>
             <p class="panel-desc">${ind.desc}</p>
-            <ul class="panel-desc-bullets">${ind.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+            <ul class="panel-desc-bullets">${ind.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
             <a href="contact.html" class="panel-cta">${ind.cta} <i class="fas fa-arrow-right"></i></a>
           </div>
         </div>
@@ -1979,8 +2415,8 @@
         <div class="pl2-stats-row">${statsHtml(ind.stats)}</div>
         <div class="pl2-body">
           <div class="pl2-img-col">
-            <div class="panel-hero-wrap" style="margin-bottom:0;border-radius:1.25rem;overflow:hidden;">
-              <img class="panel-hero-img" src="${ind.heroImg}" alt="${ind.label}" style="height:320px;">
+            <div class="panel-hero-wrap" style="margin-bottom:0;border-radius:1.25rem;overflow:hidden;height:100%;min-height:380px;">
+              <img class="panel-hero-img" src="${ind.heroImg}" alt="${ind.label}" style="height:100%;min-height:380px;">
               <div class="panel-hero-label">${ind.icon} ${ind.tag}</div>
             </div>
           </div>
@@ -1988,7 +2424,7 @@
             <div class="panel-tagline">${ind.tag}</div>
             <h2 class="panel-title">${ind.title}</h2>
             <p class="panel-desc">${ind.desc}</p>
-            <ul class="panel-desc-bullets">${ind.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+            <ul class="panel-desc-bullets">${ind.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
             <a href="contact.html" class="panel-cta">${ind.cta} <i class="fas fa-arrow-right"></i></a>
           </div>
         </div>
@@ -2009,14 +2445,14 @@
             <h2 class="panel-title" style="color:#fff;position:relative;z-index:2;">${ind.title}</h2>
             <p class="panel-desc" style="color:rgba(255,255,255,.75);position:relative;z-index:2;">${ind.desc}</p>
             <ul class="panel-desc-bullets" style="position:relative;z-index:2;">
-              ${ind.bullets.map(b=>`<li style="color:rgba(255,255,255,.75);">${b}</li>`).join('')}
+              ${ind.bullets.map(b => `<li style="color:rgba(255,255,255,.75);">${b}</li>`).join('')}
             </ul>
             <a href="contact.html" class="panel-cta" style="position:relative;z-index:2;margin-top:0.5rem;">${ind.cta} <i class="fas fa-arrow-right"></i></a>
           </div>
         </div>
         <div class="pl3-stats-grid">${statsHtml(ind.stats)}</div>
         <h3 class="panel-section-heading">VR/AR Use Cases</h3>
-        <div class="pl3-use-cases-list">${ind.useCases.map(uc=>`
+        <div class="pl3-use-cases-list">${ind.useCases.map(uc => `
           <div class="pl3-uc-item">
             <div class="pl3-uc-img"><img src="${uc.img}" alt="${uc.title}"></div>
             <div class="pl3-uc-body">
@@ -2067,6 +2503,7 @@
         btn.classList.remove('active', 'show-tooltip');
         if (btn.dataset.id === id) {
           btn.classList.add('active', 'show-tooltip');
+          btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
         }
       });
       document.querySelectorAll('.industry-panel').forEach(panel => {
@@ -2089,11 +2526,11 @@
     }
     window.addEventListener('hashchange', handleHashChange);
     handleHashChange();
-    
+
     // Intersection Observer for dock visibility
     const dockSection = document.getElementById('industryDock');
-    const industryNav = document.querySelector('.industry-nav-section');
-    if (industryNav && dockSection) {
+    const industryContent = document.getElementById('industryContent');
+    if (industryContent && dockSection) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -2102,8 +2539,8 @@
             dockSection.classList.remove('visible');
           }
         });
-      }, { threshold: 0.1 });
-      observer.observe(industryNav);
+      }, { threshold: 0.05 });
+      observer.observe(industryContent);
     }
     // ── FAQ accordion ─────────────────────────────────────────────────────────
     document.querySelectorAll('.faq-q').forEach(btn => {
@@ -2124,12 +2561,13 @@
   </script>
 
   <!-- ═══════════════════════════════════════════ FOOTER -->
- <div id="site-footer-mount"></div>
-<script src="footer-include.js"></script>
+  <div id="site-footer-mount"></div>
+  <script src="footer-include.js?v=yellow1"></script>
 
 
   <script src="volga.js"></script>
   <script src="portfolio-marquee.js"></script>
 
 </body>
+
 </html>

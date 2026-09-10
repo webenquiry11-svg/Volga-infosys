@@ -12,7 +12,6 @@ const htmlFiles = [
   'industry-news-detail.html',
   'industries.html',
   'contact.html',
-  'client-stories.html',
   'case-study-detail.html',
   'case-studies.html',
   'blog-detail.html'

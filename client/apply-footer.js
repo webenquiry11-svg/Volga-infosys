@@ -14,7 +14,6 @@ const files = [
   'industries.html',
   'case-studies.html',
   'case-study-detail.html',
-  'client-stories.html',
   'industry-news.html',
   'industry-news-detail.html',
   'insights-overview.html',

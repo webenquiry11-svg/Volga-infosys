@@ -2,7 +2,6 @@ import Contact from "../models/Contact.js";
 import Blog from "../models/Blog.js";
 import Project from "../models/Project.js";
 import EmailLog from "../models/EmailLog.js";
-import ClientStory from "../models/ClientStory.js";
 import Note from "../models/Note.js";
 import ActivityLog from "../models/ActivityLog.js";
 import { sendEmail } from "../config/emailService.js";
@@ -74,20 +73,17 @@ export const getStats = async (req, res) => {
 export const getPublicStats = async (req, res) => {
   const [
     projectsCount,
-    blogsCount,
-    clientStoriesCount
+    blogsCount
   ] = await Promise.all([
     Project.countDocuments(),
-    Blog.countDocuments({ status: "published" }),
-    ClientStory.countDocuments()
+    Blog.countDocuments({ status: "published" })
   ]);
 
   res.json({
     solutionTypes: 10,
     industriesServed: 15,
     projectsDelivered: projectsCount,
-    blogsCount,
-    clientStoriesCount
+    blogsCount
   });
 };
 

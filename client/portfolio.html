@@ -950,7 +950,7 @@
   <!-- ═══════════════════════════════════════════ NAV -->
   <nav id="navbar">
     <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
-      <img src="favicon.png" alt="VOLGA Infosys logo" />
+      <img src="logo.png" alt="VOLGA Infosys logo" />
     </a>
 
     <ul class="nav-links">
@@ -959,9 +959,6 @@
       </li>
       <li class="nav-item" data-menu="industries">
         <button class="nav-link">Industries <span class="nav-arrow"></span></button>
-      </li>
-      <li class="nav-item active" data-menu="work">
-        <button class="nav-link">Work <span class="nav-arrow"></span></button>
       </li>
       <li class="nav-item" data-menu="technologies">
         <a class="nav-link" href="technologies (2).html">Technologies</a>
@@ -987,10 +984,21 @@
       <li><a href="index.html" class="mm-link">Home</a></li>
       <li><a href="services.html" class="mm-link">Services</a></li>
       <li><a href="industries.html" class="mm-link">Industries</a></li>
-      <li><a href="portfolio.html" class="mm-link">Work</a></li>
       <li><a href="technologies (2).html" class="mm-link">Technologies</a></li>
       <li><a href="insights-overview-new.html" class="mm-link">Blogs</a></li>
-      <li><a href="company.html" class="mm-link">Company</a></li>
+      <li class="mm-has-sub open">
+        <div class="mm-sub-header">
+          <a href="javascript:void(0)" class="mm-link mm-parent-link">Company</a>
+          <button class="mm-toggle-btn" aria-label="Toggle Company submenu">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </div>
+        <ul class="mm-sub-menu">
+          <li><a href="about.html" class="mm-sub-link"><span class="mm-sub-dot"></span>About Us</a></li>
+          <li><a href="portfolio.html" class="mm-sub-link"><span class="mm-sub-dot"></span>Work</a></li>
+          <li><a href="careers-page (1).html" class="mm-sub-link"><span class="mm-sub-dot"></span>Careers</a></li>
+        </ul>
+      </li>
       <li><a href="contact.html" class="mm-link">Contact</a></li>
     </ul>
   </div>
@@ -1057,26 +1065,6 @@
     </div>
   </div>
 
-  <div class="mega-menu" id="menu-work">
-    <div class="mega-inner">
-      <div class="mega-label">Work</div>
-      <div class="mega-cols">
-        <div class="mega-col">
-          <ul class="mega-items">
-            <li><a class="mega-item" href="portfolio.html"><i class="fa-solid fa-briefcase"></i> Portfolio</a></li>
-            <li><a class="mega-item" href="client-stories.html"><i class="fa-solid fa-users"></i> Client Stories</a></li>
-            <li><a class="mega-item" href="product-demos.html"><i class="fa-solid fa-play"></i> Product Demos</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="mega-highlight">
-        <div class="mega-highlight-title">Featured Case Study</div>
-        <div class="mega-highlight-sub">See how we transformed an enterprise manufacturing workflow with interactive VR.</div>
-        <a href="client-stories.html" class="mega-highlight-btn">View Case Study <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-    </div>
-  </div>
-
   <div class="mega-menu" id="menu-company">
     <div class="mega-inner">
       <div class="mega-label">Company</div>
@@ -1084,8 +1072,14 @@
         <div class="mega-col">
           <ul class="mega-items">
             <li><a class="mega-item" href="about.html"><i class="fa-solid fa-users-gear"></i> About Us</a></li>
+            <li><a class="mega-item" href="portfolio.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9" />
+	<path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+	<path d="M12 12l0 .01" />
+	<path d="M3 13a20 20 0 0 0 18 0" />
+</svg>Work</a></li>
             <li><a class="mega-item" href="careers-page (1).html"><i class="fa-solid fa-user-plus"></i> Careers</a></li>
-            <li><a class="mega-item" href="contact.html"><i class="fa-solid fa-handshake"></i> Partnerships</a></li>
           </ul>
         </div>
       </div>
@@ -1313,7 +1307,7 @@
         
         <div class="lb-btn-row">
           <a href="contact.html" class="lb-primary-btn">Start Similar Project <i class="fa-solid fa-arrow-right"></i></a>
-          <a href="client-stories.html" class="lb-secondary-btn">View All Stories</a>
+          <a href="about.html#testimonials" class="lb-secondary-btn">View All Stories</a>
         </div>
       </div>
     </div>
@@ -2020,7 +2014,7 @@
           ],
           footerMsg: "Solid foundations. <b>Aligned expectations from day one.</b>",
           next: "Strategy",
-          image: "assets/images/about/process1.png"
+          image: "assets/images/work page images/discovery.jpeg"
         },
         {
           id: 2, nav: "Strategy", icon: "fa-solid fa-compass-drafting",
@@ -2033,7 +2027,7 @@
           ],
           footerMsg: "Strategic blueprinting. <b>Optimized for high-fidelity performance.</b>",
           next: "Development",
-          image: "assets/images/about/4-5.png"
+          image: "assets/images/work page images/strategy.jpeg"
         },
         {
           id: 3, nav: "Development", icon: "fa-solid fa-code",
@@ -2046,7 +2040,7 @@
           ],
           footerMsg: "Continuous progress. <b>Iterative previews shared at every milestone.</b>",
           next: "Testing / QA",
-          image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=900&q=80"
+          image: "assets/images/work page images/development.jpeg"
         },
         {
           id: 4, nav: "Testing / QA", icon: "fa-solid fa-shield-halved",
@@ -2059,7 +2053,7 @@
           ],
           footerMsg: "Excellence validated. <b>Tested rigorously for enterprise reliability.</b>",
           next: "Deployment",
-          image: "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=900&q=80"
+          image: "assets/images/work page images/testing &QA.jpeg"
         },
         {
           id: 5, nav: "Launch", icon: "fa-solid fa-rocket",
@@ -2072,7 +2066,7 @@
           ],
           footerMsg: "Live deployment. <b>Continuous innovation and enterprise support.</b>",
           next: "Discovery",
-          image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=900&q=80"
+          image: "assets/images/work page images/launch.jpeg"
         }
       ];
 

@@ -1703,8 +1703,23 @@ document.getElementById('backdrop')?.addEventListener('click', () => closeMenu()
       });
     }
 
-    // Close when clicking any menu link
-    mobileMenu.querySelectorAll('a').forEach(link => {
+    // Submenu accordion toggle in mobile menu
+    mobileMenu.querySelectorAll('.mm-has-sub').forEach(item => {
+      const toggle = item.querySelector('.mm-toggle-btn');
+      const parentLink = item.querySelector('.mm-parent-link');
+      
+      const handleToggle = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        item.classList.toggle('open');
+      };
+
+      if (toggle) toggle.addEventListener('click', handleToggle);
+      if (parentLink) parentLink.addEventListener('click', handleToggle);
+    });
+
+    // Close when clicking any actual navigating menu link (excluding parent accordion triggers)
+    mobileMenu.querySelectorAll('a:not(.mm-parent-link)').forEach(link => {
       link.addEventListener('click', () => {
         closeMobileMenu();
       });

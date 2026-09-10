@@ -548,23 +548,48 @@
       border-color: rgba(232, 147, 10, 0.4);
     }
 
+    .tcard-logo-banner {
+      width: 100%;
+      height: 145px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: #091a2b;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .tcard-logo-banner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(9, 26, 43, 0.05) 0%, rgba(9, 26, 43, 0.45) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
     .tcard-img {
       width: 100%;
-      height: 140px;
+      height: 100%;
+      max-height: none;
+      max-width: none;
       object-fit: cover;
+      object-position: center;
       display: block;
-      filter: saturate(.9) brightness(.85);
-      transition: filter .4s, transform .6s;
+      transition: transform .5s cubic-bezier(0.34, 1.56, 0.64, 1), filter .4s ease;
+      position: relative;
+      z-index: 1;
     }
 
     .tcard:hover .tcard-img {
-      filter: saturate(1.2) brightness(.95);
-      transform: scale(1.05)
+      transform: scale(1.08);
+      filter: brightness(1.06);
     }
 
     .tcard-img-fallback {
       width: 100%;
-      height: 140px;
+      height: 145px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -707,61 +732,63 @@
 
     .spotlight-float-card {
       position: absolute;
-      bottom: -24px;
-      left: -24px;
-      background: var(--surface);
+      bottom: -18px;
+      left: -18px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border);
-      box-shadow: 0 14px 44px rgba(13, 43, 62, 0.16), 0 4px 12px rgba(13, 43, 62, 0.06);
-      border-radius: 14px;
-      padding: 1.2rem 1.4rem;
-      min-width: 200px;
+      box-shadow: 0 16px 36px rgba(13, 43, 62, 0.14), 0 4px 12px rgba(13, 43, 62, 0.06);
+      border-radius: 16px;
+      padding: 1.1rem 1.4rem;
+      min-width: 210px;
+      z-index: 5;
     }
 
     .sfc-label {
-      font-size: .67rem;
+      font-size: .65rem;
       color: var(--text-muted);
       letter-spacing: .1em;
       text-transform: uppercase;
-      margin-bottom: .4rem
+      font-weight: 600;
+      margin-bottom: .3rem;
     }
 
     .sfc-value {
       font-family: var(--font-ui);
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--accent)
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1.15;
     }
 
     .sfc-sub {
       font-size: .75rem;
       color: var(--text-muted);
-      margin-top: .2rem
+      margin-top: .25rem;
+      white-space: nowrap;
     }
 
     .spotlight-float-badge {
       position: absolute;
-      top: -18px;
-      right: -18px;
-      width: 90px;
-      height: 90px;
+      top: -16px;
+      right: -16px;
+      width: 82px;
+      height: 82px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent-red));
+      background: linear-gradient(135deg, #f59e0b, #e8930a);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      box-shadow: var(--neu-shadow-out);
-      animation: rotateBadge 8s linear infinite;
+      box-shadow: 0 8px 24px rgba(232, 147, 10, 0.35), 0 2px 6px rgba(13, 43, 62, 0.1);
+      border: 3px solid #ffffff;
+      z-index: 5;
+      transition: transform 0.3s ease;
     }
 
-    @keyframes rotateBadge {
-      0% {
-        transform: rotate(0)
-      }
-
-      100% {
-        transform: rotate(360deg)
-      }
+    .spotlight-float-badge:hover {
+      transform: scale(1.06);
     }
 
     .sfl-inner {
@@ -769,22 +796,24 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      animation: rotateBadge 8s linear reverse infinite
+      color: #ffffff;
+      text-align: center;
+      line-height: 1.1;
     }
 
     .sfl-inner span:first-child {
       font-family: var(--font-ui);
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--accent3)
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #ffffff;
     }
 
     .sfl-inner span:last-child {
-      font-size: .55rem;
+      font-size: .58rem;
       font-weight: 700;
-      color: var(--accent3);
+      color: #ffffff;
       letter-spacing: .08em;
-      text-transform: uppercase
+      text-transform: uppercase;
     }
 
     /* Text side */
@@ -1107,17 +1136,24 @@
     .ai-video-strip {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      gap: 1.5rem;
     }
 
     .ai-video-card {
       border-radius: 16px;
       overflow: hidden;
       position: relative;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      box-shadow: 0 8px 30px rgba(13, 43, 62, 0.1), 0 2px 6px rgba(13, 43, 62, 0.04);
-      aspect-ratio: 16/9
+      background: #091726;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 30px rgba(13, 43, 62, 0.15), 0 2px 6px rgba(13, 43, 62, 0.06);
+      aspect-ratio: 16/9;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+
+    .ai-video-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(13, 43, 62, 0.25);
+      border-color: rgba(232, 147, 10, 0.45);
     }
 
     .ai-video-card video,
@@ -1126,7 +1162,14 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      filter: brightness(.75) saturate(1.2)
+      filter: brightness(0.92) saturate(1.1);
+      transition: transform 0.6s ease, filter 0.6s ease;
+    }
+
+    .ai-video-card:hover img,
+    .ai-video-card:hover video {
+      transform: scale(1.04);
+      filter: brightness(1.02) saturate(1.15);
     }
 
     .ai-video-card-label {
@@ -1135,21 +1178,28 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 1.2rem;
-      background: linear-gradient(180deg, transparent 40%, var(--surface) 100%)
+      padding: 1.5rem;
+      background: linear-gradient(180deg, transparent 25%, rgba(6, 16, 26, 0.65) 65%, rgba(6, 16, 26, 0.92) 100%);
+      pointer-events: none;
     }
 
     .ai-video-card-label h4 {
       font-family: var(--font-ui);
-      font-size: .95rem;
+      font-size: 1.05rem;
       font-weight: 700;
-      color: var(--text)
+      color: #ffffff;
+      margin: 0;
+      letter-spacing: -0.01em;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
     }
 
     .ai-video-card-label p {
-      font-size: .75rem;
-      color: var(--text-muted);
-      margin-top: .2rem
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.82);
+      margin-top: 0.35rem;
+      margin-bottom: 0;
+      line-height: 1.4;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
     }
 
     .ai-cards-row {
@@ -1694,7 +1744,7 @@
     }
 
     .section-light .tcard-glow {
-      background: linear-gradient(180deg, transparent 40%, #ff0000 100%)
+      background: linear-gradient(180deg, transparent 40%, rgba(232, 147, 10, 0.12) 100%)
     }
 
     .section-light .tcard-bar {
@@ -1761,7 +1811,7 @@
   <!-- ═══════════════════════════════════════════ NAV -->
   <nav id="navbar">
     <a href="index.html" class="nav-logo" aria-label="Volga Infosys home">
-      <img src="favicon.png" alt="VOLGA Infosys logo" />
+      <img src="logo.png" alt="VOLGA Infosys logo" />
     </a>
 
     <ul class="nav-links">
@@ -1770,9 +1820,6 @@
       </li>
       <li class="nav-item" data-menu="industries">
         <button class="nav-link">Industries <span class="nav-arrow"></span></button>
-      </li>
-      <li class="nav-item" data-menu="work">
-        <button class="nav-link">Work <span class="nav-arrow"></span></button>
       </li>
       <li class="nav-item" data-menu="technologies">
         <a class="nav-link" href="technologies (2).html">Technologies</a>
@@ -1796,12 +1843,23 @@
     <button class="mobile-close" id="mobileClose" aria-label="Close mobile menu">X</button>
     <ul>
       <li><a href="index.html" class="mm-link">Home</a></li>
-      <li><a href="industries.html" class="mm-link">Industries</a></li>
       <li><a href="services.html" class="mm-link">Services</a></li>
-      <li><a href="portfolio.html" class="mm-link">Work</a></li>
+      <li><a href="industries.html" class="mm-link">Industries</a></li>
       <li><a href="technologies (2).html" class="mm-link">Technologies</a></li>
       <li><a href="insights-overview-new.html" class="mm-link">Blogs</a></li>
-      <li><a href="company.html" class="mm-link">Company</a></li>
+      <li class="mm-has-sub open">
+        <div class="mm-sub-header">
+          <a href="javascript:void(0)" class="mm-link mm-parent-link">Company</a>
+          <button class="mm-toggle-btn" aria-label="Toggle Company submenu">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </div>
+        <ul class="mm-sub-menu">
+          <li><a href="about.html" class="mm-sub-link"><span class="mm-sub-dot"></span>About Us</a></li>
+          <li><a href="portfolio.html" class="mm-sub-link"><span class="mm-sub-dot"></span>Work</a></li>
+          <li><a href="careers-page (1).html" class="mm-sub-link"><span class="mm-sub-dot"></span>Careers</a></li>
+        </ul>
+      </li>
       <li><a href="contact.html" class="mm-link">Contact</a></li>
     </ul>
   </div>
@@ -2052,55 +2110,6 @@
     </div>
   </div>
 
-  <div class="mega-menu" id="menu-work">
-    <div class="mega-inner">
-      <div class="mega-label">Work</div>
-      <div class="mega-cols">
-        <div class="mega-col">
-          <ul class="mega-items">
-
-            <li><a class="mega-item" href="portfolio.html"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round"
-                  class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9" />
-                  <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
-                  <path d="M12 12l0 .01" />
-                  <path d="M3 13a20 20 0 0 0 18 0" />
-                </svg>Portfolio</a></li>
-            <li><a class="mega-item" href="client-stories.html"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round"
-                  class="icon icon-tabler icons-tabler-outline icon-tabler-users">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-                  <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                  <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
-                </svg>Client Stories</a></li>
-            <li><a class="mega-item" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-player-play">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M7 4v16l13 -8l-13 -8" />
-                </svg></span>Product Demos</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="mega-highlight">
-        <div class="mega-highlight-title">Featured Project</div>
-        <div class="mega-highlight-sub">See how we transformed a global manufacturer's training program with immersive
-          VR.</div>
-        <a href="#" class="mega-highlight-btn">View Case Study <svg width="12" height="12" viewBox="0 0 12 12"
-            fill="none">
-            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg></a>
-      </div>
-    </div>
-  </div>
-
   <div class="mega-menu" id="menu-company">
     <div class="mega-inner">
       <div class="mega-label">Company</div>
@@ -2118,6 +2127,13 @@
                   <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
                   <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
                 </svg>About Us</a></li>
+            <li><a class="mega-item" href="portfolio.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
+	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+	<path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9" />
+	<path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+	<path d="M12 12l0 .01" />
+	<path d="M3 13a20 20 0 0 0 18 0" />
+</svg>Work</a></li>
             <li><a class="mega-item" href="careers-page (1).html"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                   height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round"
@@ -2126,16 +2142,6 @@
                   <path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9" />
                   <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
                 </svg>Careers</a></li>
-            <li><a class="mega-item" href=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-heart-handshake">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
-                  <path
-                    d="M12 6l-3.293 3.293a1 1 0 0 0 0 1.414l.543 .543c.69 .69 1.81 .69 2.5 0l1 -1a3.182 3.182 0 0 1 4.5 0l2.25 2.25" />
-                  <path d="M12.5 15.5l2 2" />
-                  <path d="M15 13l2 2" />
-                </svg>Partnerships</a></li>
           </ul>
         </div>
       </div>
@@ -2220,19 +2226,6 @@
       <span>OpenXR</span><span class="ticker-dot">✦</span>
       <span>AI & ML</span><span class="ticker-dot">✦</span>
       <span>AWS & Azure</span><span class="ticker-dot">✦</span>
-      <span>Blender</span><span class="ticker-dot">✦</span>
-      <span>Digital Twins</span><span class="ticker-dot">✦</span>
-      <span>Real-Time 3D</span><span class="ticker-dot">✦</span>
-      <span>Unity</span><span class="ticker-dot">✦</span>
-      <span>Unreal Engine</span><span class="ticker-dot">✦</span>
-      <span>Three.js</span><span class="ticker-dot">✦</span>
-      <span>WebGL</span><span class="ticker-dot">✦</span>
-      <span>ARKit</span><span class="ticker-dot">✦</span>
-      <span>ARCore</span><span class="ticker-dot">✦</span>
-      <span>OpenXR</span><span class="ticker-dot">✦</span>
-      <span>AI & ML</span><span class="ticker-dot">✦</span>
-      <span>AWS & Azure</span><span class="ticker-dot">✦</span>
-      <span>Blender</span><span class="ticker-dot">✦</span>
       <span>Digital Twins</span><span class="ticker-dot">✦</span>
       <span>Real-Time 3D</span><span class="ticker-dot">✦</span>
     </div>
@@ -2265,12 +2258,13 @@
 
         <!-- SET A -->
         <div class="tcard">
-          <img class="tcard-img" src="https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=640&q=80"
-            alt="Unity 3D" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-logo-banner">
+            <img class="tcard-img" src="assets/images/tech/unity-showcase.jpg" alt="Unity" />
+          </div>
           <div class="tcard-glow"></div>
           <span class="tcard-tag">3D / XR</span>
           <div class="tcard-body">
-            <div class="tcard-icon">⬡</div>
+            <div class="tcard-icon"><img src="assets/images/homepage/unity.png" alt="Unity" style="width:20px;height:20px;object-fit:contain;" /></div>
             <h3>Unity</h3>
             <p>Real-time 3D development for AR/VR, digital twins, and enterprise simulations.</p>
             <div class="tcard-chips"><span class="chip">AR / VR / MR</span><span class="chip">Digital Twins</span><span
@@ -2282,12 +2276,13 @@
         </div>
 
         <div class="tcard">
-          <img class="tcard-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=640&q=80"
-            alt="Unreal Engine" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-logo-banner">
+            <img class="tcard-img" src="assets/images/tech/unreal-showcase.jpg" alt="Unreal Engine" />
+          </div>
           <div class="tcard-glow"></div>
           <span class="tcard-tag">3D / VR</span>
           <div class="tcard-body">
-            <div class="tcard-icon">🎬</div>
+            <div class="tcard-icon"><img src="assets/images/homepage/unreal.png" alt="Unreal Engine" style="width:20px;height:20px;object-fit:contain;" /></div>
             <h3>Unreal Engine</h3>
             <p>Cinematic-quality real-time rendering and high-fidelity visual simulations for industry.</p>
             <div class="tcard-chips"><span class="chip">Photorealistic</span><span class="chip">Arch. Viz</span><span
@@ -2299,12 +2294,13 @@
         </div>
 
         <div class="tcard">
-          <img class="tcard-img" src="https://images.unsplash.com/photo-1563089145-599997674d42?w=640&q=80"
-            alt="Three.js Web 3D" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-logo-banner">
+            <img class="tcard-img" src="assets/images/tech/threejs-showcase.jpg" alt="Three.js" />
+          </div>
           <div class="tcard-glow"></div>
           <span class="tcard-tag">Web 3D</span>
           <div class="tcard-body">
-            <div class="tcard-icon">△</div>
+            <div class="tcard-icon"><img src="assets/images/homepage/three.png" alt="Three.js" style="width:20px;height:20px;object-fit:contain;" /></div>
             <h3>Three.js</h3>
             <p>Browser-native 3D graphics for interactive product configurators and web showcases.</p>
             <div class="tcard-chips"><span class="chip">WebGL 3D</span><span class="chip">Configurators</span><span
@@ -2316,33 +2312,17 @@
         </div>
 
         <div class="tcard">
-          <img class="tcard-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=640&q=80"
-            alt="WebGL GPU Graphics" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-logo-banner">
+            <img class="tcard-img" src="assets/images/tech/webgl-showcase.jpg" alt="WebGL" />
+          </div>
           <div class="tcard-glow"></div>
           <span class="tcard-tag">Graphics</span>
           <div class="tcard-body">
-            <div class="tcard-icon">⊞</div>
+            <div class="tcard-icon"><img src="assets/images/homepage/webgl.png" alt="WebGL" style="width:22px;height:22px;object-fit:contain;" /></div>
             <h3>WebGL</h3>
             <p>Hardware-accelerated graphics rendering in modern web browsers without plugins.</p>
             <div class="tcard-chips"><span class="chip">GPU-Accelerated</span><span class="chip">Dashboards</span><span
                 class="chip">Web Standards</span></div>
-          </div>
-          <div class="tcard-bar">
-            <div class="tcard-bar-fill"></div>
-          </div>
-        </div>
-
-        <div class="tcard">
-          <img class="tcard-img" src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=640&q=80"
-            alt="Blender 3D" onerror="this.onerror=null;this.src='ar-application.jpg';" />
-          <div class="tcard-glow"></div>
-          <span class="tcard-tag">3D Art</span>
-          <div class="tcard-body">
-            <div class="tcard-icon">◇</div>
-            <h3>Blender</h3>
-            <p>Comprehensive 3D asset modeling, rigging, and animation pipeline for real-time engines.</p>
-            <div class="tcard-chips"><span class="chip">3D Modeling</span><span class="chip">Rigging</span><span
-                class="chip">Asset Pipeline</span></div>
           </div>
           <div class="tcard-bar">
             <div class="tcard-bar-fill"></div>
@@ -2351,12 +2331,13 @@
 
         <!-- SET B — exact duplicate for seamless loop -->
         <div class="tcard">
-          <img class="tcard-img" src="https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=640&q=80"
-            alt="Unity 3D" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-logo-banner">
+            <img class="tcard-img" src="assets/images/tech/unity-showcase.jpg" alt="Unity" />
+          </div>
           <div class="tcard-glow"></div>
           <span class="tcard-tag">3D / XR</span>
           <div class="tcard-body">
-            <div class="tcard-icon">⬡</div>
+            <div class="tcard-icon"><img src="assets/images/homepage/unity.png" alt="Unity" style="width:20px;height:20px;object-fit:contain;" /></div>
             <h3>Unity</h3>
             <p>Real-time 3D development for AR/VR, digital twins, and enterprise simulations.</p>
             <div class="tcard-chips"><span class="chip">AR / VR / MR</span><span class="chip">Digital Twins</span><span
@@ -2368,12 +2349,13 @@
         </div>
 
         <div class="tcard">
-          <img class="tcard-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=640&q=80"
-            alt="Unreal Engine" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-logo-banner">
+            <img class="tcard-img" src="assets/images/tech/unreal-showcase.jpg" alt="Unreal Engine" />
+          </div>
           <div class="tcard-glow"></div>
           <span class="tcard-tag">3D / VR</span>
           <div class="tcard-body">
-            <div class="tcard-icon">🎬</div>
+            <div class="tcard-icon"><img src="assets/images/homepage/unreal.png" alt="Unreal Engine" style="width:20px;height:20px;object-fit:contain;" /></div>
             <h3>Unreal Engine</h3>
             <p>Cinematic-quality real-time rendering and high-fidelity visual simulations for industry.</p>
             <div class="tcard-chips"><span class="chip">Photorealistic</span><span class="chip">Arch. Viz</span><span
@@ -2385,12 +2367,13 @@
         </div>
 
         <div class="tcard">
-          <img class="tcard-img" src="https://images.unsplash.com/photo-1563089145-599997674d42?w=640&q=80"
-            alt="Three.js Web 3D" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-logo-banner">
+            <img class="tcard-img" src="assets/images/tech/threejs-showcase.jpg" alt="Three.js" />
+          </div>
           <div class="tcard-glow"></div>
           <span class="tcard-tag">Web 3D</span>
           <div class="tcard-body">
-            <div class="tcard-icon">△</div>
+            <div class="tcard-icon"><img src="assets/images/homepage/three.png" alt="Three.js" style="width:20px;height:20px;object-fit:contain;" /></div>
             <h3>Three.js</h3>
             <p>Browser-native 3D graphics for interactive product configurators and web showcases.</p>
             <div class="tcard-chips"><span class="chip">WebGL 3D</span><span class="chip">Configurators</span><span
@@ -2402,33 +2385,17 @@
         </div>
 
         <div class="tcard">
-          <img class="tcard-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=640&q=80"
-            alt="WebGL GPU Graphics" onerror="this.onerror=null;this.src='ar-application.jpg';" />
+          <div class="tcard-logo-banner">
+            <img class="tcard-img" src="assets/images/tech/webgl-showcase.jpg" alt="WebGL" />
+          </div>
           <div class="tcard-glow"></div>
           <span class="tcard-tag">Graphics</span>
           <div class="tcard-body">
-            <div class="tcard-icon">⊞</div>
+            <div class="tcard-icon"><img src="assets/images/homepage/webgl.png" alt="WebGL" style="width:22px;height:22px;object-fit:contain;" /></div>
             <h3>WebGL</h3>
             <p>Hardware-accelerated graphics rendering in modern web browsers without plugins.</p>
             <div class="tcard-chips"><span class="chip">GPU-Accelerated</span><span class="chip">Dashboards</span><span
                 class="chip">Web Standards</span></div>
-          </div>
-          <div class="tcard-bar">
-            <div class="tcard-bar-fill"></div>
-          </div>
-        </div>
-
-        <div class="tcard">
-          <img class="tcard-img" src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=640&q=80"
-            alt="Blender 3D" onerror="this.onerror=null;this.src='ar-application.jpg';" />
-          <div class="tcard-glow"></div>
-          <span class="tcard-tag">3D Art</span>
-          <div class="tcard-body">
-            <div class="tcard-icon">◇</div>
-            <h3>Blender</h3>
-            <p>Comprehensive 3D asset modeling, rigging, and animation pipeline for real-time engines.</p>
-            <div class="tcard-chips"><span class="chip">3D Modeling</span><span class="chip">Rigging</span><span
-                class="chip">Asset Pipeline</span></div>
           </div>
           <div class="tcard-bar">
             <div class="tcard-bar-fill"></div>
@@ -2461,18 +2428,18 @@
       <!-- Media side -->
       <div class="spotlight-media reveal-left">
         <div class="spotlight-video-frame">
-          <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=900&q=80"
-            alt="Unity XR development" />
-          <div class="spotlight-float-card">
-            <div class="sfc-label">Real-time render</div>
-            <div class="sfc-value">60 fps</div>
-            <div class="sfc-sub">Across all target devices</div>
-          </div>
-          <div class="spotlight-float-badge">
-            <div class="sfl-inner">
-              <span>#1</span>
-              <span>Engine</span>
-            </div>
+          <img src="assets/images/homepage/unity-dev.png"
+            alt="Unity XR development and 3D environment authoring" />
+        </div>
+        <div class="spotlight-float-card">
+          <div class="sfc-label">Real-time render</div>
+          <div class="sfc-value">60 fps</div>
+          <div class="sfc-sub">Across all target devices</div>
+        </div>
+        <div class="spotlight-float-badge">
+          <div class="sfl-inner">
+            <span>#1</span>
+            <span>Engine</span>
           </div>
         </div>
       </div>
@@ -2545,17 +2512,18 @@
       <!-- Image mosaic -->
       <div class="ar-mosaic reveal-left">
         <div class="mosaic-main">
-          <img src="https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=900&q=80"
-            alt="AR augmented reality headset" />
+          <img src="assets/images/industries/AR Remote Expert Guidance.jpeg"
+            alt="Real-world AR overlay with holographic diagnostics" />
           <span class="mosaic-label">Real-world AR overlay</span>
         </div>
         <div class="mosaic-sub">
-          <img src="https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=480&q=80"
-            alt="ARKit iOS development" />
+          <img src="assets/images/tech/arkit-ios.jpg"
+            alt="ARKit iOS Apple iPhone augmented reality application" />
           <span class="mosaic-label">ARKit — iOS</span>
         </div>
         <div class="mosaic-sub">
-          <img src="https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?w=480&q=80" alt="ARCore Android AR" />
+          <img src="assets/images/tech/arcore-android.jpg"
+            alt="ARCore Android phone augmented reality tracking" />
           <span class="mosaic-label">ARCore — Android</span>
         </div>
       </div>
@@ -2628,16 +2596,16 @@
       <!-- Video/image strip -->
       <div class="ai-video-strip">
         <div class="ai-video-card reveal" style="transition-delay:.0s">
-          <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=640&q=80"
-            alt="AI machine learning neural network" />
+          <img src="assets/images/tech/ai-machine-learning.jpg"
+            alt="AI and Machine Learning Neural Intelligence" />
           <div class="ai-video-card-label">
             <h4>AI & Machine Learning</h4>
             <p>Generative AI · Computer Vision · NLP · Predictive Analytics</p>
           </div>
         </div>
         <div class="ai-video-card reveal" style="transition-delay:.1s">
-          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=640&q=80"
-            alt="Cloud infrastructure AWS Azure" />
+          <img src="assets/images/tech/cloud-infrastructure.jpg"
+            alt="Enterprise Cloud Infrastructure AWS and Azure" />
           <div class="ai-video-card-label">
             <h4>AWS & Microsoft Azure</h4>
             <p>Cloud Migration · Digital Twin Infrastructure · IoT Platforms</p>
