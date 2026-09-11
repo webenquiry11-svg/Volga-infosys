@@ -530,26 +530,121 @@
 
     @media (max-width: 1024px) {
       .cr-hero {
-        padding: 120px 0 70px;
+        padding: 130px 0 75px;
         background-position: 75% center;
+      }
+      .cr-hero h1 {
+        font-size: clamp(28px, 4.2vw, 44px);
       }
     }
 
     @media (max-width: 768px) {
       .cr-hero {
-        padding: 110px 0 60px;
-        background-image: linear-gradient(180deg, rgba(9, 21, 32, .94) 0%, rgba(9, 21, 32, .8) 100%), url('career-hero.png');
+        padding: 110px 0 55px;
+        background-image:
+          linear-gradient(180deg,
+            rgba(9, 21, 32, 0.96) 0%,
+            rgba(9, 21, 32, 0.88) 50%,
+            rgba(9, 21, 32, 0.98) 100%),
+          url('career-hero.png');
+        background-position: center center;
+      }
+
+      .cr-hero .cr-container {
+        padding: 0 18px;
+      }
+
+      .cr-hero-badge {
+        font-size: 11.5px;
+        padding: 5px 12px;
+        margin-bottom: 16px;
+      }
+
+      .cr-hero h1 {
+        font-size: clamp(25px, 6.5vw, 36px);
+        line-height: 1.18;
+      }
+
+      .cr-hero-sub {
+        font-size: 14.5px;
+        line-height: 1.6;
+        margin-top: 14px;
+        max-width: 100%;
+      }
+
+      .cr-hero-ctas {
+        margin-top: 24px;
+        gap: 10px;
+      }
+
+      .cr-hero .btn {
+        padding: 11px 18px;
+        font-size: 13.5px;
       }
 
       .cr-hero-stats {
-        flex-direction: column;
-        gap: 14px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-top: 32px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
       }
 
       .cr-hero-stat {
-        border: none;
-        padding: 0;
+        padding: 0 8px;
         margin: 0;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: left;
+      }
+
+      .cr-hero-stat:last-child {
+        border-right: none;
+        padding-right: 0;
+      }
+
+      .cr-hero-stat .num {
+        font-size: clamp(20px, 5.2vw, 24px);
+      }
+
+      .cr-hero-stat .lbl {
+        font-size: clamp(9px, 2.2vw, 10.5px);
+        letter-spacing: 0.05em;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .cr-hero {
+        padding: 100px 0 45px;
+      }
+
+      .cr-hero-ctas {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .cr-hero .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .cr-hero-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+        padding-top: 16px;
+      }
+
+      .cr-hero-stat {
+        padding: 0 4px;
+      }
+
+      .cr-hero-stat .num {
+        font-size: 19px;
+      }
+
+      .cr-hero-stat .lbl {
+        font-size: 9px;
+        letter-spacing: 0.04em;
       }
     }
 
@@ -3294,6 +3389,9 @@
       });
     });
   </script>
+  <!-- ═══════════════════════════════════════════ FOOTER -->
+  <div id="site-footer-mount"></div>
+  <script src="footer-include.js"></script>
 </body>
 
 </html>

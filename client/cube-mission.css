@@ -556,62 +556,107 @@
 /* ── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .cube-mission-wrap {
-    padding: 3rem 3rem 3rem 3rem;
-    height: 140vh;
+    padding: 3.5rem 2.5rem 3rem;
+    height: 135vh;
   }
   .cube-mission-header {
-    padding: 3rem 3rem 0;
+    padding: 0 0 1.5rem;
   }
   .cube-mission-scroll .cm-slide {
-    padding: 4rem 3rem 4rem 3rem;
+    padding: 3rem 2rem;
   }
-  #cm-cube { --s: min(65vw, 65vh, 450px); }
+  #cm-cube { --s: min(55vw, 55vh, 400px); }
 }
 
 @media (max-width: 768px) {
   .cube-mission-wrap {
-    padding: 2rem 1.5rem 2rem 1.5rem;
-    height: 160vh;
+    padding: 2.5rem 1.25rem 2rem;
+    height: 140vh;
   }
-  .cube-mission-header { padding: 2rem 1.5rem 0; }
+  .cube-mission-header {
+    padding: 0 0.5rem 1rem;
+  }
+  .cube-mission-title {
+    font-size: clamp(1.6rem, 5.5vw, 2.2rem);
+  }
+  .cube-mission-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .cube-mission-viewport {
+    height: 86vh;
+  }
+  .cube-mission-scene {
+    height: 86vh;
+  }
   .cube-mission-scroll .cm-slide { 
-    padding: 5rem 1.25rem 5rem 1.25rem; 
+    padding: 2.5rem 0.75rem; 
     align-items: flex-end; 
   }
   #cm-scene-strip { display: none; }
   #cm-hud {
-    top: 1rem;
-    right: 1rem;
+    top: 0.75rem;
+    right: 0.75rem;
+    padding: 0.35rem 0.65rem;
   }
   .cm-card, .cm-card.right, .cm-card.center {
     max-width: 100%;
     height: auto;
-    min-height: 22rem;
-    padding: 1.25rem 1rem;
+    min-height: auto;
+    padding: 1.25rem 1.1rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 8px 32px rgba(1, 51, 80, 0.12);
   }
-  #cm-cube { --s: min(75vw, 75vh, 320px); }
+  .cm-card h1, .cm-card h2 {
+    font-size: clamp(1.35rem, 5.2vw, 1.8rem) !important;
+  }
+  .cm-body {
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+  #cm-cube { --s: min(58vw, 40vh, 280px); }
   #cm-face-caption {
-    bottom: 1rem;
+    bottom: 0.75rem;
   }
 }
 
 @media (max-width: 480px) {
   .cube-mission-wrap {
-    height: 180vh;
+    padding: 2rem 0.75rem 1.5rem;
+    height: 145vh;
+  }
+  .cube-mission-viewport {
+    height: 82vh;
+  }
+  .cube-mission-scene {
+    height: 82vh;
   }
   .cube-mission-scroll .cm-slide {
-    padding: 6rem 1rem 6rem 1rem;
+    padding: 1.5rem 0.5rem;
   }
-  .cm-card h1 {
-    font-size: clamp(2rem, 8vw, 2.5rem) !important;
+  .cm-card, .cm-card.right, .cm-card.center {
+    padding: 1rem 0.9rem;
+    border-radius: 14px;
   }
-  .cm-card h2 {
-    font-size: clamp(1.8rem, 7vw, 2.2rem) !important;
+  .cm-card h1, .cm-card h2 {
+    font-size: clamp(1.22rem, 5vw, 1.5rem) !important;
   }
   .cm-body {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
+    line-height: 1.5;
   }
-  #cm-cube { --s: min(80vw, 80vh, 280px); }
+  #cm-cube { --s: min(52vw, 34vh, 210px); }
+  .cm-cta-row {
+    margin-top: 0.85rem;
+    gap: 0.5rem;
+  }
+  .cm-cta, .cm-cta-back {
+    padding: 0.4rem 0.85rem;
+    font-size: 0.8rem;
+  }
 }
 
 /* ── Respect reduced motion ───────────────────────────────────── */

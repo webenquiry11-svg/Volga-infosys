@@ -3953,10 +3953,12 @@ section {
 
   /* CTA */
   .cta-banner {
-    padding: 3.5rem 2rem;
-    margin-bottom: 40px;
-    height: 900px;
-    z-index: -3;
+    padding: 3.5rem 1.5rem;
+    margin-bottom: 0;
+    height: auto;
+    min-height: auto;
+    position: relative;
+    z-index: 1;
   }
 
   .cta-heading {

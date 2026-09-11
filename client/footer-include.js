@@ -257,8 +257,8 @@
 /* Responsive */
 @media (max-width: 1100px) {
   .vf-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 24px;
   }
   .vf-col:not(:last-child) {
     border-right: none;
@@ -268,24 +268,134 @@
     grid-column: span 2;
     max-width: 100%;
   }
+  .vf-col#col-company {
+    grid-column: 1;
+  }
+  .vf-col#col-services {
+    grid-column: 2;
+  }
+  .vf-col#col-resources {
+    grid-column: 1;
+  }
+  .vf-col#col-touch {
+    grid-column: 2;
+  }
 }
-@media (max-width: 640px) {
+
+@media (max-width: 768px) {
   .footer-inner {
-    padding: 24px 20px 8px;
+    padding: 32px 20px 16px;
   }
   .vf-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 26px 16px;
+  }
+  .vf-col:not(:last-child) {
+    border-right: none;
+    padding-right: 0;
   }
   .vf-brand-col {
-    grid-column: span 1;
+    grid-column: span 2;
+    max-width: 100%;
+  }
+  .vf-brand-col .footer-logo {
+    width: 160px;
+    margin-bottom: 10px;
+  }
+  .vf-tagline {
+    font-size: 14px;
+  }
+  .vf-desc {
+    font-size: 12.5px;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+  .vf-col#col-company {
+    grid-column: 1;
+  }
+  .vf-col#col-services {
+    grid-column: 2;
+  }
+  .vf-col#col-resources {
+    grid-column: 1;
+  }
+  .vf-col#col-touch {
+    grid-column: 2;
   }
   .footer-bottom {
     flex-direction: column;
     align-items: flex-start;
+    gap: 8px;
+    margin-top: 18px;
+    padding-top: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-inner {
+    padding: 24px 16px 14px;
+  }
+  .vf-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px 14px;
+  }
+  .vf-col:not(:last-child) {
+    border-right: none;
+    padding-right: 0;
+  }
+  .vf-brand-col {
+    grid-column: span 2;
+    max-width: 100%;
+  }
+  .vf-col#col-company {
+    grid-column: 1;
+  }
+  .vf-col#col-services {
+    grid-column: 2;
+  }
+  .vf-col#col-resources {
+    grid-column: 1;
+  }
+  .vf-col#col-touch {
+    grid-column: 2;
+  }
+  .vf-col-title {
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+  }
+  .vf-links a {
+    font-size: 12.5px;
+    line-height: 1.35;
+    word-break: break-word;
+  }
+  .vf-contact-item {
+    font-size: 11.5px;
     gap: 6px;
-    margin-top: 14px;
-    padding-top: 10px;
+  }
+  .vf-contact-item span {
+    word-break: break-all;
+  }
+  .vf-icon-badge {
+    width: 24px;
+    height: 24px;
+  }
+  .vf-icon-badge svg {
+    width: 11px;
+    height: 11px;
+  }
+  .vf-touch-btn {
+    padding: 6px 10px;
+    font-size: 11.5px;
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  .footer-bottom .brand-name {
+    font-size: 13.5px;
+  }
+  .footer-bottom .copyright {
+    font-size: 11px;
+    line-height: 1.5;
   }
 }
 `;
