@@ -194,8 +194,9 @@
   let tgt = 0;
   let smooth = 0;
   let velocity = 0;
-  const easeFactor = 0.25;
-  const dynamicFriction = (v) => (Math.abs(v) > 200 ? 0.75 : 0.88);
+  const SCROLL_SPEED_MULTIPLIER = 2.4;
+  const easeFactor = 0.35;
+  const dynamicFriction = (v) => (Math.abs(v) > 300 ? 0.82 : 0.88);
   let lastTime = performance.now();
   let animationFrameId = null;
   let isSectionVisible = false;
@@ -239,13 +240,14 @@
     }
 
     e.preventDefault();
-    const linePx = 16;
+    const linePx = 28;
     const pagePx = scroller.clientHeight * 0.9;
-    const delta = e.deltaMode === 1 ? e.deltaY * linePx :
-                  e.deltaMode === 2 ? e.deltaY * pagePx : e.deltaY;
-    if (Math.abs(delta) < 5) return;
+    const rawDelta = e.deltaMode === 1 ? e.deltaY * linePx :
+                     e.deltaMode === 2 ? e.deltaY * pagePx : e.deltaY;
+    const delta = rawDelta * SCROLL_SPEED_MULTIPLIER;
+    if (Math.abs(delta) < 2) return;
     velocity += delta;
-    velocity = Math.max(-600, Math.min(600, velocity));
+    velocity = Math.max(-1600, Math.min(1600, velocity));
   }, { passive: false });
 
   /* ── Regular scroll listener to update target ────────────────── */
@@ -268,13 +270,13 @@
     velocity *= Math.pow(dynamicFriction(velocity), dt * 60);
     if (Math.abs(velocity) < 0.01) velocity = 0;
 
-    if (Math.abs(velocity) > 0.2) {
+    if (Math.abs(velocity) > 0.1) {
       const next = Math.max(0, Math.min(scroller.scrollTop + velocity * easeFactor, maxScroll));
       scroller.scrollTop = next;
       tgt = next / maxScroll;
     }
 
-    smooth += (tgt - smooth) * (1 - Math.exp(-dt * 8));
+    smooth += (tgt - smooth) * (1 - Math.exp(-dt * 14));
     smooth = Math.max(0, Math.min(1, smooth));
 
     updateHUD(smooth);
