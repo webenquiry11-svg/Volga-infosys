@@ -1817,7 +1817,11 @@
 
   <!-- Mobile industry dock (mobile-only) -->
   <section class="industry-dock-section" id="industryDock" aria-hidden="false">
+    <div class="dock-tooltip-bubble" id="industryDockTooltip"></div>
     <div class="industry-dock-grid" id="industryDockGrid"></div>
+    <button class="dock-scroll-hint" id="industryDockHint" aria-label="Scroll for more industries">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
   </section>
 
   <!-- Divider -->
@@ -2484,31 +2488,72 @@
       });
     }
 
+    let dockTooltipTimer = null;
+
+    function showDockTooltip(label) {
+      const bubble = document.getElementById('industryDockTooltip');
+      if (!bubble) return;
+      bubble.textContent = label;
+      bubble.classList.add('visible');
+      if (dockTooltipTimer) clearTimeout(dockTooltipTimer);
+      dockTooltipTimer = setTimeout(() => {
+        bubble.classList.remove('visible');
+      }, 2500);
+    }
+
     function buildIndustryDock() {
       const dockGrid = document.getElementById('industryDockGrid');
+      const dockHint = document.getElementById('industryDockHint');
       if (!dockGrid) return;
       industries.forEach((ind, idx) => {
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = `industry-dock-btn ${idx === 0 ? 'active show-tooltip' : ''}`;
+        btn.className = `industry-dock-btn ${idx === 0 ? 'active' : ''}`;
         btn.dataset.id = ind.id;
         btn.innerHTML = `<span class="industry-dock-btn-icon">${ind.icon}</span><span class="industry-btn-label">${ind.label}</span>`;
-        btn.addEventListener('click', () => setActiveIndustry(ind.id));
+        btn.addEventListener('click', () => setActiveIndustry(ind.id, true));
         dockGrid.appendChild(btn);
       });
+
+      if (dockHint) {
+        const checkDockScroll = () => {
+          const hasOverflow = dockGrid.scrollWidth > dockGrid.clientWidth + 8;
+          const isEnd = (dockGrid.scrollLeft + dockGrid.clientWidth) >= (dockGrid.scrollWidth - 14);
+          if (hasOverflow && !isEnd) {
+            dockHint.classList.add('visible');
+          } else {
+            dockHint.classList.remove('visible');
+          }
+        };
+        dockGrid.addEventListener('scroll', checkDockScroll, { passive: true });
+        window.addEventListener('resize', checkDockScroll, { passive: true });
+        dockHint.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dockGrid.scrollBy({ left: 140, behavior: 'smooth' });
+        });
+        setTimeout(checkDockScroll, 400);
+      }
     }
 
-    function setActiveIndustry(id) {
+    function setActiveIndustry(id, showTooltip = true) {
+      const ind = industries.find(i => i.id === id);
       document.querySelectorAll('.industry-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.id === id);
       });
+
       document.querySelectorAll('.industry-dock-btn').forEach(btn => {
-        btn.classList.remove('active', 'show-tooltip');
-        if (btn.dataset.id === id) {
-          btn.classList.add('active', 'show-tooltip');
+        const isActive = btn.dataset.id === id;
+        btn.classList.toggle('active', isActive);
+        if (isActive) {
           btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
         }
       });
+
+      if (showTooltip && ind) {
+        showDockTooltip(ind.label);
+      }
+
       document.querySelectorAll('.industry-panel').forEach(panel => {
         panel.classList.toggle('active', panel.id === `panel-${id}`);
       });
@@ -2524,7 +2569,7 @@
     function handleHashChange() {
       const hash = window.location.hash.replace('#', '');
       if (hash && industries.find(i => i.id === hash)) {
-        setActiveIndustry(hash);
+        setActiveIndustry(hash, false);
       }
     }
     window.addEventListener('hashchange', handleHashChange);

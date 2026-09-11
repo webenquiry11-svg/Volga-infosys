@@ -1876,7 +1876,11 @@
 
   <!-- ═══════════════════════════════════════════ DOCK (MOBILE & QUICK NAV) ═══════════════════════════════════════════ -->
   <section class="services-nav-section" id="servicesNav" aria-hidden="false">
+    <div class="dock-tooltip-bubble" id="servicesDockTooltip"></div>
     <div class="services-nav-grid" id="servicesNavGrid"></div>
+    <button class="dock-scroll-hint" id="servicesDockHint" aria-label="Scroll for more services">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
   </section>
 
   <!-- ═══════════════════════════════════════════ FOOTER ═══════════════════════════════════════════ -->
@@ -2367,6 +2371,32 @@
       const navGrid = document.getElementById('servicesNavGrid');
       const servicesDock = document.getElementById('servicesNav');
       const solutionsShell = document.querySelector('.solutions-shell');
+      let dockTooltipTimer = null;
+
+      function showDockTooltip(name) {
+        const bubble = document.getElementById('servicesDockTooltip');
+        if (!bubble) return;
+        bubble.textContent = name;
+        bubble.classList.add('visible');
+        if (dockTooltipTimer) clearTimeout(dockTooltipTimer);
+        dockTooltipTimer = setTimeout(() => {
+          bubble.classList.remove('visible');
+        }, 2500);
+      }
+
+      function activateServiceDockBtn(id, showTooltip = true) {
+        const serv = SERVICES.find(s => s.id === id);
+        document.querySelectorAll('.services-btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.id === id);
+        });
+        const activeBtn = navGrid ? navGrid.querySelector(`[data-id="${id}"]`) : null;
+        if (activeBtn) {
+          activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+        if (showTooltip && serv) {
+          showDockTooltip(serv.name);
+        }
+      }
 
       if (navGrid) {
         SERVICES.forEach((s) => {
@@ -2374,19 +2404,38 @@
           c.className = 'services-btn';
           c.dataset.id = s.id;
           c.setAttribute('data-tooltip', s.name);
-          c.innerHTML = `<div class="services-btn-icon">${s.icon}</div>`;
+          c.innerHTML = `<div class="services-btn-icon">${s.icon}</div><span class="sb-name">${s.name}</span>`;
           c.addEventListener('click', (e) => {
             e.preventDefault();
             showService(s.id);
-            document.querySelectorAll('.services-btn').forEach(b => b.classList.remove('active'));
-            c.classList.add('active');
-            c.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+            activateServiceDockBtn(s.id, true);
           });
           navGrid.appendChild(c);
         });
 
-        const initialBtn = navGrid.querySelector(`[data-id="${target}"]`);
-        if (initialBtn) initialBtn.classList.add('active');
+        activateServiceDockBtn(target, false);
+
+        // Scroll hint handler
+        const dockHint = document.getElementById('servicesDockHint');
+        if (dockHint && navGrid) {
+          const checkDockScroll = () => {
+            const hasOverflow = navGrid.scrollWidth > navGrid.clientWidth + 8;
+            const isEnd = (navGrid.scrollLeft + navGrid.clientWidth) >= (navGrid.scrollWidth - 14);
+            if (hasOverflow && !isEnd) {
+              dockHint.classList.add('visible');
+            } else {
+              dockHint.classList.remove('visible');
+            }
+          };
+          navGrid.addEventListener('scroll', checkDockScroll, { passive: true });
+          window.addEventListener('resize', checkDockScroll, { passive: true });
+          dockHint.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            navGrid.scrollBy({ left: 140, behavior: 'smooth' });
+          });
+          setTimeout(checkDockScroll, 400);
+        }
       }
 
       if (solutionsShell && servicesDock) {

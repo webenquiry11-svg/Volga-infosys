@@ -8,7 +8,7 @@
   left: 50% !important;
   transform: translateX(-50%) !important;
   bottom: 16px !important;
-  z-index: 99999 !important;
+  z-index: 950 !important;
   padding: 8px !important;
   width: auto !important;
   max-width: calc(100% - 32px) !important;
@@ -19,6 +19,33 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
   border-radius: 50px !important;
   overflow: visible !important;
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease !important;
+}
+
+/* Ensure mobile menu and navbar are above dock */
+.navbar {
+  z-index: 99999 !important;
+}
+
+.mobile-menu {
+  z-index: 99998 !important;
+}
+
+/* Hide dock when mobile menu is open */
+body.mobile-menu-open .services-nav-section,
+body.mobile-menu-open .industry-dock-section,
+body.mobile-menu-open .solutions-nav-section,
+body:has(.mobile-menu.open) .services-nav-section,
+body:has(.mobile-menu.open) .industry-dock-section,
+body:has(.mobile-menu.open) .solutions-nav-section,
+.mobile-menu.open ~ .services-nav-section,
+.mobile-menu.open ~ .industry-dock-section,
+.mobile-menu.open ~ main .services-nav-section,
+.mobile-menu.open ~ main .industry-dock-section {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateX(-50%) translateY(40px) scale(0.92) !important;
 }
 
 /* Scroll track */
@@ -146,28 +173,72 @@
   transition: transform 0.08s ease !important;
 }
 
-/* Tooltip */
-.services-btn .sb-name,
-.services-btn .sb-arrow,
-.industry-dock-btn .industry-btn-label,
-.solutions-btn .sol-btn-name,
-.solutions-btn .sol-btn-tag {
+/* Floating Dock Tooltip / Active Name Bubble */
+.dock-tooltip-bubble {
   position: absolute !important;
   bottom: calc(100% + 12px) !important;
   left: 50% !important;
-  transform: translateX(-50%) translateY(8px) !important;
+  transform: translateX(-50%) translateY(8px) scale(0.92) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  background: #0b1329 !important;
+  color: #ffffff !important;
+  padding: 6px 14px !important;
+  border-radius: 20px !important;
+  font-family: inherit !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+  white-space: nowrap !important;
+  pointer-events: none !important;
+  border: 1px solid rgba(232, 147, 10, 0.45) !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35), 0 0 10px rgba(232, 147, 10, 0.25) !important;
+  z-index: 1000 !important;
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0.25s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.dock-tooltip-bubble::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  border-width: 6px 6px 0 6px !important;
+  border-style: solid !important;
+  border-color: #0b1329 transparent transparent transparent !important;
+}
+
+.dock-tooltip-bubble.visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateX(-50%) translateY(0) scale(1) !important;
+}
+
+/* Tooltip */
+.services-btn .sb-name,
+.industry-dock-btn .industry-btn-label,
+.solutions-btn .sol-btn-name {
+  position: absolute !important;
+  bottom: calc(100% + 12px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) translateY(6px) !important;
   opacity: 0 !important;
   visibility: hidden !important;
   background: #0f172a !important;
   color: #fff !important;
-  padding: 8px 14px !important;
-  border-radius: 10px !important;
+  padding: 6px 12px !important;
+  border-radius: 8px !important;
   font-size: 12px !important;
   font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
   white-space: nowrap !important;
-  transition: opacity 0.15s ease !important;
+  pointer-events: none !important;
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0.25s ease !important;
   z-index: 100 !important;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.3) !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25) !important;
 }
 
 .services-btn .sb-arrow,
@@ -178,12 +249,23 @@
 .services-btn .sb-name::after,
 .industry-dock-btn .industry-btn-label::after,
 .solutions-btn .sol-btn-name::after {
-  display: none !important;
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  top: 100% !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  border-width: 5px 5px 0 5px !important;
+  border-style: solid !important;
+  border-color: #0f172a transparent transparent transparent !important;
 }
 
 .services-btn.show-tooltip .sb-name,
 .industry-dock-btn.show-tooltip .industry-btn-label,
-.solutions-btn.show-tooltip .sol-btn-name {
+.solutions-btn.show-tooltip .sol-btn-name,
+.services-btn:hover .sb-name,
+.industry-dock-btn:hover .industry-btn-label,
+.solutions-btn:hover .sol-btn-name {
   opacity: 1 !important;
   visibility: visible !important;
   transform: translateX(-50%) translateY(0) !important;
@@ -265,6 +347,60 @@
 .industry-dock-btn:nth-child(10),
 .solutions-btn:nth-child(10) {
   animation-delay: 0.40s !important;
+}
+
+/* Dock scroll hint button */
+.dock-scroll-hint {
+  position: absolute !important;
+  right: -6px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #e8930a 0%, #d97706 100%) !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 4px 12px rgba(232, 147, 10, 0.45) !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+  pointer-events: auto !important;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease !important;
+  animation: dockHintBounce 1.4s infinite ease-in-out !important;
+  padding: 0 !important;
+}
+
+.dock-scroll-hint.visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.dock-scroll-hint:hover {
+  transform: translateY(-50%) scale(1.1) !important;
+}
+
+.dock-scroll-hint:active {
+  transform: translateY(-50%) scale(0.92) !important;
+}
+
+.dock-scroll-hint svg {
+  width: 14px !important;
+  height: 14px !important;
+  stroke: #ffffff !important;
+}
+
+@keyframes dockHintBounce {
+  0%, 100% {
+    transform: translateY(-50%) translateX(0);
+  }
+  50% {
+    transform: translateY(-50%) translateX(3px);
+  }
 }
 
 @media (min-width: 901px) {

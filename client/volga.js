@@ -1676,6 +1676,7 @@ document.getElementById('backdrop')?.addEventListener('click', () => closeMenu()
       burger.classList.add('open');
       burger.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
+      document.body.classList.add('mobile-menu-open');
     }
 
     function closeMobileMenu() {
@@ -1683,6 +1684,7 @@ document.getElementById('backdrop')?.addEventListener('click', () => closeMenu()
       burger.classList.remove('open');
       burger.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
+      document.body.classList.remove('mobile-menu-open');
     }
 
     function toggleMobileMenu(e) {
