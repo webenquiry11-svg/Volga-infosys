@@ -21,8 +21,223 @@
   <!-- ▶ Cube Mission styles — scoped, no conflict with volga.css -->
   <link rel="stylesheet" href="cube-mission.css" />
 
-  <!-- ▶ 3D Fluted Glass & Optical Refraction Hero styles -->
-  <link rel="stylesheet" href="hero-refraction.css" />
+  <!-- ▶ Career-style Hero styles -->
+  <style>
+    .cr-hero {
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      padding: 180px 0 130px;
+      background-color: #091520;
+      background-image:
+        linear-gradient(90deg,
+          #091520 0%,
+          #091520 40%,
+          rgba(9, 21, 32, 0.88) 55%,
+          rgba(9, 21, 32, 0.45) 75%,
+          rgba(9, 21, 32, 0.1) 100%),
+        url('volga-hero.png');
+      background-size: cover;
+      background-position: center right;
+      background-repeat: no-repeat;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .cr-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 140px;
+      background: linear-gradient(to top, #091520 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .cr-hero .cr-container {
+      position: relative;
+      z-index: 2;
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      padding: 0 clamp(24px, 5.5vw, 90px);
+    }
+
+    .cr-hero-copy {
+      max-width: 620px;
+    }
+
+    .cr-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .14);
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: .02em;
+      margin-bottom: 22px;
+    }
+
+    .cr-hero-badge .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #3CE07A;
+      flex-shrink: 0;
+    }
+
+    .cr-hero h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(32px, 4.4vw, 54px);
+      line-height: 1.12;
+      color: #d6e4f0;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .cr-hero h1 em {
+      font-style: normal;
+      color: #E8930A;
+    }
+
+    .cr-hero-sub {
+      margin-top: 18px;
+      font-size: 16px;
+      color: rgba(214, 228, 240, .75);
+      max-width: 500px;
+      line-height: 1.65;
+    }
+
+    .cr-hero-ctas {
+      display: flex;
+      gap: 14px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .cr-hero .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      border: 1.5px solid transparent;
+      transition: transform .2s cubic-bezier(.22, 1, .36, 1), box-shadow .2s cubic-bezier(.22, 1, .36, 1), background .2s, border-color .2s, color .2s;
+      white-space: nowrap;
+      text-transform: none;
+      letter-spacing: normal;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+      text-decoration: none;
+    }
+
+    .cr-hero .btn-amber {
+      background: #E8930A !important;
+      color: #fff !important;
+      border-color: #E8930A !important;
+    }
+
+    .cr-hero .btn-amber:hover {
+      background: #c97b08 !important;
+      border-color: #c97b08 !important;
+      color: #fff !important;
+      box-shadow: 0 4px 16px rgba(232, 147, 10, 0.25);
+      transform: translateY(-1px);
+    }
+
+    .cr-hero .btn-ghost {
+      background: transparent !important;
+      color: #fff !important;
+      border: 1.5px solid rgba(255, 255, 255, .28) !important;
+    }
+
+    .cr-hero .btn-ghost:hover {
+      background: rgba(255, 255, 255, .08) !important;
+      border-color: #fff !important;
+      transform: translateY(-1px);
+    }
+
+    .cr-hero-stats {
+      display: flex;
+      gap: 0;
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, .1);
+    }
+
+    .cr-hero-stat {
+      padding-right: 28px;
+      margin-right: 28px;
+      border-right: 1px solid rgba(255, 255, 255, .1);
+    }
+
+    .cr-hero-stat:last-child {
+      border-right: none;
+      margin-right: 0;
+      padding-right: 0;
+    }
+
+    .cr-hero-stat .num {
+      font-family: 'Sora', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: #E8930A;
+    }
+
+    .cr-hero-stat .lbl {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(214, 228, 240, .55);
+      margin-top: 2px;
+    }
+
+    @media (max-width: 1024px) {
+      .cr-hero {
+        min-height: 70vh;
+        padding: 150px 0 90px;
+        background-position: 75% center;
+      }
+      .cr-hero .cr-container {
+        padding: 0 24px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .cr-hero {
+        min-height: auto;
+        padding: 130px 0 70px;
+        background-image: linear-gradient(180deg, rgba(9, 21, 32, .94) 0%, rgba(9, 21, 32, .8) 100%), url('volga-hero.png');
+      }
+
+      .cr-hero .cr-container {
+        padding: 0 16px;
+      }
+
+      .cr-hero-stats {
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .cr-hero-stat {
+        border: none;
+        padding: 0;
+        margin: 0;
+      }
+    }
+  </style>
 
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -323,87 +538,42 @@
   <div id="backdrop" aria-hidden="true"></div>
 
   <!-- ═══════════════════════════════════════════ HERO ═══════════════════════════════════════════ -->
-  <section class="Hero" id="Hero">
-    
-    <!-- ═══════════ FULL-WIDTH 3D FLUTED GLASS REFRACTION BACKGROUND ═══════════ -->
-    <div class="hero-refraction-bg" aria-hidden="true">
-      <!-- 1. Deep Atmospheric Dark Base -->
-      <div class="refraction-base-ambient"></div>
-
-      <!-- 2. Autonomous Dynamic Liquid Flow Stream (Behind Glass) -->
-      <div class="refraction-emitter-container">
-        <canvas id="liquidFlowCanvas" class="liquid-flow-canvas"></canvas>
-        <div class="liquid-blob liquid-blob-1"></div>
-        <div class="liquid-blob liquid-blob-2"></div>
-        <div class="liquid-blob liquid-blob-3"></div>
+  <section class="cr-hero" id="Hero">
+    <div class="cr-container">
+      <div class="cr-hero-copy">
+        <div class="cr-hero-badge"><span class="dot"></span> Spatial Computing &amp; XR Labs · Live</div>
+        <h1>Engineering Immersive &amp;<br><em>Intelligent Systems</em><br>for Enterprise Growth</h1>
+        <p class="cr-hero-sub">We build AR, VR, AI, and Digital Twin platforms that elevate workforce training, reduce operational risk, and accelerate enterprise decision-making.</p>
+        <div class="cr-hero-ctas">
+          <a href="portfolio.html" class="btn btn-amber">
+            Explore Portfolio
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+          <a href="contact.html" class="btn btn-ghost">
+            Start a Project
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        </div>
+        <div class="cr-hero-stats">
+          <div class="cr-hero-stat">
+            <div class="num" data-val="60" data-suffix="+">0+</div>
+            <div class="lbl">Projects Delivered</div>
+          </div>
+          <div class="cr-hero-stat">
+            <div class="num" data-val="10" data-suffix="+">0+</div>
+            <div class="lbl">Industries Served</div>
+          </div>
+          <div class="cr-hero-stat">
+            <div class="num" data-val="8" data-suffix="+">0+</div>
+            <div class="lbl">Years Experience</div>
+          </div>
+        </div>
       </div>
-
-      <!-- 3. Vertical 3D Fluted / Reeded Glass Columns -->
-      <div class="fluted-glass-backdrop"></div>
-
-      <!-- 4. Specular Caustics & Highlight Ribs -->
-      <div class="fluted-caustics"></div>
-
-      <!-- 5. Interactive Refraction Light Beams -->
-      <div class="refraction-beams"></div>
-
-      <!-- 6. Luminous Horizon Arc -->
-      <div class="refraction-horizon-arc"></div>
     </div>
-
-    <!-- ═══════════ HERO FOREGROUND CONTENT ═══════════ -->
-    <div class="hero-main-container">
-      
-      <!-- Top Status Pill -->
-      <div class="hero-status-pill">
-        <span class="pulse-dot"></span>
-        <span class="pill-text">Spatial Computing &amp; XR Labs · Live</span>
-      </div>
-
-      <!-- Main Headline -->
-      <h1 class="hero-title" aria-label="Engineering Immersive &amp; Intelligent Systems for Enterprise Growth">
-        Engineering <span class="gradient-text">Immersive</span> &amp;<br />
-        <em>Intelligent Systems</em><br />
-        for Enterprise Growth
-      </h1>
-
-      <!-- Subtitle -->
-      <p class="hero-subtitle">
-        We build AR, VR, AI, and Digital Twin platforms that elevate workforce training, reduce operational risk, and accelerate enterprise decision-making.
-      </p>
-
-      <!-- CTA Row -->
-      <div class="hero-cta-group">
-        <a href="portfolio.html" class="hero-btn-primary magnetic-btn">
-          Explore Portfolio
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="contact.html" class="hero-btn-secondary magnetic-btn">
-          Start a Project
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-
-      <!-- Live KPI Strip -->
-      <div class="hero-kpi-strip">
-        <div class="hero-kpi-item">
-          <div class="hero-kpi-number"><span class="stat-num" data-val="60">0</span><span class="plus">+</span></div>
-          <div class="hero-kpi-label">Projects Delivered</div>
-        </div>
-        <div class="hero-kpi-divider"></div>
-        <div class="hero-kpi-item">
-          <div class="hero-kpi-number"><span class="stat-num" data-val="10">0</span><span class="plus">+</span></div>
-          <div class="hero-kpi-label">Industries Served</div>
-        </div>
-        <div class="hero-kpi-divider"></div>
-        <div class="hero-kpi-item">
-          <div class="hero-kpi-number"><span class="stat-num" data-val="8">0</span><span class="plus">+</span></div>
-          <div class="hero-kpi-label">Years Experience</div>
-        </div>
-      </div>
-
-    </div>
-
   </section>
 
   <!-- ═══════════════════════════════════════════ TICKER -->
@@ -420,6 +590,7 @@
       <span>3D Visualization</span><span class="ticker-dot">✦</span>
       <span>Immersive Tech</span><span class="ticker-dot">✦</span>
       <span>XR Development</span><span class="ticker-dot">✦</span>
+      <span>Innovation Lab</span><span class="ticker-dot">✦</span>
     </div>
   </div>
 
@@ -462,36 +633,44 @@
       <article class="svc-card" style="--card-bg:url('assets/images/homepage/unity-dev.png')">
         <div class="svc-card-inner">
           <div class="svc-card-glow"></div>
-          <span class="svc-card-label">Engine</span>
-          <h3>Unity Development</h3>
-          <p>Cross-platform immersive applications, configurators, realtime tools, and interactive 3D systems.</p>
+          <div class="svc-card-content">
+            <span class="svc-card-label">Engine</span>
+            <h3>Unity Development</h3>
+            <p>Cross-platform immersive applications, configurators, realtime tools, and interactive 3D systems.</p>
+          </div>
           <div class="svc-card-tags"><small>Unity</small><small>OpenXR</small><small>Realtime 3D</small></div>
         </div>
       </article>
       <article class="svc-card" style="--card-bg:url('assets/images/homepage/unreal-dev.png')">
         <div class="svc-card-inner">
           <div class="svc-card-glow"></div>
-          <span class="svc-card-label">Engine</span>
-          <h3>Unreal Engine Development</h3>
-          <p>High-fidelity visualization, virtual production, enterprise simulations, and photoreal experiences.</p>
+          <div class="svc-card-content">
+            <span class="svc-card-label">Engine</span>
+            <h3>Unreal Engine Development</h3>
+            <p>High-fidelity visualization, virtual production, enterprise simulations, and photoreal experiences.</p>
+          </div>
           <div class="svc-card-tags"><small>Unreal</small><small>Pixel Streaming</small><small>ArchViz</small></div>
         </div>
       </article>
       <article class="svc-card" style="--card-bg:url('assets/images/homepage/web-xr.png')">
         <div class="svc-card-inner">
           <div class="svc-card-glow"></div>
-          <span class="svc-card-label">Web</span>
-          <h3>WebXR Experiences</h3>
-          <p>Browser-native 3D and immersive experiences that users can access without app installation.</p>
+          <div class="svc-card-content">
+            <span class="svc-card-label">Web</span>
+            <h3>WebXR Experiences</h3>
+            <p>Browser-native 3D and immersive experiences that users can access without app installation.</p>
+          </div>
           <div class="svc-card-tags"><small>Three.js</small><small>WebXR</small><small>WebGL</small></div>
         </div>
       </article>
       <article class="svc-card" style="--card-bg:url('assets/images/homepage/ui-ux.png')">
         <div class="svc-card-inner">
           <div class="svc-card-glow"></div>
-          <span class="svc-card-label">Experience</span>
-          <h3>UI/UX Design</h3>
-          <p>Interfaces and journeys designed for clarity, conversion, enterprise usability, and repeat use.</p>
+          <div class="svc-card-content">
+            <span class="svc-card-label">Experience</span>
+            <h3>UI/UX Design</h3>
+            <p>Interfaces and journeys designed for clarity, conversion, enterprise usability, and repeat use.</p>
+          </div>
           <div class="svc-card-tags"><small>Research</small><small>Design Systems</small><small>Prototypes</small></div>
         </div>
       </article>
@@ -1141,7 +1320,5 @@
   <script src="portfolio-marquee.js"></script>
   <!-- ▶ Cube Mission — loads after volga.js, fully isolated -->
   <script src="cube-mission.js" defer></script>
-  <!-- ▶ 3D Fluted Glass & Optical Refraction Hero script -->
-  <script src="hero-refraction.js" defer></script>
 </body>
 </html>

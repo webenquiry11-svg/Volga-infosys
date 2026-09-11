@@ -554,173 +554,432 @@
     }
 
     /* ═══════════════════════════════════════
-       CULTURE — BENTO GRID
+       CULTURE SECTION (IMAGE MATCHED BENTO)
     ═══════════════════════════════════════ */
     .cr-culture {
-      padding: 64px 0;
+      padding: 56px 0 64px;
+      position: relative;
     }
 
-    .cr-section-head {
-      margin-bottom: 36px;
+    .cr-culture .cr-container {
+      max-width: 1540px;
+      width: 95%;
     }
 
-    .cr-projects .cr-container {
-      padding-bottom: 0;
-    }
-
-    .cr-section-head h2 {
-      font-family: 'Sora', sans-serif;
-      font-size: clamp(24px, 3.2vw, 36px);
-      color: var(--c-navy);
-      margin-top: 10px;
-      font-weight: 800;
-      letter-spacing: -.02em;
-    }
-
-    .cr-section-head p {
-      margin-top: 12px;
-      color: var(--c-muted);
-      font-size: 15px;
-      max-width: 560px;
-      line-height: 1.65;
-    }
-
-    .cr-section-head.center {
-      text-align: center;
-    }
-
-    .cr-section-head.center p {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .cr-bento {
+    .cr-culture-header {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 32px;
+      align-items: center;
+      margin-bottom: 24px;
     }
 
-    .cr-bento-card {
-      background: #fff;
-      border: 1px solid var(--c-border);
-      border-radius: var(--r-lg);
-      padding: 26px 24px;
+    .cr-culture-intro {
+      max-width: 620px;
     }
 
-    .cr-bento-card.featured {
-      grid-column: span 2;
-      background: linear-gradient(135deg, #0D2B3E 0%, #1B4F72 100%);
+    .eyebrow-blue {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #E8930A;
+      margin-bottom: 12px;
+    }
+
+    .eyebrow-blue::before {
+      content: '';
+      width: 20px;
+      height: 2px;
+      background: #E8930A;
+    }
+
+    .cr-culture-intro h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(28px, 3.4vw, 42px);
+      color: #0D2B3E;
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -.02em;
+      margin-bottom: 14px;
+    }
+
+    .text-blue-accent {
+      color: #E8930A;
+    }
+
+    .cr-culture-intro p {
+      color: #4A6070;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .cr-culture-banner {
+      position: relative;
+      border-radius: 120px 24px 24px 24px;
+      overflow: hidden;
+      box-shadow: 0 12px 36px rgba(13, 31, 45, 0.12), 0 0 0 1px rgba(27, 79, 114, 0.08);
+      background: #091520;
+      aspect-ratio: 16 / 9;
+      max-height: 220px;
+    }
+
+    .cr-culture-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .cr-culture-banner:hover img {
+      transform: scale(1.03);
+    }
+
+    .cr-banner-tag {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 14px;
+      background: rgba(9, 21, 32, 0.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
       color: #fff;
-      border-color: transparent;
+      z-index: 2;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     }
 
-    .cr-bento-card.featured h3,
-    .cr-bento-card.featured p {
+    .cr-banner-tag-text {
+      font-size: 10.5px;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
       color: #d6e4f0;
     }
 
-    .cr-bento-card.featured p {
-      color: rgba(214, 228, 240, .7);
-    }
-
-    .cr-bento-card.accent-card {
-      background: linear-gradient(135deg, #E8930A 0%, #c97b08 100%);
-      border-color: transparent;
-    }
-
-    .cr-bento-card.accent-card h3,
-    .cr-bento-card.accent-card p {
-      color: #fff;
-    }
-
-    .cr-bento-card.accent-card p {
-      color: rgba(255, 255, 255, .8);
-    }
-
-    .cr-bento-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: var(--r-sm);
+    .cr-banner-tag-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(232, 147, 10, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.4);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(27, 79, 114, .08);
-      border: 1px solid var(--c-border);
-      margin-bottom: 16px;
-    }
-
-    .cr-bento-card.featured .cr-bento-icon {
-      background: rgba(255, 255, 255, .12);
-      border-color: rgba(255, 255, 255, .2);
-    }
-
-    .cr-bento-card.accent-card .cr-bento-icon {
-      background: rgba(255, 255, 255, .18);
-      border-color: rgba(255, 255, 255, .3);
-    }
-
-    .cr-bento-icon svg {
-      width: 20px;
-      height: 20px;
-      stroke: var(--c-primary);
-    }
-
-    .cr-bento-card.featured .cr-bento-icon svg {
-      stroke: #fff;
-    }
-
-    .cr-bento-card.accent-card .cr-bento-icon svg {
-      stroke: #fff;
-    }
-
-    .cr-bento-card h3 {
-      font-family: 'Sora', sans-serif;
-      font-size: 16.5px;
+      font-size: 12px;
       font-weight: 700;
-      color: var(--c-navy);
-      margin-bottom: 8px;
+      color: #fff;
     }
 
-    .cr-bento-card p {
-      color: var(--c-muted);
-      font-size: 14px;
-      line-height: 1.6;
+    /* Bento Row 1: 2 Columns */
+    .cr-culture-row-1 {
+      display: grid;
+      grid-template-columns: 1.55fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .cr-bento-hero-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      padding: 26px 28px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: #091520;
+      background-image:
+        linear-gradient(90deg,
+          #091826 0%,
+          rgba(9, 24, 38, 0.95) 45%,
+          rgba(9, 24, 38, 0.45) 75%,
+          rgba(9, 24, 38, 0.15) 100%),
+        url('assets/images/career/real-impact.jpg');
+      background-size: cover;
+      background-position: center right;
+      background-repeat: no-repeat;
+      box-shadow: 0 8px 32px rgba(9, 24, 38, 0.16), 0 0 0 1px rgba(27, 79, 114, 0.1);
+      transition: transform .32s cubic-bezier(.22, 1, .36, 1), box-shadow .32s;
+    }
+
+    .cr-bento-hero-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(9, 24, 38, 0.24);
+    }
+
+    .cr-hero-card-content {
+      position: relative;
+      z-index: 2;
+      max-width: 460px;
+    }
+
+    .cr-card-icon,
+    .cr-card-icon.icon-blue,
+    .cr-card-icon.icon-light-blue,
+    .cr-card-icon.icon-mint,
+    .cr-card-icon.icon-purple,
+    .cr-card-icon.icon-orange,
+    .cr-card-icon.icon-rose {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      flex-shrink: 0;
+      background: #FEF3E6;
+      color: #D97706;
+      border: 1px solid rgba(232, 147, 10, 0.25);
+    }
+
+    .cr-card-kicker {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #E8930A;
+      margin-bottom: 4px;
+    }
+
+    .cr-bento-hero-card h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 21px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .cr-bento-hero-card p {
+      color: rgba(214, 228, 240, 0.85);
+      font-size: 13.5px;
+      line-height: 1.5;
     }
 
     .cr-bento-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 7px;
       margin-top: 16px;
+      position: relative;
+      z-index: 2;
     }
 
     .cr-bento-tag {
-      padding: 4px 10px;
+      padding: 4px 11px;
       border-radius: 999px;
       font-size: 11px;
       font-weight: 600;
-      background: rgba(255, 255, 255, .15);
-      border: 1px solid rgba(255, 255, 255, .25);
-      color: #fff;
+      background: rgba(232, 147, 10, 0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(232, 147, 10, 0.35);
+      color: #F59E0B;
     }
 
-    @media (max-width: 1100px) {
-      .cr-bento {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    .cr-culture .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+    }
 
-      .cr-bento-card.featured {
-        grid-column: span 2;
+    .cr-card-collaborative {
+      position: relative;
+      background: #ffffff !important;
+      border-radius: 20px;
+      padding: 24px 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-height: 220px;
+      border: 1px solid rgba(13, 31, 45, 0.08);
+      box-shadow: 0 4px 20px rgba(13, 31, 45, 0.05);
+      transition: transform .32s cubic-bezier(.22, 1, .36, 1), box-shadow .32s;
+    }
+
+    .cr-card-collaborative:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 36px rgba(13, 31, 45, 0.11);
+    }
+
+    .cr-card-collaborative .cr-card-copy {
+      position: relative;
+      z-index: 5;
+      max-width: 62%;
+    }
+
+    .cr-card-collaborative h3 {
+      font-family: 'Sora', sans-serif !important;
+      font-size: 18px !important;
+      font-weight: 700 !important;
+      color: #0F172A !important;
+      margin-bottom: 6px !important;
+      line-height: 1.25 !important;
+      letter-spacing: -0.01em;
+    }
+
+    .cr-card-collaborative p {
+      color: #475569 !important;
+      font-size: 13px !important;
+      font-weight: 450 !important;
+      line-height: 1.5 !important;
+    }
+
+    .cr-collab-thumb {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 44%;
+      height: 92%;
+      overflow: hidden;
+      z-index: 1;
+      pointer-events: none;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.2) 12%, black 45%);
+      mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.2) 12%, black 45%);
+    }
+
+    .cr-collab-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center bottom;
+      display: block;
+    }
+
+    /* Bento Row 2: 4 Columns */
+    .cr-culture-row-2 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .cr-mini-card {
+      position: relative;
+      background: #ffffff !important;
+      border-radius: 20px;
+      padding: 20px 22px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-height: 195px;
+      border: 1px solid rgba(13, 31, 45, 0.08);
+      box-shadow: 0 4px 18px rgba(13, 31, 45, 0.04);
+      transition: transform .32s cubic-bezier(.22, 1, .36, 1), box-shadow .32s;
+    }
+
+    .cr-mini-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(13, 31, 45, 0.10);
+    }
+
+    .cr-mini-copy {
+      position: relative;
+      z-index: 5;
+      max-width: 66%;
+    }
+
+    .cr-mini-card h3 {
+      font-family: 'Sora', sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      color: #0F172A !important;
+      margin-bottom: 5px !important;
+      line-height: 1.25 !important;
+      letter-spacing: -0.01em;
+    }
+
+    .cr-mini-card p {
+      color: #475569 !important;
+      font-size: 12px !important;
+      font-weight: 450 !important;
+      line-height: 1.45 !important;
+      margin: 0 !important;
+    }
+
+    .cr-mini-thumb {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 44%;
+      height: 88%;
+      overflow: hidden;
+      z-index: 1;
+      pointer-events: none;
+      -webkit-mask-image: radial-gradient(ellipse at 90% 90%, black 40%, rgba(0, 0, 0, 0.3) 68%, transparent 96%), linear-gradient(to right, transparent 0%, black 42%);
+      mask-image: radial-gradient(ellipse at 90% 90%, black 40%, rgba(0, 0, 0, 0.3) 68%, transparent 96%), linear-gradient(to right, transparent 0%, black 42%);
+    }
+
+    .cr-mini-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center bottom;
+      display: block;
+    }
+
+    /* Sticker Note for Flexible Work */
+    .cr-sticker-note {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #0F172A;
+      transform: rotate(3deg);
+      background: #F1F5F9;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px dashed #94A3B8;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      z-index: 6;
+    }
+
+    /* Responsive */
+    @media (max-width: 1150px) {
+      .cr-culture-header {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .cr-culture-banner {
+        max-height: 280px;
+      }
+      .cr-culture-row-1 {
+        grid-template-columns: 1fr;
+      }
+      .cr-culture-row-2 {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
     @media (max-width: 640px) {
-      .cr-bento {
+      .cr-culture-row-2 {
         grid-template-columns: 1fr;
       }
-
-      .cr-bento-card.featured {
-        grid-column: span 1;
+      .cr-bento-hero-card {
+        padding: 24px 20px;
+      }
+      .cr-card-collaborative {
+        padding: 24px 20px;
+      }
+      .cr-mini-card {
+        padding: 22px 18px;
+        min-height: 220px;
       }
     }
 
@@ -2165,17 +2424,15 @@
       <div class="cr-hero-copy">
         <div class="cr-hero-badge"><span class="dot"></span> We're Hiring — 24 Open Roles</div>
         <h1>Build the Future of<br><em>Extended Reality</em></h1>
-        <p class="cr-hero-sub">Volga designs the spatial computing layer for the physical world — XR, AR, VR, AI, and
-          digital twins used by manufacturers, hospitals, and studios on six continents. Come build what's next.</p>
+        <p class="cr-hero-sub">Volga designs the spatial computing layer for the physical world — XR, AR, VR, AI, and digital twins used by manufacturers, hospitals, and studios on six continents. Come build what's next.</p>
         <div class="cr-hero-ctas">
-          <a href="#jobs" class="btn btn-amber" onclick="event.preventDefault(); scrollToTarget('jobs');">View Open
-            Positions
+          <a href="#jobs" class="btn btn-amber" onclick="event.preventDefault(); scrollToTarget('jobs');">
+            View Open Positions
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </a>
-          <a href="#culture" class="btn btn-ghost" onclick="event.preventDefault(); scrollToTarget('culture');">Our
-            Culture</a>
+          <a href="#culture" class="btn btn-ghost" onclick="event.preventDefault(); scrollToTarget('culture');">Our Culture</a>
         </div>
         <div class="cr-hero-stats">
           <div class="cr-hero-stat">
@@ -2196,88 +2453,117 @@
   </section>
 
   <!-- ═══════════════════════════════════════
-       CULTURE — BENTO GRID
+       CULTURE — WHY JOIN US (IMAGE MATCH)
   ═══════════════════════════════════════ -->
-  <section class="cr-culture cr-container" id="culture">
-    <div class="cr-section-head reveal">
-      <span class="eyebrow">Why Join Us</span>
-      <h2>Built for Those Who Build the Future.</h2>
-      <p>We hire builders comfortable in the space between hardware and imagination, and give them the tools, autonomy,
-        and trust to do their best work.</p>
-    </div>
-    <div class="cr-bento">
-      <div class="cr-bento-card featured reveal">
-        <div class="cr-bento-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2L2 7l10 5 10-5-10-5z" />
-            <path d="M2 17l10 5 10-5" />
-            <path d="M2 12l10 5 10-5" />
-          </svg>
+  <section class="cr-culture" id="culture">
+    <div class="cr-container">
+      <!-- Top Header Row -->
+      <div class="cr-culture-header reveal">
+        <div class="cr-culture-intro">
+          <span class="eyebrow-blue">Why Join Us</span>
+          <h2>Built for Those Who <span class="text-blue-accent">Build the Future</span>.</h2>
+          <p>We hire builders comfortable in the space between hardware and imagination, and give them the tools, autonomy, and trust to do their best work.</p>
         </div>
-        <h3>Impactful Work, Day One</h3>
-        <p>Every role at Volga puts you on live client work — real industrial challenges, real enterprise outcomes. Not
-          internal tools, not tutorial projects.</p>
-        <div class="cr-bento-tags">
-          <span class="cr-bento-tag">Enterprise</span>
-          <span class="cr-bento-tag">XR / AR / VR</span>
-          <span class="cr-bento-tag">AI</span>
-          <span class="cr-bento-tag">Live Clients</span>
+        <div class="cr-culture-banner">
+          <img src="assets/images/career/team-hero.jpg" alt="Volga Team Collaborating" />
+          <div class="cr-banner-tag">
+            <div class="cr-banner-tag-text">Build<br>Create<br>Grow</div>
+            <span class="cr-banner-tag-icon">+</span>
+          </div>
         </div>
       </div>
-      <div class="cr-bento-card reveal">
-        <div class="cr-bento-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-            <circle cx="9" cy="7" r="4" />
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-          </svg>
+
+      <!-- Bento Row 1: Real Projects + Collaborative Team -->
+      <div class="cr-culture-row-1">
+        <div class="cr-bento-hero-card reveal">
+          <div class="cr-hero-card-content">
+            <div class="cr-card-icon icon-blue">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+            <span class="cr-card-kicker">IMPACTFUL WORK, DAY ONE</span>
+            <h3>Real Projects. Real Impact.</h3>
+            <p>Every role at Volga puts you on live client work — real industrial challenges, real enterprise outcomes. Not internal tools, not tutorial projects.</p>
+          </div>
+          <div class="cr-bento-tags">
+            <span class="cr-bento-tag">Enterprise</span>
+            <span class="cr-bento-tag">XR / AR / VR</span>
+            <span class="cr-bento-tag">AI</span>
+            <span class="cr-bento-tag">Live Clients</span>
+          </div>
         </div>
-        <h3>Collaborative Team</h3>
-        <p>Work with passionate engineers, designers, and strategists in a genuinely supportive environment where ideas
-          are welcomed.</p>
+
+        <div class="cr-card-collaborative reveal">
+          <div class="cr-card-copy">
+            <div class="cr-card-icon icon-light-blue">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3>Collaborative Team</h3>
+            <p>Work with passionate engineers, designers, and strategists in a genuinely supportive environment where ideas are welcomed.</p>
+          </div>
+          <div class="cr-collab-thumb">
+            <img src="assets/images/career/collaborative.jpg" alt="Collaborative Team" />
+          </div>
+        </div>
       </div>
-      <div class="cr-bento-card reveal">
-        <div class="cr-bento-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 20h9" />
-            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-          </svg>
+
+      <!-- Bento Row 2: 4 Small Cards -->
+      <div class="cr-culture-row-2">
+        <!-- Card 1: Growth & Learning -->
+        <div class="cr-mini-card reveal">
+          <div class="cr-mini-copy">
+            <div class="cr-card-icon icon-mint">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            </div>
+            <h3>Growth &amp; Learning</h3>
+            <p>Continuous learning, mentorship, R&D time, and quarterly hackathons to keep pushing boundaries.</p>
+          </div>
+          <div class="cr-mini-thumb">
+            <img src="assets/images/career/growth.jpg" alt="Growth & Learning" />
+          </div>
         </div>
-        <h3>Growth & Learning</h3>
-        <p>Continuous learning, mentorship, R&D time, and quarterly hackathons to keep pushing boundaries.</p>
-      </div>
-      <div class="cr-bento-card reveal">
-        <div class="cr-bento-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-            <line x1="16" y1="2" x2="16" y2="6" />
-            <line x1="8" y1="2" x2="8" y2="6" />
-            <line x1="3" y1="10" x2="21" y2="10" />
-          </svg>
+
+        <!-- Card 2: Flexible Work -->
+        <div class="cr-mini-card reveal">
+          <div class="cr-sticker-note">Work<br>Your Way <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg></div>
+          <div class="cr-mini-copy">
+            <div class="cr-card-icon icon-purple">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <h3>Flexible Work</h3>
+            <p>Hybrid model with the flexibility to balance deep focused work and energetic team collaboration.</p>
+          </div>
+          <div class="cr-mini-thumb">
+            <img src="assets/images/career/flexible.jpg" alt="Flexible Work" />
+          </div>
         </div>
-        <h3>Flexible Work</h3>
-        <p>Hybrid model with the flexibility to balance deep focused work and energetic team collaboration.</p>
-      </div>
-      <div class="cr-bento-card reveal">
-        <div class="cr-bento-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path
-              d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-          </svg>
+
+        <!-- Card 3: Innovation Focus -->
+        <div class="cr-mini-card reveal">
+          <div class="cr-mini-copy">
+            <div class="cr-card-icon icon-orange">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3.5 5.5V17a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-2.5c2-.9 3.5-3 3.5-5.5a7 7 0 0 0-7-7z"/></svg>
+            </div>
+            <h3>Innovation Focus</h3>
+            <p>Quarterly hackathons, dedicated R&D sprints, and genuine encouragement to experiment with new ideas.</p>
+          </div>
+          <div class="cr-mini-thumb">
+            <img src="assets/images/career/innovation.jpg" alt="Innovation Focus" />
+          </div>
         </div>
-        <h3>Innovation Focus</h3>
-        <p>Quarterly hackathons, dedicated R&D sprints, and genuine encouragement to experiment with new ideas.</p>
-      </div>
-      <div class="cr-bento-card reveal">
-        <div class="cr-bento-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="12" y1="1" x2="12" y2="23" />
-            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-          </svg>
+
+        <!-- Card 4: Competitive Benefits -->
+        <div class="cr-mini-card reveal">
+          <div class="cr-mini-copy">
+            <div class="cr-card-icon icon-rose">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H8c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h8c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1h-1c-.55 0-1-.45-1-1v-2.34"/><path d="M18 4H6v7a6 6 0 0 0 12 0V4z"/></svg>
+            </div>
+            <h3>Competitive Benefits</h3>
+            <p>Competitive salary, equity options, health benefits, and performance bonuses that reward great work.</p>
+          </div>
+          <div class="cr-mini-thumb">
+            <img src="assets/images/career/benefits.jpg" alt="Competitive Benefits" />
+          </div>
         </div>
-        <h3>Competitive Benefits</h3>
-        <p>Competitive salary, equity options, health benefits, and performance bonuses that reward great work.</p>
       </div>
     </div>
   </section>
