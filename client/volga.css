@@ -826,7 +826,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(27, 79, 114, 0.06);
+  background: rgba(27, 79, 114, 0.05);
   border-radius: 8px;
   border: 1px solid rgba(27, 79, 114, 0.08);
   transition: all 0.2s ease;
@@ -834,24 +834,26 @@ section {
 }
 
 .mega-item:hover .mega-item-icon {
-  background: var(--accent, #E8930A);
-  border-color: var(--accent, #E8930A);
-  color: #ffffff;
+  background: rgba(232, 147, 10, 0.12);
+  border-color: rgba(232, 147, 10, 0.28);
+  color: var(--accent, #E8930A);
 }
 
 .mega-item-icon svg,
 .mega-item > svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
-  stroke: currentColor;
-  transition: transform 0.2s ease;
+  stroke: var(--accent2, #1B4F72);
+  color: var(--accent2, #1B4F72);
+  transition: all 0.2s ease;
 }
 
 .mega-item:hover .mega-item-icon svg,
 .mega-item:hover > svg {
-  stroke: #ffffff;
-  transform: scale(1.08);
+  stroke: var(--accent, #E8930A) !important;
+  color: var(--accent, #E8930A) !important;
+  transform: scale(1.1);
 }
 
 /* Stagger animation on open */
