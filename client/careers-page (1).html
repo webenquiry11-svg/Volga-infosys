@@ -273,6 +273,37 @@
       background: var(--c-amber);
     }
 
+    /* ── SECTION HEAD ── */
+    .cr-section-head {
+      margin-bottom: 44px;
+    }
+
+    .cr-section-head h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(26px, 3.4vw, 38px);
+      font-weight: 800;
+      color: var(--c-navy);
+      letter-spacing: -.02em;
+      margin-top: 10px;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .cr-section-head p {
+      font-size: 15px;
+      color: var(--c-muted);
+      max-width: 580px;
+      line-height: 1.6;
+    }
+
+    .cr-section-head.center {
+      text-align: center;
+    }
+
+    .cr-section-head.center p {
+      margin: 0 auto;
+    }
+
     /* ── BTN ── */
     .btn {
       display: inline-flex;
@@ -420,13 +451,16 @@
       position: relative;
       z-index: 2;
       display: block;
-      max-width: 1320px;
+      max-width: 1540px;
+      width: 95%;
       margin: 0 auto;
+      padding: 0 20px;
     }
 
     /* copy block — constrained width so text doesn't bleed into the photo */
     .cr-hero-copy {
-      max-width: 600px;
+      max-width: 620px;
+      margin-left: 0;
     }
 
     .cr-hero-badge {
@@ -934,22 +968,23 @@
 
     .cr-collab-thumb {
       position: absolute;
+      top: 0;
       bottom: 0;
       right: 0;
-      width: 44%;
-      height: 92%;
+      width: 48%;
+      height: 100%;
       overflow: hidden;
       z-index: 1;
       pointer-events: none;
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.2) 12%, black 45%);
-      mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.2) 12%, black 45%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.05) 10%, rgba(0, 0, 0, 0.6) 45%, black 75%);
+      mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.05) 10%, rgba(0, 0, 0, 0.6) 45%, black 75%);
     }
 
     .cr-collab-thumb img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center bottom;
+      object-position: center center;
       display: block;
     }
 
@@ -1006,22 +1041,23 @@
 
     .cr-mini-thumb {
       position: absolute;
+      top: 0;
       bottom: 0;
       right: 0;
-      width: 44%;
-      height: 88%;
+      width: 48%;
+      height: 100%;
       overflow: hidden;
       z-index: 1;
       pointer-events: none;
-      -webkit-mask-image: radial-gradient(ellipse at 90% 90%, black 40%, rgba(0, 0, 0, 0.3) 68%, transparent 96%), linear-gradient(to right, transparent 0%, black 42%);
-      mask-image: radial-gradient(ellipse at 90% 90%, black 40%, rgba(0, 0, 0, 0.3) 68%, transparent 96%), linear-gradient(to right, transparent 0%, black 42%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.05) 10%, rgba(0, 0, 0, 0.6) 45%, black 75%);
+      mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.05) 10%, rgba(0, 0, 0, 0.6) 45%, black 75%);
     }
 
     .cr-mini-thumb img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center bottom;
+      object-position: center center;
       display: block;
     }
 
@@ -2719,11 +2755,9 @@
        OPEN POSITIONS — COMPACT
   ═══════════════════════════════════════ -->
   <section class="cr-jobs cr-container" id="jobs">
-    <div class="cr-jobs-top">
-      <div class="cr-section-head reveal" style="margin-bottom:0;">
-        <span class="eyebrow">Open Positions</span>
-        <h2>Find your next role</h2>
-      </div>
+    <div class="cr-section-head center reveal" style="margin-left:auto;margin-right:auto;margin-bottom:32px;">
+      <span class="eyebrow">Open Positions</span>
+      <h2>Find your next role</h2>
     </div>
 
     <!-- Filter bar -->

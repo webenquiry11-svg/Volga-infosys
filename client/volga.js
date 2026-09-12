@@ -1612,6 +1612,21 @@ function openMenu(key) {
 
   activeMenu = key;
   const { item, menuEl } = menus[key];
+
+  // Position menu directly anchored under the triggering nav-item
+  if (window.innerWidth > 900) {
+    const itemRect = item.getBoundingClientRect();
+    const menuWidth = key === 'company' ? 220 : (key === 'services' ? 600 : 640);
+    const leftPos = Math.max(16, Math.min(window.innerWidth - menuWidth - 16, itemRect.left + (itemRect.width / 2) - (menuWidth / 2)));
+    menuEl.style.left = leftPos + 'px';
+    menuEl.style.right = 'auto';
+    menuEl.style.width = menuWidth + 'px';
+  } else {
+    menuEl.style.left = '16px';
+    menuEl.style.right = '16px';
+    menuEl.style.width = 'auto';
+  }
+
   item.classList.add('open','active');
   menuEl.classList.add('visible');
 
@@ -1624,10 +1639,13 @@ function openMenu(key) {
     { opacity:1, y:0, x:0, duration:0.4, stagger:0.035, ease:'power2.out', delay:0.05 }
   );
 
-  gsap.fromTo(menuEl.querySelector('.mega-highlight'),
-    { opacity:0, x:16 },
-    { opacity:1, x:0, duration:0.45, ease:'power2.out', delay:0.1 }
-  );
+  const hl = menuEl.querySelector('.mega-highlight');
+  if (hl && getComputedStyle(hl).display !== 'none') {
+    gsap.fromTo(hl,
+      { opacity:0, x:16 },
+      { opacity:1, x:0, duration:0.45, ease:'power2.out', delay:0.1 }
+    );
+  }
 
   document.getElementById('backdrop').classList.add('active');
 }

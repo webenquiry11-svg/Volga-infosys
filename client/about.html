@@ -1281,70 +1281,260 @@
 
     /* ── Industries ── */
     .industries-head {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
       gap: 48px;
-      margin-bottom: 48px;
-      align-items: end;
+      margin-bottom: 44px;
+    }
+
+    .industries-head-left {
+      flex: 1;
+    }
+
+    .industries-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .industries-eyebrow .eyebrow-line {
+      display: inline-block;
+      width: 22px;
+      height: 2.5px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .industries-title {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(28px, 3.4vw, 42px);
+      font-weight: 800;
+      color: var(--accent3);
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+
+    .industries-head-right {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      max-width: 480px;
+      margin-bottom: 6px;
+    }
+
+    .industries-v-divider {
+      width: 1.5px;
+      height: 48px;
+      background: rgba(27, 79, 114, 0.22);
+      flex-shrink: 0;
+    }
+
+    .industries-lede {
+      font-family: 'Inter', sans-serif;
+      font-size: 14.5px;
+      color: #64748B;
+      line-height: 1.6;
+      margin: 0;
     }
 
     .industries-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      gap: 24px;
     }
 
-    .industry-card {
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 20px;
-      background: var(--surface);
-    }
-
-    .industry-card .frame {
-      height: 110px;
-      margin-bottom: 16px;
+    .industry-card-v2 {
+      background: #ffffff;
+      border-radius: 18px;
+      border: 1px solid rgba(27, 79, 114, 0.10);
+      box-shadow: 0 4px 20px rgba(13, 31, 45, 0.05);
       overflow: hidden;
-      padding: 0;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease;
     }
 
-    .industry-card .frame img {
-      position: absolute;
-      inset: 0;
+    .industry-card-v2:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 36px rgba(13, 31, 45, 0.11);
+      border-color: rgba(27, 79, 114, 0.24);
+    }
+
+    .ind-card-banner {
+      position: relative;
+      width: 100%;
+      height: 185px;
+      overflow: hidden;
+      background: #091520;
+    }
+
+    .ind-card-banner img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 4px;
-      z-index: 0;
+      object-position: center;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .industry-card .frame .corner {
+    .industry-card-v2:hover .ind-card-banner img {
+      transform: scale(1.04);
+    }
+
+    .ind-card-banner::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 70px;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.75) 60%, #ffffff 100%);
+      pointer-events: none;
+    }
+
+    .ind-card-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      z-index: 3;
+      color: #E8930A;
+    }
+
+    .ind-card-badge svg {
+      width: 22px;
+      height: 22px;
+      stroke: #E8930A;
+    }
+
+    .ind-card-body {
+      padding: 14px 22px 20px;
+      background: #ffffff;
+      position: relative;
       z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
     }
 
-    .industry-card .frame svg {
-      display: none;
+    .ind-card-copy {
+      flex: 1;
+      min-width: 0;
     }
 
-    .industry-card .tag {
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
+    .ind-card-copy h3 {
+      font-family: 'Sora', sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      color: #0D2B3E !important;
+      margin: 0 0 4px 0 !important;
+      line-height: 1.25 !important;
+      letter-spacing: -0.01em;
     }
 
-    .industry-card h3 {
+    .ind-card-copy p {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 13px !important;
+      color: #64748B !important;
+      font-weight: 450 !important;
+      line-height: 1.4 !important;
+      margin: 0 !important;
+      display: block !important;
+    }
+
+    .ind-card-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(27, 79, 114, 0.16);
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1B4F72;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(13, 31, 45, 0.04);
+      transition: all 0.25s ease;
+    }
+
+    .industry-card-v2:hover .ind-card-btn {
+      background: #1B4F72;
+      color: #ffffff;
+      border-color: #1B4F72;
+      transform: translateX(3px);
+      box-shadow: 0 4px 12px rgba(27, 79, 114, 0.25);
+    }
+
+    .industries-cta {
+      margin-top: 44px;
+      text-align: center;
+    }
+
+    .industries-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 32px;
+      border-radius: 999px;
+      border: 1.5px solid #1B4F72;
+      color: #1B4F72;
       font-family: 'Sora', sans-serif;
-      margin-bottom: 8px;
-      font-size: 17px;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      background: transparent;
+      transition: all 0.25s ease;
     }
 
-    .industry-card p {
-      font-family: 'Inter', sans-serif;
-      font-size: 13.5px;
-      color: var(--text-muted);
+    .industries-cta-btn:hover {
+      background: #1B4F72;
+      color: #ffffff;
+      box-shadow: 0 6px 20px rgba(27, 79, 114, 0.22);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 1024px) {
+      .industries-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+      .industries-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .industries-grid {
+        grid-template-columns: 1fr;
+      }
+      .ind-card-banner {
+        height: 165px;
+      }
     }
 
     /* ── Process ── */
@@ -3509,7 +3699,7 @@
               <path d="M16 14h.01" />
             </svg>
           </div>
-          <div class="impact-stat-val">U.S. OFFICE</div>
+          <div class="impact-stat-val">U.S. Office </div>
           <div class="impact-stat-label">ESTABLISHED</div>
           <p class="impact-stat-desc">Established a U.S. office in Delaware in November 2020.</p>
         </div>
@@ -3576,77 +3766,157 @@
   <section class="section section--light" id="industries">
     <div class="wrap">
       <div class="industries-head reveal">
-        <div>
-          <p class="eyebrow">Industry expertise</p>
-          <h2 class="h2">Built for the industries that matter</h2>
+        <div class="industries-head-left">
+          <div class="industries-eyebrow">
+            <span class="eyebrow-line"></span>INDUSTRY EXPERTISE
+          </div>
+          <h2 class="industries-title">Built for the industries<br>that matter</h2>
         </div>
-        <p class="lede">From healthcare to manufacturing — we bring immersive technology to the sectors that need it
-          most.</p>
+        <div class="industries-head-right">
+          <div class="industries-v-divider"></div>
+          <p class="industries-lede">From healthcare to manufacturing — we bring immersive technology to the sectors that need it most.</p>
+        </div>
       </div>
       <div class="industries-grid reveal">
 
-        <div class="industry-card">
-          <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span
-              class="corner bl"></span><span class="corner br"></span>
-            <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&q=80" alt="Healthcare">
+        <!-- Card 1: Medical -->
+        <a href="industries.html" class="industry-card-v2">
+          <div class="ind-card-banner">
+            <div class="ind-card-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M12 8v8M8 12h8"/>
+              </svg>
+            </div>
+            <img src="assets/images/industries/3D Anatomical Visualization.jpeg" alt="Medical training & simulation" />
           </div>
-          <p class="tag">Healthcare</p>
-          <h3>Medical training &amp; simulation</h3>
-        </div>
+          <div class="ind-card-body">
+            <div class="ind-card-copy">
+              <h3>Medical training &amp; simulation</h3>
+              <p>Better learning. Safer tomorrow.</p>
+            </div>
+            <div class="ind-card-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </a>
 
-        <div class="industry-card">
-          <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span
-              class="corner bl"></span><span class="corner br"></span>
-            <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&q=80" alt="Manufacturing">
+        <!-- Card 2: Digital Twins -->
+        <a href="industries.html" class="industry-card-v2">
+          <div class="ind-card-banner">
+            <div class="ind-card-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 20h20"/>
+                <path d="M4 20V10l4 3V10l4 3V4h8v16"/>
+                <path d="M14 8h2M14 12h2M14 16h2"/>
+              </svg>
+            </div>
+            <img src="assets/images/services/digital-twin-factory.jpg" alt="Digital twins & smart factories" />
           </div>
-          <p class="tag">Manufacturing</p>
-          <h3>Digital twins &amp; smart factories</h3>
-        </div>
+          <div class="ind-card-body">
+            <div class="ind-card-copy">
+              <h3>Digital twins &amp; smart factories</h3>
+              <p>Smarter operations. Greater efficiency.</p>
+            </div>
+            <div class="ind-card-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </a>
 
-        <div class="industry-card">
-          <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span
-              class="corner bl"></span><span class="corner br"></span>
-            <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80" alt="Real Estate">
+        <!-- Card 3: Virtual Property -->
+        <a href="industries.html" class="industry-card-v2">
+          <div class="ind-card-banner">
+            <div class="ind-card-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            </div>
+            <img src="assets/images/services/unreal-nanite-archviz.jpg" alt="Virtual property tours" />
           </div>
-          <p class="tag">Real estate</p>
-          <h3>Virtual property tours</h3>
-        </div>
+          <div class="ind-card-body">
+            <div class="ind-card-copy">
+              <h3>Virtual property tours</h3>
+              <p>Explore spaces. Anywhere.</p>
+            </div>
+            <div class="ind-card-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </a>
 
-        <div class="industry-card">
-          <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span
-              class="corner bl"></span><span class="corner br"></span>
-            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80" alt="Education">
+        <!-- Card 4: Immersive Learning -->
+        <a href="industries.html" class="industry-card-v2">
+          <div class="ind-card-banner">
+            <div class="ind-card-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+            </div>
+            <img src="assets/images/industries/Global Collaborative Classrooms.jpeg" alt="Immersive learning environments" />
           </div>
-          <p class="tag">Education</p>
-          <h3>Immersive learning environments</h3>
-        </div>
+          <div class="ind-card-body">
+            <div class="ind-card-copy">
+              <h3>Immersive learning environments</h3>
+              <p>Engage. Practice. Excel.</p>
+            </div>
+            <div class="ind-card-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </a>
 
-        <div class="industry-card">
-          <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span
-              class="corner bl"></span><span class="corner br"></span>
-            <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&q=80" alt="Automotive">
+        <!-- Card 5: Virtual Showrooms -->
+        <a href="industries.html" class="industry-card-v2">
+          <div class="ind-card-banner">
+            <div class="ind-card-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 17h14M5 17a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.5L8 4h8l1.5 3H19a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2M5 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm14 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                <circle cx="7" cy="11" r="1"/>
+                <circle cx="17" cy="11" r="1"/>
+              </svg>
+            </div>
+            <img src="assets/images/services/webxr-3d-configurator.jpg" alt="Virtual design & showrooms" />
           </div>
-          <p class="tag">Automotive</p>
-          <h3>Virtual design &amp; showrooms</h3>
-        </div>
+          <div class="ind-card-body">
+            <div class="ind-card-copy">
+              <h3>Virtual design &amp; showrooms</h3>
+              <p>Visualize. Customize. Decide.</p>
+            </div>
+            <div class="ind-card-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </a>
 
-        <div class="industry-card">
-          <div class="frame"><span class="corner tl"></span><span class="corner tr"></span><span
-              class="corner bl"></span><span class="corner br"></span>
-            <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=600&q=80" alt="Defense">
+        <!-- Card 6: Tactical Training -->
+        <a href="industries.html" class="industry-card-v2">
+          <div class="ind-card-banner">
+            <div class="ind-card-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <img src="Tactical training.png" alt="Tactical training & simulation" />
           </div>
-          <p class="tag">Defense</p>
-          <h3>Tactical training &amp; simulation</h3>
-        </div>
+          <div class="ind-card-body">
+            <div class="ind-card-copy">
+              <h3>Tactical training &amp; simulation</h3>
+              <p>Train for what's next.</p>
+            </div>
+            <div class="ind-card-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </a>
 
       </div>
       <div class="industries-cta reveal">
-        <a href="industries.html" class="btn-ghost">
+        <a href="industries.html" class="industries-cta-btn">
           View all industries
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>
     </div>
