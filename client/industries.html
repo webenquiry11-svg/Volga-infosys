@@ -48,60 +48,76 @@
     }
 
     /* ═══════════════════════════════════════
-       HERO — full-width centered (same as services.html)
+       HERO — 3D Spatial Depth & Perspective
     ═══════════════════════════════════════ */
     .hero-industries {
       position: relative;
-      background: #0d1b2e;
-      padding: calc(var(--navbar-height, 110px) + 20px) 6vw 40px;
+      background: #091322;
+      padding: calc(var(--navbar-height, 110px) + 90px) 6vw 110px;
       overflow: hidden;
       text-align: center;
-      min-height: auto;
+      min-height: 75vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      perspective: 1200px;
+      perspective-origin: 50% 50%;
+      transform-style: preserve-3d;
     }
 
-    /* Video background */
+    /* 3D Video background */
     .hero-video-wrap {
       position: absolute;
-      inset: 0;
+      inset: -50px;
       z-index: 0;
-      width: 100%;
-      height: 100%;
+      width: calc(100% + 100px);
+      height: calc(100% + 100px);
       overflow: hidden;
+      pointer-events: none;
+      transform-style: preserve-3d;
+      will-change: transform;
     }
 
     .hero-video-wrap video {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.28;
-      filter: saturate(1.3);
+      opacity: 1;
+      filter: saturate(1.18) contrast(1.06) brightness(0.96);
+      transform: translateZ(-40px) scale(1.14);
+      transform-origin: center center;
+      will-change: transform;
     }
 
-    .hero-video-overlay {
+    /* 3D Depth Vignette & Ambient Layer */
+    .hero-3d-vignette {
       position: absolute;
       inset: 0;
       z-index: 1;
-      background: radial-gradient(circle at center, rgba(13, 27, 46, 0.35) 0%, rgba(13, 27, 46, 0.85) 100%) !important;
+      pointer-events: none;
+      box-shadow: inset 0 0 140px 40px rgba(7, 16, 29, 0.75), inset 0 -60px 80px rgba(7, 16, 29, 0.9);
+      background: radial-gradient(circle at center, transparent 40%, rgba(9, 19, 34, 0.45) 85%, rgba(9, 19, 34, 0.8) 100%);
     }
 
     /* radial glow behind title */
     .hero-glow {
       position: absolute;
-      top: -80px;
+      top: -60px;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%) translateZ(15px);
       width: 900px;
       height: 600px;
       pointer-events: none;
       z-index: 1;
-      background: radial-gradient(ellipse at 50% 40%, rgba(232, 147, 10, .2) 0%, rgba(200, 66, 26, .05) 40%, transparent 70%);
+      background: radial-gradient(ellipse at 50% 40%, rgba(232, 147, 10, .22) 0%, rgba(200, 66, 26, .06) 40%, transparent 70%);
     }
 
     .hero-content {
       position: relative;
       z-index: 2;
       max-width: 1220px;
-      margin: 0 auto
+      margin: 0 auto;
     }
 
     .eyebrow-sm {
@@ -1796,8 +1812,8 @@
   <section class="hero-industries">
     <div class="hero-video-wrap">
       <video src="hompage.mp4" alt="Hero Background" autoplay muted loop playsinline></video>
-      <div class="hero-video-overlay"></div>
     </div>
+    <div class="hero-3d-vignette"></div>
     <div class="hero-glow"></div>
     <div class="hero-content">
       <div class="eyebrow-sm">Volga Infosys · Industry Solutions</div>
@@ -2609,6 +2625,60 @@
         }
       });
     });
+
+    // ── 3D Depth Interactive Parallax on Hero ────────────────────────────────
+    (function initHero3DDepth() {
+      const hero = document.querySelector('.hero-industries');
+      const videoWrap = document.querySelector('.hero-video-wrap');
+      const video = videoWrap ? videoWrap.querySelector('video') : null;
+
+      if (!hero || !video) return;
+
+      let reqId = null;
+      let targetX = 0, targetY = 0;
+      let currentX = 0, currentY = 0;
+
+      function onMouseMove(e) {
+        const rect = hero.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        targetX = x;
+        targetY = y;
+        if (!reqId) {
+          reqId = requestAnimationFrame(update3D);
+        }
+      }
+
+      function update3D() {
+        currentX += (targetX - currentX) * 0.08;
+        currentY += (targetY - currentY) * 0.08;
+
+        // 3D tilt on video layer (deeper layer moves inversely & rotates)
+        const rotY = currentX * 12;
+        const rotX = -currentY * 9;
+        const transX = -currentX * 36;
+        const transY = -currentY * 26;
+
+        video.style.transform = `translate3d(${transX}px, ${transY}px, -40px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.14)`;
+
+        if (Math.abs(targetX - currentX) > 0.0005 || Math.abs(targetY - currentY) > 0.0005) {
+          reqId = requestAnimationFrame(update3D);
+        } else {
+          reqId = null;
+        }
+      }
+
+      function onMouseLeave() {
+        targetX = 0;
+        targetY = 0;
+        if (!reqId) {
+          reqId = requestAnimationFrame(update3D);
+        }
+      }
+
+      hero.addEventListener('mousemove', onMouseMove, { passive: true });
+      hero.addEventListener('mouseleave', onMouseLeave);
+    })();
   </script>
 
   <!-- ═══════════════════════════════════════════ FOOTER -->
