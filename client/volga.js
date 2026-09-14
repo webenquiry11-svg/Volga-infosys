@@ -1587,98 +1587,194 @@ const observer = new IntersectionObserver((entries) => {
 
 sections.forEach(s => observer.observe(s));
 
-const menus = {};
-let activeMenu = null;
-let closeTimer = null;
+// ─── DESKTOP MEGA MENUS CONTROLLER ────────────────────────
+(function initMegaMenus() {
+  if (window.__volgaMegaMenuInit) return;
+  window.__volgaMegaMenuInit = true;
 
-document.querySelectorAll('.nav-item[data-menu]').forEach(item => {
-  const key = item.dataset.menu;
-  const menuEl = document.getElementById('menu-' + key);
-  if (!menuEl) return;
-  menus[key] = { item, menuEl };
-});
+  const menus = {};
+  let activeMenu = null;
+  let closeTimer = null;
 
-function openMenu(key) {
-  if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
-  if (activeMenu === key) return;
+  document.querySelectorAll('.nav-item[data-menu]').forEach(item => {
+    const key = item.dataset.menu;
+    const menuEl = document.getElementById('menu-' + key);
+    if (!menuEl) return;
+    menus[key] = { item, menuEl };
+  });
 
-  if (activeMenu) {
-    const prev = menus[activeMenu];
-    prev.item.classList.remove('open','active');
-    gsap.to(prev.menuEl.querySelectorAll('.mega-item'), { opacity:0, y:0, duration:0.1, stagger:0 });
-    prev.menuEl.classList.remove('visible');
-    gsap.set(prev.menuEl, { opacity:0 });
-  }
-
-  activeMenu = key;
-  const { item, menuEl } = menus[key];
-
-  // Position menu directly anchored under the triggering nav-item
-  if (window.innerWidth > 900) {
-    const itemRect = item.getBoundingClientRect();
-    const menuWidth = key === 'company' ? 220 : (key === 'services' ? 600 : 640);
-    const leftPos = Math.max(16, Math.min(window.innerWidth - menuWidth - 16, itemRect.left + (itemRect.width / 2) - (menuWidth / 2)));
-    menuEl.style.left = leftPos + 'px';
-    menuEl.style.right = 'auto';
-    menuEl.style.width = menuWidth + 'px';
-  } else {
-    menuEl.style.left = '16px';
-    menuEl.style.right = '16px';
-    menuEl.style.width = 'auto';
-  }
-
-  item.classList.add('open','active');
-  menuEl.classList.add('visible');
-
-  gsap.killTweensOf(menuEl);
-  gsap.fromTo(menuEl, { opacity:0, y:-8 }, { opacity:1, y:0, duration:0.35, ease:'power3.out' });
-
-  const items = menuEl.querySelectorAll('.mega-item');
-  gsap.fromTo(items,
-    { opacity:0, y:10, x:-4 },
-    { opacity:1, y:0, x:0, duration:0.4, stagger:0.035, ease:'power2.out', delay:0.05 }
-  );
-
-  const hl = menuEl.querySelector('.mega-highlight');
-  if (hl && getComputedStyle(hl).display !== 'none') {
-    gsap.fromTo(hl,
-      { opacity:0, x:16 },
-      { opacity:1, x:0, duration:0.45, ease:'power2.out', delay:0.1 }
-    );
-  }
-
-  document.getElementById('backdrop').classList.add('active');
-}
-
-function closeMenu(delay = 0) {
-  if (!activeMenu) return;
-  closeTimer = setTimeout(() => {
-    if (!activeMenu) return;
-    const { item, menuEl } = menus[activeMenu];
-    item.classList.remove('open','active');
-
-    gsap.to(menuEl, {
-      opacity:0, y:-6, duration:0.25, ease:'power2.in',
-      onComplete: () => {
+  function forceHideAllExcept(activeKey = null) {
+    Object.entries(menus).forEach(([key, { item, menuEl }]) => {
+      if (key !== activeKey) {
+        item.classList.remove('open', 'active');
+        gsap.killTweensOf(menuEl);
+        const items = menuEl.querySelectorAll('.mega-item');
+        if (items.length) gsap.killTweensOf(items);
         menuEl.classList.remove('visible');
-        gsap.set(menuEl, { y:0 });
+        gsap.set(menuEl, { opacity: 0, y: 0, visibility: 'hidden', pointerEvents: 'none' });
       }
     });
+  }
 
-    activeMenu = null;
-    document.getElementById('backdrop').classList.remove('active');
-  }, delay);
-}
+  function positionMenu(key) {
+    const { item, menuEl } = menus[key];
+    if (!item || !menuEl) return;
+    if (window.innerWidth > 900) {
+      const itemRect = item.getBoundingClientRect();
+      const menuWidth = key === 'company' ? 220 : (key === 'services' ? 600 : 640);
+      const leftPos = Math.max(16, Math.min(window.innerWidth - menuWidth - 16, itemRect.left + (itemRect.width / 2) - (menuWidth / 2)));
+      menuEl.style.left = leftPos + 'px';
+      menuEl.style.right = 'auto';
+      menuEl.style.width = menuWidth + 'px';
+    } else {
+      menuEl.style.left = '16px';
+      menuEl.style.right = '16px';
+      menuEl.style.width = 'auto';
+    }
+  }
 
-Object.entries(menus).forEach(([key, { item, menuEl }]) => {
-  item.addEventListener('mouseenter', () => openMenu(key));
-  item.addEventListener('mouseleave', () => closeMenu(120));
-  menuEl.addEventListener('mouseenter', () => { if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; } });
-  menuEl.addEventListener('mouseleave', () => closeMenu(80));
-  item.addEventListener('click', () => activeMenu === key ? closeMenu() : openMenu(key));
-});
+  function openMenu(key) {
+    if (!menus[key]) return;
+    if (closeTimer) {
+      clearTimeout(closeTimer);
+      closeTimer = null;
+    }
 
-document.getElementById('backdrop')?.addEventListener('click', () => closeMenu());
+    if (activeMenu === key) return;
+
+    // Immediately force-hide all other menus to prevent overlapping
+    forceHideAllExcept(key);
+
+    activeMenu = key;
+    const { item, menuEl } = menus[key];
+
+    positionMenu(key);
+
+    item.classList.add('open', 'active');
+    menuEl.classList.add('visible');
+    menuEl.style.visibility = 'visible';
+    menuEl.style.pointerEvents = 'all';
+
+    gsap.killTweensOf(menuEl);
+    gsap.fromTo(menuEl,
+      { opacity: 0, y: -8 },
+      { opacity: 1, y: 0, duration: 0.28, ease: 'power3.out' }
+    );
+
+    const items = menuEl.querySelectorAll('.mega-item');
+    if (items.length) {
+      gsap.killTweensOf(items);
+      gsap.fromTo(items,
+        { opacity: 0, y: 8, x: -3 },
+        { opacity: 1, y: 0, x: 0, duration: 0.32, stagger: 0.025, ease: 'power2.out', delay: 0.03 }
+      );
+    }
+
+    const backdrop = document.getElementById('backdrop');
+    if (backdrop) backdrop.classList.add('active');
+  }
+
+  function closeMenu(delay = 0) {
+    if (closeTimer) {
+      clearTimeout(closeTimer);
+      closeTimer = null;
+    }
+
+    const doClose = () => {
+      if (!activeMenu) {
+        forceHideAllExcept(null);
+        return;
+      }
+      const currentKey = activeMenu;
+      const current = menus[currentKey];
+      activeMenu = null;
+
+      if (current) {
+        current.item.classList.remove('open', 'active');
+        gsap.killTweensOf(current.menuEl);
+        const items = current.menuEl.querySelectorAll('.mega-item');
+        if (items.length) gsap.killTweensOf(items);
+
+        gsap.to(current.menuEl, {
+          opacity: 0,
+          y: -6,
+          duration: 0.2,
+          ease: 'power2.in',
+          onComplete: () => {
+            current.menuEl.classList.remove('visible');
+            current.menuEl.style.visibility = 'hidden';
+            current.menuEl.style.pointerEvents = 'none';
+            gsap.set(current.menuEl, { y: 0 });
+          }
+        });
+      }
+
+      const backdrop = document.getElementById('backdrop');
+      if (backdrop) backdrop.classList.remove('active');
+    };
+
+    if (delay > 0) {
+      closeTimer = setTimeout(doClose, delay);
+    } else {
+      doClose();
+    }
+  }
+
+  Object.entries(menus).forEach(([key, { item, menuEl }]) => {
+    item.addEventListener('mouseenter', () => openMenu(key));
+    item.addEventListener('mouseleave', () => closeMenu(140));
+
+    menuEl.addEventListener('mouseenter', () => {
+      if (closeTimer) {
+        clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+    });
+    menuEl.addEventListener('mouseleave', () => closeMenu(100));
+
+    item.addEventListener('click', (e) => {
+      if (activeMenu === key) {
+        closeMenu(0);
+      } else {
+        openMenu(key);
+      }
+    });
+  });
+
+  // Close menus when hovering non-dropdown navbar items
+  document.querySelectorAll('#navbar .nav-links > li:not([data-menu]), #navbar .nav-logo, #navbar .nav-cta, #navbar .nav-item:not([data-menu])').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      closeMenu(60);
+    });
+  });
+
+  // Close menus on outside click
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#navbar') && !e.target.closest('.mega-menu')) {
+      closeMenu(0);
+    }
+  });
+
+  // Close menu on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeMenu(0);
+    }
+  });
+
+  // Reposition active menu on resize
+  window.addEventListener('resize', () => {
+    if (activeMenu) {
+      if (window.innerWidth <= 900) {
+        closeMenu(0);
+      } else {
+        positionMenu(activeMenu);
+      }
+    }
+  });
+
+  document.getElementById('backdrop')?.addEventListener('click', () => closeMenu(0));
+})();
 
 // ─── MOBILE MENU CONTROLLER ──────────────────────────────
 (function initMobileMenu() {

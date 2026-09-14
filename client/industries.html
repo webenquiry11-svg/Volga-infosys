@@ -52,36 +52,36 @@
     ═══════════════════════════════════════ */
     .hero-industries {
       position: relative;
-      background: var(--navy);
+      background: #0d1b2e;
       padding: calc(var(--navbar-height, 110px) + 20px) 6vw 40px;
       overflow: hidden;
       text-align: center;
       min-height: auto;
     }
 
-    /* background image layer */
-    .hero-bg-img {
+    /* Video background */
+    .hero-video-wrap {
       position: absolute;
       inset: 0;
-      background-image: url('industries-hero.png');
-      background-size: cover;
-      background-position: center center;
-      opacity: 0.4;
       z-index: 0;
-      filter: saturate(0.9);
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
     }
 
-    /* grid pattern */
-    .hero-industries::before {
-      content: '';
+    .hero-video-wrap video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.28;
+      filter: saturate(1.3);
+    }
+
+    .hero-video-overlay {
       position: absolute;
       inset: 0;
-      pointer-events: none;
       z-index: 1;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, .04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, .04) 1px, transparent 1px);
-      background-size: 56px 56px;
+      background: radial-gradient(circle at center, rgba(13, 27, 46, 0.35) 0%, rgba(13, 27, 46, 0.85) 100%) !important;
     }
 
     /* radial glow behind title */
@@ -93,6 +93,7 @@
       width: 900px;
       height: 600px;
       pointer-events: none;
+      z-index: 1;
       background: radial-gradient(ellipse at 50% 40%, rgba(232, 147, 10, .2) 0%, rgba(200, 66, 26, .05) 40%, transparent 70%);
     }
 
@@ -146,11 +147,10 @@
       font-family: var(--font-display);
       font-size: clamp(2.8rem, 5.5vw, 4.6rem);
       font-weight: 700;
-      line-height: 1.5;
+      line-height: 1.15;
       color: #fff;
       letter-spacing: -.8px;
       margin-bottom: 22px;
-
     }
 
     .hero-title em {
@@ -1794,7 +1794,10 @@
 
   <!-- Hero Section -->
   <section class="hero-industries">
-    <div class="hero-bg-img"></div>
+    <div class="hero-video-wrap">
+      <video src="hompage.mp4" alt="Hero Background" autoplay muted loop playsinline></video>
+      <div class="hero-video-overlay"></div>
+    </div>
     <div class="hero-glow"></div>
     <div class="hero-content">
       <div class="eyebrow-sm">Volga Infosys · Industry Solutions</div>
@@ -2035,10 +2038,10 @@
           { num: "90%", label: "Trainee satisfaction score" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`, title: "Surgical Simulation", desc: "Practice complex procedures in a risk-free VR environment to build muscle memory before the operating theater.", img: "assets/images/industries/Surgical Simulation.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l3 3 5-5"/><circle cx="12" cy="12" r="10"/></svg>`, title: "3D Anatomical Visualization", desc: "Convert patient scans into spatial models teams can explore and plan around collaboratively.", img: "assets/images/industries/3D Anatomical Visualization.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`, title: "Clinical Scenario Training", desc: "Replicate ICU emergencies and nursing protocols to build decision-making confidence in a safe space.", img: "assets/images/industries/Clinical Scenario Training.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`, title: "VR Physiotherapy", desc: "Gamified rehab sessions in VR increase patient engagement and accelerate recovery adherence.", img: "assets/images/industries/virtual therpy.png" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`, title: "Surgical Simulation", desc: "Risk-free VR surgical training to build procedure muscle memory.", img: "assets/images/industries/Surgical Simulation.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l3 3 5-5"/><circle cx="12" cy="12" r="10"/></svg>`, title: "3D Anatomical Visualization", desc: "Interactive 3D models for pre-operative team planning.", img: "assets/images/industries/3D Anatomical Visualization.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`, title: "Clinical Scenario Training", desc: "Simulate ICU emergencies and clinical protocols safely.", img: "assets/images/industries/Clinical Scenario Training.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`, title: "VR Physiotherapy", desc: "Gamified VR rehab for faster patient recovery and adherence.", img: "assets/images/industries/virtual therpy.png" }
         ],
         challenges: [
           { icon: ICONS.cost, text: "High-stakes training costs" },
@@ -2064,10 +2067,10 @@
           { num: "82%", label: "Customers prefer AR try-on" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`, title: "AR Virtual Try-On", desc: "Let customers place furniture, clothes, or accessories directly in their space using their phone camera.", img: "assets/images/industries/AR Virtual Try-On.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`, title: "3D Virtual Showroom", desc: "Fully navigable digital store accessible from any browser — no app or headset required.", img: "assets/images/industries/3D Virtual Showroom.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M20 12h2M2 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg>`, title: "AI Personalised Journeys", desc: "Recommend products in real-time using AI combined with AR context from the customer's environment.", img: "assets/images/industries/AI Personalised Journeys.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>`, title: "Real-Time 3D Configurator", desc: "Customers customise colour, size, and materials on a live 3D model before adding to cart.", img: "assets/images/industries/Real-Time 3D Configurator.jpeg" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`, title: "AR Virtual Try-On", desc: "Instant AR product preview in customer space via phone camera.", img: "assets/images/industries/AR Virtual Try-On.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`, title: "3D Virtual Showroom", desc: "Browser-based 3D digital stores without apps or headsets.", img: "assets/images/industries/3D Virtual Showroom.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M20 12h2M2 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg>`, title: "AI Personalised Journeys", desc: "Real-time AI recommendations tailored with AR context.", img: "assets/images/industries/AI Personalised Journeys.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>`, title: "Real-Time 3D Configurator", desc: "Interactive 3D customization of color, finish, and size.", img: "assets/images/industries/Real-Time 3D Configurator.jpeg" }
         ],
         challenges: [
           { icon: ICONS.return_, text: "High product return rates" },
@@ -2093,10 +2096,10 @@
           { num: "2×", label: "Increase in maintenance speed with AR" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.121 2.121 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>`, title: "Assembly Line Training", desc: "Trainees practice intricate sequences and machine operations in a safe simulated environment, cutting onboarding time.", img: "assets/images/industries/Assembly Line Training.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`, title: "VR Safety Drills", desc: "Simulate chemical spills and electrical failures to build rapid-response habits before workers enter the real environment.", img: "assets/images/industries/VR Safety Drills.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/></svg>`, title: "Predictive Maintenance Twins", desc: "Identify machine bottlenecks and train maintenance crews on breakdown protocols before failures occur.", img: "assets/images/industries/Predictive Maintenance Twins.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`, title: "AR Remote Expert Guidance", desc: "Experts annotate what a field worker sees in real-time, eliminating the cost of on-site specialist travel.", img: "assets/images/industries/AR Remote Expert Guidance.jpeg" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.121 2.121 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>`, title: "Assembly Line Training", desc: "Simulated machine assembly reducing worker onboarding time.", img: "assets/images/industries/Assembly Line Training.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`, title: "VR Safety Drills", desc: "Realistic drills for hazardous spills and emergency protocols.", img: "assets/images/industries/VR Safety Drills.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/></svg>`, title: "Predictive Maintenance Twins", desc: "Digital twins to spot bottlenecks and prevent breakdowns.", img: "assets/images/industries/Predictive Maintenance Twins.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`, title: "AR Remote Expert Guidance", desc: "Live AR annotations for fast field technician support.", img: "assets/images/industries/AR Remote Expert Guidance.jpeg" }
         ],
         challenges: [
           { icon: ICONS.error, text: "Assembly errors and rework costs" },
@@ -2122,10 +2125,10 @@
           { num: "80%", label: "Client satisfaction with immersive reviews" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M12 8v13M8 21h8"/></svg>`, title: "1:1 Scale VR Walkthroughs", desc: "Evaluate spatial flow, ceiling heights, and sightlines at human scale before producing construction drawings.", img: "assets/images/industries/1-1 Scale VR Walkthroughs.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`, title: "Dynamic Light Studies", desc: "Simulate sun paths and seasonal variation to show how light interacts with facade materials throughout the day.", img: "assets/images/industries/Dynamic Light Studies.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>`, title: "On-Site AR BIM Overlay", desc: "AR headsets display BIM models aligned to the physical site, preventing costly construction errors before they happen.", img: "assets/images/industries/On-Site AR BIM Overlay.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`, title: "Immersive Client Portals", desc: "Let clients step directly into the design to simplify approvals and prevent costly late-stage change orders.", img: "assets/images/industries/Immersive Client Portals.jpeg" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M12 8v13M8 21h8"/></svg>`, title: "1:1 Scale VR Walkthroughs", desc: "Human-scale spatial evaluation before construction starts.", img: "assets/images/industries/1-1 Scale VR Walkthroughs.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`, title: "Dynamic Light Studies", desc: "Sun-path and daylight simulations on facade materials.", img: "assets/images/industries/Dynamic Light Studies.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>`, title: "On-Site AR BIM Overlay", desc: "BIM models overlaid on-site to eliminate build errors.", img: "assets/images/industries/On-Site AR BIM Overlay.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`, title: "Immersive Client Portals", desc: "Step into unbuilt designs for faster client approvals.", img: "assets/images/industries/Immersive Client Portals.jpeg" }
         ],
         challenges: [
           { icon: ICONS.visualize, text: "Client visualization gap with 2D renders" },
@@ -2151,10 +2154,10 @@
           { num: "77%", label: "Buyers prefer VR tours for off-plan purchases" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`, title: "Virtual Property Tours", desc: "Photorealistic 360° tours accessible 24/7 — international buyers experience properties without travelling.", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><rect x="9" y="13" width="6" height="8"/><line x1="9" y1="10" x2="15" y2="10"/></svg>`, title: "Interior Customisation", desc: "Clients toggle between finishes, flooring, colour schemes, and lighting setups in real-time during their tour.", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M2 9h20M9 21V9"/></svg>`, title: "Off-Plan VR Visualisation", desc: "Secure early pre-sales by giving investors an accurate VR preview of the finished property before construction.", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`, title: "Neighbourhood Context", desc: "Merge drone imagery with 3D models to show buyers the exact views from their floor and the wider community.", img: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&q=75&fit=crop" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`, title: "Virtual Property Tours", desc: "24/7 photorealistic 360° tours for global buyers.", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=75&fit=crop" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><rect x="9" y="13" width="6" height="8"/><line x1="9" y1="10" x2="15" y2="10"/></svg>`, title: "Interior Customisation", desc: "Real-time finishes, flooring, and lighting customizer.", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=75&fit=crop" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M2 9h20M9 21V9"/></svg>`, title: "Off-Plan VR Visualisation", desc: "Accurate VR previews to secure pre-construction sales.", img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=75&fit=crop" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`, title: "Neighbourhood Context", desc: "Drone and 3D views of surroundings and floor views.", img: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&q=75&fit=crop" }
         ],
         challenges: [
           { icon: ICONS.global, text: "Engaging overseas buyers without travel" },
@@ -2180,10 +2183,10 @@
           { num: "95%", label: "Mission rehearsal accuracy improvement" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>`, title: "Naval Navigation Training", desc: "Simulate bridge controls and sensor systems in a maritime environment responding accurately to weather and emergencies.", img: "assets/images/industries/Naval Navigation Training.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>`, title: "Tactical Mission Rehearsal", desc: "Import real geospatial data for precise 3D terrain where command structures coordinate and iterate mission plans.", img: "assets/images/industries/Tactical Mission Rehearsal.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`, title: "Incident Command Training", desc: "Train leadership on emergency management and crisis communication protocols across complex simulated operations.", img: "assets/images/industries/Incident Command Training.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l16 0"/><path d="M4 10l16 0"/><path d="M4 14l16 0"/><path d="M4 18l16 0"/></svg>`, title: "AR Battlefield Overlay", desc: "Real-time tactical data and navigation overlaid in the field of view, built to rigorous security standards.", img: "assets/images/industries/AR Battlefield Overlay.jpeg" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>`, title: "Naval Navigation Training", desc: "Bridge controls and sensor simulations in maritime conditions.", img: "assets/images/industries/Naval Navigation Training.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>`, title: "Tactical Mission Rehearsal", desc: "Geospatial 3D terrain for coordinated mission rehearsal.", img: "assets/images/industries/Tactical Mission Rehearsal.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`, title: "Incident Command Training", desc: "Crisis command drills for rapid emergency coordination.", img: "assets/images/industries/Incident Command Training.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l16 0"/><path d="M4 10l16 0"/><path d="M4 14l16 0"/><path d="M4 18l16 0"/></svg>`, title: "AR Battlefield Overlay", desc: "Tactical data overlaid securely in field of view.", img: "assets/images/industries/AR Battlefield Overlay.jpeg" }
         ],
         challenges: [
           { icon: ICONS.cost, text: "Live training costs and safety risks" },
@@ -2209,10 +2212,10 @@
           { num: "60%", label: "Reduction in lab costs via AR simulation" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`, title: "Virtual Field Trips", desc: "Explore ancient Rome, the ocean floor, or Mars — students experience history and science rather than just reading about it.", img: "assets/images/industries/Virtual Field Trips.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v11m0 0H5a2 2 0 0 1-2-2V9m6 5h10a2 2 0 0 0 2-2V9m0 0H3"/></svg>`, title: "Interactive STEM Labs", desc: "Students manipulate atomic structures or run chemical reactions safely inside a controlled digital lab environment.", img: "assets/images/industries/Interactive STEM Labs.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`, title: "Immersive History Lessons", desc: "Walk through historical events at 1:1 scale — spatial models make abstract concepts tangible and memorable.", img: "assets/images/industries/Immersive History Lessons.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`, title: "Global Collaborative Classrooms", desc: "Students and faculty from different continents gather in shared digital spaces to collaborate on research and design challenges.", img: "assets/images/industries/Global Collaborative Classrooms.jpeg" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`, title: "Virtual Field Trips", desc: "Immersive explorations of historical sites and science.", img: "assets/images/industries/Virtual Field Trips.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v11m0 0H5a2 2 0 0 1-2-2V9m6 5h10a2 2 0 0 0 2-2V9m0 0H3"/></svg>`, title: "Interactive STEM Labs", desc: "Safe manipulation of atomic structures and reactions.", img: "assets/images/industries/Interactive STEM Labs.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`, title: "Immersive History Lessons", desc: "Walk through 1:1 scale historical reconstructions.", img: "assets/images/industries/Immersive History Lessons.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`, title: "Global Collaborative Classrooms", desc: "Cross-border shared classrooms for collaborative learning.", img: "assets/images/industries/Global Collaborative Classrooms.jpeg" }
         ],
         challenges: [
           { icon: ICONS.engage, text: "Student disengagement in passive learning" },
@@ -2238,10 +2241,10 @@
           { num: "87%", label: "Travellers influenced by VR destination tours" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`, title: "Virtual Destination Previews", desc: "Let prospective travellers explore resorts, cruise liners, and venues before committing to a booking decision.", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><rect x="8" y="14" width="8" height="7"/></svg>`, title: "Immersive Hotel Tours", desc: "360° room and amenity tours that increase direct bookings and reduce reliance on OTA platforms.", img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`, title: "Digital Heritage Reconstruction", desc: "Recreate historical landmarks and archaeological sites with millimeter accuracy for global interactive access.", img: "https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>`, title: "Virtual Guided Excursions", desc: "Curated digital journeys led by virtual guides, opening up revenue for educational and global tourism brands.", img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=75&fit=crop" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`, title: "Virtual Destination Previews", desc: "Explore resorts and venues before booking.", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=75&fit=crop" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><rect x="8" y="14" width="8" height="7"/></svg>`, title: "Immersive Hotel Tours", desc: "360° room and amenity tours driving direct bookings.", img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=75&fit=crop" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`, title: "Digital Heritage Reconstruction", desc: "Accurate interactive models of historical landmarks.", img: "https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=75&fit=crop" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>`, title: "Virtual Guided Excursions", desc: "Expert-guided virtual journeys and cultural tours.", img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=75&fit=crop" }
         ],
         challenges: [
           { icon: ICONS.engage, text: "Booking uncertainty without physical preview" },
@@ -2267,10 +2270,10 @@
           { num: "68%", label: "Customers more likely to buy after VR configurator" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>`, title: "Virtual Design Review", desc: "Global engineering teams step inside full-scale models to review ergonomics and component placement before physical builds.", img: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M6.34 17.66l-1.41 1.41M20 12h2M2 12h2M17.66 17.66l1.41 1.41M5.34 6.34L3.93 4.93M12 20v2M12 2v2"/></svg>`, title: "Dealership Configurator", desc: "Customers configure paint, interior, and wheels under dynamic studio lighting — all before leaving the showroom.", img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=75&fit=crop" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`, title: "HMI Safety Simulation", desc: "Test dashboard layouts in a safe virtual road environment to measure driver response times before production sign-off.", img: "assets/images/industries/HMI Safety Simulation.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.121 2.121 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>`, title: "AR Technician Guidance", desc: "Step-by-step repair guides overlaid on the actual engine in AR, reducing service time and upskilling technicians.", img: "assets/images/industries/AR Technician Guidance.jpeg" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>`, title: "Virtual Design Review", desc: "Full-scale ergonomics and component design review.", img: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=800&q=75&fit=crop" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M6.34 17.66l-1.41 1.41M20 12h2M2 12h2M17.66 17.66l1.41 1.41M5.34 6.34L3.93 4.93M12 20v2M12 2v2"/></svg>`, title: "Dealership Configurator", desc: "Custom paint, trim, and wheel studio configurator.", img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=75&fit=crop" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>`, title: "HMI Safety Simulation", desc: "Test dashboard UX and driver response times safely.", img: "assets/images/industries/HMI Safety Simulation.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.121 2.121 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/></svg>`, title: "AR Technician Guidance", desc: "Step-by-step AR repair guides on live engines.", img: "assets/images/industries/AR Technician Guidance.jpeg" }
         ],
         challenges: [
           { icon: ICONS.prototype, text: "High physical prototyping overhead" },
@@ -2296,10 +2299,10 @@
           { num: "2×", label: "Improvement in remote site inspection" }
         ],
         useCases: [
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`, title: "Offshore Plant Training", desc: "Train engineers on offshore platforms or substations, building familiarity with controls before first arrival on-site.", img: "assets/images/industries/Offshore Plant Training.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>`, title: "Wind Turbine AR Maintenance", desc: "AR overlays guide technicians through maintenance steps hands-free at height, eliminating manual documentation lookups.", img: "assets/images/industries/Wind Turbine AR Maintenance.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`, title: "Grid Infrastructure Digital Twins", desc: "Visualise complex power grids and solar fields interactively to streamline maintenance routing and asset management.", img: "assets/images/industries/Grid Infrastructure Digital Twins.jpeg" },
-          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`, title: "Renewable Site Planning", desc: "Validate solar and wind layouts in VR before physical construction, optimising infrastructure placement for efficiency.", img: "assets/images/industries/Renewable Site Planning.jpeg" }
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`, title: "Offshore Plant Training", desc: "Familiarise crews with offshore controls before arrival.", img: "assets/images/industries/Offshore Plant Training.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>`, title: "Wind Turbine AR Maintenance", desc: "Hands-free AR guides for turbine maintenance at height.", img: "assets/images/industries/Wind Turbine AR Maintenance.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`, title: "Grid Infrastructure Digital Twins", desc: "Interactive digital twins for grid asset routing.", img: "assets/images/industries/Grid Infrastructure Digital Twins.jpeg" },
+          { icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`, title: "Renewable Site Planning", desc: "Validate solar and wind layouts in VR before build.", img: "assets/images/industries/Renewable Site Planning.jpeg" }
         ],
         challenges: [
           { icon: ICONS.safety, text: "Dangerous high-voltage training environments" },

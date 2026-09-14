@@ -1,4 +1,4 @@
-(function() {
+(function () {
   // ── Inject footer CSS ──────────────────────────────────────────────────────
   const style = document.createElement('style');
   style.textContent = `
@@ -25,11 +25,11 @@
   width: 100%;
   max-width: 100%;
   margin: 0;
-  padding: 34px 5vw 10px;
+  padding: 34px 4vw 10px;
 }
 .vf-grid {
   display: grid;
-  grid-template-columns: 1.6fr 0.95fr 1.25fr 1.05fr 1.35fr;
+  grid-template-columns: 2.1fr 1fr 1.3fr 1.3fr;
   gap: 3.5vw;
   position: relative;
   z-index: 2;
@@ -48,18 +48,20 @@
 
 /* Brand Column */
 .vf-brand-col {
-  max-width: 480px;
+  max-width: 520px;
 }
 .vf-brand-col .footer-logo {
-  width: 180px;
-  max-width: 210px;
-  margin-bottom: 12px;
+  width: 350px;
+  max-width: 100%;
+  margin-left: -20px;
+  margin-bottom: 16px;
 }
 .vf-brand-col .footer-logo img {
   width: 100%;
   height: auto;
-  max-height: 52px;
+  max-height: 120px;
   object-fit: contain;
+  object-position: left center;
   display: block;
 }
 .vf-tagline {
@@ -274,11 +276,8 @@
   .vf-col#col-services {
     grid-column: 2;
   }
-  .vf-col#col-resources {
-    grid-column: 1;
-  }
   .vf-col#col-touch {
-    grid-column: 2;
+    grid-column: span 2;
   }
 }
 
@@ -299,8 +298,9 @@
     max-width: 100%;
   }
   .vf-brand-col .footer-logo {
-    width: 160px;
-    margin-bottom: 10px;
+    width: 280px;
+    margin-left: -15px;
+    margin-bottom: 14px;
   }
   .vf-tagline {
     font-size: 14px;
@@ -316,11 +316,8 @@
   .vf-col#col-services {
     grid-column: 2;
   }
-  .vf-col#col-resources {
-    grid-column: 1;
-  }
   .vf-col#col-touch {
-    grid-column: 2;
+    grid-column: span 2;
   }
   .footer-bottom {
     flex-direction: column;
@@ -336,28 +333,25 @@
     padding: 24px 16px 14px;
   }
   .vf-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 22px 14px;
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
   .vf-col:not(:last-child) {
     border-right: none;
     padding-right: 0;
   }
   .vf-brand-col {
-    grid-column: span 2;
+    grid-column: 1;
     max-width: 100%;
   }
   .vf-col#col-company {
     grid-column: 1;
   }
   .vf-col#col-services {
-    grid-column: 2;
-  }
-  .vf-col#col-resources {
     grid-column: 1;
   }
   .vf-col#col-touch {
-    grid-column: 2;
+    grid-column: 1;
   }
   .vf-col-title {
     font-size: 11.5px;
@@ -445,7 +439,7 @@
           <a href="about.html">About Us</a>
           <a href="portfolio.html">Our Work</a>
           <a href="careers-page (1).html">Careers</a>
-          <a href="blog.html">Blog</a>
+          <a href="insights-overview-new.html">Blogs</a>
           <a href="contact.html">Contact</a>
         </div>
       </div>
@@ -464,20 +458,7 @@
         </div>
       </div>
 
-      <!-- Column 4: Resources -->
-      <div class="vf-col" id="col-resources">
-        <div class="vf-col-title">RESOURCES</div>
-        <div class="vf-col-accent"></div>
-        <div class="vf-links">
-          <a href="blog.html">Blogs</a>
-          <a href="contact.html">Support Center</a>
-          <a href="#faq">FAQ</a>
-          <a href="#requirements">System Requirements</a>
-          <a href="contact.html">Request a Demo</a>
-        </div>
-      </div>
-
-      <!-- Column 5: Get In Touch -->
+      <!-- Column 4: Get In Touch -->
       <div class="vf-col" id="col-touch">
         <div class="vf-col-title">GET IN TOUCH</div>
         <div class="vf-col-accent"></div>
@@ -492,7 +473,7 @@
             <span class="vf-icon-badge">
               <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </span>
-            <span>+91 123 456 7890</span>
+            <span>+91 9504495055</span>
           </a>
           <div class="vf-contact-item">
             <span class="vf-icon-badge">
@@ -512,7 +493,7 @@
     <!-- Bottom copyright / legal bar -->
     <div class="footer-bottom" id="footer-bottom">
       <div class="brand-name"><span>Volga</span> Infosys&reg;</div>
-      <div class="copyright">&copy; Volga Infosys&reg; 2026 &nbsp;&nbsp;|&nbsp;&nbsp; <a href="#">Privacy &amp; Policy</a> &nbsp;&nbsp;|&nbsp;&nbsp; <a href="#">Terms of Service</a> &nbsp;&nbsp;|&nbsp;&nbsp; <a href="#">Cookie Policy</a> &nbsp;&nbsp;|&nbsp;&nbsp; Made with &hearts; by Volga</div>
+      <div class="copyright">&copy; Volga Infosys&reg; 2026 &nbsp;&nbsp;|&nbsp;&nbsp; <a href="contact.html">Privacy &amp; Policy</a></div>
     </div>
 
   </div>
@@ -523,30 +504,27 @@
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
 
-    const footer       = document.getElementById('volga-footer');
-    const colBrand     = document.getElementById('col-brand');
-    const colCompany   = document.getElementById('col-company');
-    const colServices  = document.getElementById('col-services');
-    const colResources = document.getElementById('col-resources');
-    const colTouch     = document.getElementById('col-touch');
+    const footer = document.getElementById('volga-footer');
+    const colBrand = document.getElementById('col-brand');
+    const colCompany = document.getElementById('col-company');
+    const colServices = document.getElementById('col-services');
+    const colTouch = document.getElementById('col-touch');
     const footerBottom = document.getElementById('footer-bottom');
 
     if (!footer || !colBrand) return;
 
-    gsap.set(colBrand,     { y: 15, opacity: 0 });
-    gsap.set(colCompany,   { y: 15, opacity: 0 });
-    gsap.set(colServices,  { y: 15, opacity: 0 });
-    gsap.set(colResources, { y: 15, opacity: 0 });
-    gsap.set(colTouch,     { y: 15, opacity: 0 });
+    gsap.set(colBrand, { y: 15, opacity: 0 });
+    gsap.set(colCompany, { y: 15, opacity: 0 });
+    gsap.set(colServices, { y: 15, opacity: 0 });
+    gsap.set(colTouch, { y: 15, opacity: 0 });
     gsap.set(footerBottom, { y: 15, opacity: 0 });
 
     const showFooter = () => {
-      gsap.to(colBrand,     { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' });
-      gsap.to(colCompany,   { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out', delay: 0.08 });
-      gsap.to(colServices,  { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out', delay: 0.14 });
-      gsap.to(colResources, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out', delay: 0.20 });
-      gsap.to(colTouch,     { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out', delay: 0.26 });
-      gsap.to(footerBottom, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out', delay: 0.32 });
+      gsap.to(colBrand, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' });
+      gsap.to(colCompany, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out', delay: 0.08 });
+      gsap.to(colServices, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out', delay: 0.14 });
+      gsap.to(colTouch, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out', delay: 0.20 });
+      gsap.to(footerBottom, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out', delay: 0.26 });
     };
 
     const rect = footer.getBoundingClientRect();

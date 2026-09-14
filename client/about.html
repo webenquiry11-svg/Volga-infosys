@@ -224,11 +224,11 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop');
-      background-position: center center;
+      background-image: url('assets/images/about/about-hero.png');
+      background-position: center right;
       background-size: cover;
       background-repeat: no-repeat;
-      opacity: 0.5;
+      opacity: 0.85;
       z-index: 0;
       pointer-events: none;
     }
@@ -239,7 +239,8 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(180deg, rgba(13, 27, 38, 0.75) 0%, rgba(13, 27, 38, 0.5) 50%, rgba(13, 27, 38, 0.85) 100%);
+      background: linear-gradient(90deg, rgba(13, 27, 38, 0.92) 0%, rgba(13, 27, 38, 0.75) 45%, rgba(13, 27, 38, 0.25) 100%),
+        linear-gradient(180deg, rgba(13, 27, 38, 0.6) 0%, transparent 40%, rgba(13, 27, 38, 0.85) 100%);
       z-index: 1;
     }
 
@@ -1522,6 +1523,7 @@
         align-items: flex-start;
         gap: 20px;
       }
+
       .industries-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 18px;
@@ -1532,6 +1534,7 @@
       .industries-grid {
         grid-template-columns: 1fr;
       }
+
       .ind-card-banner {
         height: 165px;
       }
@@ -3435,40 +3438,14 @@
       </div>
 
       <!-- Stat counters -->
-      <div class="Hero-stats">
-        <div class="stat">
-          <div class="stat-value">
-            <span class="stat-num" data-val="60">0</span>
-            <span class="stat-plus">+</span>
-          </div>
-          <div class="stat-label">Projects Delivered</div>
-        </div>
-        <div class="stat Hero-stat-divider"></div>
-        <div class="stat">
-          <div class="stat-value">
-            <span class="stat-num" data-val="10">0</span>
-            <span class="stat-plus">+</span>
-          </div>
-          <div class="stat-label">Industries Served</div>
-        </div>
-        <div class="stat Hero-stat-divider"></div>
-        <div class="stat">
-          <div class="stat-value">
-            <span class="stat-num" data-val="8">0</span>
-            <span class="stat-plus">+</span>
-          </div>
-          <div class="stat-label">Years Experience</div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Scroll hint -->
-    <div class="Hero-scroll-hint">
-      <div class="Hero-scroll-mouse">
-        <div class="Hero-scroll-wheel"></div>
+      <!-- Scroll hint -->
+      <div class="Hero-scroll-hint">
+        <div class="Hero-scroll-mouse">
+          <div class="Hero-scroll-wheel"></div>
+        </div>
+        <span>Scroll</span>
       </div>
-      <span>Scroll</span>
-    </div>
   </section>
 
   <!-- 
@@ -3679,7 +3656,7 @@
               <path d="M9 16l2 2 4-4" />
             </svg>
           </div>
-          <div class="impact-stat-val"><span class="count" data-target="8">8</span>+</div>
+          <div class="impact-stat-val"><span class="count" data-target="6">6</span>+</div>
           <div class="impact-stat-label">YEARS EXPERIENCE</div>
           <p class="impact-stat-desc">Building immersive tech solutions for a smarter tomorrow.</p>
         </div>
@@ -3774,7 +3751,8 @@
         </div>
         <div class="industries-head-right">
           <div class="industries-v-divider"></div>
-          <p class="industries-lede">From healthcare to manufacturing — we bring immersive technology to the sectors that need it most.</p>
+          <p class="industries-lede">From healthcare to manufacturing — we bring immersive technology to the sectors
+            that need it most.</p>
         </div>
       </div>
       <div class="industries-grid reveal">
@@ -3783,9 +3761,10 @@
         <a href="industries.html" class="industry-card-v2">
           <div class="ind-card-banner">
             <div class="ind-card-badge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                <path d="M12 8v8M8 12h8"/>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <path d="M12 8v8M8 12h8" />
               </svg>
             </div>
             <img src="assets/images/industries/3D Anatomical Visualization.jpeg" alt="Medical training & simulation" />
@@ -3796,7 +3775,11 @@
               <p>Better learning. Safer tomorrow.</p>
             </div>
             <div class="ind-card-btn">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
             </div>
           </div>
         </a>
@@ -3805,10 +3788,11 @@
         <a href="industries.html" class="industry-card-v2">
           <div class="ind-card-banner">
             <div class="ind-card-badge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 20h20"/>
-                <path d="M4 20V10l4 3V10l4 3V4h8v16"/>
-                <path d="M14 8h2M14 12h2M14 16h2"/>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M2 20h20" />
+                <path d="M4 20V10l4 3V10l4 3V4h8v16" />
+                <path d="M14 8h2M14 12h2M14 16h2" />
               </svg>
             </div>
             <img src="assets/images/services/digital-twin-factory.jpg" alt="Digital twins & smart factories" />
@@ -3819,7 +3803,11 @@
               <p>Smarter operations. Greater efficiency.</p>
             </div>
             <div class="ind-card-btn">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
             </div>
           </div>
         </a>
@@ -3828,9 +3816,10 @@
         <a href="industries.html" class="industry-card-v2">
           <div class="ind-card-banner">
             <div class="ind-card-badge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                <polyline points="9 22 9 12 15 12 15 22"/>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
               </svg>
             </div>
             <img src="assets/images/services/unreal-nanite-archviz.jpg" alt="Virtual property tours" />
@@ -3841,7 +3830,11 @@
               <p>Explore spaces. Anywhere.</p>
             </div>
             <div class="ind-card-btn">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
             </div>
           </div>
         </a>
@@ -3850,12 +3843,14 @@
         <a href="industries.html" class="industry-card-v2">
           <div class="ind-card-banner">
             <div class="ind-card-badge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                <path d="M6 12v5c3 3 9 3 12 0v-5" />
               </svg>
             </div>
-            <img src="assets/images/industries/Global Collaborative Classrooms.jpeg" alt="Immersive learning environments" />
+            <img src="assets/images/industries/Global Collaborative Classrooms.jpeg"
+              alt="Immersive learning environments" />
           </div>
           <div class="ind-card-body">
             <div class="ind-card-copy">
@@ -3863,7 +3858,11 @@
               <p>Engage. Practice. Excel.</p>
             </div>
             <div class="ind-card-btn">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
             </div>
           </div>
         </a>
@@ -3872,10 +3871,12 @@
         <a href="industries.html" class="industry-card-v2">
           <div class="ind-card-banner">
             <div class="ind-card-badge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 17h14M5 17a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.5L8 4h8l1.5 3H19a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2M5 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm14 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
-                <circle cx="7" cy="11" r="1"/>
-                <circle cx="17" cy="11" r="1"/>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path
+                  d="M5 17h14M5 17a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.5L8 4h8l1.5 3H19a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2M5 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm14 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />
+                <circle cx="7" cy="11" r="1" />
+                <circle cx="17" cy="11" r="1" />
               </svg>
             </div>
             <img src="assets/images/services/webxr-3d-configurator.jpg" alt="Virtual design & showrooms" />
@@ -3886,7 +3887,11 @@
               <p>Visualize. Customize. Decide.</p>
             </div>
             <div class="ind-card-btn">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
             </div>
           </div>
         </a>
@@ -3895,8 +3900,9 @@
         <a href="industries.html" class="industry-card-v2">
           <div class="ind-card-banner">
             <div class="ind-card-badge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
             </div>
             <img src="Tactical training.png" alt="Tactical training & simulation" />
@@ -3907,7 +3913,11 @@
               <p>Train for what's next.</p>
             </div>
             <div class="ind-card-btn">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
             </div>
           </div>
         </a>
@@ -3916,7 +3926,11 @@
       <div class="industries-cta reveal">
         <a href="industries.html" class="industries-cta-btn">
           View all industries
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
         </a>
       </div>
     </div>
@@ -3928,7 +3942,7 @@
 
 
 
-  <!-- ═══════════════════ TESTIMONIALS SECTION ═══════════════════ -->
+  <!-- ═══════════════════ TESTIMONIALS SECTION (COMMENTED OUT) ═══════════════════
   <section class="section section--testimonials" id="testimonials">
     <div class="wrap">
       <div class="testimonials-head reveal">
@@ -3940,7 +3954,7 @@
           accelerate training, enhance design, and elevate performance.</p>
       </div>
 
-      <!-- Featured Spotlight Testimonial -->
+      <!- - Featured Spotlight Testimonial - ->
       <div class="t-spotlight reveal">
         <div class="t-spotlight-inner">
           <div class="t-spotlight-visual">
@@ -3996,10 +4010,10 @@
         </div>
       </div>
 
-      <!-- Testimonials Grid -->
+      <!- - Testimonials Grid - ->
       <div class="testimonials-grid reveal">
 
-        <!-- Card 1: Healthcare -->
+        <!- - Card 1: Healthcare - ->
         <div class="t-card">
           <div class="t-card-header">
             <span class="t-industry-pill">Healthcare &amp; MedTech</span>
@@ -4027,7 +4041,7 @@
           </div>
         </div>
 
-        <!-- Card 2: Defense / Aerospace -->
+        <!- - Card 2: Defense / Aerospace - ->
         <div class="t-card">
           <div class="t-card-header">
             <span class="t-industry-pill">Defense &amp; Aerospace</span>
@@ -4055,7 +4069,7 @@
           </div>
         </div>
 
-        <!-- Card 3: Real Estate / Spatial -->
+        <!- - Card 3: Real Estate / Spatial - ->
         <div class="t-card">
           <div class="t-card-header">
             <span class="t-industry-pill">Real Estate &amp; Architecture</span>
@@ -4083,7 +4097,7 @@
           </div>
         </div>
 
-        <!-- Card 4: Smart Manufacturing -->
+        <!- - Card 4: Smart Manufacturing - ->
         <div class="t-card">
           <div class="t-card-header">
             <span class="t-industry-pill">Smart Manufacturing</span>
@@ -4113,7 +4127,7 @@
 
       </div>
 
-      <!-- Trust Stats Bar -->
+      <!- - Trust Stats Bar - ->
       <div class="t-stats-banner reveal">
         <div class="t-stats-grid">
           <div class="t-stat-cell">
@@ -4137,6 +4151,7 @@
 
     </div>
   </section>
+  -->
 
   <section class="section section--light contact" id="contact">
     <div class="wrap">

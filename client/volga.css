@@ -715,9 +715,10 @@ section {
   padding: 0;
   pointer-events: none;
   opacity: 0;
+  visibility: hidden;
   z-index: 999;
   overflow: hidden;
-  will-change: opacity, transform;
+  will-change: opacity, transform, visibility;
 }
 
 #menu-company {
@@ -741,6 +742,7 @@ section {
 .mega-menu.visible {
   pointer-events: all;
   opacity: 1;
+  visibility: visible;
 }
 
 /* Subtle top amber highlight glow line */

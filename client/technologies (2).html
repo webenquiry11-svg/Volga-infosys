@@ -508,12 +508,12 @@
    TECH UNIVERSE — HORIZONTAL SCROLL
 ══════════════════════════════ */
     .hscroll-section {
-      padding: 120px 0 0;
+      padding: 60px 0 0;
       overflow: hidden
     }
 
     .hscroll-intro {
-      padding: 0 3rem 60px;
+      padding: 0 3rem 30px;
       max-width: 1320px;
       margin: 0 auto
     }
@@ -521,7 +521,7 @@
     .hscroll-track-wrap {
       overflow: hidden;
       position: relative;
-      padding: 20px 0 60px;
+      padding: 10px 0 30px;
     }
 
     .hscroll-track {
@@ -689,7 +689,7 @@
    FEATURED SPOTLIGHT SECTION
 ══════════════════════════════ */
     .spotlight {
-      padding: 140px 0;
+      padding: 65px 0;
       position: relative;
       overflow: hidden
     }
@@ -825,14 +825,14 @@
     }
 
     .spotlight-text .section-desc {
-      margin-bottom: 2rem
+      margin-bottom: 1.5rem
     }
 
     .feature-list {
       display: flex;
       flex-direction: column;
       gap: .8rem;
-      margin-bottom: 2.5rem
+      margin-bottom: 1.8rem
     }
 
     .fl-item {
@@ -933,7 +933,7 @@
    AR SECTION — IMAGE MOSAIC
 ══════════════════════════════ */
     .ar-section {
-      padding: 120px 0;
+      padding: 65px 0;
       background: var(--bg-alt);
       position: relative;
       overflow: hidden
@@ -1020,7 +1020,7 @@
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      margin-top: 2.5rem
+      margin-top: 1.8rem
     }
 
     .apc {
@@ -1110,7 +1110,7 @@
    AI/CLOUD — DARK GRADIENT
 ══════════════════════════════ */
     .ai-section {
-      padding: 120px 0;
+      padding: 65px 0;
       background: var(--bg);
       position: relative;
       overflow: hidden
@@ -1133,7 +1133,7 @@
       grid-template-columns: 1fr 1fr;
       gap: 4rem;
       align-items: end;
-      margin-bottom: 4rem
+      margin-bottom: 2.2rem
     }
 
     .ai-video-strip {
@@ -1209,7 +1209,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
-      margin-top: 3rem
+      margin-top: 2rem
     }
 
     .ai-card {
@@ -1243,12 +1243,13 @@
     }
 
     .ai-card-num {
-      font-family: var(--font-ui);
-      font-size: 3rem;
-      font-weight: 700;
-      color: rgba(232, 147, 10, .15);
+      font-family: var(--font-display, var(--font-ui));
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: #e8930a;
       line-height: 1;
-      margin-bottom: .8rem
+      margin-bottom: .8rem;
+      letter-spacing: -0.02em;
     }
 
     .ai-card h3 {
@@ -1270,7 +1271,7 @@
    WHY — HORIZONTAL SCROLL CARDS
 ══════════════════════════════ */
     .why-section {
-      padding: 120px 0;
+      padding: 65px 0;
       background: var(--bg-alt)
     }
 
@@ -1281,7 +1282,7 @@
     }
 
     .why-header {
-      margin-bottom: 4rem
+      margin-bottom: 2.2rem
     }
 
     .why-cards {
@@ -1308,15 +1309,13 @@
     }
 
     .wc-num {
-      font-family: var(--font-ui);
-      font-size: 4rem;
-      font-weight: 700;
+      font-family: var(--font-display, var(--font-ui));
+      font-size: 3rem;
+      font-weight: 800;
       line-height: 1;
       margin-bottom: .8rem;
-      background: linear-gradient(135deg, rgba(232, 147, 10, .15), rgba(232, 80, 26, .1));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent
+      color: #e8930a;
+      letter-spacing: -0.02em;
     }
 
     .wc h3 {
@@ -1355,7 +1354,7 @@
    CTA FINALE
 ══════════════════════════════ */
     .cta-finale {
-      padding: 140px 0;
+      padding: 75px 0;
       position: relative;
       overflow: hidden;
       background: var(--bg-alt);
@@ -1402,7 +1401,7 @@
       font-size: 1rem;
       color: var(--text-muted);
       line-height: 1.75;
-      margin-bottom: 2.5rem
+      margin-bottom: 1.8rem
     }
 
     .cta-actions {
@@ -1527,7 +1526,7 @@
       gap: 1.5rem;
       max-width: 1320px;
       margin: 0 auto;
-      padding: 0 3rem 60px;
+      padding: 0 3rem 18px;
     }
 
     .section-rule-line {
@@ -1716,10 +1715,9 @@
     }
 
     .section-light .wc-num {
-      background: linear-gradient(135deg, rgba(217, 79, 43, .15), rgba(217, 79, 43, .04));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent
+      color: #e8930a;
+      background: none;
+      -webkit-text-fill-color: initial;
     }
 
     .section-light .wc-glow {
@@ -1770,7 +1768,7 @@
 ══════════════════════════════ */
     /* Remove old hscroll-track-wrap overflow/padding */
     .hscroll-section {
-      padding: 120px 0 80px;
+      padding: 60px 0 40px;
       background: var(--bg-alt);
       overflow: hidden
     }
@@ -2254,7 +2252,7 @@
      IMMERSIVE TECH — SEAMLESS LOOP
 ════════════════════════════ -->
   <section class="hscroll-section" id="immersive">
-    <div class="hscroll-intro" style="padding:0 3rem 60px;max-width:1320px;margin:0 auto">
+    <div class="hscroll-intro" style="padding:0 3rem 30px;max-width:1320px;margin:0 auto">
       <div class="section-eyebrow reveal">
         <div class="eyebrow-line"></div>
         <div class="eyebrow-text">Trusted Technologies</div>
@@ -2428,7 +2426,7 @@
   <div style="display:block;width:100%;line-height:0;overflow:hidden">
 
   </div>
-  <div class="section-rule reveal" style="margin:0 auto;padding-top:40px">
+  <div class="section-rule reveal" style="margin:0 auto;padding-top:10px">
     <div class="section-rule-line"></div>
     <div class="section-rule-label">Unity Spotlight</div>
     <div class="section-rule-line"></div>
@@ -2513,7 +2511,7 @@
 
 
   </div>
-  <div class="section-rule reveal" style="margin:0 auto;padding-top:20px">
+  <div class="section-rule reveal" style="margin:0 auto;padding-top:10px">
     <div class="section-rule-line"></div>
     <div class="section-rule-label">Augmented Reality</div>
     <div class="section-rule-line"></div>
@@ -2583,7 +2581,7 @@
 
   <!-- wave back to dark after AR -->
 
-  <div class="section-rule reveal" style="margin:0 auto;padding-top:40px">
+  <div class="section-rule reveal" style="margin:0 auto;padding-top:10px">
     <div class="section-rule-line"></div>
     <div class="section-rule-label">AI &amp; Cloud Infrastructure</div>
     <div class="section-rule-line"></div>
@@ -2653,7 +2651,7 @@
 
   <!-- wave into light for Why -->
 
-  <div class="section-rule reveal" style="margin:0 auto;padding-top:20px">
+  <div class="section-rule reveal" style="margin:0 auto;padding-top:10px">
     <div class="section-rule-line"></div>
     <div class="section-rule-label">Why Volga Infosys</div>
     <div class="section-rule-line"></div>
