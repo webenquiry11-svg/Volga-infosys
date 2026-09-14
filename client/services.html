@@ -1564,7 +1564,7 @@
                   <path d="M4 15a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -3" />
                   <path d="M14 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -12" />
                 </svg>UI/UX Design</a></li>
-            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+            <li><a class="mega-item" href="services.html#cloud"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                   height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round"
                   class="icon icon-tabler icons-tabler-outline icon-tabler-cloud">
@@ -2260,112 +2260,179 @@
     const stageEmpty = document.getElementById('stageEmpty');
     const stageContent = document.getElementById('stageContent');
 
-    function showService(id) {
-      if (activeServiceId === id) return;
-      activeServiceId = id;
+    function resolveServiceId(rawId) {
+      if (!rawId) return 'ar-dev';
+      const clean = String(rawId).replace(/^#/, '').toLowerCase().trim();
+      const aliasMap = {
+        'custom-ar': 'ar-dev',
+        'ar': 'ar-dev',
+        'ar-dev': 'ar-dev',
+        'vr-training': 'vr-platform',
+        'vr-platform': 'vr-platform',
+        'vr-dev': 'vr-platform',
+        'vr': 'vr-platform',
+        'unity-dev': 'unity',
+        'unity': 'unity',
+        'unreal-engine': 'unreal',
+        'unreal-dev': 'unreal',
+        'unreal': 'unreal',
+        'webgl': 'webxr',
+        'webxr-dev': 'webxr',
+        'webxr': 'webxr',
+        '3d-modeling': '3d-modeling',
+        '3d-model': '3d-modeling',
+        '3d': '3d-modeling',
+        'uiux': 'uiux',
+        'ui-ux': 'uiux',
+        'spatial-ui': 'uiux',
+        'cloud-dev': 'cloud',
+        'pixel-streaming': 'cloud',
+        'cloud': 'cloud',
+        'maintenance': 'support',
+        'maintenance-support': 'support',
+        'support': 'support'
+      };
+      return aliasMap[clean] || (SERVICES.find(s => s.id === clean) ? clean : 'ar-dev');
+    }
+
+    function scrollToServiceStage() {
+      const target = document.querySelector('.solutions-shell') || document.getElementById('servicesStage');
+      if (target) {
+        const nav = document.getElementById('navbar') || document.querySelector('.navbar');
+        const navHeight = nav ? nav.offsetHeight : 70;
+        const targetTop = target.getBoundingClientRect().top + window.pageYOffset - (navHeight + 15);
+        window.scrollTo({
+          top: Math.max(0, targetTop),
+          behavior: 'smooth'
+        });
+      }
+    }
+    window.scrollToServiceStage = scrollToServiceStage;
+
+    function showService(rawId, shouldScroll = false) {
+      const id = resolveServiceId(rawId);
       const s = SERVICES.find(x => x.id === id);
       if (!s) return;
+
+      const isChanged = (activeServiceId !== id);
+      activeServiceId = id;
 
       document.querySelectorAll('.sol-btn').forEach(e => e.classList.toggle('active', e.dataset.id === id));
       document.querySelectorAll('.services-btn').forEach(b => b.classList.toggle('active', b.dataset.id === id));
 
-      const whyHTML = s.whyNeed ? `
-        <div class="stage-why">
-          <div class="sec-label">Why Businesses Need This</div>
-          <div class="why-text">${s.whyNeed}</div>
-          ${s.whyItems ? `<div class="why-pills">${s.whyItems.map(w => `<div class="why-pill">${w}</div>`).join('')}</div>` : ''}
-        </div>
-      ` : '';
+      if (isChanged || stageEmpty.style.display !== 'none') {
+        const whyHTML = s.whyNeed ? `
+          <div class="stage-why">
+            <div class="sec-label">Why Businesses Need This</div>
+            <div class="why-text">${s.whyNeed}</div>
+            ${s.whyItems ? `<div class="why-pills">${s.whyItems.map(w => `<div class="why-pill">${w}</div>`).join('')}</div>` : ''}
+          </div>
+        ` : '';
 
-      const hlHTML = s.highlights ? `
-        <div class="intro-highlights">
-          ${s.highlights.map(h => `
-            <div class="intro-hl">
-              <div class="intro-hl-icon">${h.i}</div>
-              <div class="intro-hl-title">${h.t}</div>
-              <div class="intro-hl-desc">${h.d}</div>
-            </div>
-          `).join('')}
-        </div>
-      ` : '';
-
-      const ucHTML = s.usecases ? `
-        <div class="usecase-section">
-          <div class="sec-label">Real-World Applications</div>
-          <div class="usecase-strip">
-            ${s.usecases.map(u => `
-              <div class="usecase-card">
-                <div class="usecase-img" style="background-image:url('${u.img}')"></div>
-                <div class="usecase-label">${u.label}</div>
+        const hlHTML = s.highlights ? `
+          <div class="intro-highlights">
+            ${s.highlights.map(h => `
+              <div class="intro-hl">
+                <div class="intro-hl-icon">${h.i}</div>
+                <div class="intro-hl-title">${h.t}</div>
+                <div class="intro-hl-desc">${h.d}</div>
               </div>
             `).join('')}
           </div>
-        </div>
-      ` : '';
+        ` : '';
 
-      const featHTML = s.features ? `
-        <div class="sec-label">Core Capabilities & Engineering</div>
-        <div class="feats-grid">
-          ${s.features.map(f => `
-            <div class="feat-card">
-              <div class="feat-icon">${f.i}</div>
-              <div class="feat-title">${f.t}</div>
-              <div class="feat-desc">${f.d}</div>
-            </div>
-          `).join('')}
-        </div>
-      ` : '';
-
-      stageContent.innerHTML = `
-        <div class="stage-visual">
-          <div class="stage-img" style="background-image:url('${s.img}')"></div>
-          <div class="stage-grad"></div>
-          <div class="stage-badge">${s.tag}</div>
-          <div class="stage-title-wrap">
-            <div class="stage-title">${s.title}<span class="stage-subtitle">${s.subtitle}</span></div>
-          </div>
-        </div>
-        <div class="stage-body">
-          ${hlHTML}
-          ${whyHTML}
-          ${featHTML}
-          ${ucHTML}
-          <div class="chips-row">
-            <div class="chips-col">
-              <div class="chips-col-label">Business Benefits</div>
-              <div class="chips">${s.benefits.map(b => `<span class="chip">${b}</span>`).join('')}</div>
-            </div>
-            <div class="chips-col">
-              <div class="chips-col-label">Target Industries</div>
-              <div class="chips">${s.industries.map(i => `<span class="chip chip-sq">${i}</span>`).join('')}</div>
+        const ucHTML = s.usecases ? `
+          <div class="usecase-section">
+            <div class="sec-label">Real-World Applications</div>
+            <div class="usecase-strip">
+              ${s.usecases.map(u => `
+                <div class="usecase-card">
+                  <div class="usecase-img" style="background-image:url('${u.img}')"></div>
+                  <div class="usecase-label">${u.label}</div>
+                </div>
+              `).join('')}
             </div>
           </div>
-          <div class="stage-cta">
-            <div class="stage-cta-copy">
-              <h4>${s.ctaH}</h4>
-              <p>${s.ctaP}</p>
-            </div>
-            <a href="contact.html" class="stage-btn">Start a Project</a>
-          </div>
-        </div>
-      `;
+        ` : '';
 
-      stageEmpty.style.display = 'none';
-      stageContent.style.display = 'flex';
-      stageContent.style.flexDirection = 'column';
-      stageContent.style.flex = '1';
+        const featHTML = s.features ? `
+          <div class="sec-label">Core Capabilities & Engineering</div>
+          <div class="feats-grid">
+            ${s.features.map(f => `
+              <div class="feat-card">
+                <div class="feat-icon">${f.i}</div>
+                <div class="feat-title">${f.t}</div>
+                <div class="feat-desc">${f.d}</div>
+              </div>
+            `).join('')}
+          </div>
+        ` : '';
+
+        stageContent.innerHTML = `
+          <div class="stage-visual">
+            <div class="stage-img" style="background-image:url('${s.img}')"></div>
+            <div class="stage-grad"></div>
+            <div class="stage-badge">${s.tag}</div>
+            <div class="stage-title-wrap">
+              <div class="stage-title">${s.title}<span class="stage-subtitle">${s.subtitle}</span></div>
+            </div>
+          </div>
+          <div class="stage-body">
+            ${hlHTML}
+            ${whyHTML}
+            ${featHTML}
+            ${ucHTML}
+            <div class="chips-row">
+              <div class="chips-col">
+                <div class="chips-col-label">Business Benefits</div>
+                <div class="chips">${s.benefits.map(b => `<span class="chip">${b}</span>`).join('')}</div>
+              </div>
+              <div class="chips-col">
+                <div class="chips-col-label">Target Industries</div>
+                <div class="chips">${s.industries.map(i => `<span class="chip chip-sq">${i}</span>`).join('')}</div>
+              </div>
+            </div>
+            <div class="stage-cta">
+              <div class="stage-cta-copy">
+                <h4>${s.ctaH}</h4>
+                <p>${s.ctaP}</p>
+              </div>
+              <a href="contact.html" class="stage-btn">Start a Project</a>
+            </div>
+          </div>
+        `;
+
+        stageEmpty.style.display = 'none';
+        stageContent.style.display = 'flex';
+        stageContent.style.flexDirection = 'column';
+        stageContent.style.flex = '1';
+      }
 
       history.replaceState(null, '', `#${id}`);
-      if (window.innerWidth < 960) {
+
+      if (typeof activateServiceDockBtn === 'function') {
+        activateServiceDockBtn(id, false);
+      }
+
+      if (shouldScroll) {
+        scrollToServiceStage();
+      } else if (window.innerWidth < 960) {
         setTimeout(() => stageContent.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
       }
     }
+    window.showService = showService;
+
+    window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        showService(hash, true);
+      }
+    });
 
     document.addEventListener('DOMContentLoaded', () => {
       const hash = window.location.hash.replace('#', '');
-      const validIds = SERVICES.map(s => s.id);
-      const target = validIds.includes(hash) ? hash : 'ar-dev';
-      showService(target);
+      const target = resolveServiceId(hash);
+      showService(target, !!hash);
 
       // Setup Dock
       const navGrid = document.getElementById('servicesNavGrid');

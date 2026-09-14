@@ -1773,6 +1773,83 @@ sections.forEach(s => observer.observe(s));
     }
   });
 
+  // Expose global close function
+  window.closeAllMegaMenus = () => closeMenu(0);
+
+  // Handle dropdown & nav link clicks (instant close & smooth scrolling if on same page)
+  function handleDropdownLinkClick(e) {
+    const link = e.target.closest('a');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('javascript:')) return;
+
+    // Immediately force close mega menus
+    closeMenu(0);
+
+    // Check if on same page
+    let isSamePage = false;
+    let hash = '';
+
+    try {
+      const url = new URL(href, window.location.href);
+      const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+      const targetPath = url.pathname.replace(/\/$/, '') || '/';
+      const currentFile = decodeURIComponent(currentPath.split('/').pop().toLowerCase());
+      const targetFile = decodeURIComponent(targetPath.split('/').pop().toLowerCase());
+
+      const sameFile = (currentFile === targetFile) ||
+                       (!currentFile && (targetFile === 'index.html' || targetFile === '')) ||
+                       (!targetFile && (currentFile === 'index.html' || currentFile === ''));
+
+      if (sameFile && url.hash) {
+        isSamePage = true;
+        hash = url.hash.replace(/^#/, '');
+      }
+    } catch (err) {
+      if (href.startsWith('#')) {
+        isSamePage = true;
+        hash = href.replace(/^#/, '');
+      }
+    }
+
+    if (isSamePage && hash) {
+      e.preventDefault();
+
+      // If on services page with showService
+      if (typeof window.showService === 'function') {
+        window.showService(hash, true);
+        return;
+      }
+
+      // If on industries page with setActiveIndustry
+      if (typeof window.setActiveIndustry === 'function') {
+        window.setActiveIndustry(hash, true);
+        const panel = document.getElementById(`panel-${hash}`) || document.getElementById('industryContent') || document.getElementById('industryNav');
+        if (panel) {
+          const nav = document.getElementById('navbar') || document.querySelector('.navbar');
+          const navH = nav ? nav.offsetHeight : 70;
+          const targetTop = panel.getBoundingClientRect().top + window.pageYOffset - (navH + 15);
+          window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+        }
+        return;
+      }
+
+      // Generic target element
+      const targetEl = document.getElementById(hash);
+      if (targetEl) {
+        const nav = document.getElementById('navbar') || document.querySelector('.navbar');
+        const navH = nav ? nav.offsetHeight : 70;
+        const targetTop = targetEl.getBoundingClientRect().top + window.pageYOffset - (navH + 15);
+        window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+        history.pushState(null, '', '#' + hash);
+      }
+    }
+  }
+
+  document.querySelectorAll('.mega-menu a, .mega-item, .nav-dropdown a, #navbar a').forEach(a => {
+    a.addEventListener('click', handleDropdownLinkClick);
+  });
+
   document.getElementById('backdrop')?.addEventListener('click', () => closeMenu(0));
 })();
 
@@ -1800,6 +1877,8 @@ sections.forEach(s => observer.observe(s));
       document.body.style.overflow = '';
       document.body.classList.remove('mobile-menu-open');
     }
+
+    window.closeMobileNav = closeMobileMenu;
 
     function toggleMobileMenu(e) {
       if (e) e.stopPropagation();
@@ -1834,10 +1913,61 @@ sections.forEach(s => observer.observe(s));
       if (parentLink) parentLink.addEventListener('click', handleToggle);
     });
 
-    // Close when clicking any actual navigating menu link (excluding parent accordion triggers)
+    // Close and route when clicking any navigating menu link
     mobileMenu.querySelectorAll('a:not(.mm-parent-link)').forEach(link => {
-      link.addEventListener('click', () => {
+      link.addEventListener('click', (e) => {
         closeMobileMenu();
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('javascript:')) return;
+
+        let isSamePage = false;
+        let hash = '';
+        try {
+          const url = new URL(href, window.location.href);
+          const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+          const targetPath = url.pathname.replace(/\/$/, '') || '/';
+          const currentFile = decodeURIComponent(currentPath.split('/').pop().toLowerCase());
+          const targetFile = decodeURIComponent(targetPath.split('/').pop().toLowerCase());
+
+          const sameFile = (currentFile === targetFile) ||
+                           (!currentFile && (targetFile === 'index.html' || targetFile === '')) ||
+                           (!targetFile && (currentFile === 'index.html' || currentFile === ''));
+
+          if (sameFile && url.hash) {
+            isSamePage = true;
+            hash = url.hash.replace(/^#/, '');
+          }
+        } catch (err) {
+          if (href.startsWith('#')) {
+            isSamePage = true;
+            hash = href.replace(/^#/, '');
+          }
+        }
+
+        if (isSamePage && hash) {
+          e.preventDefault();
+          if (typeof window.showService === 'function') {
+            window.showService(hash, true);
+          } else if (typeof window.setActiveIndustry === 'function') {
+            window.setActiveIndustry(hash, true);
+            const panel = document.getElementById(`panel-${hash}`) || document.getElementById('industryContent') || document.getElementById('industryNav');
+            if (panel) {
+              const nav = document.getElementById('navbar') || document.querySelector('.navbar');
+              const navH = nav ? nav.offsetHeight : 70;
+              const targetTop = panel.getBoundingClientRect().top + window.pageYOffset - (navH + 15);
+              window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+            }
+          } else {
+            const targetEl = document.getElementById(hash);
+            if (targetEl) {
+              const nav = document.getElementById('navbar') || document.querySelector('.navbar');
+              const navH = nav ? nav.offsetHeight : 70;
+              const targetTop = targetEl.getBoundingClientRect().top + window.pageYOffset - (navH + 15);
+              window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+              history.pushState(null, '', '#' + hash);
+            }
+          }
+        }
       });
     });
 
