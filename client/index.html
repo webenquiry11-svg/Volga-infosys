@@ -23,308 +23,266 @@
 
   <!-- ▶ Career-style Hero styles -->
   <style>
+    /* ════════════════════════════════════════════════════════
+       AWWWARDS-GRADE CINEMATIC HERO DESIGN
+    ═══════════════════════════════════════════════════════════ */
+    /* ════════════════════════════════════════════════════════
+       BORDERLESS VR CINEMATIC HERO DESIGN & ANIMATIONS
+    ═══════════════════════════════════════════════════════════ */
     .cr-hero {
-      min-height: 88vh;
+      min-height: 105vh;
       display: flex;
       align-items: center;
-      padding: 180px 0 130px;
-      background-color: #091520;
-      background-image:
-        linear-gradient(90deg,
-          #091520 0%,
-          #091520 40%,
-          rgba(9, 21, 32, 0.88) 55%,
-          rgba(9, 21, 32, 0.45) 75%,
-          rgba(9, 21, 32, 0.1) 100%),
-        url('volga-hero.png');
-      background-size: cover;
-      background-position: center right;
-      background-repeat: no-repeat;
+      justify-content: center;
+      padding: 160px 0 90px;
+      background: radial-gradient(circle at 50% 40%, #1A2538 0%, #101928 60%, #090F1B 100%);
       position: relative;
       overflow: hidden;
       width: 100%;
+      user-select: none;
     }
 
-    .cr-hero::after {
-      content: '';
+    .cr-hero-glow-1 {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 140px;
-      background: linear-gradient(to top, #091520 0%, transparent 100%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      width: 850px;
+      height: 850px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232, 147, 10, 0.22) 0%, rgba(36, 82, 217, 0.12) 45%, transparent 70%);
+      filter: blur(90px);
       pointer-events: none;
+      z-index: 1;
+    }
+
+    .borderless-left-line {
+      position: absolute;
+      left: 36px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2px;
+      height: 160px;
+      background: linear-gradient(to bottom, transparent, rgba(232, 147, 10, 0.8), transparent);
+      z-index: 10;
     }
 
     .cr-hero .cr-container {
       position: relative;
-      z-index: 2;
-      display: block;
+      z-index: 5;
       width: 100%;
-      max-width: 100%;
-      margin: 0;
-      padding: 0 clamp(24px, 5.5vw, 90px);
-    }
-
-    .cr-hero-copy {
-      max-width: 620px;
-    }
-
-    .cr-hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .08);
-      border: 1px solid rgba(255, 255, 255, .14);
-      font-size: 12px;
-      font-weight: 600;
-      color: #fff;
-      letter-spacing: .02em;
-      margin-bottom: 22px;
-    }
-
-    .cr-hero-badge .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #3CE07A;
-      flex-shrink: 0;
-    }
-
-    .cr-hero h1 {
-      font-family: 'Sora', sans-serif;
-      font-size: clamp(32px, 4.4vw, 54px);
-      line-height: 1.12;
-      color: #d6e4f0;
-      font-weight: 800;
-      letter-spacing: -.02em;
-    }
-
-    .cr-hero h1 em {
-      font-style: normal;
-      color: #E8930A;
-    }
-
-    .cr-hero-sub {
-      margin-top: 18px;
-      font-size: 16px;
-      color: rgba(214, 228, 240, .75);
-      max-width: 500px;
-      line-height: 1.65;
-    }
-
-    .cr-hero-ctas {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 60px);
+      min-height: 85vh;
       display: flex;
-      gap: 14px;
-      margin-top: 30px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    .cr-hero .btn {
-      display: inline-flex;
+    /* Floating Headset Centerpiece */
+    .hero-headset-wrap {
+      position: absolute;
+      top: 46%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(860px, 92vw);
+      max-width: 880px;
+      z-index: 6;
+      pointer-events: none;
+      filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.7));
+      will-change: transform;
+    }
+
+    .hero-headset-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      animation: floatHeadset 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatHeadset {
+      0% { transform: translateY(-12px) rotate(0.5deg); }
+      100% { transform: translateY(16px) rotate(-1deg); }
+    }
+
+    /* Huge Extended Borderless Typography */
+    .bvr-top-right {
+      position: relative;
+      z-index: 4;
+      text-align: right;
+      align-self: flex-end;
+      margin-top: 10px;
+    }
+
+    .bvr-title-huge {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(38px, 6.5vw, 88px);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      text-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      white-space: nowrap;
+    }
+
+    .bvr-bottom-left {
+      position: relative;
+      z-index: 7;
+      text-align: left;
+      align-self: flex-start;
+      margin-top: auto;
+      margin-bottom: 0;
+      padding-top: 30px;
+      max-width: 100%;
+    }
+
+    .bvr-center-subline {
+      position: relative;
+      z-index: 7;
+      text-align: center;
+      width: 100%;
+      margin: 18px auto 0;
+      pointer-events: auto;
+    }
+
+    .bvr-desc-text {
+      font-size: clamp(15px, 1.15vw, 17px);
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.6;
+      margin: 0 auto;
+      max-width: 580px;
+      text-align: center;
+    }
+
+    .bvr-hero-ctas {
+      position: relative;
+      z-index: 8;
+      display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 12px 22px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 14px;
-      border: 1.5px solid transparent;
-      transition: transform .2s cubic-bezier(.22, 1, .36, 1), box-shadow .2s cubic-bezier(.22, 1, .36, 1), background .2s, border-color .2s, color .2s;
-      white-space: nowrap;
-      text-transform: none;
-      letter-spacing: normal;
-      cursor: pointer;
-      position: relative;
-      z-index: 1;
+      gap: 16px;
+      margin: 20px auto 0;
+      width: 100%;
+      pointer-events: auto;
+    }
+
+    .bvr-btn-amber {
+      background: #E8930A !important;
+      color: #FFFFFF !important;
+      padding: 13px 28px !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      border-radius: 999px !important;
+      box-shadow: 0 8px 30px rgba(232, 147, 10, 0.35);
+      transition: all 0.3s ease !important;
+      border: none !important;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       text-decoration: none;
     }
 
-    .cr-hero .btn-amber {
-      background: #E8930A !important;
-      color: #fff !important;
-      border-color: #E8930A !important;
+    .bvr-btn-amber:hover {
+      background: #D47E00 !important;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(232, 147, 10, 0.5);
     }
 
-    .cr-hero .btn-amber:hover {
-      background: #c97b08 !important;
-      border-color: #c97b08 !important;
-      color: #fff !important;
-      box-shadow: 0 4px 16px rgba(232, 147, 10, 0.25);
-      transform: translateY(-1px);
+    .bvr-btn-ghost {
+      background: rgba(255, 255, 255, 0.08) !important;
+      color: #FFFFFF !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      padding: 13px 24px !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      border-radius: 999px !important;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease !important;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
     }
 
-    .cr-hero .btn-ghost {
-      background: transparent !important;
-      color: #fff !important;
-      border: 1.5px solid rgba(255, 255, 255, .28) !important;
+    .bvr-btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.18) !important;
+      transform: translateY(-2px);
+      color: #FFFFFF !important;
     }
 
-    .cr-hero .btn-ghost:hover {
-      background: rgba(255, 255, 255, .08) !important;
-      border-color: #fff !important;
-      transform: translateY(-1px);
-    }
-
-    .cr-hero-stats {
+    /* Scroll Down Indicator */
+    .bvr-scroll-indicator {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
-      gap: 0;
-      margin-top: 40px;
-      padding-top: 24px;
-      border-top: 1px solid rgba(255, 255, 255, .1);
-    }
-
-    .cr-hero-stat {
-      padding-right: 28px;
-      margin-right: 28px;
-      border-right: 1px solid rgba(255, 255, 255, .1);
-    }
-
-    .cr-hero-stat:last-child {
-      border-right: none;
-      margin-right: 0;
-      padding-right: 0;
-    }
-
-    .cr-hero-stat .num {
-      font-family: 'Sora', sans-serif;
-      font-size: 26px;
-      font-weight: 800;
-      color: #E8930A;
-    }
-
-    .cr-hero-stat .lbl {
+      align-items: center;
+      gap: 10px;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 11px;
-      font-weight: 600;
-      letter-spacing: .1em;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: rgba(255, 255, 255, 0.7);
       text-transform: uppercase;
-      color: rgba(214, 228, 240, .55);
-      margin-top: 2px;
+      z-index: 10;
+      cursor: pointer;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+      text-decoration: none;
     }
 
-    @media (max-width: 1024px) {
-      .cr-hero {
-        min-height: 75vh;
-        padding: 140px 0 80px;
-        background-position: 75% center;
-      }
-      .cr-hero .cr-container {
-        padding: 0 clamp(20px, 4vw, 40px);
-      }
-      .cr-hero h1 {
-        font-size: clamp(28px, 4.2vw, 44px);
-      }
+    .bvr-scroll-indicator:hover {
+      color: #E8930A;
+      border-color: rgba(232, 147, 10, 0.4);
+      background: rgba(232, 147, 10, 0.1);
     }
 
-    @media (max-width: 768px) {
-      .cr-hero {
-        min-height: auto;
-        padding: 110px 0 60px;
-        background-image:
-          linear-gradient(180deg,
-            rgba(9, 21, 32, 0.96) 0%,
-            rgba(9, 21, 32, 0.88) 50%,
-            rgba(9, 21, 32, 0.98) 100%),
-          url('volga-hero.png');
-        background-position: center center;
-      }
-
-      .cr-hero .cr-container {
-        padding: 0 18px;
-      }
-
-      .cr-hero-badge {
-        font-size: 11.5px;
-        padding: 5px 12px;
-        margin-bottom: 16px;
-      }
-
-      .cr-hero h1 {
-        font-size: clamp(25px, 6.5vw, 36px);
-        line-height: 1.18;
-      }
-
-      .cr-hero-sub {
-        font-size: 14.5px;
-        line-height: 1.6;
-        margin-top: 14px;
-      }
-
-      .cr-hero-ctas {
-        margin-top: 24px;
-        gap: 10px;
-      }
-
-      .cr-hero .btn {
-        padding: 11px 18px;
-        font-size: 13.5px;
-      }
-
-      .cr-hero-stats {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-        margin-top: 32px;
-        padding-top: 20px;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
-      }
-
-      .cr-hero-stat {
-        padding: 0 8px;
-        margin: 0;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-        text-align: left;
-      }
-
-      .cr-hero-stat:last-child {
-        border-right: none;
-        padding-right: 0;
-      }
-
-      .cr-hero-stat .num {
-        font-size: clamp(20px, 5.2vw, 24px);
-      }
-
-      .cr-hero-stat .lbl {
-        font-size: clamp(9px, 2.2vw, 10.5px);
-        letter-spacing: 0.05em;
-      }
+    .bvr-scroll-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      animation: bounceDown 2s infinite;
     }
 
-    @media (max-width: 480px) {
-      .cr-hero {
-        padding: 100px 0 50px;
-      }
+    @keyframes bounceDown {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
 
-      .cr-hero-ctas {
+    @media (max-width: 900px) {
+      .cr-hero { padding: 120px 0 60px; }
+      .cr-hero .cr-container { min-height: auto; gap: 28px; }
+      .hero-headset-wrap { width: min(560px, 92vw); opacity: 0.45; }
+      .bvr-top-right { text-align: left; align-self: flex-start; margin-top: 0; }
+      .bvr-title-huge { font-size: clamp(28px, 6.5vw, 54px); }
+      .bvr-bottom-left { max-width: 100%; margin-bottom: 0; padding-top: 10px; }
+      .bvr-desc-text { max-width: 100%; }
+      .bvr-hero-ctas { margin-top: 16px; }
+      .borderless-left-line { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .bvr-hero-ctas {
         flex-direction: column;
         width: 100%;
+        gap: 12px;
       }
-
-      .cr-hero .btn {
+      .bvr-btn-amber, .bvr-btn-ghost {
         width: 100%;
         justify-content: center;
-      }
-
-      .cr-hero-stats {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 4px;
-        padding-top: 16px;
-      }
-
-      .cr-hero-stat {
-        padding: 0 4px;
-      }
-
-      .cr-hero-stat .num {
-        font-size: 19px;
-      }
-
-      .cr-hero-stat .lbl {
-        font-size: 9px;
-        letter-spacing: 0.04em;
       }
     }
   </style>
@@ -627,43 +585,56 @@
 
   <div id="backdrop" aria-hidden="true"></div>
 
-  <!-- ═══════════════════════════════════════════ HERO ═══════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════ BORDERLESS VR HERO ═══════════════════════════════════════════ -->
   <section class="cr-hero" id="Hero">
+    <div class="cr-hero-glow-1"></div>
+    <div class="borderless-left-line"></div>
+
+    <!-- Center Floating 3D VR Headset -->
+    <div class="hero-headset-wrap" id="headsetWrap">
+      <img src="vr-hero-headset.png" alt="Volga Infosys 3D VR Headset" class="hero-headset-img" id="headsetImg" />
+    </div>
+
     <div class="cr-container">
-      <div class="cr-hero-copy">
-        <div class="cr-hero-badge"><span class="dot"></span> Spatial Computing &amp; XR Labs · Live</div>
-        <h1>Engineering Immersive &amp;<br><em>Intelligent Systems</em><br>for Enterprise Growth</h1>
-        <p class="cr-hero-sub">We build AR, VR, AI, and Digital Twin platforms that elevate workforce training, reduce operational risk, and accelerate enterprise decision-making.</p>
-        <div class="cr-hero-ctas">
-          <a href="portfolio.html" class="btn btn-amber">
-            Explore Portfolio
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </a>
-          <a href="contact.html" class="btn btn-ghost">
-            Start a Project
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </a>
-        </div>
-        <div class="cr-hero-stats">
-          <div class="cr-hero-stat">
-            <div class="num" data-val="100" data-suffix="+">0+</div>
-            <div class="lbl">Immersive Modules</div>
-          </div>
-          <div class="cr-hero-stat">
-            <div class="num" data-val="75" data-suffix="+">0+</div>
-            <div class="lbl">Clients Served</div>
-          </div>
-          <div class="cr-hero-stat">
-            <div class="num" data-val="6" data-suffix="+">0+</div>
-            <div class="lbl">Years Experience</div>
-          </div>
-        </div>
+      <!-- Top Right Extended Headline -->
+      <div class="bvr-top-right bvr-anim-top">
+        <h1 class="bvr-title-huge">The Future</h1>
+      </div>
+
+      <!-- Bottom Left Headline -->
+      <div class="bvr-bottom-left bvr-anim-bottom">
+        <h1 class="bvr-title-huge">of VR is Here</h1>
+      </div>
+
+      <!-- Centered Subline -->
+      <div class="bvr-center-subline bvr-anim-bottom">
+        <p class="bvr-desc-text">
+          Enterprise virtual reality solutions engineered for zero-risk surgical training, industrial digital twins, and photorealistic 3D spatial experiences.
+        </p>
+      </div>
+
+      <!-- Centralized CTAs -->
+      <div class="bvr-hero-ctas bvr-anim-bottom">
+        <a href="portfolio.html" class="bvr-btn-amber">
+          Explore Work
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+        <a href="contact.html" class="bvr-btn-ghost">
+          Start Project
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
       </div>
     </div>
+
+    <!-- Scroll Indicator -->
+    <a href="#tickerTrack" class="bvr-scroll-indicator bvr-anim-scroll" aria-label="Scroll down">
+      <span>Scroll</span>
+      <div class="bvr-scroll-icon">↓</div>
+    </a>
   </section>
 
   <!-- ═══════════════════════════════════════════ TICKER -->
@@ -1154,5 +1125,92 @@
   <script src="portfolio-marquee.js"></script>
   <!-- ▶ Cube Mission — loads after volga.js, fully isolated -->
   <script src="cube-mission.js" defer></script>
+
+  <!-- ── Borderless VR Hero GSAP Entry Animation & Parallax ── -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const heroEl = document.getElementById('Hero');
+      const headsetWrap = document.getElementById('headsetWrap');
+
+      if (typeof gsap !== 'undefined' && headsetWrap) {
+        // Ensure baseline transform coordinates
+        gsap.set(headsetWrap, { xPercent: -50, yPercent: -50, x: 0, y: 0, transformOrigin: '50% 50%' });
+
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        // 1. VR Headset entry scale & float reveal
+        tl.fromTo(headsetWrap, 
+          { scale: 0.8, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 1.4, ease: 'power4.out' }
+        );
+
+        // 2. Top Right title "The Future" slide in
+        tl.fromTo('.bvr-top-right',
+          { y: -40, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1 },
+          '-=1.0'
+        );
+
+        // 3. Bottom Left title reveal
+        tl.fromTo('.bvr-bottom-left',
+          { y: 40, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1.1 },
+          '-=0.8'
+        );
+
+        // 4. Centered Subline reveal
+        tl.fromTo('.bvr-center-subline',
+          { y: 25, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.9 },
+          '-=0.75'
+        );
+
+        // 5. Centralized CTA buttons reveal
+        tl.fromTo('.bvr-hero-ctas',
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.9 },
+          '-=0.7'
+        );
+
+        // 6. Scroll indicator reveal
+        tl.fromTo('.bvr-scroll-indicator',
+          { opacity: 0, y: 15 },
+          { opacity: 1, y: 0, duration: 0.8 },
+          '-=0.6'
+        );
+
+        // 5. Controlled 3D Mouse Parallax
+        if (heroEl) {
+          heroEl.addEventListener('mousemove', (e) => {
+            const rect = heroEl.getBoundingClientRect();
+            const relX = (e.clientX - rect.left) / rect.width - 0.5;
+            const relY = (e.clientY - rect.top) / rect.height - 0.5;
+
+            gsap.to(headsetWrap, {
+              x: relX * 24,
+              y: relY * 18,
+              rotateY: relX * 12,
+              rotateX: -relY * 10,
+              duration: 0.6,
+              ease: 'power2.out',
+              overwrite: 'auto'
+            });
+          });
+
+          heroEl.addEventListener('mouseleave', () => {
+            gsap.to(headsetWrap, {
+              x: 0,
+              y: 0,
+              rotateY: 0,
+              rotateX: 0,
+              duration: 1.0,
+              ease: 'power2.out',
+              overwrite: 'auto'
+            });
+          });
+        }
+      }
+    });
+  </script>
 </body>
 </html>

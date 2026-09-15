@@ -97,9 +97,9 @@
     }
 
     .container {
-      max-width: 1240px;
+      max-width: 100%;
       margin: 0 auto;
-      padding: 0 32px;
+      padding: 0 clamp(24px, 4vw, 60px);
     }
 
     section {
@@ -232,10 +232,10 @@
       box-shadow: var(--shadow-sm);
     }
 
-    /* ── Job Detail Redesign ── */
+    /* ── Job Detail Redesign — Enhanced Professional Layout ── */
     .jd-hero {
-      padding: 140px 0 60px;
-      background: linear-gradient(150deg, #0B2545 0%, #143564 60%, #1D4590 100%);
+      padding: 150px 0 70px;
+      background: linear-gradient(150deg, #091D36 0%, #102B52 50%, #1B4588 100%);
       position: relative;
       overflow: hidden;
     }
@@ -243,83 +243,172 @@
       content: '';
       position: absolute;
       inset: 0;
-      background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-      background-size: 40px 40px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 20%, transparent 90%);
+      background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: radial-gradient(ellipse 90% 90% at 50% 30%, black 20%, transparent 90%);
+    }
+    .jd-hero-glow {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(36, 82, 217, 0.35) 0%, transparent 70%);
+      top: -150px;
+      right: -100px;
+      pointer-events: none;
+      z-index: 1;
     }
     .jd-hero .container { position: relative; z-index: 2; }
     .jd-back {
       display: inline-flex; align-items: center; gap: 8px;
-      color: rgba(255,255,255,0.55); font-family: var(--font-mono);
-      font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
-      margin-bottom: 32px; transition: color .2s;
+      color: rgba(255,255,255,0.7); font-family: var(--font-mono);
+      font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 28px; transition: all .2s; font-weight: 600;
+      background: rgba(255,255,255,0.06); padding: 7px 16px; border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.12);
     }
-    .jd-back:hover { color: #fff; }
-    .jd-back svg { width: 16px; height: 16px; stroke: currentColor; }
+    .jd-back:hover { color: #fff; background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.25); }
+    .jd-back svg { width: 14px; height: 14px; stroke: currentColor; }
     .jd-status {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 6px 14px; border-radius: 999px;
-      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
-      font-family: var(--font-mono); font-size: 11.5px; color: #fff;
-      margin-bottom: 20px;
+      background: rgba(60, 224, 122, 0.12); border: 1px solid rgba(60, 224, 122, 0.3);
+      font-family: var(--font-mono); font-size: 11.5px; color: #52EE90;
+      margin-bottom: 20px; font-weight: 600;
     }
     .jd-status .dot { width: 7px; height: 7px; border-radius: 50%; background: #3CE07A; flex-shrink: 0; animation: jd-pulse 2s ease-in-out infinite; }
-    @keyframes jd-pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-    .jd-hero h1 { font-size: clamp(30px, 4vw, 52px); color: #fff; line-height: 1.1; margin-bottom: 24px; }
+    @keyframes jd-pulse { 0%,100%{opacity:1; transform:scale(1)} 50%{opacity:.4; transform:scale(1.2)} }
+    .jd-hero h1 { font-size: clamp(32px, 4.5vw, 54px); color: #fff; line-height: 1.12; margin-bottom: 24px; font-weight: 800; letter-spacing: -0.02em; }
     .jd-meta {
-      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px;
+      display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 36px;
     }
     .jd-pill {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 8px 14px; border-radius: 999px;
-      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
-      font-family: var(--font-mono); font-size: 12.5px; color: rgba(255,255,255,0.9);
-    }
-    .jd-pill svg { width: 13px; height: 13px; stroke: #7CA6FF; flex-shrink: 0; }
-    .jd-pill.salary { background: rgba(36,82,217,0.3); border-color: rgba(36,82,217,0.5); color: #A8C4FF; font-weight: 700; }
-    .jd-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
-    .jd-btn-primary {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 28px; background: var(--primary); color: #fff;
-      border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700;
-      font-family: inherit; cursor: pointer; transition: background .2s, transform .15s;
+      padding: 9px 16px; border-radius: 999px;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      font-family: var(--font-mono); font-size: 13px; color: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
     }
-    .jd-btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .jd-pill svg { width: 14px; height: 14px; stroke: #8FB4FF; flex-shrink: 0; }
+    .jd-pill.salary { background: rgba(36,82,217,0.35); border-color: rgba(124,166,255,0.4); color: #BBD2FF; font-weight: 700; }
+    .jd-hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+    .jd-btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 15px 30px; background: var(--primary); color: #fff;
+      border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700;
+      font-family: inherit; cursor: pointer; transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 14px rgba(36, 82, 217, 0.4);
+    }
+    .jd-btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(36, 82, 217, 0.5); }
     .jd-btn-outline {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 28px; background: transparent; color: #fff;
+      padding: 15px 28px; background: transparent; color: #fff;
       border: 1px solid rgba(255,255,255,0.3); border-radius: var(--radius-sm);
       font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer;
       text-decoration: none; transition: background .2s, border-color .2s;
     }
-    .jd-btn-outline:hover { background: rgba(255,255,255,0.08); border-color: #fff; }
+    .jd-btn-outline:hover { background: rgba(255,255,255,0.12); border-color: #fff; }
 
-    /* ── Two-col layout ── */
-    .jd-body { padding: 64px 0 100px; }
-    .jd-layout { display: grid; grid-template-columns: 1fr 400px; gap: 48px; align-items: start; }
+    /* ── Content Layout & Cards ── */
+    .jd-body { padding: 60px 0 100px; background: #f8fafc; }
+    .jd-layout { display: grid; grid-template-columns: 1fr 410px; gap: 40px; align-items: start; }
     
-    /* ── Main content ── */
-    .jd-main {
-      min-width: 0; /* Prevents flex/grid overflow issues */
+    .jd-main { min-width: 0; }
+    
+    .jd-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 40px;
+      margin-bottom: 28px;
+      box-shadow: 0 2px 10px rgba(16, 24, 40, 0.04);
+      transition: border-color .2s, box-shadow .2s;
     }
-    .jd-section { margin-bottom: 44px; }
+    .jd-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 8px 24px rgba(16, 24, 40, 0.07);
+    }
     .jd-section-label {
       font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em;
-      text-transform: uppercase; color: var(--primary); margin-bottom: 14px;
-      display: flex; align-items: center; gap: 8px;
+      text-transform: uppercase; color: var(--primary); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px; font-weight: 700;
     }
     .jd-section-label::before { content:''; width:20px; height:2px; background:var(--primary); }
-    .jd-section h2 { font-size: 22px; color: var(--navy); margin-bottom: 14px; }
-    .jd-section p { color: var(--text-secondary); font-size: 15.5px; line-height: 1.8; }
-    .jd-list { margin-top: 14px; display: flex; flex-direction: column; gap: 10px; }
-    .jd-list-item {
-      display: flex; align-items: flex-start; gap: 12px;
-      padding: 14px 16px; background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); font-size: 14.5px; color: var(--text-secondary);
-      transition: border-color .2s, background .2s;
+    .jd-card h2 { font-size: 24px; color: var(--navy); margin-bottom: 16px; font-weight: 700; }
+    .jd-card p { color: var(--text-secondary); font-size: 16px; line-height: 1.8; }
+
+    /* ── Skill Tags Flex Container ── */
+    .jd-skills-flex {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px;
     }
-    .jd-list-item:hover { border-color: var(--primary); background: #fff; }
-    .jd-list-item::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--primary); flex-shrink:0; margin-top:8px; }
+    .jd-skill-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 18px; background: #EEF4FF; border: 1px solid #D2E2FF;
+      border-radius: 999px; font-size: 14px; font-weight: 600; color: #1E40AF;
+      transition: all .2s ease; cursor: default;
+    }
+    .jd-skill-tag:hover {
+      background: #3B82F6; color: #ffffff; border-color: #3B82F6;
+      transform: translateY(-2px); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+    }
+    .jd-skill-tag svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+
+    /* ── Checklist Items ── */
+    .jd-check-list {
+      display: flex; flex-direction: column; gap: 12px; margin-top: 16px;
+    }
+    .jd-check-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 16px 20px; background: #F8FAFC; border: 1px solid #E2E8F0;
+      border-left: 4px solid var(--primary); border-radius: var(--radius);
+      font-size: 15px; color: #334155; line-height: 1.65;
+      transition: all .2s ease;
+    }
+    .jd-check-item:hover {
+      background: #ffffff; border-color: var(--primary);
+      box-shadow: 0 4px 14px rgba(36, 82, 217, 0.08); transform: translateX(3px);
+    }
+    .jd-check-icon {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: rgba(36, 82, 217, 0.12); color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .jd-check-icon svg { width: 13px; height: 13px; stroke-width: 2.5; stroke: currentColor; fill: none; }
+
+    /* ── Perks Grid ── */
+    .jd-perks-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px; margin-top: 20px;
+    }
+    .jd-perk-item {
+      display: flex; gap: 14px; padding: 18px; background: #F8FAFC;
+      border: 1px solid #E2E8F0; border-radius: 12px; transition: border-color .2s;
+    }
+    .jd-perk-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: rgba(36, 82, 217, 0.08); color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .jd-perk-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .jd-perk-item h4 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .jd-perk-item p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin: 0; }
+
+    /* ── Process Steps Timeline ── */
+    .jd-process-steps { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+    .jd-step {
+      display: flex; gap: 18px; align-items: flex-start;
+      padding: 16px 20px; background: #F8FAFC; border: 1px solid #E2E8F0;
+      border-radius: 12px;
+    }
+    .jd-step-num {
+      font-family: var(--font-mono); font-size: 14px; font-weight: 700;
+      color: var(--primary); background: rgba(36, 82, 217, 0.1);
+      padding: 6px 12px; border-radius: 8px; flex-shrink: 0;
+    }
+    .jd-step-content h4 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+    .jd-step-content p { font-size: 13.5px; color: var(--text-secondary); margin: 0; line-height: 1.5; }
 
     /* ── Sticky Sidebar ── */
     .jd-sidebar { position: sticky; top: 110px; }
@@ -331,54 +420,69 @@
       background: linear-gradient(135deg, var(--navy) 0%, #1D4590 100%);
       padding: 24px 28px;
     }
-    .jd-form-header h3 { color: #fff; font-size: 18px; margin-bottom: 4px; }
+    .jd-form-header h3 { color: #fff; font-size: 19px; margin-bottom: 4px; font-weight: 700; }
     .jd-form-header p { color: var(--text-on-navy); font-size: 13.5px; }
     .jd-form-body { padding: 28px; }
     .jd-fg { margin-bottom: 18px; }
     .jd-fg label {
-      display: block; font-size: 12px; font-weight: 600; margin-bottom: 7px;
-      color: var(--text-secondary); font-family: var(--font-mono); letter-spacing:.04em; text-transform:uppercase;
+      display: block; font-size: 12px; font-weight: 700; margin-bottom: 7px;
+      color: var(--navy); font-family: var(--font-mono); letter-spacing:.04em; text-transform:uppercase;
     }
     .jd-fg .req { color: var(--primary); }
     .jd-fg input, .jd-fg textarea {
-      width: 100%; padding: 11px 14px; background: var(--surface);
+      width: 100%; padding: 12px 16px; background: #F8FAFC;
       border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
       color: var(--text); font-size: 14px; font-family: inherit;
-      transition: border-color .2s, background .2s;
+      transition: border-color .2s, background .2s, box-shadow .2s;
     }
-    .jd-fg input:focus, .jd-fg textarea:focus { outline: none; border-color: var(--primary); background: #fff; }
-    .jd-fg input::placeholder, .jd-fg textarea::placeholder { color: var(--text-secondary); }
-    .jd-fg textarea { resize: vertical; min-height: 90px; }
+    .jd-fg input:focus, .jd-fg textarea:focus { outline: none; border-color: var(--primary); background: #fff; box-shadow: 0 0 0 3px rgba(36, 82, 217, 0.12); }
+    .jd-fg input::placeholder, .jd-fg textarea::placeholder { color: #94A3B8; }
+    .jd-fg textarea { resize: vertical; min-height: 95px; }
     .jd-file-drop {
       position: relative; border: 2px dashed var(--border-strong); border-radius: var(--radius-sm);
-      padding: 20px; text-align: center; cursor: pointer; transition: border-color .2s, background .2s;
+      padding: 22px; text-align: center; cursor: pointer; transition: border-color .2s, background .2s;
+      background: #F8FAFC;
     }
     .jd-file-drop:hover { border-color: var(--primary); background: rgba(36,82,217,.03); }
-    .jd-file-drop.has-file { border-color: var(--primary); background: rgba(36,82,217,.04); }
+    .jd-file-drop.has-file { border-color: var(--primary); background: rgba(36,82,217,.05); }
     .jd-file-drop input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-    .jd-file-drop svg { width: 24px; height: 24px; stroke: var(--text-secondary); margin: 0 auto 8px; display: block; }
-    .jd-file-drop span { font-size: 12.5px; color: var(--text-secondary); }
-    .jd-file-drop.has-file span { color: var(--primary); font-weight: 600; }
-    .jd-form-error { color: #dc2626; font-size: 12.5px; margin-bottom: 12px; min-height: 16px; }
+    .jd-file-drop svg { width: 26px; height: 26px; stroke: var(--primary); margin: 0 auto 8px; display: block; }
+    .jd-file-drop span { font-size: 13px; color: var(--text-secondary); }
+    .jd-file-drop.has-file span { color: var(--primary); font-weight: 700; }
+    .jd-form-error { color: #dc2626; font-size: 13px; margin-bottom: 12px; min-height: 16px; font-weight: 600; }
     .jd-submit {
-      width: 100%; padding: 14px; background: var(--primary); color: #fff;
+      width: 100%; padding: 15px; background: var(--primary); color: #fff;
       border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700;
-      font-family: inherit; cursor: pointer; transition: background .2s, transform .15s;
+      font-family: inherit; cursor: pointer; transition: background .2s, transform .15s, box-shadow .2s;
       display: flex; align-items: center; justify-content: center; gap: 10px;
+      box-shadow: 0 4px 14px rgba(36, 82, 217, 0.35);
     }
-    .jd-submit:hover:not(:disabled) { background: var(--primary-dark); transform: translateY(-1px); }
+    .jd-submit:hover:not(:disabled) { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(36, 82, 217, 0.45); }
     .jd-submit:disabled { opacity: .6; cursor: not-allowed; }
     .jd-submit-spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: jd-spin .7s linear infinite; display: none; }
     .jd-submit.loading .jd-submit-spinner { display: block; }
     .jd-submit.loading .jd-submit-label { display: none; }
     @keyframes jd-spin { to { transform: rotate(360deg); } }
-    .jd-success {
-      text-align: center; padding: 32px 28px;
-    }
-    .jd-success-icon { width: 60px; height: 60px; background: rgba(16,185,129,.12); border: 2px solid rgba(16,185,129,.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
-    .jd-success-icon svg { width: 26px; height: 26px; stroke: #10b981; }
-    .jd-success h3 { color: var(--navy); font-size: 1.2rem; margin-bottom: 8px; }
+    
+    .jd-success { text-align: center; padding: 36px 28px; }
+    .jd-success-icon { width: 64px; height: 64px; background: rgba(16,185,129,.12); border: 2px solid rgba(16,185,129,.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+    .jd-success-icon svg { width: 28px; height: 28px; stroke: #10b981; }
+    .jd-success h3 { color: var(--navy); font-size: 1.3rem; margin-bottom: 8px; font-weight: 700; }
     .jd-success p { color: var(--text-secondary); font-size: 14px; line-height: 1.7; }
+    
+    /* ── Snapshot Card ── */
+    .jd-snapshot-card {
+      background: #ffffff; border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 24px 28px; margin-top: 24px;
+      box-shadow: 0 2px 10px rgba(16, 24, 40, 0.03);
+    }
+    .jd-snapshot-card h4 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--font-mono); }
+    .jd-snap-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #F1F5F9; font-size: 14px; }
+    .jd-snap-row:last-child { border-bottom: none; }
+    .snap-label { color: var(--text-secondary); }
+    .snap-val { font-weight: 600; color: var(--navy); }
+    .snap-link { color: var(--primary); text-decoration: underline; }
+
     /* Loading skeleton */
     .jd-skeleton { animation: jd-shimmer 1.4s ease-in-out infinite; background: linear-gradient(90deg, var(--surface) 25%, var(--surface-alt) 50%, var(--surface) 75%); background-size: 400% 100%; border-radius: 6px; }
     @keyframes jd-shimmer { 0%{background-position:100% 50%} 100%{background-position:-100% 50%} }
@@ -389,6 +493,7 @@
     }
     @media (max-width: 640px) {
       .jd-hero { padding: 120px 0 48px; }
+      .jd-card { padding: 24px 20px; }
     }
   </style>
   <script src="api-config.js"></script>
@@ -673,6 +778,7 @@
 
   <!-- ══════════ HERO ══════════ -->
   <section class="jd-hero">
+    <div class="jd-hero-glow"></div>
     <div class="container">
       <a href="careers-page (1).html#jobs" class="jd-back">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="m15 18-6-6 6-6"/></svg>
@@ -789,6 +895,27 @@
               </form>
             </div>
           </div>
+
+          <!-- Snapshot Sidebar Card -->
+          <div class="jd-snapshot-card">
+            <h4>At a Glance</h4>
+            <div class="jd-snap-row">
+              <span class="snap-label">Company</span>
+              <span class="snap-val">Volga Infosys®</span>
+            </div>
+            <div class="jd-snap-row">
+              <span class="snap-label">Industry</span>
+              <span class="snap-val">XR, AR/VR &amp; AI</span>
+            </div>
+            <div class="jd-snap-row">
+              <span class="snap-label">Response Time</span>
+              <span class="snap-val">~3 Business Days</span>
+            </div>
+            <div class="jd-snap-row">
+              <span class="snap-label">Hiring Contact</span>
+              <a href="mailto:careers@volgainfosys.com" class="snap-val snap-link">careers@volgainfosys.com</a>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -824,6 +951,52 @@
       }
     }
 
+    function renderSectionContent(items, labelText, titleText) {
+      if (!items || !items.length) return '';
+      
+      const shortItems = items.filter(i => i && i.trim().length <= 25);
+      const longItems = items.filter(i => i && i.trim().length > 25);
+
+      let content = `<div class="jd-card">
+        <div class="jd-section-label">${esc(labelText)}</div>
+        <h2>${esc(titleText)}</h2>`;
+
+      if (shortItems.length > 0) {
+        if (longItems.length > 0) {
+          content += `<div style="font-size:12px; font-weight:700; color:var(--primary); font-family:var(--font-mono); letter-spacing:0.06em; text-transform:uppercase; margin-top:16px; margin-bottom:10px;">Core Skills &amp; Tools</div>`;
+        }
+        content += `
+          <div class="jd-skills-flex">
+            ${shortItems.map(item => `
+              <div class="jd-skill-tag">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                <span>${esc(item.trim())}</span>
+              </div>
+            `).join('')}
+          </div>`;
+      }
+
+      if (longItems.length > 0) {
+        if (shortItems.length > 0) {
+          content += `<div style="font-size:12px; font-weight:700; color:var(--primary); font-family:var(--font-mono); letter-spacing:0.06em; text-transform:uppercase; margin-top:24px; margin-bottom:10px;">Key Details &amp; Expectations</div>`;
+        }
+        content += `
+          <div class="jd-check-list">
+            ${longItems.map(item => `
+              <div class="jd-check-item">
+                <div class="jd-check-icon">
+                  <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                </div>
+                <span>${esc(item.trim())}</span>
+              </div>
+            `).join('')}
+          </div>`;
+      }
+
+      content += `</div>`;
+      return content;
+    }
+
     function renderJob(job) {
       document.title = `${job.title} · Volga Careers`;
       document.getElementById('job-loading').style.display = 'none';
@@ -834,30 +1007,100 @@
         <div class="jd-pill"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${esc(job.location)}</div>
         <div class="jd-pill"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${esc(job.type)}</div>
         <div class="jd-pill"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>${esc(job.department)}</div>
-        <div class="jd-pill salary"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>${esc(job.salary)}</div>
+        <div class="jd-pill salary"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12M6 8h12M6 3v10a4 4 0 0 0 4 4h3M6 13l7 8"/></svg>${esc(job.salary)}</div>
       `;
 
       document.getElementById('jd-main-skeleton').style.display = 'none';
 
-      const reqs = job.requirements && job.requirements.length
-        ? `<div class="jd-section">
-            <div class="jd-section-label">Requirements</div>
-            <div class="jd-list">${job.requirements.map(r=>`<div class="jd-list-item">${esc(r)}</div>`).join('')}</div>
-           </div>` : '';
+      const reqs = renderSectionContent(job.requirements, 'Requirements', 'Skills & Qualifications');
+      const resps = renderSectionContent(job.responsibilities, 'Responsibilities', 'What You Will Do');
 
-      const resps = job.responsibilities && job.responsibilities.length
-        ? `<div class="jd-section">
-            <div class="jd-section-label">Responsibilities</div>
-            <div class="jd-list">${job.responsibilities.map(r=>`<div class="jd-list-item">${esc(r)}</div>`).join('')}</div>
-           </div>` : '';
+      const perksCard = `
+        <div class="jd-card">
+          <div class="jd-section-label">Why Volga Infosys</div>
+          <h2>Perks &amp; Culture</h2>
+          <div class="jd-perks-grid">
+            <div class="jd-perk-item">
+              <div class="jd-perk-icon">
+                <svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.71 1.26-1.5 1.5-2.5L4.5 16.5z"/><path d="M12 15l-3-3 7.5-7.5c.78-.78 2.05-.78 2.83 0s.78 2.05 0 2.83L12 15z"/><path d="M15 9l-3 3"/><path d="M9 15l3-3"/></svg>
+              </div>
+              <div>
+                <h4>Enterprise XR Projects</h4>
+                <p>Work directly on live AR/VR and 3D digital twin products for global clients.</p>
+              </div>
+            </div>
+            <div class="jd-perk-item">
+              <div class="jd-perk-icon">
+                <svg viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M11 3v18"/><path d="M2 9h20"/></svg>
+              </div>
+              <div>
+                <h4>Competitive Pay</h4>
+                <p>Industry-leading salaries, equity options, and merit-based quarterly rewards.</p>
+              </div>
+            </div>
+            <div class="jd-perk-item">
+              <div class="jd-perk-icon">
+                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <div>
+                <h4>Flexible Work</h4>
+                <p>Enjoy the balance of deep focused work and energetic team collaboration.</p>
+              </div>
+            </div>
+            <div class="jd-perk-item">
+              <div class="jd-perk-icon">
+                <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+              <div>
+                <h4>R&amp;D &amp; Learning</h4>
+                <p>Quarterly hackathons, learning stipends, and access to latest hardware.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const processCard = `
+        <div class="jd-card">
+          <div class="jd-section-label">Hiring Process</div>
+          <h2>3-Step Selection Process</h2>
+          <div class="jd-process-steps">
+            <div class="jd-step">
+              <div class="jd-step-num">01</div>
+              <div class="jd-step-content">
+                <h4>Application Review</h4>
+                <p>Our talent team reviews your resume &amp; portfolio within 3 business days.</p>
+              </div>
+            </div>
+            <div class="jd-step">
+              <div class="jd-step-num">02</div>
+              <div class="jd-step-content">
+                <h4>Technical &amp; Team Discussion</h4>
+                <p>A conversation with our engineering/design leads covering past work &amp; skill set.</p>
+              </div>
+            </div>
+            <div class="jd-step">
+              <div class="jd-step-num">03</div>
+              <div class="jd-step-content">
+                <h4>Final Offer &amp; Onboarding</h4>
+                <p>We extend an offer with competitive compensation and seamless onboarding.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
 
       const detail = document.getElementById('job-details');
       detail.insertAdjacentHTML('beforeend', `
-        <div class="jd-section">
+        <div class="jd-card">
           <div class="jd-section-label">About the role</div>
+          <h2>Position Overview</h2>
           <p>${esc(job.description)}</p>
         </div>
-        ${reqs}${resps}
+        ${reqs}
+        ${resps}
+        ${perksCard}
+        ${processCard}
       `);
     }
 

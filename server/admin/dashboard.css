@@ -1665,6 +1665,16 @@ html.dark .dropdown-menu {
   to   { transform: translateX(0); opacity: 1; }
 }
 
+.toast.hiding {
+  animation: toastSlideOut 0.3s ease-in forwards;
+  pointer-events: none;
+}
+
+@keyframes toastSlideOut {
+  from { transform: translateX(0); opacity: 1; }
+  to   { transform: translateX(100px); opacity: 0; }
+}
+
 .toast-success { border-left-color: var(--success); }
 .toast-error   { border-left-color: var(--danger); }
 .toast-warning { border-left-color: var(--warning); }
@@ -1698,6 +1708,287 @@ html.dark .dropdown-menu {
 }
 
 /* ════════════════════════════════════════════════════════════
+   LOGIN PAGE
+════════════════════════════════════════════════════════════ */
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(232, 147, 10, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(27, 79, 114, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(13, 43, 62, 0.06) 0%, transparent 50%),
+    var(--bg-main);
+  padding: 2rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle animated dot pattern overlay */
+.login-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+html.dark .login-page {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(232, 147, 10, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(27, 79, 114, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(9, 23, 38, 0.9) 0%, transparent 60%),
+    var(--bg-main);
+}
+
+html.dark .login-page::before {
+  opacity: 0.15;
+}
+
+/* ── Login Card ──────────────────────────────────────────── */
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2.8rem 2.4rem 2.2rem;
+  box-shadow:
+    var(--shadow-lg),
+    0 0 0 1px var(--border-subtle),
+    0 0 80px -20px rgba(232, 147, 10, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: loginCardIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+html.dark .login-card {
+  background: rgba(13, 43, 62, 0.85);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    var(--shadow-lg),
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 0 100px -30px rgba(232, 147, 10, 0.12);
+}
+
+@keyframes loginCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Logo ────────────────────────────────────────────────── */
+.login-logo {
+  text-align: center;
+  margin-bottom: 0.6rem;
+}
+
+.login-logo img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+}
+
+.login-logo img:hover {
+  transform: scale(1.06);
+}
+
+/* ── Subtitle ────────────────────────────────────────────── */
+.login-sub {
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  letter-spacing: 0.01em;
+}
+
+/* ── Login Form Overrides ────────────────────────────────── */
+.login-page .field {
+  margin-bottom: 0.4rem;
+}
+
+.login-page .field label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.login-page .field input,
+.login-page .field select,
+.login-page .field textarea {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.82rem 1.1rem;
+  font-size: 0.92rem;
+  color: var(--text-primary);
+  transition: all 0.25s ease;
+}
+
+.login-page .field input:focus,
+.login-page .field select:focus,
+.login-page .field textarea:focus {
+  border-color: var(--accent);
+  background: var(--bg-surface);
+  box-shadow: 0 0 0 3.5px var(--accent-glow);
+}
+
+/* ── Sign In Button ──────────────────────────────────────── */
+.btn-login {
+  display: block;
+  width: 100%;
+  padding: 0.88rem 1.6rem;
+  margin-top: 1.2rem;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #FFFFFF;
+  background: var(--accent-gradient);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 4px 14px rgba(232, 147, 10, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-login:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 6px 20px rgba(232, 147, 10, 0.4),
+    0 2px 6px rgba(0, 0, 0, 0.1);
+  filter: brightness(1.06);
+}
+
+.btn-login:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(232, 147, 10, 0.25);
+}
+
+.btn-login:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  filter: grayscale(0.3);
+}
+
+/* Shimmer effect on button */
+.btn-login::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
+  transition: left 0.5s ease;
+}
+
+.btn-login:hover::after {
+  left: 100%;
+}
+
+/* ── Error & Success Messages ────────────────────────────── */
+.login-error {
+  color: var(--danger);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: center;
+  min-height: 1.2em;
+  margin-top: 0.3rem;
+  transition: opacity 0.2s ease;
+}
+
+.login-error:empty {
+  display: none;
+}
+
+.login-success {
+  color: var(--success);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: center;
+  min-height: 1.2em;
+  margin-top: 0.3rem;
+  transition: opacity 0.2s ease;
+}
+
+.login-success:empty {
+  display: none;
+}
+
+/* ── Login Page Links ────────────────────────────────────── */
+.login-page a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.login-page a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── Login Theme Toggle fix for light mode visibility ───── */
+.login-page #loginThemeToggle {
+  background: var(--bg-surface);
+  border-color: var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+html.dark .login-page #loginThemeToggle {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ── Login Responsive ────────────────────────────────────── */
+@media (max-width: 500px) {
+  .login-card {
+    padding: 2rem 1.5rem 1.8rem;
+    margin: 0 0.5rem;
+    border-radius: var(--radius-md);
+  }
+
+  .login-logo img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .login-sub {
+    font-size: 0.85rem;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+
    RESPONSIVE BREAKPOINTS
 ════════════════════════════════════════════════════════════ */
 @media (max-width: 1200px) {

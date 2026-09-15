@@ -281,6 +281,220 @@
       line-height: 1.5;
     }
 
+    /* ── Client Testimonials Showcase (Redesign matching mock) ── */
+    .testi-section {
+      background: #E8F2FD;
+      padding: 90px 0 100px;
+      position: relative;
+    }
+    .testi-header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 44px;
+    }
+    .testi-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #E8930A;
+      margin-bottom: 12px;
+    }
+    .testi-eyebrow::before,
+    .testi-eyebrow::after {
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: #E8930A;
+      border-radius: 2px;
+    }
+    .testi-header h2 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 800;
+      color: #0D2B3E;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .testi-header h2 span {
+      color: #E8930A;
+    }
+    .testi-header p {
+      font-size: 16px;
+      color: #5F7288;
+      line-height: 1.6;
+    }
+
+    .testi-carousel-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      position: relative;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .testi-nav-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 1px solid rgba(13, 43, 62, 0.08);
+      color: #0D2B3E;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(13, 43, 62, 0.06);
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+      z-index: 5;
+    }
+    .testi-nav-btn:hover {
+      background: #0D2B3E;
+      color: #FFFFFF;
+      box-shadow: 0 8px 24px rgba(13, 43, 62, 0.15);
+      transform: scale(1.06);
+    }
+
+    .testi-card-box {
+      background: #FFFFFF;
+      border-radius: 24px;
+      box-shadow: 0 16px 40px rgba(13, 43, 62, 0.07), 0 2px 6px rgba(13, 43, 62, 0.03);
+      padding: 44px 50px;
+      width: 100%;
+      max-width: 820px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .testi-card-inner {
+      display: grid;
+      grid-template-columns: 1.4fr 1px 1fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .testi-card-divider {
+      background: #E2E8F0;
+      height: 100%;
+      min-height: 130px;
+      width: 1px;
+    }
+
+    .testi-left-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .testi-stars-row {
+      color: #E8930A;
+      font-size: 16px;
+      letter-spacing: 4px;
+      margin-bottom: 20px;
+    }
+
+    .testi-bullets-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .testi-bullet-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1E293B;
+      line-height: 1.5;
+    }
+
+    .testi-bullet-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #E8930A;
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .testi-right-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .testi-stat-number {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 4.5vw, 64px);
+      font-weight: 800;
+      color: #E8930A;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .testi-stat-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #5F7288;
+      max-width: 170px;
+      line-height: 1.45;
+    }
+
+    .testi-author-info {
+      margin-top: 14px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #0D2B3E;
+    }
+
+    .testi-dots-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 36px;
+    }
+
+    .testi-dot {
+      height: 9px;
+      width: 9px;
+      border-radius: 50%;
+      background: #CBD5E1;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .testi-dot.active {
+      width: 28px;
+      border-radius: 6px;
+      background: #E8930A;
+    }
+
+    @media (max-width: 768px) {
+      .testi-card-box { padding: 30px 20px; }
+      .testi-card-inner { grid-template-columns: 1fr; gap: 24px; }
+      .testi-card-divider { display: none; }
+      .testi-right-content {
+        padding-left: 0;
+        border-top: 1px solid #E2E8F0;
+        padding-top: 20px;
+      }
+      .testi-nav-btn { display: none; }
+    }
+
     /* ══════════════════════════════════════════
        GALLERY & FILTER TABS SECTION
     ═══════════════════════════════════════════ */
@@ -1880,92 +2094,45 @@
   ═══════════════════════════════════════════ -->
   <section class="testi-section">
     <div class="pf-wrap">
-      <div class="section-eyebrow">
-        <div class="eyebrow-line"></div>
-        <div class="eyebrow-text">Client Testimonials</div>
+      <div class="testi-header">
+        <div class="testi-eyebrow">Client Testimonials</div>
+        <h2>Trusted by <span>Our Clients</span></h2>
+        <p>Hear what executive partners have to say about working with Volga Infosys.</p>
       </div>
-      <h2 class="section-title">Trusted by <em>Our Clients</em></h2>
-      <p class="section-desc">Hear what executive partners have to say about working with Volga Infosys.</p>
 
-      <div class="testi-carousel-track">
-        <div class="testi-quote-card">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-quote-text">"The surgical training simulation Volga built reduced onboarding time by 60% while
-            drastically increasing technical procedure confidence."</p>
-          <div class="testi-author-row">
-            <div class="testi-avatar-init">HS</div>
-            <div>
-              <div class="testi-author-name">Harish Shukla</div>
+      <div class="testi-carousel-wrapper">
+        <button class="testi-nav-btn" onclick="prevTestimonial()" aria-label="Previous testimonial">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
 
+        <div class="testi-card-box" id="testiCardBox">
+          <div class="testi-card-inner">
+            <div class="testi-left-content">
+              <div class="testi-stars-row">★★★★★</div>
+              <div class="testi-bullets-list" id="testiBullets">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <div class="testi-card-divider"></div>
+
+            <div class="testi-right-content">
+              <div class="testi-stat-number" id="testiStatNum">40%</div>
+              <div class="testi-stat-label" id="testiStatLabel">pre-sold before groundbreak</div>
             </div>
           </div>
         </div>
 
-        <div class="testi-quote-card">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-quote-text">"Our AR furniture visualizer achieved a 42% decrease in product returns within 90
-            days. Flawless execution and reliable post-launch support."</p>
-          <div class="testi-author-row">
-            <div class="testi-avatar-init">DS</div>
-            <div>
-              <div class="testi-author-name">Dharmpreet Singh</div>
+        <button class="testi-nav-btn" onclick="nextTestimonial()" aria-label="Next testimonial">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
 
-            </div>
-          </div>
-        </div>
-
-        <div class="testi-quote-card">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-quote-text">"The real-time Digital Twin built for our plant gives our engineering teams total
-            visibility over maintenance cycles, eliminating downtime."</p>
-          <div class="testi-author-row">
-            <div class="testi-avatar-init">AR</div>
-            <div>
-              <div class="testi-author-name">Anmol Rehalia</div>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="testi-quote-card">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-quote-text">"Pre-sale virtual tours allowed us to sell 40% of luxury units before breaking
-            ground. Volga transformed our entire real estate sales pipeline."</p>
-          <div class="testi-author-row">
-            <div class="testi-avatar-init">IK</div>
-            <div>
-              <div class="testi-author-name">Iqbal Kadri</div>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- Duplicates for smooth infinite carousel -->
-        <div class="testi-quote-card">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-quote-text">"The surgical training simulation Volga built reduced onboarding time by 60% while
-            drastically increasing technical procedure confidence."</p>
-          <div class="testi-author-row">
-            <div class="testi-avatar-init">HS</div>
-            <div>
-              <div class="testi-author-name">Harish Shukla</div>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="testi-quote-card">
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-quote-text">"Our AR furniture visualizer achieved a 42% decrease in product returns within 90
-            days. Flawless execution and reliable post-launch support."</p>
-          <div class="testi-author-row">
-            <div class="testi-avatar-init">DS</div>
-            <div>
-              <div class="testi-author-name">Dharmpreet Singh</div>
-
-            </div>
-          </div>
-        </div>
+      <div class="testi-dots-row" id="testiDotsRow">
+        <div class="testi-dot active" onclick="updateTestimonial(0)"></div>
+        <div class="testi-dot" onclick="updateTestimonial(1)"></div>
+        <div class="testi-dot" onclick="updateTestimonial(2)"></div>
+        <div class="testi-dot" onclick="updateTestimonial(3)"></div>
       </div>
     </div>
   </section>
@@ -2262,6 +2429,100 @@
       buildUI();
       setStep(0);
     })();
+
+    /* ---------------- TESTIMONIALS SLIDER ---------------- */
+    const testimonialsData = [
+      {
+        bullets: [
+          "Pre-sale virtual tours launched ahead of groundbreaking",
+          "Luxury units sold off-plan directly through the tour experience",
+          "Entire real estate sales pipeline transformed end-to-end"
+        ],
+        metric: "40%",
+        label: "pre-sold before groundbreak"
+      },
+      {
+        bullets: [
+          "Zero-risk surgical procedure simulation for medical personnel",
+          "Technical procedure confidence boosted across 12 departments",
+          "Substantial reduction in clinical onboarding timeframe"
+        ],
+        metric: "60%",
+        label: "onboarding time saved"
+      },
+      {
+        bullets: [
+          "Interactive AR product visualizer deployed in 40+ showrooms",
+          "True-to-scale 3D furniture preview in physical customer spaces",
+          "Exceptional cross-platform stability and customer engagement"
+        ],
+        metric: "42%",
+        label: "decrease in product returns"
+      },
+      {
+        bullets: [
+          "Real-time IoT Digital Twin built for heavy machinery telemetry",
+          "Engineering teams gained total predictive maintenance clarity",
+          "Proactive anomaly detection prevented unplanned shutdowns"
+        ],
+        metric: "100%",
+        label: "unplanned downtime prevented"
+      }
+    ];
+
+    let currentTestiIdx = 0;
+    let testiTimer = null;
+
+    function updateTestimonial(idx) {
+      currentTestiIdx = idx;
+      const card = document.getElementById('testiCardBox');
+      if (!card) return;
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(8px)';
+
+      setTimeout(() => {
+        const data = testimonialsData[idx];
+        const bulletsHtml = data.bullets.map(b => `
+          <div class="testi-bullet-item">
+            <div class="testi-bullet-dot"></div>
+            <div>${b}</div>
+          </div>
+        `).join('');
+
+        document.getElementById('testiBullets').innerHTML = bulletsHtml;
+        document.getElementById('testiStatNum').textContent = data.metric;
+        document.getElementById('testiStatLabel').textContent = data.label;
+
+        document.querySelectorAll('.testi-dot').forEach((dot, i) => {
+          dot.classList.toggle('active', i === idx);
+        });
+
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 200);
+      restartTestiTimer();
+    }
+
+    function prevTestimonial() {
+      const nextIdx = (currentTestiIdx - 1 + testimonialsData.length) % testimonialsData.length;
+      updateTestimonial(nextIdx);
+    }
+
+    function nextTestimonial() {
+      const nextIdx = (currentTestiIdx + 1) % testimonialsData.length;
+      updateTestimonial(nextIdx);
+    }
+
+    function restartTestiTimer() {
+      if (testiTimer) clearInterval(testiTimer);
+      testiTimer = setInterval(() => {
+        nextTestimonial();
+      }, 6000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateTestimonial(0);
+    });
   </script>
 </body>
 
