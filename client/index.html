@@ -42,18 +42,68 @@
       user-select: none;
     }
 
+    /* Atmospheric 3D Multi-Point Lighting */
     .cr-hero-glow-1 {
       position: absolute;
-      top: 50%;
+      top: 45%;
       left: 50%;
-      transform: translate(-50%, -55%);
-      width: 850px;
-      height: 850px;
+      transform: translate(-50%, -50%);
+      width: 900px;
+      height: 900px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(232, 147, 10, 0.22) 0%, rgba(36, 82, 217, 0.12) 45%, transparent 70%);
+      background: radial-gradient(circle, rgba(232, 147, 10, 0.24) 0%, rgba(36, 82, 217, 0.14) 45%, transparent 70%);
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .cr-hero-glow-2 {
+      position: absolute;
+      bottom: 8%;
+      left: 10%;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(36, 120, 255, 0.18) 0%, transparent 65%);
       filter: blur(90px);
       pointer-events: none;
       z-index: 1;
+    }
+
+    .cr-hero-glow-amber {
+      position: absolute;
+      top: 12%;
+      right: 10%;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232, 147, 10, 0.22) 0%, transparent 65%);
+      filter: blur(85px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+
+
+    /* 3D Spatial Orbital Ring */
+    .spatial-orbit-ring {
+      position: absolute;
+      top: 46%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotateX(72deg) rotateZ(20deg);
+      width: min(920px, 94vw);
+      height: min(920px, 94vw);
+      border-radius: 50%;
+      border: 1px dashed rgba(232, 147, 10, 0.35);
+      box-shadow: 0 0 40px rgba(232, 147, 10, 0.15), inset 0 0 40px rgba(36, 120, 255, 0.12);
+      pointer-events: none;
+      z-index: 3;
+      animation: spinSpatialOrbit 45s linear infinite;
+    }
+
+    @keyframes spinSpatialOrbit {
+      from { transform: translate(-50%, -50%) rotateX(72deg) rotateZ(0deg); }
+      to { transform: translate(-50%, -50%) rotateX(72deg) rotateZ(360deg); }
     }
 
     .borderless-left-line {
@@ -90,8 +140,37 @@
       max-width: 880px;
       z-index: 6;
       pointer-events: none;
-      filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.7));
+      filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.85)) drop-shadow(0 50px 100px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 50px rgba(232, 147, 10, 0.22));
       will-change: transform;
+    }
+
+    /* Dynamic Ground Shadow Under Headset */
+    .headset-floor-shadow {
+      position: absolute;
+      bottom: -65px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 68%;
+      height: 42px;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 45%, transparent 75%);
+      filter: blur(18px);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+      animation: headsetShadowPulse 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes headsetShadowPulse {
+      0% {
+        transform: translateX(-50%) scale(0.85);
+        opacity: 0.6;
+        filter: blur(22px);
+      }
+      100% {
+        transform: translateX(-50%) scale(1.1);
+        opacity: 0.9;
+        filter: blur(16px);
+      }
     }
 
     .hero-headset-img {
@@ -587,11 +666,19 @@
 
   <!-- ═══════════════════════════════════════════ BORDERLESS VR HERO ═══════════════════════════════════════════ -->
   <section class="cr-hero" id="Hero">
-    <div class="cr-hero-glow-1"></div>
+    <!-- Atmospheric Multi-Point Lighting -->
+    <div class="cr-hero-glow-1" id="glow1" aria-hidden="true"></div>
+    <div class="cr-hero-glow-2" id="glow2" aria-hidden="true"></div>
+    <div class="cr-hero-glow-amber" id="glowAmber" aria-hidden="true"></div>
+
+    <!-- 3D Spatial Orbital Ring -->
+    <div class="spatial-orbit-ring" id="orbitRing" aria-hidden="true"></div>
+
     <div class="borderless-left-line"></div>
 
-    <!-- Center Floating 3D VR Headset -->
+    <!-- Center Floating 3D VR Headset with Floor Shadow -->
     <div class="hero-headset-wrap" id="headsetWrap">
+      <div class="headset-floor-shadow" id="headsetShadow"></div>
       <img src="vr-hero-headset.png" alt="Volga Infosys 3D VR Headset" class="hero-headset-img" id="headsetImg" />
     </div>
 
@@ -1131,6 +1218,11 @@
     document.addEventListener('DOMContentLoaded', () => {
       const heroEl = document.getElementById('Hero');
       const headsetWrap = document.getElementById('headsetWrap');
+      const headsetShadow = document.getElementById('headsetShadow');
+      const orbitRing = document.getElementById('orbitRing');
+      const glow1 = document.getElementById('glow1');
+      const glow2 = document.getElementById('glow2');
+      const glowAmber = document.getElementById('glowAmber');
 
       if (typeof gsap !== 'undefined' && headsetWrap) {
         // Ensure baseline transform coordinates
@@ -1138,63 +1230,101 @@
 
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-        // 1. VR Headset entry scale & float reveal
+        // 1. Spatial Orbital Ring reveal
+        if (orbitRing) {
+          tl.fromTo(orbitRing,
+            { opacity: 0, scale: 0.7 },
+            { opacity: 1, scale: 1, duration: 1.5, ease: 'power3.out' }
+          );
+        }
+
+        // 2. VR Headset entry scale & float reveal
         tl.fromTo(headsetWrap, 
-          { scale: 0.8, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 1.4, ease: 'power4.out' }
+          { scale: 0.75, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 1.4, ease: 'power4.out' },
+          '-=1.2'
         );
 
-        // 2. Top Right title "The Future" slide in
+        // 3. Top Right title "The Future" slide in
         tl.fromTo('.bvr-top-right',
           { y: -40, opacity: 0 },
           { y: 0, opacity: 1, duration: 1 },
           '-=1.0'
         );
 
-        // 3. Bottom Left title reveal
+        // 4. Bottom Left title reveal
         tl.fromTo('.bvr-bottom-left',
           { y: 40, opacity: 0 },
           { y: 0, opacity: 1, duration: 1.1 },
           '-=0.8'
         );
 
-        // 4. Centered Subline reveal
+        // 5. Centered Subline reveal
         tl.fromTo('.bvr-center-subline',
           { y: 25, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.9 },
           '-=0.75'
         );
 
-        // 5. Centralized CTA buttons reveal
+        // 6. Centralized CTA buttons reveal
         tl.fromTo('.bvr-hero-ctas',
           { y: 20, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.9 },
           '-=0.7'
         );
 
-        // 6. Scroll indicator reveal
+        // 7. Scroll indicator reveal
         tl.fromTo('.bvr-scroll-indicator',
           { opacity: 0, y: 15 },
           { opacity: 1, y: 0, duration: 0.8 },
           '-=0.6'
         );
 
-        // 5. Controlled 3D Mouse Parallax
+        // 8. Multi-Layered 3D Spatial Mouse Parallax
         if (heroEl) {
           heroEl.addEventListener('mousemove', (e) => {
             const rect = heroEl.getBoundingClientRect();
             const relX = (e.clientX - rect.left) / rect.width - 0.5;
             const relY = (e.clientY - rect.top) / rect.height - 0.5;
 
+            // Centerpiece Headset 3D Sway
             gsap.to(headsetWrap, {
-              x: relX * 24,
-              y: relY * 18,
-              rotateY: relX * 12,
-              rotateX: -relY * 10,
-              duration: 0.6,
+              x: relX * 28,
+              y: relY * 20,
+              rotateY: relX * 14,
+              rotateX: -relY * 12,
+              duration: 0.65,
               ease: 'power2.out',
               overwrite: 'auto'
             });
+
+            // Dynamic Floor Shadow Drift
+            if (headsetShadow) {
+              gsap.to(headsetShadow, {
+                x: -relX * 16,
+                scaleX: 1 - relY * 0.1,
+                opacity: 0.75 + relY * 0.2,
+                duration: 0.65,
+                ease: 'power2.out',
+                overwrite: 'auto'
+              });
+            }
+
+            // Spatial Orbital Ring Tilt
+            if (orbitRing) {
+              gsap.to(orbitRing, {
+                x: relX * 15,
+                y: relY * 10,
+                duration: 0.8,
+                ease: 'power2.out',
+                overwrite: 'auto'
+              });
+            }
+
+            // Atmosphere Glow Lighting Shift
+            if (glow1) gsap.to(glow1, { x: relX * -20, y: relY * -15, duration: 1.2, overwrite: 'auto' });
+            if (glow2) gsap.to(glow2, { x: relX * 25, y: relY * 20, duration: 1.2, overwrite: 'auto' });
+            if (glowAmber) gsap.to(glowAmber, { x: relX * -25, y: relY * -20, duration: 1.2, overwrite: 'auto' });
           });
 
           heroEl.addEventListener('mouseleave', () => {
@@ -1203,10 +1333,19 @@
               y: 0,
               rotateY: 0,
               rotateX: 0,
-              duration: 1.0,
+              duration: 1.2,
               ease: 'power2.out',
               overwrite: 'auto'
             });
+            if (headsetShadow) {
+              gsap.to(headsetShadow, { x: 0, scaleX: 1, opacity: 0.75, duration: 1.2, overwrite: 'auto' });
+            }
+            if (orbitRing) {
+              gsap.to(orbitRing, { x: 0, y: 0, duration: 1.2, overwrite: 'auto' });
+            }
+            if (glow1) gsap.to(glow1, { x: 0, y: 0, duration: 1.4, overwrite: 'auto' });
+            if (glow2) gsap.to(glow2, { x: 0, y: 0, duration: 1.4, overwrite: 'auto' });
+            if (glowAmber) gsap.to(glowAmber, { x: 0, y: 0, duration: 1.4, overwrite: 'auto' });
           });
         }
       }
