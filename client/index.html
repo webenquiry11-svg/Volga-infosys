@@ -5,12 +5,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Volga Infosys — VR & AR Pioneers</title>
-  
+
   <!-- Preconnect to Google Fonts for faster font delivery -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
   <link rel="icon" type="image/png" href="Favicon-new.png" />
   <link rel="shortcut icon" type="image/png" href="Favicon-new.png" />
   <link rel="apple-touch-icon" href="Favicon-new.png" />
@@ -102,8 +104,13 @@
     }
 
     @keyframes spinSpatialOrbit {
-      from { transform: translate(-50%, -50%) rotateX(72deg) rotateZ(0deg); }
-      to { transform: translate(-50%, -50%) rotateX(72deg) rotateZ(360deg); }
+      from {
+        transform: translate(-50%, -50%) rotateX(72deg) rotateZ(0deg);
+      }
+
+      to {
+        transform: translate(-50%, -50%) rotateX(72deg) rotateZ(360deg);
+      }
     }
 
     .borderless-left-line {
@@ -166,6 +173,7 @@
         opacity: 0.6;
         filter: blur(22px);
       }
+
       100% {
         transform: translateX(-50%) scale(1.1);
         opacity: 0.9;
@@ -182,8 +190,13 @@
     }
 
     @keyframes floatHeadset {
-      0% { transform: translateY(-12px) rotate(0.5deg); }
-      100% { transform: translateY(16px) rotate(-1deg); }
+      0% {
+        transform: translateY(-12px) rotate(0.5deg);
+      }
+
+      100% {
+        transform: translateY(16px) rotate(-1deg);
+      }
     }
 
     /* Huge Extended Borderless Typography */
@@ -337,20 +350,59 @@
     }
 
     @keyframes bounceDown {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(4px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(4px);
+      }
     }
 
     @media (max-width: 900px) {
-      .cr-hero { padding: 120px 0 60px; }
-      .cr-hero .cr-container { min-height: auto; gap: 28px; }
-      .hero-headset-wrap { width: min(560px, 92vw); opacity: 0.45; }
-      .bvr-top-right { text-align: left; align-self: flex-start; margin-top: 0; }
-      .bvr-title-huge { font-size: clamp(28px, 6.5vw, 54px); }
-      .bvr-bottom-left { max-width: 100%; margin-bottom: 0; padding-top: 10px; }
-      .bvr-desc-text { max-width: 100%; }
-      .bvr-hero-ctas { margin-top: 16px; }
-      .borderless-left-line { display: none; }
+      .cr-hero {
+        padding: 120px 0 60px;
+      }
+
+      .cr-hero .cr-container {
+        min-height: auto;
+        gap: 28px;
+      }
+
+      .hero-headset-wrap {
+        width: min(560px, 92vw);
+        opacity: 0.45;
+      }
+
+      .bvr-top-right {
+        text-align: left;
+        align-self: flex-start;
+        margin-top: 0;
+      }
+
+      .bvr-title-huge {
+        font-size: clamp(28px, 6.5vw, 54px);
+      }
+
+      .bvr-bottom-left {
+        max-width: 100%;
+        margin-bottom: 0;
+        padding-top: 10px;
+      }
+
+      .bvr-desc-text {
+        max-width: 100%;
+      }
+
+      .bvr-hero-ctas {
+        margin-top: 16px;
+      }
+
+      .borderless-left-line {
+        display: none;
+      }
     }
 
     @media (max-width: 600px) {
@@ -359,7 +411,9 @@
         width: 100%;
         gap: 12px;
       }
-      .bvr-btn-amber, .bvr-btn-ghost {
+
+      .bvr-btn-amber,
+      .bvr-btn-ghost {
         width: 100%;
         justify-content: center;
       }
@@ -367,7 +421,8 @@
   </style>
 
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script crossorigin="anonymous"
+    src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
 </head>
 
@@ -433,7 +488,10 @@
         <div class="mm-sub-header">
           <a href="javascript:void(0)" class="mm-link mm-parent-link">Company</a>
           <button class="mm-toggle-btn" aria-label="Toggle Company submenu">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6 9 6 6 6-6" />
+            </svg>
           </button>
         </div>
         <ul class="mm-sub-menu">
@@ -445,7 +503,7 @@
       <li><a href="contact.html" class="mm-link">Contact</a></li>
     </ul>
   </div>
-  
+
 
   <!-- MEGA MENUS -->
 
@@ -455,91 +513,129 @@
       <div class="mega-cols">
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="industries.html#healthcare"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-activity-heartbeat">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 12h4.5l1.5 -6l4 12l2 -9l1.5 3h4.5" />
-</svg>Healthcare</a></li>
-            <li><a class="mega-item" href="industries.html#manufacturing"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-factory-2">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 21h18" />
-	<path d="M5 21v-12l5 4v-4l5 4h4" />
-	<path d="M19 21v-8l-1.436 -9.574a.5 .5 0 0 0 -.495 -.426h-1.145a.5 .5 0 0 0 -.494 .418l-1.43 8.582" />
-	<path d="M9 17h1" />
-	<path d="M14 17h1" />
-</svg>Manufacturing</a></li>
-            <li><a class="mega-item" href="industries.html#realestate"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-home">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-	<path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-	<path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-</svg>Real Estate</a></li>
-            <li><a class="mega-item" href="industries.html#education"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-school">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
-	<path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
-</svg>Education</a></li>
-            <li><a class="mega-item" href="industries.html#automotive"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-car-suv">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M5 17a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-	<path d="M16 17a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-	<path d="M5 9l2 -4h7.438a2 2 0 0 1 1.94 1.515l.622 2.485h3a2 2 0 0 1 2 2v3" />
-	<path d="M10 9v-4" />
-	<path d="M2 7v4" />
-	<path d="M22.001 14.001a4.992 4.992 0 0 0 -4.001 -2.001a4.992 4.992 0 0 0 -4 2h-3a4.998 4.998 0 0 0 -8.003 .003" />
-	<path d="M5 12v-3h13" />
-</svg>Automotive</a></li>
+            <li><a class="mega-item" href="industries.html#healthcare"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-activity-heartbeat">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M3 12h4.5l1.5 -6l4 12l2 -9l1.5 3h4.5" />
+                </svg>Healthcare</a></li>
+            <li><a class="mega-item" href="industries.html#manufacturing"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-building-factory-2">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M3 21h18" />
+                  <path d="M5 21v-12l5 4v-4l5 4h4" />
+                  <path d="M19 21v-8l-1.436 -9.574a.5 .5 0 0 0 -.495 -.426h-1.145a.5 .5 0 0 0 -.494 .418l-1.43 8.582" />
+                  <path d="M9 17h1" />
+                  <path d="M14 17h1" />
+                </svg>Manufacturing</a></li>
+            <li><a class="mega-item" href="industries.html#realestate"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-home">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                </svg>Real Estate</a></li>
+            <li><a class="mega-item" href="industries.html#education"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-school">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+                  <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
+                </svg>Education</a></li>
+            <li><a class="mega-item" href="industries.html#automotive"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-car-suv">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M5 17a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M16 17a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M5 9l2 -4h7.438a2 2 0 0 1 1.94 1.515l.622 2.485h3a2 2 0 0 1 2 2v3" />
+                  <path d="M10 9v-4" />
+                  <path d="M2 7v4" />
+                  <path
+                    d="M22.001 14.001a4.992 4.992 0 0 0 -4.001 -2.001a4.992 4.992 0 0 0 -4 2h-3a4.998 4.998 0 0 0 -8.003 .003" />
+                  <path d="M5 12v-3h13" />
+                </svg>Automotive</a></li>
           </ul>
         </div>
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="industries.html#retail"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M4 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-	<path d="M15 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-	<path d="M17 17h-11v-14h-2" />
-	<path d="M6 5l14 1l-1 7h-13" />
-</svg>Retail</a></li>
-            <li><a class="mega-item" href="industries.html#architecture"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-buildings">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M4 21v-15c0 -1 1 -2 2 -2h5c1 0 2 1 2 2v15" />
-	<path d="M16 8h2c1 0 2 1 2 2v11" />
-	<path d="M3 21h18" />
-	<path d="M10 12v.01" />
-	<path d="M10 16v.01" />
-	<path d="M10 8v.01" />
-	<path d="M7 12v.01" />
-	<path d="M7 16v.01" />
-	<path d="M7 8v.01" />
-	<path d="M17 12v.01" />
-	<path d="M17 16v.01" />
-</svg></span>Architecture</a></li>
-            <li><a class="mega-item" href="industries.html#defense"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-shield-chevron">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
-	<path d="M4 14l8 -3l8 3" />
-</svg>  Defense</a></li>
-            <li><a class="mega-item" href="industries.html#tourism"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
-	<path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" />
-</svg>Tourism</a></li>
-            <li><a class="mega-item" href="industries.html#energy"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-building-wind-turbine">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M10 11a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-	<path d="M10 11v-2.573c0 -.18 .013 -.358 .04 -.536l.716 -4.828c.064 -.597 .597 -1.063 1.244 -1.063s1.18 .466 1.244 1.063l.716 4.828c.027 .178 .04 .357 .04 .536v2.573" />
-	<path d="M13.01 9.28l2.235 1.276c.156 .09 .305 .19 .446 .3l3.836 2.911c.487 .352 .624 1.04 .3 1.596c-.325 .556 -1 .782 -1.548 .541l-4.555 -1.68a3.624 3.624 0 0 1 -.486 -.231l-2.235 -1.277" />
-	<path d="M13 12.716l-2.236 1.277a3.624 3.624 0 0 1 -.485 .23l-4.555 1.681c-.551 .241 -1.223 .015 -1.548 -.54c-.324 -.557 -.187 -1.245 .3 -1.597l3.836 -2.91a3.41 3.41 0 0 1 .446 -.3l2.235 -1.277" />
-	<path d="M7 21h10" />
-	<path d="M10 21l1 -7" />
-	<path d="M13 14l1 7" />
-</svg>Energy</a></li>
+            <li><a class="mega-item" href="industries.html#retail"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                  <path d="M15 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                  <path d="M17 17h-11v-14h-2" />
+                  <path d="M6 5l14 1l-1 7h-13" />
+                </svg>Retail</a></li>
+            <li><a class="mega-item" href="industries.html#architecture"><svg xmlns="http://www.w3.org/2000/svg"
+                  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-buildings">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 21v-15c0 -1 1 -2 2 -2h5c1 0 2 1 2 2v15" />
+                  <path d="M16 8h2c1 0 2 1 2 2v11" />
+                  <path d="M3 21h18" />
+                  <path d="M10 12v.01" />
+                  <path d="M10 16v.01" />
+                  <path d="M10 8v.01" />
+                  <path d="M7 12v.01" />
+                  <path d="M7 16v.01" />
+                  <path d="M7 8v.01" />
+                  <path d="M17 12v.01" />
+                  <path d="M17 16v.01" />
+                </svg></span>Architecture</a></li>
+            <li><a class="mega-item" href="industries.html#defense"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-shield-chevron">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
+                  <path d="M4 14l8 -3l8 3" />
+                </svg> Defense</a></li>
+            <li><a class="mega-item" href="industries.html#tourism"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                  <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" />
+                </svg>Tourism</a></li>
+            <li><a class="mega-item" href="industries.html#energy"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-building-wind-turbine">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M10 11a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                  <path
+                    d="M10 11v-2.573c0 -.18 .013 -.358 .04 -.536l.716 -4.828c.064 -.597 .597 -1.063 1.244 -1.063s1.18 .466 1.244 1.063l.716 4.828c.027 .178 .04 .357 .04 .536v2.573" />
+                  <path
+                    d="M13.01 9.28l2.235 1.276c.156 .09 .305 .19 .446 .3l3.836 2.911c.487 .352 .624 1.04 .3 1.596c-.325 .556 -1 .782 -1.548 .541l-4.555 -1.68a3.624 3.624 0 0 1 -.486 -.231l-2.235 -1.277" />
+                  <path
+                    d="M13 12.716l-2.236 1.277a3.624 3.624 0 0 1 -.485 .23l-4.555 1.681c-.551 .241 -1.223 .015 -1.548 -.54c-.324 -.557 -.187 -1.245 .3 -1.597l3.836 -2.91a3.41 3.41 0 0 1 .446 -.3l2.235 -1.277" />
+                  <path d="M7 21h10" />
+                  <path d="M10 21l1 -7" />
+                  <path d="M13 14l1 7" />
+                </svg>Energy</a></li>
           </ul>
         </div>
       </div>
       <div class="mega-highlight">
         <div class="mega-highlight-title">Industry Solutions</div>
         <div class="mega-highlight-sub">Tailored immersive experiences built for your sector's unique challenges.</div>
-        <a href="industries.html" class="mega-highlight-btn">View All <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="industries.html" class="mega-highlight-btn">View All <svg width="12" height="12" viewBox="0 0 12 12"
+            fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
       </div>
     </div>
   </div>
@@ -550,76 +646,105 @@
       <div class="mega-cols">
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="services.html#custom-ar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality-2">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M10 21h-2a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v3.5" />
-	<path d="M17 17l-4 -2.5l4 -2.5l4 2.5v4.5l-4 2.5l0 -4.5" />
-	<path d="M13 14.5v4.5l4 2.5" />
-	<path d="M17 17l4 -2.5" />
-	<path d="M11 4h2" />
-</svg>Custom AR App Development</a></li>
-            <li><a class="mega-item" href="services.html#vr-training"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cardboards">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 8v8.5a2.5 2.5 0 0 0 2.5 2.5h1.06a3 3 0 0 0 2.34 -1.13l1.54 -1.92a2 2 0 0 1 3.12 0l1.54 1.92a3 3 0 0 0 2.34 1.13h1.06a2.5 2.5 0 0 0 2.5 -2.5v-8.5a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2" />
-	<path d="M7 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-	<path d="M15 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-</svg>VR Training Platforms</a></li>
-            <li><a class="mega-item" href="services.html#unity-dev"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-unity">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M14 3l6 4v7" />
-	<path d="M18 17l-6 4l-6 -4" />
-	<path d="M4 14v-7l6 -4" />
-	<path d="M4 7l8 5v9" />
-	<path d="M20 7l-8 5" />
-</svg>Unity Development</a></li>
-            <li><a class="mega-item" href="services.html#webgl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cube-3d-sphere">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M6 17.6l-2 -1.1v-2.5" />
-	<path d="M4 10v-2.5l2 -1.1" />
-	<path d="M10 4.1l2 -1.1l2 1.1" />
-	<path d="M18 6.4l2 1.1v2.5" />
-	<path d="M20 14v2.5l-2 1.12" />
-	<path d="M14 19.9l-2 1.1l-2 -1.1" />
-	<path d="M12 12l2 -1.1" />
-	<path d="M18 8.6l2 -1.1" />
-	<path d="M12 12l0 2.5" />
-	<path d="M12 18.5l0 2.5" />
-	<path d="M12 12l-2 -1.12" />
-	<path d="M6 8.6l-2 -1.1" />
-</svg>WebGL Experiences</a></li>
+            <li><a class="mega-item" href="services.html#custom-ar"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-augmented-reality-2">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M10 21h-2a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v3.5" />
+                  <path d="M17 17l-4 -2.5l4 -2.5l4 2.5v4.5l-4 2.5l0 -4.5" />
+                  <path d="M13 14.5v4.5l4 2.5" />
+                  <path d="M17 17l4 -2.5" />
+                  <path d="M11 4h2" />
+                </svg>Custom AR App Development</a></li>
+            <li><a class="mega-item" href="services.html#vr-training"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-cardboards">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M3 8v8.5a2.5 2.5 0 0 0 2.5 2.5h1.06a3 3 0 0 0 2.34 -1.13l1.54 -1.92a2 2 0 0 1 3.12 0l1.54 1.92a3 3 0 0 0 2.34 1.13h1.06a2.5 2.5 0 0 0 2.5 -2.5v-8.5a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2" />
+                  <path d="M7 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                  <path d="M15 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                </svg>VR Training Platforms</a></li>
+            <li><a class="mega-item" href="services.html#unity-dev"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-unity">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M14 3l6 4v7" />
+                  <path d="M18 17l-6 4l-6 -4" />
+                  <path d="M4 14v-7l6 -4" />
+                  <path d="M4 7l8 5v9" />
+                  <path d="M20 7l-8 5" />
+                </svg>Unity Development</a></li>
+            <li><a class="mega-item" href="services.html#webgl"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-cube-3d-sphere">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M6 17.6l-2 -1.1v-2.5" />
+                  <path d="M4 10v-2.5l2 -1.1" />
+                  <path d="M10 4.1l2 -1.1l2 1.1" />
+                  <path d="M18 6.4l2 1.1v2.5" />
+                  <path d="M20 14v2.5l-2 1.12" />
+                  <path d="M14 19.9l-2 1.1l-2 -1.1" />
+                  <path d="M12 12l2 -1.1" />
+                  <path d="M18 8.6l2 -1.1" />
+                  <path d="M12 12l0 2.5" />
+                  <path d="M12 18.5l0 2.5" />
+                  <path d="M12 12l-2 -1.12" />
+                  <path d="M6 8.6l-2 -1.1" />
+                </svg>WebGL Experiences</a></li>
           </ul>
         </div>
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="services.html#3d-modeling"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-3d">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M14 3v4a1 1 0 0 0 1 1h4" />
-	<path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
-	<path d="M12 13.5l4 -1.5" />
-	<path d="M8 11.846l4 1.654v4.5l4 -1.846v-4.308l-4 -1.846l-4 1.846" />
-	<path d="M8 12v4.2l4 1.8" />
-</svg>3D Modeling & Animation</a></li>
-            <li><a class="mega-item" href="services.html#uiux"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-layout">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M4 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -1" />
-	<path d="M4 15a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -3" />
-	<path d="M14 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -12" />
-</svg>UI/UX Design</a></li>
-            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cloud">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M6.657 18c-2.572 0 -4.657 -2.007 -4.657 -4.483c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486c0 1.927 -1.551 3.487 -3.465 3.487h-11.878" />
-</svg>Cloud Deployment</a></li>
-            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-tool">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" />
-</svg>Maintenance & Support</a></li>
+            <li><a class="mega-item" href="services.html#3d-modeling"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-file-3d">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+                  <path d="M12 13.5l4 -1.5" />
+                  <path d="M8 11.846l4 1.654v4.5l4 -1.846v-4.308l-4 -1.846l-4 1.846" />
+                  <path d="M8 12v4.2l4 1.8" />
+                </svg>3D Modeling & Animation</a></li>
+            <li><a class="mega-item" href="services.html#uiux"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-layout">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M4 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -1" />
+                  <path d="M4 15a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -3" />
+                  <path d="M14 6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -12" />
+                </svg>UI/UX Design</a></li>
+            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-cloud">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M6.657 18c-2.572 0 -4.657 -2.007 -4.657 -4.483c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486c0 1.927 -1.551 3.487 -3.465 3.487h-11.878" />
+                </svg>Cloud Deployment</a></li>
+            <li><a class="mega-item" href="services.html#support"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-tool">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" />
+                </svg>Maintenance & Support</a></li>
           </ul>
         </div>
       </div>
       <div class="mega-highlight">
         <div class="mega-highlight-title">Full-Cycle Delivery</div>
         <div class="mega-highlight-sub">From concept to deployment — we handle every stage of your XR project.</div>
-        <a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="#" class="mega-highlight-btn">Our Process <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
       </div>
     </div>
   </div>
@@ -630,34 +755,47 @@
       <div class="mega-cols">
         <div class="mega-col">
           <ul class="mega-items">
-            <li><a class="mega-item" href="about.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-users-group">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-	<path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
-	<path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-	<path d="M17 10h2a2 2 0 0 1 2 2v1" />
-	<path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-	<path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
-</svg>About Us</a></li>
-            <li><a class="mega-item" href="portfolio.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9" />
-	<path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
-	<path d="M12 12l0 .01" />
-	<path d="M3 13a20 20 0 0 0 18 0" />
-</svg>Work</a></li>
-            <li><a class="mega-item" href="careers-page (1).html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase-2">
-	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-	<path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9" />
-	<path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
-</svg>Careers</a></li>
+            <li><a class="mega-item" href="about.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-users-group">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
+                  <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M17 10h2a2 2 0 0 1 2 2v1" />
+                  <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                  <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
+                </svg>About Us</a></li>
+            <li><a class="mega-item" href="portfolio.html"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9" />
+                  <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+                  <path d="M12 12l0 .01" />
+                  <path d="M3 13a20 20 0 0 0 18 0" />
+                </svg>Work</a></li>
+            <li><a class="mega-item" href="careers-page (1).html"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase-2">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9" />
+                  <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+                </svg>Careers</a></li>
           </ul>
         </div>
       </div>
       <div class="mega-highlight">
         <div class="mega-highlight-title">We're Hiring</div>
-        <div class="mega-highlight-sub">Join a team building the future of spatial computing and enterprise immersive tech.</div>
-        <a href="careers-page (1).html" class="mega-highlight-btn">See Openings <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="mega-highlight-sub">Join a team building the future of spatial computing and enterprise immersive
+          tech.</div>
+        <a href="careers-page (1).html" class="mega-highlight-btn">See Openings <svg width="12" height="12"
+            viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></a>
       </div>
     </div>
   </div>
@@ -696,7 +834,8 @@
       <!-- Centered Subline -->
       <div class="bvr-center-subline bvr-anim-bottom">
         <p class="bvr-desc-text">
-          Enterprise virtual reality solutions engineered for zero-risk surgical training, industrial digital twins, and photorealistic 3D spatial experiences.
+          Enterprise virtual reality solutions engineered for zero-risk surgical training, industrial digital twins, and
+          photorealistic 3D spatial experiences.
         </p>
       </div>
 
@@ -711,7 +850,8 @@
         <a href="contact.html" class="bvr-btn-ghost">
           Start Project
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
           </svg>
         </a>
       </div>
@@ -750,7 +890,8 @@
         <h2 class="svc-title">Enterprise Services Built Around Business Outcomes</h2>
       </div>
       <div class="svc-header-right">
-        <p class="svc-desc">We build AR, VR, AI and Digital Twin platforms that improve training, reduce operational risk, and accelerate enterprise decision-making.</p>
+        <p class="svc-desc">We build AR, VR, AI and Digital Twin platforms that improve training, reduce operational
+          risk, and accelerate enterprise decision-making.</p>
         <a class="svc-link" href="services.html">See all Services <i class="fas fa-arrow-right"></i></a>
       </div>
     </div>
@@ -762,7 +903,8 @@
           <div class="svc-card-content">
             <span class="svc-card-label">Immersive Apps</span>
             <h3>Custom AR App Development</h3>
-            <p>Mobile and headset-ready augmented reality applications for visualization, learning, and product interaction.</p>
+            <p>Mobile and headset-ready augmented reality applications for visualization, learning, and product
+              interaction.</p>
           </div>
           <div class="svc-card-tags"><small>ARKit</small><small>ARCore</small><small>WebAR</small></div>
         </div>
@@ -775,7 +917,8 @@
             <h3>VR Training Platforms</h3>
             <p>Repeatable, measurable simulation platforms for safety, equipment, process, and field training.</p>
           </div>
-          <div class="svc-card-tags"><small>Simulation</small><small>Analytics</small><small>Enterprise LMS</small></div>
+          <div class="svc-card-tags"><small>Simulation</small><small>Analytics</small><small>Enterprise LMS</small>
+          </div>
         </div>
       </article>
       <article class="svc-card" style="--card-bg:url('assets/images/homepage/unity-dev.png')">
@@ -825,24 +968,27 @@
     </div>
   </section>
   <section class="tech-section" id="tech-showcase">
-    
+
     <div class="tech-header">
       <div>
         <div class="tech-kicker">Technologies</div>
         <h2 class="tech-title">Technology Stack Credibility</h2>
-        <p class="tech-desc">We leverage cutting-edge technologies to build immersive, scalable, and high-performance solutions for enterprise.</p>
+        <p class="tech-desc">We leverage cutting-edge technologies to build immersive, scalable, and high-performance
+          solutions for enterprise.</p>
       </div>
     </div>
     <div class="tech-grid">
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="assets/images/homepage/unity.png" loading="lazy" decoding="async" alt="Unity Engine"></i>
+          <i class=""><img src="assets/images/homepage/unity.png" loading="lazy" decoding="async"
+              alt="Unity Engine"></i>
           <h3>Unity Engine</h3>
         </div>
       </div>
       <div class="tech-card">
         <div class="card-default">
-          <i class=""><img src="assets/images/homepage/unreal.png" loading="lazy" decoding="async" alt="Unreal Engine"></i>
+          <i class=""><img src="assets/images/homepage/unreal.png" loading="lazy" decoding="async"
+              alt="Unreal Engine"></i>
           <h3>Unreal Engine</h3>
         </div>
       </div>
@@ -883,11 +1029,11 @@
         </div>
       </div>
     </div>
-     
+
   </section>
 
   <!-- ═══════════════════════════════════════════ TECH STACK -->
- 
+
 
   <!-- ═══════════════════════════════════════════ OUR PROCESS / 3D CUBE MISSION -->
   <div class="cube-mission-wrap">
@@ -895,7 +1041,8 @@
     <div class="cube-mission-header">
       <p class="cube-mission-kicker">Our Process</p>
       <h2 class="cube-mission-title" style="color: var(--cm-fg);">Transforming Ideas into Immersive Experiences</h2>
-      <p class="cube-mission-desc">We build immersive, intelligent systems that help enterprises educate, innovate, build, deploy, scale, and evolve with cutting-edge VR/AR technology.</p>
+      <p class="cube-mission-desc">We build immersive, intelligent systems that help enterprises educate, innovate,
+        build, deploy, scale, and evolve with cutting-edge VR/AR technology.</p>
     </div>
     <div class="cube-mission-viewport">
 
@@ -907,19 +1054,21 @@
         <div class="cm-ground-plane"></div>
         <!-- 3D Particles Container -->
         <div id="cm-particles"></div>
-        
+
         <div id="cm-cube">
-          <div class="cm-face" data-face="top">    <span class="cm-face-ph">TOP</span></div>
-          <div class="cm-face" data-face="front">  <span class="cm-face-ph">FRONT</span></div>
-          <div class="cm-face" data-face="right">  <span class="cm-face-ph">RIGHT</span></div>
-          <div class="cm-face" data-face="back">   <span class="cm-face-ph">BACK</span></div>
-          <div class="cm-face" data-face="left">   <span class="cm-face-ph">LEFT</span></div>
+          <div class="cm-face" data-face="top"> <span class="cm-face-ph">TOP</span></div>
+          <div class="cm-face" data-face="front"> <span class="cm-face-ph">FRONT</span></div>
+          <div class="cm-face" data-face="right"> <span class="cm-face-ph">RIGHT</span></div>
+          <div class="cm-face" data-face="back"> <span class="cm-face-ph">BACK</span></div>
+          <div class="cm-face" data-face="left"> <span class="cm-face-ph">LEFT</span></div>
           <div class="cm-face" data-face="bottom"> <span class="cm-face-ph">BOTTOM</span></div>
         </div>
         <!-- HUD -->
         <div id="cm-hud">
           <span id="cm-hud-pct">000%</span>
-          <div class="cm-progress-bar"><div id="cm-prog-fill" class="cm-progress-fill"></div></div>
+          <div class="cm-progress-bar">
+            <div id="cm-prog-fill" class="cm-progress-fill"></div>
+          </div>
           <div class="cm-scene-label" id="cm-scene-name">INTRO</div>
         </div>
       </div>
@@ -947,9 +1096,14 @@
           <div class="cm-card">
             <div class="cm-tag">OUR PROCESS</div>
             <h1>From Vision <br>to Virtual<br> Reality</h1>
-            <p class="cm-body">We are shaping the next generation of immersive experiences by connecting technology, creativity, and industry expertise. Through education, innovation, and collaboration, we are expanding the possibilities of VR and AR across industries.</p>
+            <p class="cm-body">We are shaping the next generation of immersive experiences by connecting technology,
+              creativity, and industry expertise. Through education, innovation, and collaboration, we are expanding the
+              possibilities of VR and AR across industries.</p>
             <div class="cm-cta-row">
-              <a class="cm-cta" href="#cms1" data-cm-slide="1">Explore <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+              <a class="cm-cta" href="#cms1" data-cm-slide="1">Explore <svg viewBox="0 0 12 12" fill="none"
+                  stroke="currentColor" stroke-width="1.5">
+                  <path d="M1 6h10M6 1l5 5-5 5" />
+                </svg></a>
             </div>
           </div>
         </div>
@@ -958,10 +1112,19 @@
           <div class="cm-card right">
             <div class="cm-h-line"></div>
             <h2> Define the Opportunity</h2>
-            <p class="cm-body">Every successful digital experience begins with a clear understanding of the vision behind it. We work closely with your team to explore business goals, user expectations, existing workflows, and operational challenges. By identifying opportunities where immersive technology can create meaningful impact, we build a strong foundation for a solution that aligns with your objectives.</p>
+            <p class="cm-body">Every successful digital experience begins with a clear understanding of the vision
+              behind it. We work closely with your team to explore business goals, user expectations, existing
+              workflows, and operational challenges. By identifying opportunities where immersive technology can create
+              meaningful impact, we build a strong foundation for a solution that aligns with your objectives.</p>
             <div class="cm-cta-row">
-              <a class="cm-cta-back" href="#cms0" data-cm-slide="0"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
-              <a class="cm-cta" href="#cms2" data-cm-slide="2">Next <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+              <a class="cm-cta-back" href="#cms0" data-cm-slide="0"><svg viewBox="0 0 12 12" fill="none"
+                  stroke="currentColor" stroke-width="1.5">
+                  <path d="M11 6H1M6 11L1 6l5-5" />
+                </svg>Back</a>
+              <a class="cm-cta" href="#cms2" data-cm-slide="2">Next <svg viewBox="0 0 12 12" fill="none"
+                  stroke="currentColor" stroke-width="1.5">
+                  <path d="M1 6h10M6 1l5 5-5 5" />
+                </svg></a>
             </div>
           </div>
         </div>
@@ -969,12 +1132,21 @@
         <div class="cm-slide" id="cms2">
           <div class="cm-card">
             <div class="cm-h-line"></div>
-          
+
             <h2>Shape the Experience</h2>
-            <p class="cm-body">We transform ideas into engaging, intuitive experiences designed around real-world needs. Our team creates immersive concepts, user journeys, and interactive environments that combine creativity with functionality. Whether it’s VR training, AR experiences, AI-powered solutions, or digital twins, we design experiences that are purposeful, memorable, and built for your audience.</p>
+            <p class="cm-body">We transform ideas into engaging, intuitive experiences designed around real-world needs.
+              Our team creates immersive concepts, user journeys, and interactive environments that combine creativity
+              with functionality. Whether it’s VR training, AR experiences, AI-powered solutions, or digital twins, we
+              design experiences that are purposeful, memorable, and built for your audience.</p>
             <div class="cm-cta-row">
-              <a class="cm-cta-back" href="#cms1" data-cm-slide="1"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
-              <a class="cm-cta" href="#cms3" data-cm-slide="3">Next <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+              <a class="cm-cta-back" href="#cms1" data-cm-slide="1"><svg viewBox="0 0 12 12" fill="none"
+                  stroke="currentColor" stroke-width="1.5">
+                  <path d="M11 6H1M6 11L1 6l5-5" />
+                </svg>Back</a>
+              <a class="cm-cta" href="#cms3" data-cm-slide="3">Next <svg viewBox="0 0 12 12" fill="none"
+                  stroke="currentColor" stroke-width="1.5">
+                  <path d="M1 6h10M6 1l5 5-5 5" />
+                </svg></a>
             </div>
           </div>
         </div>
@@ -982,13 +1154,22 @@
         <div class="cm-slide" id="cms3">
           <div class="cm-card right">
             <div class="cm-h-line"></div>
-           
+
             <h2>Build the Future</h2>
-            <p class="cm-body">Using advanced technologies such as AR, VR, AI, and digital twins, we turn concepts into scalable digital solutions. Our development process focuses on performance, security, usability, and seamless integration to ensure every solution is reliable and ready to support your business growth. We build technology that goes beyond innovation — delivering practical value and measurable results.</p>
-            
+            <p class="cm-body">Using advanced technologies such as AR, VR, AI, and digital twins, we turn concepts into
+              scalable digital solutions. Our development process focuses on performance, security, usability, and
+              seamless integration to ensure every solution is reliable and ready to support your business growth. We
+              build technology that goes beyond innovation — delivering practical value and measurable results.</p>
+
             <div class="cm-cta-row">
-              <a class="cm-cta-back" href="#cms2" data-cm-slide="2"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
-              <a class="cm-cta" href="#cms4" data-cm-slide="4">Next <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+              <a class="cm-cta-back" href="#cms2" data-cm-slide="2"><svg viewBox="0 0 12 12" fill="none"
+                  stroke="currentColor" stroke-width="1.5">
+                  <path d="M11 6H1M6 11L1 6l5-5" />
+                </svg>Back</a>
+              <a class="cm-cta" href="#cms4" data-cm-slide="4">Next <svg viewBox="0 0 12 12" fill="none"
+                  stroke="currentColor" stroke-width="1.5">
+                  <path d="M1 6h10M6 1l5 5-5 5" />
+                </svg></a>
             </div>
           </div>
         </div>
@@ -996,12 +1177,21 @@
         <div class="cm-slide" id="cms4">
           <div class="cm-card">
             <div class="cm-h-line"></div>
-            
+
             <h2>Bring Innovation to Life</h2>
-            <p class="cm-body">A great solution needs a smooth transition from development to real-world implementation. We handle the deployment process with a focus on reliability, accessibility, and user adoption. From enterprise platforms to immersive applications, we ensure your technology is delivered securely and prepared for successful use across your organization.</p>
+            <p class="cm-body">A great solution needs a smooth transition from development to real-world implementation.
+              We handle the deployment process with a focus on reliability, accessibility, and user adoption. From
+              enterprise platforms to immersive applications, we ensure your technology is delivered securely and
+              prepared for successful use across your organization.</p>
             <div class="cm-cta-row">
-              <a class="cm-cta-back" href="#cms3" data-cm-slide="3"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
-              <a class="cm-cta" href="#cms5" data-cm-slide="5">Next <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+              <a class="cm-cta-back" href="#cms3" data-cm-slide="3"><svg viewBox="0 0 12 12" fill="none"
+                  stroke="currentColor" stroke-width="1.5">
+                  <path d="M11 6H1M6 11L1 6l5-5" />
+                </svg>Back</a>
+              <a class="cm-cta" href="#cms5" data-cm-slide="5">Next <svg viewBox="0 0 12 12" fill="none"
+                  stroke="currentColor" stroke-width="1.5">
+                  <path d="M1 6h10M6 1l5 5-5 5" />
+                </svg></a>
             </div>
           </div>
         </div>
@@ -1009,12 +1199,21 @@
         <div class="cm-slide" id="cms5">
           <div class="cm-card center">
             <div class="cm-h-line"></div>
-           
+
             <h2>Evolve Continuously</h2>
-            <p class="cm-body">Technology continues to evolve, and so should your digital experiences. Through analytics, performance monitoring, and user feedback, we identify opportunities to improve and enhance your solution over time. Our continuous optimization approach helps maximize impact, maintain performance, and keep your immersive experiences future-ready.</p>
+            <p class="cm-body">Technology continues to evolve, and so should your digital experiences. Through
+              analytics, performance monitoring, and user feedback, we identify opportunities to improve and enhance
+              your solution over time. Our continuous optimization approach helps maximize impact, maintain performance,
+              and keep your immersive experiences future-ready.</p>
             <div class="cm-cta-row" style="justify-content:center">
-              <a class="cm-cta-back" href="#cms4" data-cm-slide="4"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 6H1M6 11L1 6l5-5"/></svg>Back</a>
-              <a class="cm-cta" href="contact.html">Start a project <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 6h10M6 1l5 5-5 5"/></svg></a>
+              <a class="cm-cta-back" href="#cms4" data-cm-slide="4"><svg viewBox="0 0 12 12" fill="none"
+                  stroke="currentColor" stroke-width="1.5">
+                  <path d="M11 6H1M6 11L1 6l5-5" />
+                </svg>Back</a>
+              <a class="cm-cta" href="contact.html">Start a project <svg viewBox="0 0 12 12" fill="none"
+                  stroke="currentColor" stroke-width="1.5">
+                  <path d="M1 6h10M6 1l5 5-5 5" />
+                </svg></a>
             </div>
           </div>
         </div>
@@ -1026,12 +1225,13 @@
   <!-- ═══════════════════════════════════════════ CTA BANNER -->
   <section class="cta-banner">
     <div class="cta-shape-top">
-      
+
     </div>
     <div class="cta-bg"></div>
     <div class="container cta-inner">
       <h2 class="cta-heading reveal-split">Start Your Virtual Reality Journey Today</h2>
-      <p class="reveal-fade">Whether you're planning a VR training platform, digital twin initiative, enterprise AR solution, or metaverse ecosystem, our team can help you define the right strategy and execution roadmap.</p>
+      <p class="reveal-fade">Whether you're planning a VR training platform, digital twin initiative, enterprise AR
+        solution, or metaverse ecosystem, our team can help you define the right strategy and execution roadmap.</p>
       <div class="cta-btns reveal-fade">
         <a href="portfolio.html" class="btn-primary">Learn More</a>
         <a href="contact.html" class="btn-ghost btn-ghost-light">Contact Us</a>
@@ -1051,18 +1251,18 @@
     // ══════════════════════════════════════════════════════
     //  SVC SECTION — Full animation suite
     // ══════════════════════════════════════════════════════
-    (function() {
+    (function () {
       if (typeof gsap === 'undefined') return;
 
-      const section  = document.querySelector('.svc-section');
-      const header   = section  ? section.querySelector('.svc-header') : null;
-      const kicker   = header   ? header.querySelector('.svc-kicker') : null;
-      const title    = header   ? header.querySelector('.svc-title') : null;
-      const desc     = header   ? header.querySelector('.svc-desc') : null;
-      const cta      = header   ? header.querySelector('.svc-link') : null;
-      const grid     = document.getElementById('svcGrid');
+      const section = document.querySelector('.svc-section');
+      const header = section ? section.querySelector('.svc-header') : null;
+      const kicker = header ? header.querySelector('.svc-kicker') : null;
+      const title = header ? header.querySelector('.svc-title') : null;
+      const desc = header ? header.querySelector('.svc-desc') : null;
+      const cta = header ? header.querySelector('.svc-link') : null;
+      const grid = document.getElementById('svcGrid');
       const trayGlow = document.getElementById('svcTrayGlow');
-      const cards    = grid ? Array.from(grid.querySelectorAll('.svc-card')) : [];
+      const cards = grid ? Array.from(grid.querySelectorAll('.svc-card')) : [];
 
       // ── 1. ScrollTrigger entrance ───────────────────────
       if (typeof ScrollTrigger !== 'undefined' && section) {
@@ -1129,7 +1329,7 @@
           const r = grid.getBoundingClientRect();
           gsap.to(trayGlow, {
             left: e.clientX - r.left,
-            top:  e.clientY - r.top,
+            top: e.clientY - r.top,
             duration: 0.6,
             ease: 'power2.out'
           });
@@ -1139,9 +1339,9 @@
       // ── 3. Per-card interactions ────────────────────────
       cards.forEach((card, i) => {
         const inner = card.querySelector('.svc-card-inner');
-        const glow  = card.querySelector('.svc-card-glow');
-        const tags  = card.querySelector('.svc-card-tags');
-        const MAX   = 12;
+        const glow = card.querySelector('.svc-card-glow');
+        const tags = card.querySelector('.svc-card-tags');
+        const MAX = 12;
 
         // Hero card (first) gets slightly less tilt — it's larger
         const tiltMax = i === 0 ? 7 : MAX;
@@ -1150,8 +1350,8 @@
         card.addEventListener('mousemove', e => {
           const { left, top, width, height } = card.getBoundingClientRect();
           const x = (e.clientX - left) / width;
-          const y = (e.clientY - top)  / height;
-          const rotY =  (x - 0.5) * tiltMax * 2;
+          const y = (e.clientY - top) / height;
+          const rotY = (x - 0.5) * tiltMax * 2;
           const rotX = -(y - 0.5) * tiltMax * 2;
           gsap.to(inner, {
             rotateX: rotX, rotateY: rotY,
@@ -1239,7 +1439,7 @@
         }
 
         // 2. VR Headset entry scale & float reveal
-        tl.fromTo(headsetWrap, 
+        tl.fromTo(headsetWrap,
           { scale: 0.75, opacity: 0 },
           { scale: 1, opacity: 1, duration: 1.4, ease: 'power4.out' },
           '-=1.2'
@@ -1352,4 +1552,5 @@
     });
   </script>
 </body>
+
 </html>

@@ -17,6 +17,25 @@
   <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script crossorigin="anonymous"
     src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    function scrollToTarget(target) {
+      const el = typeof target === 'string'
+        ? (target.startsWith('#') ? document.querySelector(target) : document.getElementById(target))
+        : target;
+      if (!el) return;
+      const nav = document.getElementById('navbar') || document.querySelector('nav');
+      const navHeight = nav ? nav.offsetHeight : 80;
+      const targetTop = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
+      window.scrollTo({
+        top: Math.max(0, targetTop),
+        behavior: 'smooth'
+      });
+      if (history.pushState && typeof target === 'string') {
+        history.pushState(null, null, target.startsWith('#') ? target : ('#' + target));
+      }
+    }
+    window.scrollToTarget = scrollToTarget;
+  </script>
   <style>
     /* ── PAGE TOKENS ── */
     :root {
@@ -2577,8 +2596,7 @@
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </a>
-          <a href="#culture" class="btn btn-ghost" onclick="event.preventDefault(); scrollToTarget('culture');">Our
-            Culture</a>
+          <a href="contact.html" class="btn btn-ghost">Talk to Us</a>
         </div>
         <div class="cr-hero-stats">
           <div class="cr-hero-stat">
@@ -3114,16 +3132,13 @@
         ? (target.startsWith('#') ? document.querySelector(target) : document.getElementById(target))
         : target;
       if (!el) return;
-      const nav = document.getElementById('navbar');
+      const nav = document.getElementById('navbar') || document.querySelector('nav');
       const navHeight = nav ? nav.offsetHeight : 80;
       const targetTop = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
       window.scrollTo({
         top: Math.max(0, targetTop),
         behavior: 'smooth'
       });
-      try {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } catch (err) { }
       if (history.pushState && typeof target === 'string') {
         history.pushState(null, null, target.startsWith('#') ? target : ('#' + target));
       }

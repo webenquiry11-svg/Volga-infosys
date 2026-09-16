@@ -1121,14 +1121,25 @@ function animateOrbit() {
 // ─── 13. SMOOTH SCROLL ANCHOR ────────────────────────────
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      gsap.to(window, {
-        scrollTo: { y: target, offsetY: 80 },
-        duration: 1.1,
-        ease: 'power4.inOut'
-      });
+    const hash = this.getAttribute('href');
+    if (!hash || hash === '#') return;
+    try {
+      const target = document.querySelector(hash);
+      if (target) {
+        e.preventDefault();
+        const nav = document.getElementById('navbar') || document.querySelector('nav');
+        const navHeight = nav ? nav.offsetHeight : 80;
+        const targetTop = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
+        window.scrollTo({
+          top: Math.max(0, targetTop),
+          behavior: 'smooth'
+        });
+        if (history.pushState) {
+          history.pushState(null, null, hash);
+        }
+      }
+    } catch (err) {
+      console.warn('Smooth scroll target error:', err);
     }
   });
 });
@@ -1410,12 +1421,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.hero-line').forEach(el => el.classList.add('Hero-line'));
   } catch (e) { /* no-op */ }
 
-  setupHeroParallax();
-  setupScrollReveals();
-  setupGlobalTextScrollAnimation();
-  setupParallax();
-  setupMagnetic();
-  setupMissionCardFlip();
+  if (typeof setupHeroParallax === 'function') setupHeroParallax();
+  if (typeof setupScrollReveals === 'function') setupScrollReveals();
+  if (typeof setupGlobalTextScrollAnimation === 'function') setupGlobalTextScrollAnimation();
+  if (typeof setupParallax === 'function') setupParallax();
+  if (typeof setupMagnetic === 'function') setupMagnetic();
+  if (typeof setupMissionCardFlip === 'function') setupMissionCardFlip();
 
   if (document.getElementById('blogGrid')) {
     fetchLatestBlogs();
