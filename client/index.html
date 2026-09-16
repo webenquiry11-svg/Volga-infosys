@@ -37,80 +37,37 @@
       align-items: center;
       justify-content: center;
       padding: 160px 0 90px;
-      background: radial-gradient(circle at 50% 40%, #1A2538 0%, #101928 60%, #090F1B 100%);
+      background: #060B14;
       position: relative;
       overflow: hidden;
       width: 100%;
       user-select: none;
     }
 
-    /* Atmospheric 3D Multi-Point Lighting */
-    .cr-hero-glow-1 {
+    /* ════════════════════════════════════════════════════════
+       AMBIENT BACKGROUND VIDEO & SCENE SETTINGS
+    ═══════════════════════════════════════════════════════════ */
+    .cr-hero-bg-video {
       position: absolute;
-      top: 45%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 900px;
-      height: 900px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(232, 147, 10, 0.24) 0%, rgba(36, 82, 217, 0.14) 45%, transparent 70%);
-      filter: blur(100px);
-      pointer-events: none;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.72;
       z-index: 1;
-    }
-
-    .cr-hero-glow-2 {
-      position: absolute;
-      bottom: 8%;
-      left: 10%;
-      width: 700px;
-      height: 700px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(36, 120, 255, 0.18) 0%, transparent 65%);
-      filter: blur(90px);
       pointer-events: none;
-      z-index: 1;
+      filter: saturate(1.2) brightness(0.95);
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
     }
 
-    .cr-hero-glow-amber {
+    .cr-hero-bg-scrim {
       position: absolute;
-      top: 12%;
-      right: 10%;
-      width: 600px;
-      height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(232, 147, 10, 0.22) 0%, transparent 65%);
-      filter: blur(85px);
+      inset: 0;
+      background: radial-gradient(circle at 50% 45%, rgba(6, 11, 20, 0.22) 0%, rgba(6, 11, 20, 0.6) 70%, #060B14 100%);
+      z-index: 2;
       pointer-events: none;
-      z-index: 1;
-    }
-
-
-
-    /* 3D Spatial Orbital Ring */
-    .spatial-orbit-ring {
-      position: absolute;
-      top: 46%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotateX(72deg) rotateZ(20deg);
-      width: min(920px, 94vw);
-      height: min(920px, 94vw);
-      border-radius: 50%;
-      border: 1px dashed rgba(232, 147, 10, 0.35);
-      box-shadow: 0 0 40px rgba(232, 147, 10, 0.15), inset 0 0 40px rgba(36, 120, 255, 0.12);
-      pointer-events: none;
-      z-index: 3;
-      animation: spinSpatialOrbit 45s linear infinite;
-    }
-
-    @keyframes spinSpatialOrbit {
-      from {
-        transform: translate(-50%, -50%) rotateX(72deg) rotateZ(0deg);
-      }
-
-      to {
-        transform: translate(-50%, -50%) rotateX(72deg) rotateZ(360deg);
-      }
     }
 
     .borderless-left-line {
@@ -137,69 +94,226 @@
       justify-content: space-between;
     }
 
-    /* Floating Headset Centerpiece */
-    .hero-headset-wrap {
+    /* ════════════════════════════════════════════════════════
+       LIGHTWEIGHT 3D SPATIAL 9:16 VIDEO STACK (60FPS, ALL VIDEOS PLAY)
+    ═══════════════════════════════════════════════════════════ */
+    .hero-spatial-stage {
       position: absolute;
-      top: 46%;
+      top: 48%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: min(860px, 92vw);
-      max-width: 880px;
+      width: min(1160px, 94vw);
+      height: clamp(390px, 35vw, 520px);
       z-index: 6;
-      pointer-events: none;
-      filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.85)) drop-shadow(0 50px 100px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 50px rgba(232, 147, 10, 0.22));
-      will-change: transform;
+      perspective: 1600px;
+      perspective-origin: 50% 50%;
+      transform-style: preserve-3d;
+      pointer-events: auto;
+      user-select: none;
     }
 
-    /* Dynamic Ground Shadow Under Headset */
-    .headset-floor-shadow {
+    .spatial-stage-floor-glow {
       position: absolute;
-      bottom: -65px;
+      bottom: -35px;
       left: 50%;
-      transform: translateX(-50%);
-      width: 68%;
-      height: 42px;
-      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 45%, transparent 75%);
-      filter: blur(18px);
+      transform: translateX(-50%) rotateX(78deg);
+      width: 75%;
+      height: 80px;
+      background: radial-gradient(ellipse at center, rgba(232, 147, 10, 0.3) 0%, rgba(36, 120, 255, 0.15) 45%, transparent 75%);
+      filter: blur(24px);
       border-radius: 50%;
       pointer-events: none;
-      z-index: -1;
-      animation: headsetShadowPulse 6s ease-in-out infinite alternate;
+      z-index: 0;
+      animation: spatialFloorBreathe 6s ease-in-out infinite alternate;
     }
 
-    @keyframes headsetShadowPulse {
-      0% {
-        transform: translateX(-50%) scale(0.85);
-        opacity: 0.6;
-        filter: blur(22px);
-      }
-
-      100% {
-        transform: translateX(-50%) scale(1.1);
-        opacity: 0.9;
-        filter: blur(16px);
-      }
+    @keyframes spatialFloorBreathe {
+      0% { transform: translateX(-50%) rotateX(78deg) scale(0.92); opacity: 0.7; }
+      100% { transform: translateX(-50%) rotateX(78deg) scale(1.12); opacity: 1; }
     }
 
-    .hero-headset-img {
+    .spatial-carousel-track {
+      position: relative;
       width: 100%;
-      height: auto;
-      display: block;
-      object-fit: contain;
-      animation: floatHeadset 6s ease-in-out infinite alternate;
+      height: 100%;
+      transform-style: preserve-3d;
+      z-index: 2;
     }
 
-    @keyframes floatHeadset {
-      0% {
-        transform: translateY(-12px) rotate(0.5deg);
-      }
-
-      100% {
-        transform: translateY(16px) rotate(-1deg);
-      }
+    .spatial-video-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: clamp(200px, 16vw, 250px);
+      aspect-ratio: 9 / 16;
+      border-radius: 26px;
+      background: #060B14;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      will-change: transform, opacity;
+      opacity: 0;
+      pointer-events: none;
+      backface-visibility: hidden;
     }
 
-    /* Huge Extended Borderless Typography */
+    /* 3D Stacked Fanning Positions (Lightweight & Smooth - Zero GPU Blur) */
+    .spatial-video-card.pos-center {
+      transform: translate(-50%, -50%) translateZ(105px) rotateY(0deg) scale(1);
+      opacity: 1;
+      z-index: 30;
+      border-color: rgba(232, 147, 10, 0.9);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), 0 0 45px rgba(232, 147, 10, 0.4);
+      pointer-events: auto;
+    }
+
+    .spatial-video-card.pos-center:hover {
+      transform: translate(-50%, -50%) translateZ(125px) rotateY(0deg) scale(1.03);
+      box-shadow: 0 40px 95px rgba(0, 0, 0, 0.98), 0 0 60px rgba(232, 147, 10, 0.6);
+      border-color: #FFAA2B;
+    }
+
+    .spatial-video-card.pos-r1 {
+      transform: translate(-50%, -50%) translateX(190px) translateZ(-40px) rotateY(-18deg) scale(0.88);
+      opacity: 0.88;
+      z-index: 24;
+      pointer-events: auto;
+    }
+
+    .spatial-video-card.pos-l1 {
+      transform: translate(-50%, -50%) translateX(-190px) translateZ(-40px) rotateY(18deg) scale(0.88);
+      opacity: 0.88;
+      z-index: 24;
+      pointer-events: auto;
+    }
+
+    .spatial-video-card.pos-r1:hover,
+    .spatial-video-card.pos-l1:hover {
+      opacity: 0.98;
+      border-color: rgba(232, 147, 10, 0.6);
+    }
+
+    .spatial-video-card.pos-r2 {
+      transform: translate(-50%, -50%) translateX(355px) translateZ(-110px) rotateY(-32deg) scale(0.76);
+      opacity: 0.68;
+      z-index: 18;
+      pointer-events: auto;
+    }
+
+    .spatial-video-card.pos-l2 {
+      transform: translate(-50%, -50%) translateX(-355px) translateZ(-110px) rotateY(32deg) scale(0.76);
+      opacity: 0.68;
+      z-index: 18;
+      pointer-events: auto;
+    }
+
+    .spatial-video-card.pos-r3 {
+      transform: translate(-50%, -50%) translateX(490px) translateZ(-190px) rotateY(-44deg) scale(0.64);
+      opacity: 0.42;
+      z-index: 12;
+      pointer-events: auto;
+    }
+
+    .spatial-video-card.pos-l3 {
+      transform: translate(-50%, -50%) translateX(-490px) translateZ(-190px) rotateY(44deg) scale(0.64);
+      opacity: 0.42;
+      z-index: 12;
+      pointer-events: auto;
+    }
+
+    .spatial-video-card.pos-hidden-far {
+      transform: translate(-50%, -50%) translateZ(-400px) scale(0.4);
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .spatial-card-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.92;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    }
+
+    .spatial-video-card.pos-center:hover .spatial-card-video {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+
+    .spatial-device-notch {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #FFAA2B;
+      text-transform: uppercase;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .spatial-badge-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #E8930A;
+      box-shadow: 0 0 6px #E8930A;
+      animation: pulseDot 2s infinite;
+    }
+
+    .spatial-card-caption {
+      position: absolute;
+      bottom: 16px;
+      left: 14px;
+      right: 14px;
+      z-index: 4;
+      text-align: left;
+      pointer-events: none;
+    }
+
+    .spatial-service-title {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(13px, 1.1vw, 15px);
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.25;
+      margin: 0 0 3px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+    }
+
+    .spatial-service-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 10.5px;
+      color: rgba(255, 255, 255, 0.8);
+      margin: 0;
+      line-height: 1.3;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
+    }
+
+    /* ════════════════════════════════════════════════════════
+       BORDERLESS VR TYPOGRAPHY & HERO CONTENT
+    ═══════════════════════════════════════════════════════════ */
     .bvr-top-right {
       position: relative;
       z-index: 4;
@@ -275,6 +389,7 @@
       align-items: center;
       gap: 10px;
       text-decoration: none;
+      cursor: pointer;
     }
 
     .bvr-btn-amber:hover {
@@ -297,6 +412,7 @@
       align-items: center;
       gap: 8px;
       text-decoration: none;
+      cursor: pointer;
     }
 
     .bvr-btn-ghost:hover {
@@ -350,72 +466,108 @@
     }
 
     @keyframes bounceDown {
-
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(4px);
-      }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
     }
 
-    @media (max-width: 900px) {
+    /* ════════════════════════════════════════════════════════
+       RESPONSIVE BREAKPOINTS
+    ═══════════════════════════════════════════════════════════ */
+    @media (max-width: 991px) {
       .cr-hero {
         padding: 120px 0 60px;
       }
 
       .cr-hero .cr-container {
         min-height: auto;
-        gap: 28px;
+        gap: 20px;
+        align-items: center;
+        text-align: center;
       }
 
-      .hero-headset-wrap {
-        width: min(560px, 92vw);
-        opacity: 0.45;
+      .hero-spatial-stage {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        width: 100% !important;
+        max-width: 380px !important;
+        height: 250px !important;
+        margin: 16px auto 28px !important;
+        order: 4 !important;
+        perspective: 1000px !important;
+      }
+
+      .spatial-video-card {
+        width: 88% !important;
+        border-radius: 18px !important;
+      }
+
+      .spatial-video-card.pos-r1,
+      .spatial-video-card.pos-l1,
+      .spatial-video-card.pos-r2,
+      .spatial-video-card.pos-l2,
+      .spatial-video-card.pos-r3,
+      .spatial-video-card.pos-l3 {
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
+
+      .spatial-video-card.pos-center {
+        transform: translate(-50%, -50%) translateZ(0) scale(1) !important;
       }
 
       .bvr-top-right {
-        text-align: left;
-        align-self: flex-start;
+        text-align: center;
+        align-self: center;
         margin-top: 0;
+        order: 2;
       }
 
       .bvr-title-huge {
-        font-size: clamp(28px, 6.5vw, 54px);
+        font-size: clamp(28px, 6.5vw, 48px);
+        white-space: normal;
+        line-height: 1.1;
       }
 
       .bvr-bottom-left {
-        max-width: 100%;
+        text-align: center;
+        align-self: center;
         margin-bottom: 0;
-        padding-top: 10px;
+        padding-top: 2px;
+        order: 3;
       }
 
-      .bvr-desc-text {
-        max-width: 100%;
+      .bvr-center-subline {
+        order: 5;
+        margin-top: 8px;
       }
 
       .bvr-hero-ctas {
-        margin-top: 16px;
-      }
-
-      .borderless-left-line {
-        display: none;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .bvr-hero-ctas {
+        order: 6;
+        margin-top: 18px;
         flex-direction: column;
         width: 100%;
-        gap: 12px;
+        max-width: 320px;
+        gap: 10px;
       }
 
       .bvr-btn-amber,
       .bvr-btn-ghost {
         width: 100%;
         justify-content: center;
+        box-sizing: border-box;
+      }
+
+      .borderless-left-line {
+        display: none;
+      }
+
+      .bvr-scroll-indicator {
+        order: 7;
+        position: static;
+        margin: 20px auto 0;
+        transform: none;
       }
     }
   </style>
@@ -804,22 +956,30 @@
 
   <!-- ═══════════════════════════════════════════ BORDERLESS VR HERO ═══════════════════════════════════════════ -->
   <section class="cr-hero" id="Hero">
+    <!-- Ambient Base Video Background (More visible & vibrant) -->
+    <video class="cr-hero-bg-video" autoplay loop muted playsinline preload="auto">
+      <source src="assets/video/Scene.mp4" type="video/mp4" />
+    </video>
+    <div class="cr-hero-bg-scrim" aria-hidden="true"></div>
+
     <!-- Atmospheric Multi-Point Lighting -->
     <div class="cr-hero-glow-1" id="glow1" aria-hidden="true"></div>
     <div class="cr-hero-glow-2" id="glow2" aria-hidden="true"></div>
     <div class="cr-hero-glow-amber" id="glowAmber" aria-hidden="true"></div>
 
-    <!-- 3D Spatial Orbital Ring -->
-    <div class="spatial-orbit-ring" id="orbitRing" aria-hidden="true"></div>
-
     <div class="borderless-left-line"></div>
 
-    <!-- Center Floating 3D VR Headset with Floor Shadow -->
-    <div class="hero-headset-wrap" id="headsetWrap">
-      <div class="headset-floor-shadow" id="headsetShadow"></div>
-      <img src="vr-hero-headset.png" alt="Volga Infosys 3D VR Headset" class="hero-headset-img" id="headsetImg" />
+    <!-- Center 3D Spatial 9:16 Video Stack Carousel (Lightweight, 60FPS) -->
+    <div class="hero-spatial-stage" id="spatialStage" aria-label="Volga Infosys 3D Spatial Video Carousel">
+      <div class="spatial-stage-floor-glow" id="stageFloorGlow"></div>
+
+      <!-- 3D Track Container with all 11 9:16 vertical cards -->
+      <div class="spatial-carousel-track" id="spatialTrack">
+        <!-- 11 Cards dynamically initialized and animated in 3D -->
+      </div>
     </div>
 
+    <!-- Borderless VR Typography & Content Framing Around 3D Stack -->
     <div class="cr-container">
       <!-- Top Right Extended Headline -->
       <div class="bvr-top-right bvr-anim-top">
@@ -1413,139 +1573,304 @@
   <!-- ▶ Cube Mission — loads after volga.js, fully isolated -->
   <script src="cube-mission.js" defer></script>
 
-  <!-- ── Borderless VR Hero GSAP Entry Animation & Parallax ── -->
+  <!-- ── 3D Spatial 9:16 Vertical Services Carousel Engine & GSAP Integration ── -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // ═══════════════════════════════════════════════════════
+      // 1. DATASET OF ALL 11 ENTERPRISE XR SERVICE VIDEOS (9:16 VERTICAL)
+      // ═══════════════════════════════════════════════════════
+      const SPATIAL_SERVICES = [
+        {
+          id: 1,
+          title: "Tactical Defense Simulation",
+          sub: "Combat Readiness & Mission Ops",
+          badge: "DEFENSE XR",
+          src: "assets/video/video-01-defense-simulation.mp4"
+        },
+        {
+          id: 2,
+          title: "Enterprise Spatial Strategy",
+          sub: "VisionOS & XR Architecture",
+          badge: "CONSULTING",
+          src: "assets/video/video-02-xr-consulting.mp4"
+        },
+        {
+          id: 3,
+          title: "Holographic 3D Modeling",
+          sub: "Real-Time Spatial CAD & Design",
+          badge: "SPATIAL CAD",
+          src: "assets/video/video-03-spatial-design.mp4"
+        },
+        {
+          id: 4,
+          title: "Smart AR Manufacturing",
+          sub: "Digital Twins & Assembly Guidance",
+          badge: "DIGITAL TWINS",
+          src: "assets/video/video-04-ar-manufacturing.mp4"
+        },
+        {
+          id: 5,
+          title: "Spatial Gaming & 3D Interactive",
+          sub: "Physics Engines & Unreal WebGL",
+          badge: "SPATIAL GAMING",
+          src: "assets/video/video-05-xr-gaming.mp4"
+        },
+        {
+          id: 6,
+          title: "Immersive STEM Education",
+          sub: "Interactive Classroom Anatomy Labs",
+          badge: "XR EDUCATION",
+          src: "assets/video/video-06-xr-education.mp4"
+        },
+        {
+          id: 7,
+          title: "Virtual Spatial Retail",
+          sub: "Photogrammetry 3D Showrooms",
+          badge: "RETAIL XR",
+          src: "assets/video/video-07-retail-showcase.mp4"
+        },
+        {
+          id: 8,
+          title: "Aerospace & Avionics HUD",
+          sub: "Mission Telemetry & HUD Simulation",
+          badge: "AEROSPACE",
+          src: "assets/video/video-08-vertical-defense.mp4"
+        },
+        {
+          id: 9,
+          title: "Zero-Risk Surgical VR",
+          sub: "Haptic Simulation & Clinical Twins",
+          badge: "HEALTHCARE VR",
+          src: "assets/video/video-09-surgical-vr.mp4"
+        },
+        {
+          id: 10,
+          title: "Energy & Utilities Field XR",
+          sub: "Substation Inspection & IoT Sensors",
+          badge: "ENERGY XR",
+          src: "assets/video/video-10-energy-ar.mp4"
+        },
+        {
+          id: 11,
+          title: "Virtual Tourism & Heritage",
+          sub: "Spatial Walkthroughs & Preservation",
+          badge: "VIRTUAL TOURISM",
+          src: "assets/video/video-11-tourism-spatial.mp4"
+        }
+      ];
+
+      const totalVideos = SPATIAL_SERVICES.length;
+      let activeIndex = 0;
+      let autoplayInterval = null;
+
+      const spatialStage = document.getElementById('spatialStage');
+      const spatialTrack = document.getElementById('spatialTrack');
+      const stageFloorGlow = document.getElementById('stageFloorGlow');
       const heroEl = document.getElementById('Hero');
-      const headsetWrap = document.getElementById('headsetWrap');
-      const headsetShadow = document.getElementById('headsetShadow');
-      const orbitRing = document.getElementById('orbitRing');
       const glow1 = document.getElementById('glow1');
       const glow2 = document.getElementById('glow2');
       const glowAmber = document.getElementById('glowAmber');
 
-      if (typeof gsap !== 'undefined' && headsetWrap) {
-        // Ensure baseline transform coordinates
-        gsap.set(headsetWrap, { xPercent: -50, yPercent: -50, x: 0, y: 0, transformOrigin: '50% 50%' });
+      if (!spatialTrack) return;
 
+      // ═══════════════════════════════════════════════════════
+      // 2. BUILD VERTICAL 9:16 DEVICE CARDS
+      // ═══════════════════════════════════════════════════════
+      spatialTrack.innerHTML = '';
+      const cardElements = [];
+
+      SPATIAL_SERVICES.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'spatial-video-card pos-hidden-far';
+        card.setAttribute('data-index', index);
+        card.setAttribute('role', 'group');
+        card.setAttribute('aria-label', `${item.title} (${index + 1} of ${totalVideos})`);
+
+        card.innerHTML = `
+          <video class="spatial-card-video" loop muted playsinline autoplay preload="auto">
+            <source src="${item.src}" type="video/mp4" />
+          </video>
+          <div class="spatial-device-notch">
+            <span class="spatial-badge-dot"></span>
+            <span>${item.badge}</span>
+          </div>
+          <div class="spatial-card-caption">
+            <h3 class="spatial-service-title">${item.title}</h3>
+            <p class="spatial-service-sub">${item.sub}</p>
+          </div>
+        `;
+
+        spatialTrack.appendChild(card);
+        cardElements.push(card);
+
+        // Click any card to bring to center stage
+        card.addEventListener('click', () => {
+          goToSlide(index);
+        });
+      });
+
+      // Ensure all videos play continuously
+      const allVideos = spatialTrack.querySelectorAll('video');
+      allVideos.forEach(v => {
+        v.muted = true;
+        const p = v.play();
+        if (p !== undefined) {
+          p.catch(() => {
+            document.addEventListener('click', () => v.play(), { once: true });
+          });
+        }
+      });
+
+      // ═══════════════════════════════════════════════════════
+      // 3. LIGHTWEIGHT 3D STACK ENGINE
+      // ═══════════════════════════════════════════════════════
+      function update3DPositions() {
+        cardElements.forEach((card, index) => {
+          let diff = index - activeIndex;
+          if (diff > totalVideos / 2) diff -= totalVideos;
+          if (diff < -totalVideos / 2) diff += totalVideos;
+
+          card.className = 'spatial-video-card';
+
+          if (diff === 0) {
+            card.classList.add('pos-center');
+          } else if (diff === 1) {
+            card.classList.add('pos-r1');
+          } else if (diff === -1) {
+            card.classList.add('pos-l1');
+          } else if (diff === 2) {
+            card.classList.add('pos-r2');
+          } else if (diff === -2) {
+            card.classList.add('pos-l2');
+          } else if (diff === 3) {
+            card.classList.add('pos-r3');
+          } else if (diff === -3) {
+            card.classList.add('pos-l3');
+          } else {
+            card.classList.add('pos-hidden-far');
+          }
+        });
+      }
+
+      function goToSlide(nextIndex) {
+        activeIndex = (nextIndex + totalVideos) % totalVideos;
+        update3DPositions();
+      }
+
+      function nextSlide() {
+        goToSlide(activeIndex + 1);
+      }
+
+      function startAutoplay() {
+        stopAutoplay();
+        autoplayInterval = setInterval(nextSlide, 3200);
+      }
+
+      function stopAutoplay() {
+        if (autoplayInterval) {
+          clearInterval(autoplayInterval);
+          autoplayInterval = null;
+        }
+      }
+
+      if (spatialStage) {
+        spatialStage.addEventListener('mouseenter', stopAutoplay);
+        spatialStage.addEventListener('mouseleave', startAutoplay);
+      }
+
+      // Initialize
+      update3DPositions();
+      startAutoplay();
+
+      // GSAP Entrance Animations
+      if (typeof gsap !== 'undefined') {
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-        // 1. Spatial Orbital Ring reveal
-        if (orbitRing) {
-          tl.fromTo(orbitRing,
-            { opacity: 0, scale: 0.7 },
-            { opacity: 1, scale: 1, duration: 1.5, ease: 'power3.out' }
-          );
-        }
-
-        // 2. VR Headset entry scale & float reveal
-        tl.fromTo(headsetWrap,
-          { scale: 0.75, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 1.4, ease: 'power4.out' },
-          '-=1.2'
+        tl.fromTo(spatialStage,
+          { scale: 0.85, opacity: 0, y: 30 },
+          { scale: 1, opacity: 1, y: 0, duration: 1.3, ease: 'power4.out' }
         );
 
-        // 3. Top Right title "The Future" slide in
         tl.fromTo('.bvr-top-right',
           { y: -40, opacity: 0 },
           { y: 0, opacity: 1, duration: 1 },
           '-=1.0'
         );
 
-        // 4. Bottom Left title reveal
         tl.fromTo('.bvr-bottom-left',
           { y: 40, opacity: 0 },
           { y: 0, opacity: 1, duration: 1.1 },
           '-=0.8'
         );
 
-        // 5. Centered Subline reveal
         tl.fromTo('.bvr-center-subline',
           { y: 25, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.9 },
           '-=0.75'
         );
 
-        // 6. Centralized CTA buttons reveal
         tl.fromTo('.bvr-hero-ctas',
           { y: 20, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.9 },
           '-=0.7'
         );
 
-        // 7. Scroll indicator reveal
         tl.fromTo('.bvr-scroll-indicator',
           { opacity: 0, y: 15 },
           { opacity: 1, y: 0, duration: 0.8 },
           '-=0.6'
         );
 
-        // 8. Multi-Layered 3D Spatial Mouse Parallax
-        if (heroEl) {
+        // Smooth Throttled Parallax (60FPS)
+        let mouseTicking = false;
+        if (heroEl && window.innerWidth > 991) {
           heroEl.addEventListener('mousemove', (e) => {
-            const rect = heroEl.getBoundingClientRect();
-            const relX = (e.clientX - rect.left) / rect.width - 0.5;
-            const relY = (e.clientY - rect.top) / rect.height - 0.5;
+            if (!mouseTicking) {
+              requestAnimationFrame(() => {
+                const rect = heroEl.getBoundingClientRect();
+                const relX = (e.clientX - rect.left) / rect.width - 0.5;
+                const relY = (e.clientY - rect.top) / rect.height - 0.5;
 
-            // Centerpiece Headset 3D Sway
-            gsap.to(headsetWrap, {
-              x: relX * 28,
-              y: relY * 20,
-              rotateY: relX * 14,
-              rotateX: -relY * 12,
-              duration: 0.65,
-              ease: 'power2.out',
-              overwrite: 'auto'
-            });
+                gsap.to(spatialTrack, {
+                  rotateY: relX * 10,
+                  rotateX: -relY * 8,
+                  duration: 0.6,
+                  ease: 'power2.out',
+                  overwrite: 'auto'
+                });
 
-            // Dynamic Floor Shadow Drift
-            if (headsetShadow) {
-              gsap.to(headsetShadow, {
-                x: -relX * 16,
-                scaleX: 1 - relY * 0.1,
-                opacity: 0.75 + relY * 0.2,
-                duration: 0.65,
-                ease: 'power2.out',
-                overwrite: 'auto'
+                if (stageFloorGlow) {
+                  gsap.to(stageFloorGlow, {
+                    x: -relX * 15,
+                    opacity: 0.85 + relY * 0.15,
+                    duration: 0.6,
+                    ease: 'power2.out',
+                    overwrite: 'auto'
+                  });
+                }
+
+                if (glow1) gsap.to(glow1, { x: relX * -15, y: relY * -10, duration: 1.0, overwrite: 'auto' });
+                if (glow2) gsap.to(glow2, { x: relX * 18, y: relY * 14, duration: 1.0, overwrite: 'auto' });
+                if (glowAmber) gsap.to(glowAmber, { x: relX * -18, y: relY * -14, duration: 1.0, overwrite: 'auto' });
+
+                mouseTicking = false;
               });
+              mouseTicking = true;
             }
-
-            // Spatial Orbital Ring Tilt
-            if (orbitRing) {
-              gsap.to(orbitRing, {
-                x: relX * 15,
-                y: relY * 10,
-                duration: 0.8,
-                ease: 'power2.out',
-                overwrite: 'auto'
-              });
-            }
-
-            // Atmosphere Glow Lighting Shift
-            if (glow1) gsap.to(glow1, { x: relX * -20, y: relY * -15, duration: 1.2, overwrite: 'auto' });
-            if (glow2) gsap.to(glow2, { x: relX * 25, y: relY * 20, duration: 1.2, overwrite: 'auto' });
-            if (glowAmber) gsap.to(glowAmber, { x: relX * -25, y: relY * -20, duration: 1.2, overwrite: 'auto' });
           });
 
           heroEl.addEventListener('mouseleave', () => {
-            gsap.to(headsetWrap, {
-              x: 0,
-              y: 0,
+            gsap.to(spatialTrack, {
               rotateY: 0,
               rotateX: 0,
-              duration: 1.2,
+              duration: 1.0,
               ease: 'power2.out',
               overwrite: 'auto'
             });
-            if (headsetShadow) {
-              gsap.to(headsetShadow, { x: 0, scaleX: 1, opacity: 0.75, duration: 1.2, overwrite: 'auto' });
-            }
-            if (orbitRing) {
-              gsap.to(orbitRing, { x: 0, y: 0, duration: 1.2, overwrite: 'auto' });
-            }
-            if (glow1) gsap.to(glow1, { x: 0, y: 0, duration: 1.4, overwrite: 'auto' });
-            if (glow2) gsap.to(glow2, { x: 0, y: 0, duration: 1.4, overwrite: 'auto' });
-            if (glowAmber) gsap.to(glowAmber, { x: 0, y: 0, duration: 1.4, overwrite: 'auto' });
+            if (stageFloorGlow) gsap.to(stageFloorGlow, { x: 0, opacity: 0.85, duration: 1.0, overwrite: 'auto' });
+            if (glow1) gsap.to(glow1, { x: 0, y: 0, duration: 1.2, overwrite: 'auto' });
+            if (glow2) gsap.to(glow2, { x: 0, y: 0, duration: 1.2, overwrite: 'auto' });
+            if (glowAmber) gsap.to(glowAmber, { x: 0, y: 0, duration: 1.2, overwrite: 'auto' });
           });
         }
       }
