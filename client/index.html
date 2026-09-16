@@ -32,11 +32,11 @@
        BORDERLESS VR CINEMATIC HERO DESIGN & ANIMATIONS
     ═══════════════════════════════════════════════════════════ */
     .cr-hero {
-      min-height: 105vh;
+      min-height: 118vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 160px 0 90px;
+      padding: 160px 0 110px;
       background: #060B14;
       position: relative;
       overflow: hidden;
@@ -53,10 +53,10 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.72;
+      opacity: 0.48;
       z-index: 1;
       pointer-events: none;
-      filter: saturate(1.2) brightness(0.95);
+      filter: saturate(1.15) brightness(0.85);
       will-change: transform;
       transform: translate3d(0, 0, 0);
       backface-visibility: hidden;
@@ -65,7 +65,8 @@
     .cr-hero-bg-scrim {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 50% 45%, rgba(6, 11, 20, 0.22) 0%, rgba(6, 11, 20, 0.6) 70%, #060B14 100%);
+      background: radial-gradient(circle at 50% 45%, rgba(6, 11, 20, 0.52) 0%, rgba(6, 11, 20, 0.84) 65%, #060B14 100%),
+                  linear-gradient(180deg, rgba(6, 11, 20, 0.6) 0%, transparent 25%, transparent 75%, #060B14 100%);
       z-index: 2;
       pointer-events: none;
     }
@@ -88,7 +89,7 @@
       max-width: 1440px;
       margin: 0 auto;
       padding: 0 clamp(20px, 4vw, 60px);
-      min-height: 85vh;
+      min-height: 92vh;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -99,7 +100,7 @@
     ═══════════════════════════════════════════════════════════ */
     .hero-spatial-stage {
       position: absolute;
-      top: 48%;
+      top: 45%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: min(1160px, 94vw);
@@ -341,7 +342,7 @@
       align-self: flex-start;
       margin-top: auto;
       margin-bottom: 0;
-      padding-top: 30px;
+      padding-top: 50px;
       max-width: 100%;
     }
 
@@ -350,7 +351,7 @@
       z-index: 7;
       text-align: center;
       width: 100%;
-      margin: 18px auto 0;
+      margin: 24px auto 0;
       pointer-events: auto;
     }
 
@@ -370,7 +371,7 @@
       align-items: center;
       justify-content: center;
       gap: 16px;
-      margin: 20px auto 0;
+      margin: 26px auto 0;
       width: 100%;
       pointer-events: auto;
     }
@@ -471,40 +472,137 @@
     }
 
     /* ════════════════════════════════════════════════════════
-       RESPONSIVE BREAKPOINTS
+       RESPONSIVE BREAKPOINTS (DESKTOP, LAPTOP, TABLET & MOBILE)
     ═══════════════════════════════════════════════════════════ */
+    @media (min-width: 992px) and (max-width: 1280px) {
+      .cr-hero {
+        min-height: 105vh;
+        padding: 140px 0 90px;
+      }
+
+      .cr-hero .cr-container {
+        min-height: 85vh;
+        padding: 0 30px;
+      }
+
+      .hero-spatial-stage {
+        width: 88vw;
+        height: 420px;
+      }
+
+      .spatial-video-card {
+        width: clamp(170px, 15vw, 210px);
+      }
+
+      .spatial-video-card.pos-r1 {
+        transform: translate(-50%, -50%) translateX(160px) translateZ(-40px) rotateY(-18deg) scale(0.86);
+      }
+
+      .spatial-video-card.pos-l1 {
+        transform: translate(-50%, -50%) translateX(-160px) translateZ(-40px) rotateY(18deg) scale(0.86);
+      }
+
+      .spatial-video-card.pos-r2 {
+        transform: translate(-50%, -50%) translateX(300px) translateZ(-110px) rotateY(-30deg) scale(0.72);
+      }
+
+      .spatial-video-card.pos-l2 {
+        transform: translate(-50%, -50%) translateX(-300px) translateZ(-110px) rotateY(30deg) scale(0.72);
+      }
+
+      .spatial-video-card.pos-r3,
+      .spatial-video-card.pos-l3 {
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
+
+      .bvr-title-huge {
+        font-size: clamp(34px, 5.2vw, 68px);
+      }
+    }
+
     @media (max-width: 991px) {
       .cr-hero {
+        min-height: auto;
         padding: 120px 0 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
       .cr-hero .cr-container {
         min-height: auto;
-        gap: 20px;
-        align-items: center;
+        width: 100%;
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: contents;
+      }
+
+      .bvr-top-right {
+        order: 1;
+        width: 100%;
+        text-align: center;
+        align-self: center;
+        margin: 0;
+        padding: 0 16px;
+        box-sizing: border-box;
+      }
+
+      .bvr-bottom-left {
+        order: 2;
+        width: 100%;
+        text-align: center;
+        align-self: center;
+        margin: 6px 0 0 0;
+        padding: 0 16px;
+        box-sizing: border-box;
+      }
+
+      .bvr-title-huge {
+        font-size: clamp(28px, 6.5vw, 44px);
+        white-space: normal;
+        word-break: normal;
+        overflow-wrap: normal;
+        line-height: 1.15;
         text-align: center;
       }
 
       .hero-spatial-stage {
+        order: 3;
         position: relative !important;
         top: auto !important;
         left: auto !important;
         transform: none !important;
         width: 100% !important;
-        max-width: 380px !important;
-        height: 250px !important;
-        margin: 16px auto 28px !important;
-        order: 4 !important;
-        perspective: 1000px !important;
+        max-width: 480px !important;
+        height: 350px !important;
+        margin: 22px auto 16px !important;
+        perspective: 1200px !important;
       }
 
       .spatial-video-card {
-        width: 88% !important;
-        border-radius: 18px !important;
+        width: 190px !important;
+        border-radius: 20px !important;
       }
 
-      .spatial-video-card.pos-r1,
-      .spatial-video-card.pos-l1,
+      .spatial-video-card.pos-center {
+        transform: translate(-50%, -50%) translateZ(40px) scale(1) !important;
+        opacity: 1 !important;
+      }
+
+      .spatial-video-card.pos-r1 {
+        transform: translate(-50%, -50%) translateX(120px) translateZ(-35px) rotateY(-16deg) scale(0.84) !important;
+        opacity: 0.78 !important;
+        pointer-events: auto !important;
+      }
+
+      .spatial-video-card.pos-l1 {
+        transform: translate(-50%, -50%) translateX(-120px) translateZ(-35px) rotateY(16deg) scale(0.84) !important;
+        opacity: 0.78 !important;
+        pointer-events: auto !important;
+      }
+
       .spatial-video-card.pos-r2,
       .spatial-video-card.pos-l2,
       .spatial-video-card.pos-r3,
@@ -513,50 +611,33 @@
         pointer-events: none !important;
       }
 
-      .spatial-video-card.pos-center {
-        transform: translate(-50%, -50%) translateZ(0) scale(1) !important;
-      }
-
-      .bvr-top-right {
-        text-align: center;
-        align-self: center;
-        margin-top: 0;
-        order: 2;
-      }
-
-      .bvr-title-huge {
-        font-size: clamp(28px, 6.5vw, 48px);
-        white-space: normal;
-        line-height: 1.1;
-      }
-
-      .bvr-bottom-left {
-        text-align: center;
-        align-self: center;
-        margin-bottom: 0;
-        padding-top: 2px;
-        order: 3;
-      }
-
       .bvr-center-subline {
-        order: 5;
-        margin-top: 8px;
+        order: 4;
+        width: 100%;
+        max-width: 520px;
+        margin: 12px auto 0;
+        padding: 0 16px;
+        box-sizing: border-box;
+        text-align: center;
+      }
+
+      .bvr-desc-text {
+        font-size: 14.5px;
+        line-height: 1.6;
+        text-align: center;
       }
 
       .bvr-hero-ctas {
-        order: 6;
-        margin-top: 18px;
-        flex-direction: column;
+        order: 5;
         width: 100%;
-        max-width: 320px;
-        gap: 10px;
-      }
-
-      .bvr-btn-amber,
-      .bvr-btn-ghost {
-        width: 100%;
-        justify-content: center;
+        max-width: 380px;
+        margin: 20px auto 0;
+        padding: 0 16px;
         box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 12px;
       }
 
       .borderless-left-line {
@@ -564,10 +645,172 @@
       }
 
       .bvr-scroll-indicator {
-        order: 7;
+        order: 6;
         position: static;
-        margin: 20px auto 0;
+        margin: 28px auto 0;
         transform: none;
+        display: inline-flex;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .cr-hero {
+        padding: 100px 0 45px;
+      }
+
+      .bvr-title-huge {
+        font-size: clamp(26px, 6.8vw, 36px);
+      }
+
+      .hero-spatial-stage {
+        max-width: 380px !important;
+        height: 310px !important;
+        margin: 18px auto 14px !important;
+      }
+
+      .spatial-video-card {
+        width: 165px !important;
+        border-radius: 18px !important;
+      }
+
+      .spatial-video-card.pos-r1 {
+        transform: translate(-50%, -50%) translateX(95px) translateZ(-30px) rotateY(-15deg) scale(0.82) !important;
+        opacity: 0.65 !important;
+      }
+
+      .spatial-video-card.pos-l1 {
+        transform: translate(-50%, -50%) translateX(-95px) translateZ(-30px) rotateY(15deg) scale(0.82) !important;
+        opacity: 0.65 !important;
+      }
+
+      .spatial-device-notch {
+        font-size: 9px;
+        padding: 3px 9px;
+        top: 10px;
+      }
+
+      .spatial-card-caption {
+        bottom: 12px;
+        left: 10px;
+        right: 10px;
+      }
+
+      .spatial-service-title {
+        font-size: 12.5px;
+        margin-bottom: 2px;
+      }
+
+      .spatial-service-sub {
+        font-size: 9.5px;
+      }
+
+      .bvr-desc-text {
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .bvr-hero-ctas {
+        flex-direction: row;
+        width: 100%;
+        max-width: 340px;
+        gap: 10px;
+      }
+
+      .bvr-btn-amber,
+      .bvr-btn-ghost {
+        flex: 1;
+        padding: 12px 18px !important;
+        font-size: 13.5px !important;
+        justify-content: center;
+        box-sizing: border-box;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .cr-hero {
+        padding: 88px 0 35px;
+      }
+
+      .bvr-title-huge {
+        font-size: clamp(23px, 7.8vw, 30px);
+        line-height: 1.15;
+      }
+
+      .hero-spatial-stage {
+        max-width: 310px !important;
+        height: 270px !important;
+        margin: 14px auto 10px !important;
+      }
+
+      .spatial-video-card {
+        width: 140px !important;
+        border-radius: 16px !important;
+      }
+
+      .spatial-video-card.pos-center {
+        transform: translate(-50%, -50%) translateZ(25px) scale(1) !important;
+      }
+
+      .spatial-video-card.pos-r1 {
+        transform: translate(-50%, -50%) translateX(70px) translateZ(-25px) rotateY(-12deg) scale(0.82) !important;
+        opacity: 0.55 !important;
+      }
+
+      .spatial-video-card.pos-l1 {
+        transform: translate(-50%, -50%) translateX(-70px) translateZ(-25px) rotateY(12deg) scale(0.82) !important;
+        opacity: 0.55 !important;
+      }
+
+      .spatial-device-notch {
+        font-size: 8px;
+        padding: 2.5px 7px;
+        top: 8px;
+      }
+
+      .spatial-card-caption {
+        bottom: 8px;
+        left: 8px;
+        right: 8px;
+      }
+
+      .spatial-service-title {
+        font-size: 11px;
+        line-height: 1.2;
+        margin-bottom: 0;
+      }
+
+      .spatial-service-sub {
+        display: none;
+      }
+
+      .bvr-center-subline {
+        margin-top: 8px;
+      }
+
+      .bvr-desc-text {
+        font-size: 13px;
+        line-height: 1.48;
+      }
+
+      .bvr-hero-ctas {
+        flex-direction: column;
+        width: 100%;
+        max-width: 270px;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .bvr-btn-amber,
+      .bvr-btn-ghost {
+        width: 100%;
+        padding: 11px 16px !important;
+        font-size: 13px !important;
+      }
+
+      .bvr-scroll-indicator {
+        font-size: 10px;
+        padding: 6px 14px;
+        margin-top: 16px;
       }
     }
   </style>
@@ -1761,9 +2004,13 @@
         goToSlide(activeIndex + 1);
       }
 
+      function prevSlide() {
+        goToSlide(activeIndex - 1);
+      }
+
       function startAutoplay() {
         stopAutoplay();
-        autoplayInterval = setInterval(nextSlide, 3200);
+        autoplayInterval = setInterval(nextSlide, 3400);
       }
 
       function stopAutoplay() {
@@ -1776,7 +2023,49 @@
       if (spatialStage) {
         spatialStage.addEventListener('mouseenter', stopAutoplay);
         spatialStage.addEventListener('mouseleave', startAutoplay);
+
+        // Touch Swipe Gesture Support for Mobile & Tablets
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+
+        spatialStage.addEventListener('touchstart', (e) => {
+          stopAutoplay();
+          if (e.touches && e.touches.length > 0) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+          }
+        }, { passive: true });
+
+        spatialStage.addEventListener('touchend', (e) => {
+          if (e.changedTouches && e.changedTouches.length > 0) {
+            touchEndX = e.changedTouches[0].clientX;
+            touchEndY = e.changedTouches[0].clientY;
+            const diffX = touchEndX - touchStartX;
+            const diffY = touchEndY - touchStartY;
+
+            // Only trigger if horizontal swipe is dominant and significant
+            if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
+              if (diffX < 0) {
+                nextSlide();
+              } else {
+                prevSlide();
+              }
+            }
+          }
+          startAutoplay();
+        }, { passive: true });
       }
+
+      // Keyboard arrow navigation
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+          nextSlide();
+        } else if (e.key === 'ArrowLeft') {
+          prevSlide();
+        }
+      });
 
       // Initialize
       update3DPositions();
