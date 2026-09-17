@@ -1387,8 +1387,12 @@
       // 5. Featured Cover Image
       const coverUrl = getImageUrl(post.coverImage || post.image);
       const heroImg = document.getElementById('HeroImage');
-      heroImg.src = coverUrl;
+      heroImg.src = coverUrl || 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=1600&q=80';
       heroImg.alt = post.title || 'Article Cover';
+      heroImg.onerror = function() {
+        this.onerror = null;
+        this.src = 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=1600&q=80';
+      };
 
       // 6. Excerpt / Lead Box
       if (post.excerpt && post.excerpt.trim()) {

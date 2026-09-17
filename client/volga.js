@@ -6,14 +6,13 @@
 
 // ─── 0. API CONFIG ───────────────────────────────────────
 (function() {
-  const RAILWAY_URL = 'https://volga-remodel-15-6-26-production.up.railway.app';
   const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  window.VOLGA_API = isLocal ? 'http://localhost:5000/api' : (RAILWAY_URL + '/api');
+  window.VOLGA_API = isLocal ? 'http://localhost:5000/api' : `${window.location.origin}/api`;
   window.getVolgaImageUrl = function(url) {
     if (!url) return '';
     if (url.startsWith('http://') || url.startsWith('https://')) return url;
     if (url.startsWith('/uploads/')) {
-      return isLocal ? ('http://localhost:5000' + url) : (RAILWAY_URL + url);
+      return isLocal ? ('http://localhost:5000' + url) : `${window.location.origin}${url}`;
     }
     return url;
   };

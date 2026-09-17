@@ -1780,10 +1780,11 @@
 
     function renderCard(item) {
       const detailUrl = `blog-detail.html?id=${item._id}`;
+      const fallbackImg = 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=800&q=80';
 
       return `
       <a href="${detailUrl}" class="blog-card">
-        <img src="${getImageUrl(item.coverImage || item.image)}" alt="${item.title}" class="blog-card-img">
+        <img src="${getImageUrl(item.coverImage || item.image) || fallbackImg}" alt="${item.title}" class="blog-card-img" onerror="this.onerror=null;this.src='${fallbackImg}';">
         <div class="blog-card-body">
           <div class="blog-tag">${item.category || item.type || 'Article'}</div>
           <h3 class="blog-card-title">${item.title}</h3>
@@ -1821,9 +1822,10 @@
     }
 
     function renderTrending(trendingData) {
+      const fallbackThumb = 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=300&q=80';
       document.getElementById('trending-list').innerHTML = trendingData.map((item, idx) => `
       <div class="trending-item">
-        <img src="${getImageUrl(item.coverImage || item.image)}" class="trending-thumb" alt="${item.title}">
+        <img src="${getImageUrl(item.coverImage || item.image) || fallbackThumb}" class="trending-thumb" alt="${item.title}" onerror="this.onerror=null;this.src='${fallbackThumb}';">
         <div>
           <div class="trending-num">0${idx + 1}</div>
           <div class="trending-title">${item.title}</div>
@@ -2078,6 +2080,7 @@
       if (!item) return;
 
       const detailUrl = `blog-detail.html?id=${item._id}`;
+      const fallbackHero = 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=1200&q=80';
 
       const featuredHtml = `
       <div class="featured-card">
@@ -2094,7 +2097,7 @@
           </div>
           <a href="${detailUrl}" class="featured-btn">Read Article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         </div>
-        <div class="featured-img"><img src="${getImageUrl(item.coverImage || item.image)}" alt="${item.title}"></div>
+        <div class="featured-img"><img src="${getImageUrl(item.coverImage || item.image) || fallbackHero}" alt="${item.title}" onerror="this.onerror=null;this.src='${fallbackHero}';"></div>
       </div>
     `;
 
