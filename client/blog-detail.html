@@ -7,6 +7,22 @@
   <title>Blog &amp; Insights — Volga Infosys</title>
   <meta name="description" content="Read in-depth articles, industry insights, and technical breakthroughs in AR, VR, Spatial Computing, and Digital Twins from Volga Infosys." />
 
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.volgainfosys.com/blog-detail.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.volgainfosys.com/blog-detail.html" />
+  <meta property="og:title" content="Blog &amp; Insights — Volga Infosys" />
+  <meta property="og:description" content="Read in-depth articles, industry insights, and technical breakthroughs in AR, VR, Spatial Computing, and Digital Twins from Volga Infosys." />
+  <meta property="og:image" content="https://www.volgainfosys.com/logo.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Blog & Insights — Volga Infosys" />
+  <meta name="twitter:description" content="Read in-depth articles, industry insights, and technical breakthroughs in AR, VR, Spatial Computing, and Digital Twins from Volga Infosys." />
+  <meta name="twitter:image" content="https://www.volgainfosys.com/logo.png" />
+
   <link rel="icon" type="image/png" href="Favicon-new.png" />
   <link rel="shortcut icon" type="image/png" href="Favicon-new.png" />
   <link rel="apple-touch-icon" href="Favicon-new.png" />
@@ -1353,8 +1369,53 @@
     }
 
     function renderArticle(post, allPosts) {
-      // 1. Update Document Title
-      document.title = `${post.title || 'Blog'} — Volga Infosys`;
+      // 1. Update Document Title & SEO Tags
+      const pageTitle = post.seoTitle || post.title || 'Blog Post';
+      const pageDesc = post.seoDescription || post.excerpt || 'Read this article from Volga Infosys.';
+      const pageImg = getImageUrl(post.coverImage || post.image) || 'https://www.volgainfosys.com/logo.png';
+      const canonicalUrl = `https://www.volgainfosys.com/blog-detail.html?id=${post.slug || post._id}`;
+
+      document.title = `${pageTitle} — Volga Infosys`;
+      document.querySelector('meta[name="description"]')?.setAttribute('content', pageDesc);
+      document.querySelector('link[rel="canonical"]')?.setAttribute('href', canonicalUrl);
+      document.querySelector('meta[property="og:title"]')?.setAttribute('content', pageTitle);
+      document.querySelector('meta[property="og:description"]')?.setAttribute('content', pageDesc);
+      document.querySelector('meta[property="og:image"]')?.setAttribute('content', pageImg);
+      document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonicalUrl);
+
+      // Inject Schema.org Article Structured Data
+      let schemaScript = document.getElementById('articleSchema');
+      if (!schemaScript) {
+        schemaScript = document.createElement('script');
+        schemaScript.id = 'articleSchema';
+        schemaScript.type = 'application/ld+json';
+        document.head.appendChild(schemaScript);
+      }
+      schemaScript.textContent = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": pageTitle,
+        "description": pageDesc,
+        "image": pageImg,
+        "author": {
+          "@type": "Organization",
+          "name": post.author || "Volga Infosys"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Volga Infosys",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.volgainfosys.com/logo.png"
+          }
+        },
+        "datePublished": post.createdAt || post.publishAt || new Date().toISOString(),
+        "dateModified": post.updatedAt || post.createdAt || new Date().toISOString(),
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": canonicalUrl
+        }
+      });
 
       // 2. Breadcrumb & Category
       const cat = post.category || 'Insights';

@@ -137,8 +137,28 @@
         <button class="btn-save" id="addBlogBtn">+ Add Post</button>
       </div>
     </div>
+    <div class="view-filter-bar">
+      <div class="search-input-wrap">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="blogSearchInput" class="filter-input" placeholder="Search blogs by title, author, or excerpt..." />
+      </div>
+      <select id="blogCategoryFilter" class="filter-select">
+        <option value="">All Categories</option>
+        <option value="Virtual Reality">Virtual Reality</option>
+        <option value="Augmented Reality">Augmented Reality</option>
+        <option value="AI & Digital Twins">AI &amp; Digital Twins</option>
+        <option value="Defence & Aerospace">Defence &amp; Aerospace</option>
+        <option value="Healthcare XR">Healthcare XR</option>
+        <option value="Industry News">Industry News</option>
+      </select>
+      <select id="blogStatusFilter" class="filter-select">
+        <option value="">All Statuses</option>
+        <option value="published">Published</option>
+        <option value="draft">Draft</option>
+      </select>
+    </div>
     <div class="proj-grid" id="blogGrid"></div>
-    <div id="blogPagination" class="pagination"></div>
+    <div class="pagination" id="blogPagination"></div>
   
       </section>
     </main>

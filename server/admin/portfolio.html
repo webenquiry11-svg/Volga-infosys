@@ -137,6 +137,15 @@
         <button class="btn-save" id="addProjectBtn">+ Add Project</button>
       </div>
     </div>
+    <div class="view-filter-bar">
+      <div class="search-input-wrap">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="projSearchInput" class="filter-input" placeholder="Search projects by title, tag, or place..." />
+      </div>
+      <select id="projTagFilter" class="filter-select">
+        <option value="">All Categories</option>
+      </select>
+    </div>
     <div class="proj-grid" id="projGrid"></div>
     <div class="pagination" id="projPagination"></div>
   

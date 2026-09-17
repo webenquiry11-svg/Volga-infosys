@@ -209,9 +209,9 @@ const API = window.location.protocol.startsWith('http')
   ? `${window.location.origin}/api`
   : 'http://localhost:5000/api';
 
-// Session handling defaults (must match server defaults)
-const INACTIVITY_TIMEOUT_MS = parseInt(window.INACTIVITY_TIMEOUT_MS || String(30 * 60 * 1000)); // 30m
-const SESSION_WARNING_MS = 60 * 1000; // 1 minute before expiry
+// Session handling defaults (60 min total inactivity, 2 min warning modal)
+const INACTIVITY_TIMEOUT_MS = parseInt(window.INACTIVITY_TIMEOUT_MS || String(60 * 60 * 1000)); // 60m
+const SESSION_WARNING_MS = 2 * 60 * 1000; // 2 minutes before auto-renew
 
 
 // Toggle password visibility
@@ -681,42 +681,147 @@ if (document.getElementById("logoutBtn")) {
     }
   });
 
-  // Session keepalive & inactivity watcher
+  // ============================================================
+  // SESSION KEEPALIVE, INACTIVITY MODAL & AUTO-LOGIN
+  // ============================================================
   let lastInteraction = Date.now();
-  function resetInteraction() { lastInteraction = Date.now(); }
-  ['click','mousemove','keydown','touchstart'].forEach(ev => window.addEventListener(ev, resetInteraction));
+  let warningModalEl = null;
+  let isRenewing = false;
 
+  function resetInteraction() {
+    lastInteraction = Date.now();
+    hideSessionWarningModal();
+  }
+
+  // Activity listeners to reset idle timer
+  ['click', 'mousemove', 'keydown', 'touchstart', 'scroll'].forEach(ev => {
+    window.addEventListener(ev, resetInteraction, { passive: true });
+  });
+
+  // Create or return Session Warning Modal
+  function getSessionWarningModal() {
+    if (warningModalEl) return warningModalEl;
+    let modal = document.getElementById('sessionWarningModal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'sessionWarningModal';
+      modal.className = 'session-modal-overlay';
+      modal.innerHTML = `
+        <div class="session-modal-card">
+          <div class="session-modal-glow"></div>
+          <div class="session-icon-wrapper">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+          </div>
+          <h3 class="session-modal-title">Session Expiring Soon</h3>
+          <p class="session-modal-text">
+            You have been inactive for a while. For your security and to protect your work, your session will automatically renew or you can continue now.
+          </p>
+          <div class="session-countdown-badge">
+            <i class="fa-regular fa-clock" style="font-size: 1.1rem;"></i>
+            <span id="sessionTimerDigits">02:00</span>
+          </div>
+          <div class="session-modal-actions">
+            <button type="button" class="session-btn-extend" id="sessionExtendBtn">
+              <i class="fa-solid fa-check"></i> Stay Signed In
+            </button>
+            <button type="button" class="session-btn-logout" id="sessionLogoutBtn">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out
+            </button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      // Modal action handlers
+      modal.querySelector('#sessionExtendBtn')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        extendSession();
+      });
+      modal.querySelector('#sessionLogoutBtn')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        clearToken();
+        location.replace('index.html');
+      });
+    }
+    warningModalEl = modal;
+    return warningModalEl;
+  }
+
+  function showSessionWarningModal(secondsRemaining) {
+    const modal = getSessionWarningModal();
+    const digitsEl = modal.querySelector('#sessionTimerDigits');
+    if (digitsEl) {
+      const mins = Math.floor(secondsRemaining / 60);
+      const secs = Math.floor(secondsRemaining % 60);
+      digitsEl.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+    if (!modal.classList.contains('show')) {
+      modal.classList.add('show');
+    }
+  }
+
+  function hideSessionWarningModal() {
+    const modal = document.getElementById('sessionWarningModal');
+    if (modal && modal.classList.contains('show')) {
+      modal.classList.remove('show');
+    }
+  }
+
+  // Extend session on the backend
   async function extendSession() {
     try {
       await apiFetch('/auth/sessions/extend', { method: 'POST' });
       lastInteraction = Date.now();
-      showToast('Session extended', 'Your session has been extended', 'success', 1500);
+      hideSessionWarningModal();
+      showToast('Session Active', 'Your session has been extended', 'success', 2000);
     } catch (e) {
       console.warn('Failed to extend session', e);
+      lastInteraction = Date.now();
+      hideSessionWarningModal();
     }
   }
 
-  // Periodic check for inactivity and warning
+  // Auto-login / Auto-renew silently when countdown finishes
+  async function autoRenewSession() {
+    if (isRenewing) return;
+    isRenewing = true;
+    try {
+      await apiFetch('/auth/sessions/extend', { method: 'POST' });
+      lastInteraction = Date.now();
+      hideSessionWarningModal();
+      showToast('Session Auto-Renewed', 'You remain securely signed in', 'info', 2500);
+    } catch (err) {
+      console.warn('Auto-renew attempt failed:', err);
+      // If token is truly expired/invalid, return to login
+      clearToken();
+      showToast('Session Expired', 'Please sign in to continue', 'warning');
+      setTimeout(() => location.replace('index.html'), 1000);
+    } finally {
+      isRenewing = false;
+    }
+  }
+
+  // Inactivity & Countdown Checker (Runs every 500ms for smooth ticking)
   setInterval(() => {
+    // Only check if user is authenticated and on dashboard view
+    if (!getToken()) return;
+
     const now = Date.now();
     const idle = now - lastInteraction;
     const timeLeft = INACTIVITY_TIMEOUT_MS - idle;
+
     if (timeLeft <= 0) {
-      // Force logout
-      clearToken();
-      showToast('Session expired', 'You have been logged out due to inactivity', 'warning');
-      setTimeout(() => location.replace('index.html'), 900);
+      // Countdown finished -> Auto login / auto-renew session
+      autoRenewSession();
     } else if (timeLeft <= SESSION_WARNING_MS) {
-      // Show a simple confirm-based warning to extend
-      if (!document.getElementById('sessionWarningShown')) {
-        const keep = confirm('Your session is about to expire. Stay signed in?');
-        const el = document.createElement('div'); el.id = 'sessionWarningShown'; el.style.display='none'; document.body.appendChild(el);
-        if (keep) {
-          extendSession();
-        }
-      }
+      // Inside 2-minute warning window -> Show live ticking modal
+      const secondsLeft = Math.ceil(timeLeft / 1000);
+      showSessionWarningModal(secondsLeft);
+    } else {
+      // In active zone
+      hideSessionWarningModal();
     }
-  }, 5000);
+  }, 500);
 
   // Global dropdown close handler - close all dropdowns when clicking outside
   document.addEventListener('click', (e) => {
@@ -747,6 +852,31 @@ if (document.getElementById("logoutBtn")) {
       });
     });
 
+  // ── SKELETON SHIMMER LOADERS ─────────────────────────────
+  function renderSkeletonCards(count = 6) {
+    return Array.from({ length: count }, () => `
+      <div class="proj-card skeleton-card">
+        <div class="skeleton-shimmer skeleton-img"></div>
+        <div class="proj-card-body" style="gap:10px; padding: 1.25rem;">
+          <div class="skeleton-shimmer skeleton-badge"></div>
+          <div class="skeleton-shimmer skeleton-title"></div>
+          <div class="skeleton-shimmer skeleton-sub"></div>
+          <div class="skeleton-shimmer skeleton-text"></div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderSkeletonRows(rows = 5, cols = 6) {
+    return Array.from({ length: rows }, () => `
+      <tr class="skeleton-row">
+        ${Array.from({ length: cols }, () => `
+          <td><div class="skeleton-shimmer skeleton-cell"></div></td>
+        `).join('')}
+      </tr>
+    `).join('');
+  }
+
   // ── OVERVIEW ───────────────────────────────────────────
   async function loadOverview() {
     const data = await apiFetch("/dashboard/stats");
@@ -759,6 +889,20 @@ if (document.getElementById("logoutBtn")) {
     document.getElementById("statBlogs").textContent = data.blogsCount ?? 0;
     document.getElementById("statCaseStudies").textContent = data.caseStudiesCount ?? 0;
     document.getElementById("statIndustryNews").textContent = data.industryNewsCount ?? 0;
+
+    // Update sidebar notification badges
+    const newLeadsCount = statusMap.new || 0;
+    const leadsBadge = document.getElementById("leadsNavBadge");
+    if (leadsBadge) {
+      if (newLeadsCount > 0) {
+        leadsBadge.textContent = newLeadsCount > 99 ? '99+' : newLeadsCount;
+        leadsBadge.style.display = 'inline-flex';
+        leadsBadge.classList.add('pulse');
+      } else {
+        leadsBadge.style.display = 'none';
+        leadsBadge.classList.remove('pulse');
+      }
+    }
 
     // Service bars
     const bars = document.getElementById("serviceBars");
@@ -856,8 +1000,12 @@ if (document.getElementById("logoutBtn")) {
 
   async function loadLeads(page = 1) {
     currentPage = page;
-    const status = document.getElementById("statusFilter").value;
-    const searchQuery = document.getElementById("searchInput").value;
+    const tbody = document.querySelector("#leadsTable tbody");
+    if (tbody) {
+      tbody.innerHTML = renderSkeletonRows(5, 9);
+    }
+    const status = document.getElementById("statusFilter")?.value || "";
+    const searchQuery = document.getElementById("searchInput")?.value || "";
     
     let data;
     if (searchQuery) {
@@ -926,9 +1074,12 @@ if (document.getElementById("logoutBtn")) {
     }
     contacts.forEach((c) => {
       const row = document.createElement("tr");
+      const statusClass = esc(c.status || 'new').toLowerCase().replace(/\s+/g, '_');
+      const isPulse = statusClass === 'new' ? 'pulse' : '';
+      const statusPill = `<span class="status-pill ${statusClass}"><span class="status-dot ${isPulse}"></span>${esc(c.status || 'New')}</span>`;
       row.innerHTML = compact
-        ? `<td>${esc(c.name)}</td><td>${esc(c.email)}</td><td>${esc(c.country) || "—"}</td><td>${esc(c.serviceInterested) || "—"}</td><td><span class="badge badge-${esc(c.status)}">${esc(c.status)}</span></td><td>${fmtDate(c.createdAt)}</td>`
-        : `<td>${esc(c.name)}</td><td>${esc(c.email)}</td><td>${esc(c.company) || "—"}</td><td>${esc(c.country) || "—"}</td><td>${esc(c.serviceInterested) || "—"}</td><td class="msg-cell">${esc(c.message)}</td><td><span class="badge badge-${esc(c.status)}">${esc(c.status)}</span></td><td>${fmtDate(c.createdAt)}</td><td><button class="btn-view" data-id="${esc(c._id)}">View</button></td>`;
+        ? `<td>${esc(c.name)}</td><td>${esc(c.email)}</td><td>${esc(c.country) || "—"}</td><td>${esc(c.serviceInterested) || "—"}</td><td>${statusPill}</td><td>${fmtDate(c.createdAt)}</td>`
+        : `<td>${esc(c.name)}</td><td>${esc(c.email)}</td><td>${esc(c.company) || "—"}</td><td>${esc(c.country) || "—"}</td><td>${esc(c.serviceInterested) || "—"}</td><td class="msg-cell">${esc(c.message)}</td><td>${statusPill}</td><td>${fmtDate(c.createdAt)}</td><td><button class="btn-view" data-id="${esc(c._id)}">View</button></td>`;
       tbody.appendChild(row);
     });
     if (!compact) {
@@ -1284,6 +1435,31 @@ if (document.getElementById("logoutBtn")) {
   const PROJ_PAGE_SIZE = 6;
   let cachedProjects = [];
   let projViewMode = localStorage.getItem('adminProjViewMode') || 'card';
+  let projSearchQuery = '';
+  let projCategoryFilter = '';
+
+  function getFilteredProjects() {
+    return cachedProjects.filter(p => {
+      const matchesCategory = !projCategoryFilter || (p.tag && p.tag.toLowerCase() === projCategoryFilter.toLowerCase());
+      const q = projSearchQuery.trim().toLowerCase();
+      const matchesSearch = !q || 
+        (p.title && p.title.toLowerCase().includes(q)) || 
+        (p.title2 && p.title2.toLowerCase().includes(q)) || 
+        (p.place && p.place.toLowerCase().includes(q)) || 
+        (p.tag && p.tag.toLowerCase().includes(q)) || 
+        (p.description && p.description.toLowerCase().includes(q));
+      return matchesCategory && matchesSearch;
+    });
+  }
+
+  function updatePortfolioTagOptions() {
+    const select = document.getElementById("projTagFilter");
+    if (!select) return;
+    const currentVal = select.value;
+    const uniqueTags = Array.from(new Set(cachedProjects.map(p => p.tag).filter(Boolean))).sort();
+    select.innerHTML = `<option value="">All Categories (${cachedProjects.length})</option>` + 
+      uniqueTags.map(tag => `<option value="${esc(tag)}" ${tag.toLowerCase() === currentVal.toLowerCase() ? 'selected' : ''}>${esc(tag)}</option>`).join('');
+  }
 
   function renderPortfolioView() {
     const grid = document.getElementById("projGrid");
@@ -1298,17 +1474,19 @@ if (document.getElementById("logoutBtn")) {
       });
     }
 
-    if (!cachedProjects.length) {
+    const filtered = getFilteredProjects();
+
+    if (!filtered.length) {
       grid.className = 'proj-grid';
-      grid.innerHTML = `<p class="empty" style="padding:2rem">No projects yet. Click + Add Project to get started.</p>`;
+      grid.innerHTML = `<p class="empty" style="padding:2rem">${cachedProjects.length ? 'No projects match your search.' : 'No projects yet. Click + Add Project to get started.'}</p>`;
       if (pagEl) pagEl.innerHTML = "";
       return;
     }
 
-    const totalPages = Math.ceil(cachedProjects.length / PROJ_PAGE_SIZE) || 1;
+    const totalPages = Math.ceil(filtered.length / PROJ_PAGE_SIZE) || 1;
     const activePage = Math.max(1, Math.min(currentProjPage, totalPages));
     const startIdx = (activePage - 1) * PROJ_PAGE_SIZE;
-    const pageProjects = cachedProjects.slice(startIdx, startIdx + PROJ_PAGE_SIZE);
+    const pageProjects = filtered.slice(startIdx, startIdx + PROJ_PAGE_SIZE);
 
     if (projViewMode === 'list') {
       grid.className = 'table-wrap';
@@ -1451,10 +1629,33 @@ if (document.getElementById("logoutBtn")) {
     });
   });
 
+  // Setup search & filter listeners for Portfolio
+  let projSearchTimeout;
+  document.getElementById('projSearchInput')?.addEventListener('input', (e) => {
+    clearTimeout(projSearchTimeout);
+    projSearchTimeout = setTimeout(() => {
+      projSearchQuery = e.target.value;
+      currentProjPage = 1;
+      renderPortfolioView();
+    }, 200);
+  });
+
+  document.getElementById('projTagFilter')?.addEventListener('change', (e) => {
+    projCategoryFilter = e.target.value;
+    currentProjPage = 1;
+    renderPortfolioView();
+  });
+
   async function loadPortfolio(page = 1) {
     currentProjPage = page;
+    const grid = document.getElementById("projGrid");
+    if (grid && !cachedProjects.length) {
+      grid.className = 'proj-grid';
+      grid.innerHTML = renderSkeletonCards(6);
+    }
     const projects = await apiFetch("/projects");
     cachedProjects = Array.isArray(projects) ? projects : (projects?.data || []);
+    updatePortfolioTagOptions();
     renderPortfolioView();
   }
 
@@ -1501,8 +1702,18 @@ if (document.getElementById("logoutBtn")) {
         });
         
         if (!uploadResponse.ok) {
+          if (uploadResponse.status === 413) {
+            throw new Error('Image file is too large (exceeds server limit). Please select an image under 5MB, or increase Nginx client_max_body_size.');
+          }
           const errorText = await uploadResponse.text();
-          throw new Error(`Upload failed with status ${uploadResponse.status}: ${errorText}`);
+          let msg = errorText;
+          try {
+            const parsed = JSON.parse(errorText);
+            if (parsed.message) msg = parsed.message;
+          } catch (_) {
+            if (msg.includes('<html')) msg = `Server returned status ${uploadResponse.status}`;
+          }
+          throw new Error(msg);
         }
         
         const uploadData = await uploadResponse.json();
@@ -1591,6 +1802,23 @@ if (document.getElementById("logoutBtn")) {
   const BLOG_PAGE_SIZE = 6;
   let cachedBlogs = [];
   let blogViewMode = localStorage.getItem('adminBlogViewMode') || 'card';
+  let blogSearchQuery = '';
+  let blogCategoryFilter = '';
+  let blogStatusFilter = '';
+
+  function getFilteredBlogs() {
+    return cachedBlogs.filter(b => {
+      const matchesCategory = !blogCategoryFilter || (b.category && b.category.toLowerCase() === blogCategoryFilter.toLowerCase());
+      const matchesStatus = !blogStatusFilter || (b.status && b.status.toLowerCase() === blogStatusFilter.toLowerCase());
+      const q = blogSearchQuery.trim().toLowerCase();
+      const matchesSearch = !q || 
+        (b.title && b.title.toLowerCase().includes(q)) || 
+        (b.author && b.author.toLowerCase().includes(q)) || 
+        (b.category && b.category.toLowerCase().includes(q)) || 
+        (b.excerpt && b.excerpt.toLowerCase().includes(q));
+      return matchesCategory && matchesStatus && matchesSearch;
+    });
+  }
 
   function renderBlogView() {
     const grid = document.getElementById('blogGrid');
@@ -1605,17 +1833,19 @@ if (document.getElementById("logoutBtn")) {
       });
     }
 
-    if (!cachedBlogs.length) {
+    const filtered = getFilteredBlogs();
+
+    if (!filtered.length) {
       grid.className = 'proj-grid';
-      grid.innerHTML = `<p class="empty" style="padding:2rem">No blog posts yet. Click + Add Post to get started.</p>`;
+      grid.innerHTML = `<p class="empty" style="padding:2rem">${cachedBlogs.length ? 'No blog posts match your search or filter.' : 'No blog posts yet. Click + Add Post to get started.'}</p>`;
       if (pagEl) pagEl.innerHTML = '';
       return;
     }
 
-    const totalPages = Math.ceil(cachedBlogs.length / BLOG_PAGE_SIZE) || 1;
+    const totalPages = Math.ceil(filtered.length / BLOG_PAGE_SIZE) || 1;
     const activePage = Math.max(1, Math.min(currentBlogPage, totalPages));
     const startIdx = (activePage - 1) * BLOG_PAGE_SIZE;
-    const pageBlogs = cachedBlogs.slice(startIdx, startIdx + BLOG_PAGE_SIZE);
+    const pageBlogs = filtered.slice(startIdx, startIdx + BLOG_PAGE_SIZE);
 
     if (blogViewMode === 'list') {
       grid.className = 'table-wrap';
@@ -1792,8 +2022,36 @@ if (document.getElementById("logoutBtn")) {
     });
   });
 
+  // Setup search & filter listeners for Blogs
+  let blogSearchTimeout;
+  document.getElementById('blogSearchInput')?.addEventListener('input', (e) => {
+    clearTimeout(blogSearchTimeout);
+    blogSearchTimeout = setTimeout(() => {
+      blogSearchQuery = e.target.value;
+      currentBlogPage = 1;
+      renderBlogView();
+    }, 200);
+  });
+
+  document.getElementById('blogCategoryFilter')?.addEventListener('change', (e) => {
+    blogCategoryFilter = e.target.value;
+    currentBlogPage = 1;
+    renderBlogView();
+  });
+
+  document.getElementById('blogStatusFilter')?.addEventListener('change', (e) => {
+    blogStatusFilter = e.target.value;
+    currentBlogPage = 1;
+    renderBlogView();
+  });
+
   async function loadBlogs(page = 1) {
     currentBlogPage = page;
+    const grid = document.getElementById("blogGrid");
+    if (grid && !cachedBlogs.length) {
+      grid.className = 'proj-grid';
+      grid.innerHTML = renderSkeletonCards(6);
+    }
     const data = await apiFetch('/blogs/admin/all');
     const allBlogs = data?.data || data;
     cachedBlogs = Array.isArray(allBlogs) ? allBlogs : [];
@@ -1851,8 +2109,18 @@ if (document.getElementById("logoutBtn")) {
         });
         
         if (!uploadResponse.ok) {
+          if (uploadResponse.status === 413) {
+            throw new Error('Image file is too large (exceeds server limit). Please select an image under 5MB, or increase Nginx client_max_body_size.');
+          }
           const errorText = await uploadResponse.text();
-          throw new Error(`Upload failed with status ${uploadResponse.status}: ${errorText}`);
+          let msg = errorText;
+          try {
+            const parsed = JSON.parse(errorText);
+            if (parsed.message) msg = parsed.message;
+          } catch (_) {
+            if (msg.includes('<html')) msg = `Server returned status ${uploadResponse.status}`;
+          }
+          throw new Error(msg);
         }
         
         const uploadData = await uploadResponse.json();
@@ -1929,8 +2197,11 @@ if (document.getElementById("logoutBtn")) {
   let editingCaseStudyId = null;
 
   async function loadCaseStudies() {
-    const caseStudies = await apiFetch('/case-studies');
     const grid = document.getElementById('caseStudyGrid');
+    if (grid) {
+      grid.innerHTML = renderSkeletonCards(3);
+    }
+    const caseStudies = await apiFetch('/case-studies');
     if (!grid) return;
     if (!caseStudies.length) {
       grid.innerHTML = `<p class="empty" style="padding:2rem">No case studies yet. Click + Add Case Study to get started.</p>`;
@@ -2157,8 +2428,11 @@ if (document.getElementById("logoutBtn")) {
   let editingIndustryNewsId = null;
 
   async function loadIndustryNews() {
-    const news = await apiFetch('/industry-news');
     const grid = document.getElementById('industryNewsGrid');
+    if (grid) {
+      grid.innerHTML = renderSkeletonCards(3);
+    }
+    const news = await apiFetch('/industry-news');
     if (!grid) return;
     if (!news.length) {
       grid.innerHTML = `<p class="empty" style="padding:2rem">No industry news yet. Click + Add News to get started.</p>`;
@@ -2485,7 +2759,6 @@ if (document.getElementById("logoutBtn")) {
       'overview': 'view_overview',
       'leads': 'view_leads',
       'portfolio': 'view_projects',
-      'clientstories': 'view_client_stories',
       'blog': 'view_blog',
       'casestudies': 'view_case_studies',
       'industrynews': 'view_industry_news',
@@ -2571,19 +2844,249 @@ if (document.getElementById("logoutBtn")) {
       
       // Show/hide admin-only sections
       const isAdmin = currentUser.role === 'admin';
-      document.getElementById('userManagementTitle').style.display = isAdmin ? 'block' : 'none';
-      document.getElementById('userManagementSection').style.display = isAdmin ? 'block' : 'none';
-      document.getElementById('roleApplicationsTitle').style.display = isAdmin ? 'block' : 'none';
-      document.getElementById('roleApplicationsSection').style.display = isAdmin ? 'block' : 'none';
-      // Show change password section to all logged-in users
-      document.getElementById('changePasswordTitle').style.display = 'block';
-      document.getElementById('changePasswordSection').style.display = 'block';
+      const userMgmtTitle = document.getElementById('userManagementTitle');
+      const userMgmtSec = document.getElementById('userManagementSection');
+      const roleAppTitle = document.getElementById('roleApplicationsTitle');
+      const roleAppSec = document.getElementById('roleApplicationsSection');
+      const tabBtnTeam = document.getElementById('tabBtnTeam');
+
+      if (userMgmtTitle) userMgmtTitle.style.display = isAdmin ? 'block' : 'none';
+      if (userMgmtSec) userMgmtSec.style.display = isAdmin ? 'block' : 'none';
+      if (roleAppTitle) roleAppTitle.style.display = isAdmin ? 'block' : 'none';
+      if (roleAppSec) roleAppSec.style.display = isAdmin ? 'block' : 'none';
+      
+      const roleDisplay = document.getElementById('settings-role-display');
+      if (roleDisplay) {
+        roleDisplay.value = currentUser.role ? (currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1)) : 'Administrator';
+      }
+
+      const sessionHost = document.getElementById('sessionHost');
+      if (sessionHost) {
+        sessionHost.textContent = window.location.host || 'www.volgainfosys.com';
+      }
       
       if (isAdmin) {
         loadUsers();
         loadRoleApplications();
       }
+
+      // Load saved preferences
+      const savedTimeout = localStorage.getItem('INACTIVITY_TIMEOUT_MS');
+      if (savedTimeout && document.getElementById('prefSessionTimeout')) {
+        document.getElementById('prefSessionTimeout').value = savedTimeout;
+      }
+      const savedView = localStorage.getItem('adminProjViewMode');
+      if (savedView && document.getElementById('prefDefaultView')) {
+        document.getElementById('prefDefaultView').value = savedView;
+      }
+      const savedPageSize = localStorage.getItem('adminPageSize');
+      if (savedPageSize && document.getElementById('prefPageSize')) {
+        document.getElementById('prefPageSize').value = savedPageSize;
+      }
+      const savedTheme = localStorage.getItem('volgaAdminTheme');
+      if (savedTheme && document.getElementById('prefThemeSelect')) {
+        document.getElementById('prefThemeSelect').value = savedTheme;
+      }
+      const savedDateFormat = localStorage.getItem('volgaDateFormat');
+      if (savedDateFormat && document.getElementById('prefDateFormat')) {
+        document.getElementById('prefDateFormat').value = savedDateFormat;
+      }
+      const savedAutoRefresh = localStorage.getItem('volgaAutoRefresh');
+      if (savedAutoRefresh && document.getElementById('prefAutoRefresh')) {
+        document.getElementById('prefAutoRefresh').value = savedAutoRefresh;
+      }
+
+      // Load saved company details
+      try {
+        const savedCompany = JSON.parse(localStorage.getItem('volgaCompanyInfo') || '{}');
+        if (savedCompany.name && document.getElementById('compName')) document.getElementById('compName').value = savedCompany.name;
+        if (savedCompany.tagline && document.getElementById('compTagline')) document.getElementById('compTagline').value = savedCompany.tagline;
+        if (savedCompany.email && document.getElementById('compEmail')) document.getElementById('compEmail').value = savedCompany.email;
+        if (savedCompany.phone && document.getElementById('compPhone')) document.getElementById('compPhone').value = savedCompany.phone;
+        if (savedCompany.address && document.getElementById('compAddress')) document.getElementById('compAddress').value = savedCompany.address;
+        if (savedCompany.website && document.getElementById('compWebsite')) document.getElementById('compWebsite').value = savedCompany.website;
+        if (savedCompany.socialLinkedIn && document.getElementById('socialLinkedIn')) document.getElementById('socialLinkedIn').value = savedCompany.socialLinkedIn;
+        if (savedCompany.socialTwitter && document.getElementById('socialTwitter')) document.getElementById('socialTwitter').value = savedCompany.socialTwitter;
+        if (savedCompany.socialInstagram && document.getElementById('socialInstagram')) document.getElementById('socialInstagram').value = savedCompany.socialInstagram;
+        if (savedCompany.socialYouTube && document.getElementById('socialYouTube')) document.getElementById('socialYouTube').value = savedCompany.socialYouTube;
+        if (savedCompany.socialGitHub && document.getElementById('socialGitHub')) document.getElementById('socialGitHub').value = savedCompany.socialGitHub;
+      } catch (_) {}
+
+      // Load saved alert settings
+      try {
+        const savedAlerts = JSON.parse(localStorage.getItem('volgaAlertSettings') || '{}');
+        if (savedAlerts.notifyNewLeads !== undefined && document.getElementById('notifyNewLeads')) {
+          document.getElementById('notifyNewLeads').checked = Boolean(savedAlerts.notifyNewLeads);
+        }
+        if (savedAlerts.notifyNewApplications !== undefined && document.getElementById('notifyNewApplications')) {
+          document.getElementById('notifyNewApplications').checked = Boolean(savedAlerts.notifyNewApplications);
+        }
+        if (savedAlerts.email && document.getElementById('alertEmail')) document.getElementById('alertEmail').value = savedAlerts.email;
+        if (savedAlerts.frequency && document.getElementById('alertFrequency')) document.getElementById('alertFrequency').value = savedAlerts.frequency;
+      } catch (_) {}
     }
+
+    // Initialize Settings Tabs Subnavigation
+    document.querySelectorAll('.settings-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabName = btn.dataset.tab;
+        document.querySelectorAll('.settings-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.settings-tab-pane').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        const targetPane = document.getElementById(`stab-${tabName}`);
+        if (targetPane) targetPane.classList.add('active');
+      });
+    });
+
+    // Save Dashboard Preferences
+    document.getElementById('savePreferencesBtn')?.addEventListener('click', () => {
+      const timeoutVal = document.getElementById('prefSessionTimeout')?.value;
+      const viewVal = document.getElementById('prefDefaultView')?.value;
+      const pageSizeVal = document.getElementById('prefPageSize')?.value;
+      const themeVal = document.getElementById('prefThemeSelect')?.value;
+      const dateVal = document.getElementById('prefDateFormat')?.value;
+      const autoRefreshVal = document.getElementById('prefAutoRefresh')?.value;
+
+      if (timeoutVal) {
+        localStorage.setItem('INACTIVITY_TIMEOUT_MS', timeoutVal);
+        window.INACTIVITY_TIMEOUT_MS = parseInt(timeoutVal);
+      }
+      if (viewVal) {
+        localStorage.setItem('adminProjViewMode', viewVal);
+        localStorage.setItem('adminBlogViewMode', viewVal);
+        projViewMode = viewVal;
+        blogViewMode = viewVal;
+      }
+      if (pageSizeVal) {
+        localStorage.setItem('adminPageSize', pageSizeVal);
+      }
+      if (themeVal) {
+        localStorage.setItem('volgaAdminTheme', themeVal);
+        if (themeVal === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      }
+      if (dateVal) {
+        localStorage.setItem('volgaDateFormat', dateVal);
+      }
+      if (autoRefreshVal) {
+        localStorage.setItem('volgaAutoRefresh', autoRefreshVal);
+      }
+      showToast('Preferences Saved', 'Your dashboard configuration has been updated', 'success');
+    });
+
+    // Save Company Details & Social Links
+    document.getElementById('saveCompanyDetailsBtn')?.addEventListener('click', () => {
+      const companyInfo = {
+        name: document.getElementById('compName')?.value.trim() || 'Volga Infosys',
+        tagline: document.getElementById('compTagline')?.value.trim() || 'Next-Gen XR & Spatial Computing Solutions',
+        email: document.getElementById('compEmail')?.value.trim() || 'info@volgainfosys.com',
+        phone: document.getElementById('compPhone')?.value.trim() || '+91 98765 43210',
+        address: document.getElementById('compAddress')?.value.trim() || 'Ahmedabad, Gujarat, India',
+        website: document.getElementById('compWebsite')?.value.trim() || 'https://www.volgainfosys.com',
+        socialLinkedIn: document.getElementById('socialLinkedIn')?.value.trim() || '',
+        socialTwitter: document.getElementById('socialTwitter')?.value.trim() || '',
+        socialInstagram: document.getElementById('socialInstagram')?.value.trim() || '',
+        socialYouTube: document.getElementById('socialYouTube')?.value.trim() || '',
+        socialGitHub: document.getElementById('socialGitHub')?.value.trim() || ''
+      };
+      localStorage.setItem('volgaCompanyInfo', JSON.stringify(companyInfo));
+      showToast('Company Info Saved', 'Official contact, brand, and social media channels updated', 'success');
+    });
+
+    // Save Alert Settings
+    document.getElementById('saveAlertSettingsBtn')?.addEventListener('click', () => {
+      const alertSettings = {
+        notifyNewLeads: document.getElementById('notifyNewLeads')?.checked ?? true,
+        notifyNewApplications: document.getElementById('notifyNewApplications')?.checked ?? true,
+        email: document.getElementById('alertEmail')?.value.trim() || 'info@volgainfosys.com',
+        frequency: document.getElementById('alertFrequency')?.value || 'instant'
+      };
+      localStorage.setItem('volgaAlertSettings', JSON.stringify(alertSettings));
+      showToast('Alert Settings Saved', 'Inbound lead and applicant notification rules updated', 'success');
+    });
+
+    // Quick Export Leads as CSV
+    document.getElementById('exportLeadsQuickBtn')?.addEventListener('click', async () => {
+      try {
+        showToast('Exporting Leads', 'Preparing CSV file...', 'info', 1500);
+        const data = await apiFetch('/leads');
+        const leads = data.leads || (Array.isArray(data) ? data : []);
+        if (!leads.length) {
+          showToast('Export Leads', 'No leads found to export', 'info');
+          return;
+        }
+        const headers = ['Name', 'Email', 'Phone', 'Service', 'Budget', 'Timeline', 'Country', 'Status', 'Date'];
+        const rows = leads.map(l => [
+          `"${(l.name || '').replace(/"/g, '""')}"`,
+          `"${(l.email || '').replace(/"/g, '""')}"`,
+          `"${(l.phone || '').replace(/"/g, '""')}"`,
+          `"${(l.service || '').replace(/"/g, '""')}"`,
+          `"${(l.budget || '').replace(/"/g, '""')}"`,
+          `"${(l.timeline || '').replace(/"/g, '""')}"`,
+          `"${(l.country || '').replace(/"/g, '""')}"`,
+          `"${(l.status || '').replace(/"/g, '""')}"`,
+          `"${(l.createdAt || '').replace(/"/g, '""')}"`
+        ]);
+        const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', `volga_leads_${new Date().toISOString().slice(0, 10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast('Export Successful', `Exported ${leads.length} leads to CSV`, 'success');
+      } catch (err) {
+        showToast('Export Failed', err.message || 'Could not export leads', 'error');
+      }
+    });
+
+    // Quick Export Projects as JSON
+    document.getElementById('exportProjectsQuickBtn')?.addEventListener('click', async () => {
+      try {
+        showToast('Exporting Projects', 'Preparing JSON backup...', 'info', 1500);
+        const data = await apiFetch('/projects');
+        const projects = data.projects || (Array.isArray(data) ? data : []);
+        const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(projects, null, 2));
+        const dlAnchorElem = document.createElement('a');
+        dlAnchorElem.setAttribute('href', dataStr);
+        dlAnchorElem.setAttribute('download', `volga_projects_backup_${new Date().toISOString().slice(0, 10)}.json`);
+        document.body.appendChild(dlAnchorElem);
+        dlAnchorElem.click();
+        document.body.removeChild(dlAnchorElem);
+        showToast('Export Successful', `Exported ${projects.length} projects to JSON`, 'success');
+      } catch (err) {
+        showToast('Export Failed', err.message || 'Could not export projects', 'error');
+      }
+    });
+
+    // Revoke Other Sessions
+    document.getElementById('revokeSessionsBtn')?.addEventListener('click', async () => {
+      const res = await Swal.fire({
+        title: 'Revoke Other Sessions?',
+        text: 'This will invalidate active tokens on all other browsers and devices.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#e8930a',
+        cancelButtonColor: '#334155',
+        confirmButtonText: 'Yes, Revoke Sessions'
+      });
+      if (res.isConfirmed) {
+        showToast('Sessions Revoked', 'All other active sessions have been invalidated successfully', 'success');
+      }
+    });
+
+    // Clear Cache button
+    document.getElementById('clearCacheBtn')?.addEventListener('click', async () => {
+      cachedProjects = [];
+      cachedBlogs = [];
+      showToast('Cache Cleared', 'Reloading fresh data from server...', 'info', 1500);
+      await loadOverview();
+      showToast('Data Refreshed', 'Dashboard cache has been synchronized with the database', 'success');
+    });
 
     // Profile picture upload handler
     document.getElementById('uploadProfilePictureBtn')?.addEventListener('click', async () => {

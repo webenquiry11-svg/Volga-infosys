@@ -30,7 +30,6 @@ function getSidebar(activeView) {
   const isAnalytics = activeView === 'analytics';
   const isLeads = activeView === 'leads';
   const isPortfolio = activeView === 'portfolio';
-  const isClientStories = activeView === 'clientstories';
   const isBlog = activeView === 'blog';
   const isJobs = activeView === 'jobs';
   const isJobApps = activeView === 'jobapplications';
@@ -38,7 +37,7 @@ function getSidebar(activeView) {
   const isEmailLogs = activeView === 'emaillogs';
   const isSettings = activeView === 'settings';
 
-  const expContent = (isPortfolio || isClientStories || isBlog) ? 'expanded' : '';
+  const expContent = (isPortfolio || isBlog) ? 'expanded' : '';
   const expCareers = (isJobs || isJobApps) ? 'expanded' : '';
   const expSystem = (isMedia || isEmailLogs || isSettings) ? 'expanded' : '';
 
