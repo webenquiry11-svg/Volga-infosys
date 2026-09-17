@@ -35,11 +35,12 @@ function getSidebar(activeView) {
   const isJobApps = activeView === 'jobapplications';
   const isMedia = activeView === 'medialibrary';
   const isEmailLogs = activeView === 'emaillogs';
+  const isUsers = activeView === 'users';
   const isSettings = activeView === 'settings';
 
   const expContent = (isPortfolio || isBlog) ? 'expanded' : '';
   const expCareers = (isJobs || isJobApps) ? 'expanded' : '';
-  const expSystem = (isMedia || isEmailLogs || isSettings) ? 'expanded' : '';
+  const expSystem = (isMedia || isEmailLogs || isUsers || isSettings) ? 'expanded' : '';
 
   return `
   <aside class="sidebar">
@@ -129,9 +130,13 @@ function getSidebar(activeView) {
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l9 6 9-6" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 8v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             Email Logs
           </a>
+          <a href="users.html" class="nav-item ${isUsers ? 'active' : ''}" data-view="users">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            User Settings
+          </a>
           <a href="settings.html" class="nav-item ${isSettings ? 'active' : ''}" data-view="settings">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
-            Settings
+            Portal Settings
           </a>
         </div>
       </div>
@@ -325,8 +330,24 @@ const pages = [
     `
   },
   {
+    file: 'users.html',
+    title: 'User Settings & Access',
+    view: 'users',
+    content: `
+    <main class="dash-main">
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <section class="view active" id="view-users">
+        ${extractSection('view-users')}
+      </section>
+    </main>
+    ${extractModal('userModalOverlay')}
+    `
+  },
+  {
     file: 'settings.html',
-    title: 'Settings & Users',
+    title: 'Portal Settings',
     view: 'settings',
     content: `
     <main class="dash-main">
@@ -337,7 +358,6 @@ const pages = [
         ${extractSection('view-settings')}
       </section>
     </main>
-    ${extractModal('userModalOverlay')}
     `
   }
 ];

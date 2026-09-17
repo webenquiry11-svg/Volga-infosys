@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Email Logs — Volga Admin</title>
+  <title>User Settings & Access — Volga Admin</title>
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -100,11 +100,11 @@
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
             Media Library
           </a>
-          <a href="email-logs.html" class="nav-item active" data-view="emaillogs">
+          <a href="email-logs.html" class="nav-item " data-view="emaillogs">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l9 6 9-6" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 8v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             Email Logs
           </a>
-          <a href="users.html" class="nav-item " data-view="users">
+          <a href="users.html" class="nav-item active" data-view="users">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             User Settings
           </a>
@@ -129,37 +129,137 @@
       <button class="mobile-menu-btn" id="mobileMenuBtn">
         <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
-      <section class="view active" id="view-emaillogs">
+      <section class="view active" id="view-users">
         
-      <div class="page-header">
-        <h1>Email Logs</h1>
-        <div class="filter-row">
-          <select id="emailTypeFilter">
-            <option value="">All Types</option>
-            <option value="outgoing">Outgoing</option>
-            <option value="incoming">Incoming</option>
-            <option value="auto-response">Auto-response</option>
-          </select>
-          <select id="emailStatusFilter">
-            <option value="">All Statuses</option>
-            <option value="sent">Sent</option>
-            <option value="pending">Pending</option>
-            <option value="failed">Failed</option>
-            <option value="received">Received</option>
-          </select>
-          <button class="btn-delete" id="deleteAllLogsBtn" type="button">Delete All Logs</button>
-        </div>
+    <div class="page-header">
+      <div>
+        <h1>User Settings &amp; Access</h1>
+        <p style="color:var(--text-secondary); margin-top:0.25rem; font-size:0.9rem;">Manage user accounts, assign roles, inspect permissions, and review role upgrade requests.</p>
       </div>
+      <div class="view-actions">
+        <button class="btn-save" id="addUserBtn" type="button"><i class="fa-solid fa-user-plus"></i> Add New User</button>
+      </div>
+    </div>
+
+    <!-- User KPI Cards -->
+    <div class="stats-grid" style="margin-bottom:1.5rem;">
+      <div class="stat-card">
+        <div class="stat-label">Total Users</div>
+        <div class="stat-value" id="statUserTotal">—</div>
+        <div class="stat-mini">Registered portal accounts</div>
+      </div>
+      <div class="stat-card accent-closed">
+        <div class="stat-label">Administrators</div>
+        <div class="stat-value" id="statUserAdmins">—</div>
+        <div class="stat-mini">Full system privileges</div>
+      </div>
+      <div class="stat-card accent-contacted">
+        <div class="stat-label">Editors</div>
+        <div class="stat-value" id="statUserEditors">—</div>
+        <div class="stat-mini">Content management access</div>
+      </div>
+      <div class="stat-card accent-new">
+        <div class="stat-label">Role Requests</div>
+        <div class="stat-value" id="statUserPending">—</div>
+        <div class="stat-mini">Pending approval</div>
+      </div>
+    </div>
+
+    <!-- Search & Filter Toolbar -->
+    <div class="view-filter-bar" style="margin-bottom:1.25rem;">
+      <div class="search-input-wrap">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="userSearchInput" class="filter-input" placeholder="Search users by name or email..." />
+      </div>
+      <select id="userRoleFilter" class="filter-select">
+        <option value="all">All Roles</option>
+        <option value="admin">Administrators</option>
+        <option value="editor">Editors</option>
+        <option value="viewer">Viewers</option>
+      </select>
+    </div>
+
+    <!-- User Accounts Table Card -->
+    <div class="section-title" id="userManagementTitle"><i class="fa-solid fa-users"></i> Team Members &amp; Credentials</div>
+    <div class="proj-form" id="userManagementSection" style="margin-bottom:2rem;">
       <div class="table-wrap">
-        <table class="leads-table" id="emailLogsTable">
-          <thead><tr><th>Date</th><th>From</th><th>To</th><th>Subject</th><th>Type</th><th>Status</th><th>Action</th></tr></thead>
+        <table class="leads-table" id="usersTable">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Created At</th>
+              <th style="text-align:right;">Actions</th>
+            </tr>
+          </thead>
           <tbody></tbody>
         </table>
       </div>
-      <div class="pagination" id="emailPagination"></div>
-    
+    </div>
+
+    <!-- Role Upgrade Requests Section -->
+    <div class="section-title" id="roleApplicationsTitle"><i class="fa-solid fa-user-shield"></i> Role Upgrade &amp; Access Requests</div>
+    <div class="proj-form" id="roleApplicationsSection">
+      <div class="table-wrap">
+        <table class="leads-table" id="roleApplicationsTable">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Email</th>
+              <th>Requested Role</th>
+              <th>Reason / Purpose</th>
+              <th>Status</th>
+              <th>Requested Date</th>
+              <th style="text-align:right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  
       </section>
     </main>
+    <div class="modal-overlay" id="userModalOverlay">
+    <div class="modal" style="max-width: 600px;">
+      <button class="modal-close" id="userModalClose">✕</button>
+      <h2 class="modal-name" id="userModalTitle">Add User</h2>
+      <div class="proj-form">
+        <div class="field"><label for="user-name">Name *</label><input id="user-name" placeholder="User name" /></div>
+        <div class="field"><label for="user-email">Email *</label><input id="user-email" placeholder="User email" /></div>
+        <div class="field"><label for="user-role">Role *</label>
+          <select id="user-role">
+            <option value="viewer">Viewer</option>
+            <option value="editor">Editor</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div class="field" id="permissions-field">
+          <label style="display: block; margin-bottom: 10px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8;">Permissions</label>
+          <div id="permissions-list" style="max-height: 350px; overflow-y: auto; border: 1px solid rgba(148, 163, 184, 0.2); padding: 16px; border-radius: 10px; background: rgba(15, 23, 42, 0.5);">
+          </div>
+        </div>
+        <div class="field">
+          <label for="user-password">Password</label>
+          <div style="position: relative;">
+            <input id="user-password" type="password" placeholder="Leave blank to keep current" style="padding-right: 40px;" />
+            <button type="button" onclick="togglePasswordVisibility('user-password', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 18px;">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div id="userFormError" class="proj-form-error"></div>
+        <div class="modal-actions">
+          <button class="btn-save" id="userSaveBtn">Save User</button>
+          <button class="btn-delete" id="userDeleteBtn" style="display: none;">Delete User</button>
+        </div>
+      </div>
+    </div>
+  </div>
     
   <div id="toastContainer" class="toast-container"></div>
   <script src="dashboard.js"></script>

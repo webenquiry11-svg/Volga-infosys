@@ -845,6 +845,7 @@ if (document.getElementById("logoutBtn")) {
         if (item.dataset.view === "industrynews") loadIndustryNews();
         if (item.dataset.view === "medialibrary") loadMediaLibrary();
         if (item.dataset.view === "emaillogs") loadEmailLogs();
+        if (item.dataset.view === "users") { loadUsers(); loadRoleApplications(); }
         if (item.dataset.view === "settings") loadCurrentUser();
         if (item.dataset.view === "analytics") loadAnalytics();
         if (item.dataset.view === "jobs") loadJobs();
@@ -2764,6 +2765,7 @@ if (document.getElementById("logoutBtn")) {
       'industrynews': 'view_industry_news',
       'medialibrary': 'view_media_library',
       'emaillogs': 'view_email_logs',
+      'users': 'manage_users',
       'settings': 'view_settings',
       'roleapplications': 'manage_users'
     };
@@ -3171,29 +3173,82 @@ if (document.getElementById("logoutBtn")) {
     });
 
     // Load users (admin)
-    async function loadUsers() {
-      const data = await apiFetch('/auth/users');
+    let cachedUsersList = [];
+
+    function renderUsersTable(usersToRender) {
       const tbody = document.querySelector('#usersTable tbody');
-      if (!data.users || !data.users.length) {
-        tbody.innerHTML = '<tr><td colspan="5" class="empty">No users found</td></tr>';
+      if (!tbody) return;
+      if (!usersToRender || !usersToRender.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="empty" style="text-align:center; padding:2rem; color:var(--text-secondary);">No user accounts found matching criteria</td></tr>';
         return;
       }
-      tbody.innerHTML = data.users.map(u => `
+      tbody.innerHTML = usersToRender.map(u => `
         <tr>
-          <td>${esc(u.name)}</td>
-          <td>${esc(u.email)}</td>
-          <td><span class="badge badge-${esc(u.role)}">${esc(u.role)}</span></td>
-          <td>${fmtDate(u.createdAt)}</td>
-          <td><button class="btn-view edit-user-btn" data-id="${esc(u._id)}">Edit</button></td>
+          <td>
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+              <div style="width:34px; height:34px; border-radius:50%; background:rgba(232,147,10,0.15); color:var(--accent); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem;">
+                ${esc((u.name || 'U').charAt(0).toUpperCase())}
+              </div>
+              <div>
+                <strong style="color:var(--text-primary); display:block; font-size:0.92rem;">${esc(u.name || 'Unknown')}</strong>
+                <span style="color:var(--text-secondary); font-size:0.78rem;">ID: ${esc(u._id ? u._id.slice(-6) : '—')}</span>
+              </div>
+            </div>
+          </td>
+          <td><span style="color:var(--text-secondary); font-family:monospace; font-size:0.85rem;">${esc(u.email)}</span></td>
+          <td><span class="badge badge-${esc(u.role || 'viewer')}">${esc(u.role ? (u.role.charAt(0).toUpperCase() + u.role.slice(1)) : 'Viewer')}</span></td>
+          <td><span style="color:var(--text-secondary); font-size:0.82rem;">${fmtDate(u.createdAt)}</span></td>
+          <td style="text-align:right;">
+            <button class="btn-view edit-user-btn" data-id="${esc(u._id)}" style="padding:0.4rem 0.85rem; font-size:0.8rem;"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+          </td>
         </tr>
       `).join('');
       
       tbody.querySelectorAll('.edit-user-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-          const user = data.users.find(u => u._id === btn.dataset.id);
+          const user = cachedUsersList.find(u => u._id === btn.dataset.id);
           openUserModal(user);
         });
       });
+    }
+
+    function filterUsers() {
+      const q = (document.getElementById('userSearchInput')?.value || '').toLowerCase().trim();
+      const role = document.getElementById('userRoleFilter')?.value || 'all';
+
+      let filtered = cachedUsersList.slice();
+      if (role !== 'all') {
+        filtered = filtered.filter(u => (u.role || 'viewer').toLowerCase() === role.toLowerCase());
+      }
+      if (q) {
+        filtered = filtered.filter(u => 
+          (u.name || '').toLowerCase().includes(q) || 
+          (u.email || '').toLowerCase().includes(q)
+        );
+      }
+      renderUsersTable(filtered);
+    }
+
+    document.getElementById('userSearchInput')?.addEventListener('input', debounce(filterUsers, 200));
+    document.getElementById('userRoleFilter')?.addEventListener('change', filterUsers);
+
+    async function loadUsers() {
+      const data = await apiFetch('/auth/users');
+      cachedUsersList = data.users || [];
+
+      // Update KPI Cards
+      const totalUsers = cachedUsersList.length;
+      const adminUsers = cachedUsersList.filter(u => u.role === 'admin').length;
+      const editorUsers = cachedUsersList.filter(u => u.role === 'editor').length;
+
+      const statTotal = document.getElementById('statUserTotal');
+      const statAdmins = document.getElementById('statUserAdmins');
+      const statEditors = document.getElementById('statUserEditors');
+      if (statTotal) statTotal.textContent = totalUsers;
+      if (statAdmins) statAdmins.textContent = adminUsers;
+      if (statEditors) statEditors.textContent = editorUsers;
+
+      filterUsers();
     }
 
     // Function to render permissions list
@@ -3344,12 +3399,18 @@ if (document.getElementById("logoutBtn")) {
     // Load role applications (admin)
     async function loadRoleApplications() {
       const data = await apiFetch('/auth/role-applications');
+      const apps = data.applications || [];
+      const pendingCount = apps.filter(a => a.status === 'pending').length;
+      const statPending = document.getElementById('statUserPending');
+      if (statPending) statPending.textContent = pendingCount;
+
       const tbody = document.querySelector('#roleApplicationsTable tbody');
-      if (!data.applications || !data.applications.length) {
-        tbody.innerHTML = '<tr><td colspan="7" class="empty">No role applications found</td></tr>';
+      if (!tbody) return;
+      if (!apps.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="empty" style="text-align:center; padding:2rem; color:var(--text-secondary);">No role upgrade applications found</td></tr>';
         return;
       }
-      tbody.innerHTML = data.applications.map(a => `
+      tbody.innerHTML = apps.map(a => `
         <tr>
           <td>${esc(a.applicantName)}</td>
           <td>${esc(a.applicantEmail)}</td>

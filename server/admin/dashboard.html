@@ -109,9 +109,13 @@
             <i class="fa-solid fa-clock-rotate-left"></i>
             <span>Email Logs</span>
           </a>
+          <a href="#" class="nav-item" data-view="users">
+            <i class="fa-solid fa-users-gear"></i>
+            <span>User Settings</span>
+          </a>
           <a href="#" class="nav-item" data-view="settings">
             <i class="fa-solid fa-gear"></i>
-            <span>Settings</span>
+            <span>Portal Settings</span>
           </a>
         </div>
       </div>
@@ -393,9 +397,6 @@
       <button type="button" class="settings-tab-btn" data-tab="security">
         <i class="fa-solid fa-shield-halved"></i> Security &amp; Sessions
       </button>
-      <button type="button" class="settings-tab-btn" data-tab="team" id="tabBtnTeam">
-        <i class="fa-solid fa-users-gear"></i> Team &amp; Access
-      </button>
       <button type="button" class="settings-tab-btn" data-tab="system">
         <i class="fa-solid fa-server"></i> System &amp; Data
       </button>
@@ -662,34 +663,7 @@
       </div>
     </div>
 
-    <!-- TAB 6: Team & Access (Admin Only) -->
-    <div class="settings-tab-pane" id="stab-team">
-      <div class="section-title" id="userManagementTitle"><i class="fa-solid fa-users-gear"></i> User Accounts &amp; Roles</div>
-      <div class="proj-form" id="userManagementSection">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-          <p style="color:var(--text-secondary); font-size:0.88rem; margin:0;">Manage administrator, editor, and viewer access.</p>
-          <button class="btn-save" id="addUserBtn" type="button"><i class="fa-solid fa-user-plus"></i> Add User</button>
-        </div>
-        <div class="table-wrap">
-          <table class="leads-table" id="usersTable">
-            <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Created At</th><th>Actions</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="section-title" id="roleApplicationsTitle" style="margin-top:2rem;"><i class="fa-solid fa-user-check"></i> Role Upgrade Requests</div>
-      <div class="proj-form" id="roleApplicationsSection">
-        <div class="table-wrap">
-          <table class="leads-table" id="roleApplicationsTable">
-            <thead><tr><th>Name</th><th>Email</th><th>Requested Role</th><th>Reason</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB 7: System & Data -->
+    <!-- TAB 6: System & Data -->
     <div class="settings-tab-pane" id="stab-system">
       <div class="section-title"><i class="fa-solid fa-heart-pulse"></i> System Status &amp; Diagnostics</div>
       <div class="system-stats-grid">
@@ -723,6 +697,97 @@
         <div>
           <button class="btn-delete" id="logoutBtn" type="button"><i class="fa-solid fa-power-off"></i> End Session</button>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USER MANAGEMENT & SETTINGS -->
+  <section class="view" id="view-users">
+    <div class="page-header">
+      <div>
+        <h1>User Settings &amp; Access</h1>
+        <p style="color:var(--text-secondary); margin-top:0.25rem; font-size:0.9rem;">Manage user accounts, assign roles, inspect permissions, and review role upgrade requests.</p>
+      </div>
+      <div class="view-actions">
+        <button class="btn-save" id="addUserBtn" type="button"><i class="fa-solid fa-user-plus"></i> Add New User</button>
+      </div>
+    </div>
+
+    <!-- User KPI Cards -->
+    <div class="stats-grid" style="margin-bottom:1.5rem;">
+      <div class="stat-card">
+        <div class="stat-label">Total Users</div>
+        <div class="stat-value" id="statUserTotal">—</div>
+        <div class="stat-mini">Registered portal accounts</div>
+      </div>
+      <div class="stat-card accent-closed">
+        <div class="stat-label">Administrators</div>
+        <div class="stat-value" id="statUserAdmins">—</div>
+        <div class="stat-mini">Full system privileges</div>
+      </div>
+      <div class="stat-card accent-contacted">
+        <div class="stat-label">Editors</div>
+        <div class="stat-value" id="statUserEditors">—</div>
+        <div class="stat-mini">Content management access</div>
+      </div>
+      <div class="stat-card accent-new">
+        <div class="stat-label">Role Requests</div>
+        <div class="stat-value" id="statUserPending">—</div>
+        <div class="stat-mini">Pending approval</div>
+      </div>
+    </div>
+
+    <!-- Search & Filter Toolbar -->
+    <div class="view-filter-bar" style="margin-bottom:1.25rem;">
+      <div class="search-input-wrap">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="userSearchInput" class="filter-input" placeholder="Search users by name or email..." />
+      </div>
+      <select id="userRoleFilter" class="filter-select">
+        <option value="all">All Roles</option>
+        <option value="admin">Administrators</option>
+        <option value="editor">Editors</option>
+        <option value="viewer">Viewers</option>
+      </select>
+    </div>
+
+    <!-- User Accounts Table Card -->
+    <div class="section-title" id="userManagementTitle"><i class="fa-solid fa-users"></i> Team Members &amp; Credentials</div>
+    <div class="proj-form" id="userManagementSection" style="margin-bottom:2rem;">
+      <div class="table-wrap">
+        <table class="leads-table" id="usersTable">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Created At</th>
+              <th style="text-align:right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Role Upgrade Requests Section -->
+    <div class="section-title" id="roleApplicationsTitle"><i class="fa-solid fa-user-shield"></i> Role Upgrade &amp; Access Requests</div>
+    <div class="proj-form" id="roleApplicationsSection">
+      <div class="table-wrap">
+        <table class="leads-table" id="roleApplicationsTable">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Email</th>
+              <th>Requested Role</th>
+              <th>Reason / Purpose</th>
+              <th>Status</th>
+              <th>Requested Date</th>
+              <th style="text-align:right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </div>
     </div>
   </section>
