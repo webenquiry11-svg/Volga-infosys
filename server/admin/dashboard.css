@@ -2032,3 +2032,92 @@ html.dark .login-page #loginThemeToggle {
   .filter-row { flex-direction: column; align-items: stretch; }
   .filter-row input, .filter-row select { width: 100%; }
 }
+
+/* ════════════════════════════════════════════════════════════
+   VIEW MODE TOGGLE & ADMIN LIST TABLE STYLES
+════════════════════════════════════════════════════════════ */
+.header-actions-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.view-mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  gap: 3px;
+}
+
+.view-mode-toggle .btn-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 32px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.view-mode-toggle .btn-toggle:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.view-mode-toggle .btn-toggle.active {
+  background: var(--accent);
+  color: #0D2B3E;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(232, 147, 10, 0.35);
+}
+
+.admin-list-thumb {
+  width: 64px;
+  height: 44px;
+  border-radius: 6px;
+  object-fit: cover;
+  background-color: var(--brand-navy-deep);
+  border: 1px solid var(--border);
+  display: block;
+}
+
+.admin-table-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-icon-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.82rem;
+  transition: all 0.2s ease;
+}
+
+.btn-icon-sm:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.btn-icon-sm.danger:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+  background: rgba(239, 68, 68, 0.1);
+}

@@ -249,9 +249,16 @@
   <section class="view" id="view-portfolio">
     <div class="page-header">
       <h1>Portfolio Projects</h1>
-      <button class="btn-save" id="addProjectBtn">+ Add Project</button>
+      <div class="header-actions-wrap">
+        <div class="view-mode-toggle" id="projViewToggle">
+          <button type="button" class="btn-toggle active" data-view="card" title="Card View"><i class="fa-solid fa-table-cells"></i></button>
+          <button type="button" class="btn-toggle" data-view="list" title="List View"><i class="fa-solid fa-list"></i></button>
+        </div>
+        <button class="btn-save" id="addProjectBtn">+ Add Project</button>
+      </div>
     </div>
     <div class="proj-grid" id="projGrid"></div>
+    <div class="pagination" id="projPagination"></div>
   </section>
 
   <!-- CLIENT STORIES -->
@@ -267,9 +274,16 @@
   <section class="view" id="view-blog">
     <div class="page-header">
       <h1>Blog Posts</h1>
-      <button class="btn-save" id="addBlogBtn">+ Add Post</button>
+      <div class="header-actions-wrap">
+        <div class="view-mode-toggle" id="blogViewToggle">
+          <button type="button" class="btn-toggle active" data-view="card" title="Card View"><i class="fa-solid fa-table-cells"></i></button>
+          <button type="button" class="btn-toggle" data-view="list" title="List View"><i class="fa-solid fa-list"></i></button>
+        </div>
+        <button class="btn-save" id="addBlogBtn">+ Add Post</button>
+      </div>
     </div>
     <div class="proj-grid" id="blogGrid"></div>
+    <div class="pagination" id="blogPagination"></div>
   </section>
 
   <!-- CASE STUDIES -->

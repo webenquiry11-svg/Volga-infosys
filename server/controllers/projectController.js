@@ -18,6 +18,9 @@ export const getProject = async (req, res) => {
 
 export const createProject = async (req, res) => {
   try {
+    if (req.body && req.body.description) {
+      req.body.description = req.body.description.replace(/<[^>]*>?/gm, '').trim();
+    }
     const project = await Project.create(req.body);
     await logActivity(req.user?._id, "create", "project", project._id, `Created project: ${project.title}`);
     res.status(201).json(project);
@@ -28,6 +31,9 @@ export const createProject = async (req, res) => {
 
 export const updateProject = async (req, res) => {
   try {
+    if (req.body && req.body.description) {
+      req.body.description = req.body.description.replace(/<[^>]*>?/gm, '').trim();
+    }
     const project = await Project.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!project) return res.status(404).json({ message: "Not found" });
     res.json(project);

@@ -5,6 +5,11 @@ function esc(s) {
   return d.innerHTML;
 }
 
+function stripHtml(s) {
+  if (!s) return '';
+  return s.replace(/<[^>]*>?/gm, '').trim();
+}
+
 // ── TOAST NOTIFICATIONS ─────────────────────────────────────
 function showToast(title, message = '', type = 'info', duration = 5000) {
   const container = document.getElementById('toastContainer');
@@ -1278,16 +1283,23 @@ if (document.getElementById("logoutBtn")) {
   let currentProjPage = 1;
   const PROJ_PAGE_SIZE = 6;
   let cachedProjects = [];
+  let projViewMode = localStorage.getItem('adminProjViewMode') || 'card';
 
-  async function loadPortfolio(page = 1) {
-    currentProjPage = page;
-    const projects = await apiFetch("/projects");
-    cachedProjects = Array.isArray(projects) ? projects : (projects?.data || []);
+  function renderPortfolioView() {
     const grid = document.getElementById("projGrid");
     const pagEl = document.getElementById("projPagination");
+    const toggleWrap = document.getElementById("projViewToggle");
     if (!grid) return;
 
+    // Update toggle active state
+    if (toggleWrap) {
+      toggleWrap.querySelectorAll('.btn-toggle').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.view === projViewMode);
+      });
+    }
+
     if (!cachedProjects.length) {
+      grid.className = 'proj-grid';
       grid.innerHTML = `<p class="empty" style="padding:2rem">No projects yet. Click + Add Project to get started.</p>`;
       if (pagEl) pagEl.innerHTML = "";
       return;
@@ -1298,54 +1310,98 @@ if (document.getElementById("logoutBtn")) {
     const startIdx = (activePage - 1) * PROJ_PAGE_SIZE;
     const pageProjects = cachedProjects.slice(startIdx, startIdx + PROJ_PAGE_SIZE);
 
-    grid.innerHTML = pageProjects.map(p => `
-      <div class="proj-card">
-        <div class="proj-card-img" style="background-image:url('${esc(p.image)}');position:relative;">
-          <div class="actions-dropdown" data-id="${esc(p._id)}" data-type="projects" data-name="${esc(p.title)}">
-            <button class="dropdown-toggle" title="Options" aria-label="Project actions"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-            <div class="dropdown-menu">
-              <button class="dropdown-item" data-action="edit">
-                <i class="fa-solid fa-pen-to-square"></i>
-                <span>Edit Project</span>
-              </button>
-              <button class="dropdown-item danger" data-action="delete">
-                <i class="fa-solid fa-trash"></i>
-                <span>Delete Project</span>
-              </button>
+    if (projViewMode === 'list') {
+      grid.className = 'table-wrap';
+      grid.innerHTML = `
+        <table class="leads-table">
+          <thead>
+            <tr>
+              <th style="width:75px;">Cover</th>
+              <th>Project Title</th>
+              <th>Location</th>
+              <th>Category</th>
+              <th style="width:70px;">Order</th>
+              <th style="width:100px;text-align:right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${pageProjects.map(p => `
+              <tr>
+                <td>
+                  <img src="${esc(p.image)}" class="admin-list-thumb" alt="${esc(p.title)}" onerror="this.src='login-dark.png'">
+                </td>
+                <td>
+                  <div class="admin-list-title-cell">
+                    <span class="admin-list-title">${esc(p.title)}${p.title2 ? ' ' + esc(p.title2) : ''}</span>
+                    <span class="admin-list-sub">${esc(stripHtml(p.description)).substring(0, 65)}${stripHtml(p.description).length > 65 ? '...' : ''}</span>
+                  </div>
+                </td>
+                <td>${esc(p.place)}</td>
+                <td><span class="proj-tag">${esc(p.tag)}</span></td>
+                <td><strong>${p.order ?? 0}</strong></td>
+                <td style="text-align:right;">
+                  <div class="admin-table-actions">
+                    <button type="button" class="btn-icon-sm" data-action="edit" data-id="${esc(p._id)}" title="Edit Project"><i class="fa-solid fa-pen"></i></button>
+                    <button type="button" class="btn-icon-sm danger" data-action="delete" data-id="${esc(p._id)}" data-name="${esc(p.title)}" title="Delete Project"><i class="fa-solid fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    } else {
+      grid.className = 'proj-grid';
+      grid.innerHTML = pageProjects.map(p => `
+        <div class="proj-card">
+          <div class="proj-card-img" style="background-image:url('${esc(p.image)}');position:relative;">
+            <div class="actions-dropdown" data-id="${esc(p._id)}" data-type="projects" data-name="${esc(p.title)}">
+              <button class="dropdown-toggle" title="Options" aria-label="Project actions"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+              <div class="dropdown-menu">
+                <button class="dropdown-item" data-action="edit">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                  <span>Edit Project</span>
+                </button>
+                <button class="dropdown-item danger" data-action="delete">
+                  <i class="fa-solid fa-trash"></i>
+                  <span>Delete Project</span>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="proj-card-body">
-          <span class="proj-tag">${esc(p.tag)}</span>
-          <div class="proj-title">${esc(p.title)}${p.title2 ? ' ' + esc(p.title2) : ''}</div>
-          <div class="proj-place">${esc(p.place)}</div>
-          <p class="proj-desc">${esc(p.description)}</p>
-        </div>
-      </div>`).join("");
+          <div class="proj-card-body">
+            <span class="proj-tag">${esc(p.tag)}</span>
+            <div class="proj-title">${esc(p.title)}${p.title2 ? ' ' + esc(p.title2) : ''}</div>
+            <div class="proj-place">${esc(p.place)}</div>
+            <p class="proj-desc">${esc(stripHtml(p.description))}</p>
+          </div>
+        </div>`).join("");
 
-    // Dropdown menu handlers for project cards
-    grid.querySelectorAll('.dropdown-toggle').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const menu = btn.nextElementSibling;
-        document.querySelectorAll('.dropdown-menu').forEach(m => {
-          if (m !== menu) m.classList.remove('show');
+      // Dropdown menu handlers for project cards
+      grid.querySelectorAll('.dropdown-toggle').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const menu = btn.nextElementSibling;
+          document.querySelectorAll('.dropdown-menu').forEach(m => {
+            if (m !== menu) m.classList.remove('show');
+          });
+          menu.classList.toggle('show');
         });
-        menu.classList.toggle('show');
       });
-    });
+    }
 
-    grid.querySelectorAll('.dropdown-item').forEach(item => {
-      item.addEventListener('click', async (e) => {
+    // Attach actions for list buttons and card dropdown items
+    grid.querySelectorAll('[data-action]').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
         e.stopPropagation();
-        const dropdown = item.closest('.actions-dropdown');
-        const itemId = dropdown.dataset.id;
-        const itemType = dropdown.dataset.type;
-        const itemName = dropdown.dataset.name;
-        const action = item.dataset.action;
-        
-        // Close the menu
-        dropdown.querySelector('.dropdown-menu').classList.remove('show');
+        const action = btn.dataset.action;
+        const dropdown = btn.closest('.actions-dropdown');
+        const itemId = btn.dataset.id || dropdown?.dataset.id;
+        const itemName = btn.dataset.name || dropdown?.dataset.name || 'Project';
+
+        if (dropdown) {
+          dropdown.querySelector('.dropdown-menu')?.classList.remove('show');
+        }
 
         switch (action) {
           case 'edit':
@@ -1370,8 +1426,8 @@ if (document.getElementById("logoutBtn")) {
             });
             if (result.isConfirmed) {
               try {
-                await apiFetch(`/${itemType}/${itemId}`, { method: 'DELETE' });
-                showToast('Deleted', 'Item removed', 'success');
+                await apiFetch(`/projects/${itemId}`, { method: 'DELETE' });
+                showToast('Deleted', 'Project removed', 'success');
                 loadPortfolio(activePage);
               } catch(e) { showToast('Error', e.message, 'error'); }
             }
@@ -1384,6 +1440,22 @@ if (document.getElementById("logoutBtn")) {
       loadPortfolio(p);
       grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
+  }
+
+  // Setup toggle listener for Portfolio
+  document.getElementById('projViewToggle')?.querySelectorAll('.btn-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      projViewMode = btn.dataset.view;
+      localStorage.setItem('adminProjViewMode', projViewMode);
+      renderPortfolioView();
+    });
+  });
+
+  async function loadPortfolio(page = 1) {
+    currentProjPage = page;
+    const projects = await apiFetch("/projects");
+    cachedProjects = Array.isArray(projects) ? projects : (projects?.data || []);
+    renderPortfolioView();
   }
 
   function openProjectModal(project = null) {
@@ -1447,12 +1519,15 @@ if (document.getElementById("logoutBtn")) {
       image = existingProject.image || '';
     }
 
+    const rawPfDesc = editors.pfDesc ? editors.pfDesc.getData() : document.getElementById("pf-desc").value;
+    const cleanPfDesc = stripHtml(rawPfDesc);
+
     const body = {
       place:       document.getElementById("pf-place").value.trim(),
       tag:         document.getElementById("pf-tag").value.trim(),
       title:       document.getElementById("pf-title").value.trim(),
       title2:      document.getElementById("pf-title2").value.trim(),
-      description: editors.pfDesc ? editors.pfDesc.getData() : document.getElementById("pf-desc").value.trim(),
+      description: cleanPfDesc,
       image:       image,
       order:       Number(document.getElementById("pf-order").value) || 0,
     };
@@ -1515,17 +1590,23 @@ if (document.getElementById("logoutBtn")) {
   let currentBlogPage = 1;
   const BLOG_PAGE_SIZE = 6;
   let cachedBlogs = [];
+  let blogViewMode = localStorage.getItem('adminBlogViewMode') || 'card';
 
-  async function loadBlogs(page = 1) {
-    currentBlogPage = page;
-    const data = await apiFetch('/blogs/admin/all');
-    const allBlogs = data?.data || data;
-    cachedBlogs = Array.isArray(allBlogs) ? allBlogs : [];
+  function renderBlogView() {
     const grid = document.getElementById('blogGrid');
     const pagEl = document.getElementById('blogPagination');
+    const toggleWrap = document.getElementById('blogViewToggle');
     if (!grid) return;
 
+    // Update toggle active state
+    if (toggleWrap) {
+      toggleWrap.querySelectorAll('.btn-toggle').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.view === blogViewMode);
+      });
+    }
+
     if (!cachedBlogs.length) {
+      grid.className = 'proj-grid';
       grid.innerHTML = `<p class="empty" style="padding:2rem">No blog posts yet. Click + Add Post to get started.</p>`;
       if (pagEl) pagEl.innerHTML = '';
       return;
@@ -1536,71 +1617,122 @@ if (document.getElementById("logoutBtn")) {
     const startIdx = (activePage - 1) * BLOG_PAGE_SIZE;
     const pageBlogs = cachedBlogs.slice(startIdx, startIdx + BLOG_PAGE_SIZE);
 
-    grid.innerHTML = pageBlogs.map(b => `
-      <div class="proj-card content-card" data-id="${esc(b._id)}">
-        <div class="proj-card-img" style="background-image:url('${esc(b.coverImage || b.image || '')}');position:relative;">
-          ${b.featured ? '<span class="card-badge badge-featured">★ Featured</span>' : ''}
-          <span class="card-status-badge status-${esc(b.status)}">${esc(b.status)}</span>
-          <div class="actions-dropdown" data-id="${esc(b._id)}" data-type="blogs" data-name="${esc(b.title.replace(/"/g,''))}" data-status="${esc(b.status)}">
-            <button class="dropdown-toggle" title="Options" aria-label="Blog actions"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-            <div class="dropdown-menu">
-              <button class="dropdown-item" data-action="edit">
-                <i class="fa-solid fa-pen-to-square"></i>
-                <span>Edit Post</span>
-              </button>
-              <button class="dropdown-item" data-action="toggle-status">
-                <i class="fa-solid ${b.status === 'published' ? 'fa-eye-slash' : 'fa-globe'}"></i>
-                <span>${b.status === 'published' ? 'Set to Draft' : 'Publish'}</span>
-              </button>
-              <button class="dropdown-item" data-action="duplicate">
-                <i class="fa-solid fa-copy"></i>
-                <span>Duplicate</span>
-              </button>
-              <button class="dropdown-item danger" data-action="delete">
-                <i class="fa-solid fa-trash"></i>
-                <span>Delete Post</span>
-              </button>
+    if (blogViewMode === 'list') {
+      grid.className = 'table-wrap';
+      grid.innerHTML = `
+        <table class="leads-table">
+          <thead>
+            <tr>
+              <th style="width:75px;">Cover</th>
+              <th>Article Title</th>
+              <th>Category</th>
+              <th>Author / Read Time</th>
+              <th>Status</th>
+              <th>Featured</th>
+              <th style="width:150px;text-align:right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${pageBlogs.map(b => `
+              <tr>
+                <td>
+                  <img src="${esc(b.coverImage || b.image || '')}" class="admin-list-thumb" alt="${esc(b.title)}" onerror="this.src='login-dark.png'">
+                </td>
+                <td>
+                  <div class="admin-list-title-cell">
+                    <span class="admin-list-title">${esc(b.title)}</span>
+                    <span class="admin-list-sub">${esc(b.excerpt || '').substring(0, 60)}${b.excerpt && b.excerpt.length > 60 ? '...' : ''}</span>
+                  </div>
+                </td>
+                <td><span class="proj-tag">${esc(b.category)}</span></td>
+                <td>${esc(b.author) || '—'}<br><small style="color:var(--text-muted);">${esc(b.readTime) || '—'}</small></td>
+                <td>
+                  <span class="card-status-badge status-${esc(b.status)}">${esc(b.status)}</span>
+                </td>
+                <td>
+                  ${b.featured ? '<span style="color:var(--accent);font-weight:bold;">★ Yes</span>' : '<span style="color:var(--text-muted);">No</span>'}
+                </td>
+                <td style="text-align:right;">
+                  <div class="admin-table-actions">
+                    <button type="button" class="btn-icon-sm" data-action="edit" data-id="${esc(b._id)}" title="Edit Post"><i class="fa-solid fa-pen"></i></button>
+                    <button type="button" class="btn-icon-sm" data-action="toggle-status" data-id="${esc(b._id)}" data-status="${esc(b.status)}" title="${b.status === 'published' ? 'Set to Draft' : 'Publish'}"><i class="fa-solid ${b.status === 'published' ? 'fa-eye-slash' : 'fa-globe'}"></i></button>
+                    <button type="button" class="btn-icon-sm" data-action="duplicate" data-id="${esc(b._id)}" title="Duplicate Post"><i class="fa-solid fa-copy"></i></button>
+                    <button type="button" class="btn-icon-sm danger" data-action="delete" data-id="${esc(b._id)}" data-name="${esc(b.title.replace(/"/g,''))}" title="Delete Post"><i class="fa-solid fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    } else {
+      grid.className = 'proj-grid';
+      grid.innerHTML = pageBlogs.map(b => `
+        <div class="proj-card content-card" data-id="${esc(b._id)}">
+          <div class="proj-card-img" style="background-image:url('${esc(b.coverImage || b.image || '')}');position:relative;">
+            ${b.featured ? '<span class="card-badge badge-featured">★ Featured</span>' : ''}
+            <span class="card-status-badge status-${esc(b.status)}">${esc(b.status)}</span>
+            <div class="actions-dropdown" data-id="${esc(b._id)}" data-type="blogs" data-name="${esc(b.title.replace(/"/g,''))}" data-status="${esc(b.status)}">
+              <button class="dropdown-toggle" title="Options" aria-label="Blog actions"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+              <div class="dropdown-menu">
+                <button class="dropdown-item" data-action="edit">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                  <span>Edit Post</span>
+                </button>
+                <button class="dropdown-item" data-action="toggle-status">
+                  <i class="fa-solid ${b.status === 'published' ? 'fa-eye-slash' : 'fa-globe'}"></i>
+                  <span>${b.status === 'published' ? 'Set to Draft' : 'Publish'}</span>
+                </button>
+                <button class="dropdown-item" data-action="duplicate">
+                  <i class="fa-solid fa-copy"></i>
+                  <span>Duplicate</span>
+                </button>
+                <button class="dropdown-item danger" data-action="delete">
+                  <i class="fa-solid fa-trash"></i>
+                  <span>Delete Post</span>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="proj-card-body">
-          <span class="proj-tag">${esc(b.category)}</span>
-          <div class="proj-title">${esc(b.title)}</div>
-          <div class="proj-place">${esc(b.author) || '—'} · ${esc(b.readTime) || '—'}</div>
-          <p class="proj-desc">${esc(b.excerpt) || ''}</p>
-        </div>
-      </div>`).join('');
+          <div class="proj-card-body">
+            <span class="proj-tag">${esc(b.category)}</span>
+            <div class="proj-title">${esc(b.title)}</div>
+            <div class="proj-place">${esc(b.author) || '—'} · ${esc(b.readTime) || '—'}</div>
+            <p class="proj-desc">${esc(b.excerpt) || ''}</p>
+          </div>
+        </div>`).join('');
 
-    // Dropdown menu handlers for blog cards
-    grid.querySelectorAll('.dropdown-toggle').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const menu = btn.nextElementSibling;
-        document.querySelectorAll('.dropdown-menu').forEach(m => {
-          if (m !== menu) m.classList.remove('show');
+      // Dropdown menu handlers for blog cards
+      grid.querySelectorAll('.dropdown-toggle').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const menu = btn.nextElementSibling;
+          document.querySelectorAll('.dropdown-menu').forEach(m => {
+            if (m !== menu) m.classList.remove('show');
+          });
+          menu.classList.toggle('show');
         });
-        menu.classList.toggle('show');
       });
-    });
+    }
 
-    grid.querySelectorAll('.dropdown-item').forEach(item => {
-      item.addEventListener('click', async (e) => {
+    // Attach actions for list buttons and card dropdown items
+    grid.querySelectorAll('[data-action]').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
         e.stopPropagation();
-        const dropdown = item.closest('.actions-dropdown');
-        const itemId = dropdown.dataset.id;
-        const itemType = dropdown.dataset.type;
-        const itemName = dropdown.dataset.name;
-        const itemStatus = dropdown.dataset.status;
-        const action = item.dataset.action;
-        
-        // Close the menu
-        dropdown.querySelector('.dropdown-menu').classList.remove('show');
+        const action = btn.dataset.action;
+        const dropdown = btn.closest('.actions-dropdown');
+        const itemId = btn.dataset.id || dropdown?.dataset.id;
+        const itemName = btn.dataset.name || dropdown?.dataset.name || 'Blog Post';
+        const itemStatus = btn.dataset.status || dropdown?.dataset.status;
+
+        if (dropdown) {
+          dropdown.querySelector('.dropdown-menu')?.classList.remove('show');
+        }
 
         switch (action) {
           case 'edit':
             try {
               const blogData = await apiFetch(`/blogs/admin/${itemId}`);
-              console.log('Fetched blog data:', blogData);
               openBlogModal(blogData);
             } catch (e) {
               console.error('Error fetching blog:', e);
@@ -1617,7 +1749,7 @@ if (document.getElementById("logoutBtn")) {
             break;
           case 'duplicate':
             try {
-              await apiFetch(`/${itemType}/${itemId}/duplicate`, { method: 'POST' });
+              await apiFetch(`/blogs/${itemId}/duplicate`, { method: 'POST' });
               showToast('Cloned', 'Draft copy created', 'success');
               loadBlogs(activePage);
             } catch(e) { showToast('Error', e.message, 'error'); }
@@ -1635,7 +1767,7 @@ if (document.getElementById("logoutBtn")) {
             });
             if (result.isConfirmed) {
               try {
-                await apiFetch(`/${itemType}/${itemId}`, { method: 'DELETE' });
+                await apiFetch(`/blogs/${itemId}`, { method: 'DELETE' });
                 showToast('Deleted', 'Item removed', 'success');
                 loadBlogs(activePage);
               } catch(e) { showToast('Error', e.message, 'error'); }
@@ -1649,6 +1781,23 @@ if (document.getElementById("logoutBtn")) {
       loadBlogs(p);
       grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
+  }
+
+  // Setup toggle listener for Blogs
+  document.getElementById('blogViewToggle')?.querySelectorAll('.btn-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      blogViewMode = btn.dataset.view;
+      localStorage.setItem('adminBlogViewMode', blogViewMode);
+      renderBlogView();
+    });
+  });
+
+  async function loadBlogs(page = 1) {
+    currentBlogPage = page;
+    const data = await apiFetch('/blogs/admin/all');
+    const allBlogs = data?.data || data;
+    cachedBlogs = Array.isArray(allBlogs) ? allBlogs : [];
+    renderBlogView();
   }
 
   function openBlogModal(blog = null) {

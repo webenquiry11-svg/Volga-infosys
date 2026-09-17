@@ -14,12 +14,24 @@ const defaultData = [
 const h = window.location.hostname;
 const API_URL = window.VOLGA_API;
 
+function stripHtml(str) {
+  if (!str) return '';
+  return str.replace(/<[^>]*>?/gm, '').trim();
+}
+
 async function fetchProjects() {
   try {
     const res = await fetch(`${API_URL}/projects`);
     const projects = await res.json();
     if (Array.isArray(projects) && projects.length) {
-      const mapped = projects.map(p => ({ place: p.place, title: p.title, title2: p.title2 || '', tag: p.tag, description: p.description, image: window.getVolgaImageUrl(p.image) }));
+      const mapped = projects.map(p => ({
+        place: p.place,
+        title: p.title,
+        title2: p.title2 || '',
+        tag: p.tag,
+        description: stripHtml(p.description),
+        image: window.getVolgaImageUrl(p.image)
+      }));
       // slider needs at least 2 slides — pad with defaultData if needed
       if (mapped.length < 2) {
         const extras = defaultData.filter(d => !mapped.find(m => m.title === d.title));
@@ -30,7 +42,14 @@ async function fetchProjects() {
   } catch (_) {}
   const saved = JSON.parse(localStorage.getItem('volgaPortfolioProjects') || '[]');
   return saved.length
-    ? saved.map(p => ({ place: p.place, title: p.title1, title2: p.title2, tag: p.tag, description: p.description, image: p.image }))
+    ? saved.map(p => ({
+        place: p.place,
+        title: p.title1,
+        title2: p.title2,
+        tag: p.tag,
+        description: stripHtml(p.description),
+        image: p.image
+      }))
     : defaultData;
 }
 
@@ -87,7 +106,7 @@ function boot(data) {
     document.querySelector(`${p} .pf-place-text`).textContent = data[idx].place;
     document.querySelector(`${p} .pf-title-1`).textContent    = data[idx].title;
     document.querySelector(`${p} .pf-title-2`).textContent    = data[idx].title2;
-    document.querySelector(`${p} .pf-desc`).textContent       = data[idx].description;
+    document.querySelector(`${p} .pf-desc`).textContent       = stripHtml(data[idx].description);
     document.querySelector(`${p} .pf-tag-btn`).textContent    = data[idx].tag;
   }
 
