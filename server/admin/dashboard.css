@@ -635,6 +635,7 @@ html.dark .toggle-thumb {
    MODERN ENTERPRISE TABLES
 ════════════════════════════════════════════════════════════ */
 .table-wrap {
+  width: 100%;
   background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
@@ -1287,7 +1288,8 @@ html.dark .dropdown-menu {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  max-width: 900px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .modal .proj-form {
